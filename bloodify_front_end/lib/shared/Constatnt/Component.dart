@@ -41,3 +41,73 @@ Widget DefaultButton(
             style: TextStyle(color: Colors.white, fontSize: 20),
           ),
         ));
+Widget DefaultInputText({
+  required TextEditingController controller,
+  TextInputType? type,
+  Function? onSubmit,
+  Function? onChange,
+  Function? onTap,
+  bool isPassword = false,
+  required Function validate,
+  required String labelText,
+  IconData? prefix,
+  IconData? suffix,
+  Function? suffixPressed,
+  bool isClickable = true,
+}) =>
+    TextFormField(
+      controller: controller,
+      keyboardType: type,
+      obscureText: isPassword,
+      enabled: isClickable,
+      onFieldSubmitted: (() {
+        if (onSubmit != null) {
+          onSubmit.call();
+        } else {
+          return null;
+        }
+      }()),
+      onChanged: (() {
+        if (onChange != null) {
+          onChange.call();
+        } else {
+          return null;
+        }
+      }()),
+      onTap: (() {
+        if (onTap != null) {
+          onTap.call();
+        } else {
+          return null;
+        }
+      }()),
+      validator: (value) => validate(value),
+      decoration: InputDecoration(
+        labelText: labelText,
+        prefixIcon: Icon(
+          prefix,
+          color: Color.fromARGB(255, 255, 78, 66),
+        ),
+        suffixIcon: (() {
+          if (suffix != null) {
+            return InkWell(
+              onTap: () {
+                suffixPressed!.call();
+              },
+              child: isPassword
+                  ? Icon(
+                      Icons.visibility,
+                      color: Color.fromARGB(255, 255, 78, 66),
+                    )
+                  : Icon(
+                      Icons.visibility_off,
+                      color: Color.fromARGB(255, 255, 78, 66),
+                    ),
+            );
+          } else {
+            return null;
+          }
+        }()),
+        border: OutlineInputBorder(),
+      ),
+    );
