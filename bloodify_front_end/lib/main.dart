@@ -1,9 +1,12 @@
+import 'package:bloc/bloc.dart';
+import 'package:bloodify_front_end/shared/bloc_observer.dart';
 import 'package:bloodify_front_end/shared/network/local/cach_helper.dart';
 import 'package:flutter/material.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await CachHelper.init();
+  Bloc.observer = MyBlocObserver();
   runApp(const MyApp());
 }
 
