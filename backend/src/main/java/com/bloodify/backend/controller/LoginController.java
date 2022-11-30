@@ -1,7 +1,18 @@
 package com.bloodify.backend.controller;
 
+import java.util.Date;
+import java.util.Map;
+
+import org.slf4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,6 +23,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bloodify.backend.Model.UserLoginRequest;
 import com.bloodify.backend.Model.UserLoginResponse;
+import com.bloodify.backend.Model.UserLoginResponseBody;
+import com.bloodify.backend.Utils.JwtUtil;
+
 
 /**
  * LoginController
@@ -21,9 +35,36 @@ import com.bloodify.backend.Model.UserLoginResponse;
 @RequestMapping("/api/v1")
 public class LoginController {
 
+    @Autowired
+    AuthenticationManager authenticationManager;
+
+    @Autowired
+    UserDetailsService userDetailsService;
+
+    @Autowired
+    JwtUtil jwtUtil;
+    
+
     @PostMapping("/userlogin")
     public ResponseEntity<UserLoginResponse> userLogin(@RequestBody UserLoginRequest request){
-        return ResponseEntity.ok(new UserLoginResponse());
+        System.out.println("login");
+        try{
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
+            UserDetails userDetails = userDetailsService.loadUserByUsername(request.getUsername());
+            String token = jwtUtil.generateToken(userDetails, new Date(System.currentTimeMillis()));
+            return ResponseEntity.ok(new UserLoginResponse(true,
+                                                            "good to go",
+                                                            UserLoginResponseBody.builder().name(request.getUsername())
+                                                                                .email(request.getUsername() + "@gmail.com")
+                                                                                .token(token)
+                                                                                .build()));
+
+        } catch (BadCredentialsException e){
+            System.out.println(e.getMessage());
+            return ResponseEntity.status(401).body(new UserLoginResponse(false, "Wrong credentials", null));
+        }
+
+
     }
 
     @GetMapping("/user/hello")
