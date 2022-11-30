@@ -9,8 +9,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../shared/Constatnt/Component.dart';
 import '../../shared/functions/sharedFunctions.dart';
 import '../../shared/network/local/cach_helper.dart';
-import 'cubit/login_cubit.dart';
-import 'cubit/states_login.dart';
+import 'cubit/user_login_cubit.dart';
+import 'cubit/user_states_login.dart';
 
 class UserLogin extends StatelessWidget {
   var loginKey = GlobalKey<FormState>();
@@ -19,10 +19,10 @@ class UserLogin extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (BuildContext context) => LoginCubit(),
-      child: BlocConsumer<LoginCubit, LoginStates>(
+      create: (BuildContext context) => UserLoginCubit(),
+      child: BlocConsumer<UserLoginCubit, UserLoginStates>(
         listener: (context, state) {
-          if (state is LoginSuccessState) {
+          if (state is UserLoginSuccessState) {
             bool login_state = state.loginModel.status;
             if (state.loginModel.status) {
               print(state.loginModel.message);
@@ -84,10 +84,10 @@ class UserLogin extends StatelessWidget {
                       DefaultInputText(
                         controller: passwordController,
                         labelText: "password",
-                        isPassword: LoginCubit.get(context).isPassword,
-                        suffix: LoginCubit.get(context).suffix,
-                        suffixPressed: () =>
-                            LoginCubit.get(context).changePasswordVisibility(),
+                        isPassword: UserLoginCubit.get(context).isPassword,
+                        suffix: UserLoginCubit.get(context).suffix,
+                        suffixPressed: () => UserLoginCubit.get(context)
+                            .changePasswordVisibility(),
                         prefix: Icons.lock,
                         validate: (String value) {
                           print(passwordController.text);
@@ -124,13 +124,13 @@ class UserLogin extends StatelessWidget {
                     height: 40,
                   ),
                   ConditionalBuilder(
-                    condition: state is! LoginLoadingState,
+                    condition: state is! UserLoginLoadingState,
                     builder: (context) => DefaultButton(
                         onClick: () {
                           print(
                               "${emailController.text} ${passwordController.text}");
                           if (loginKey.currentState!.validate()) {
-                            LoginCubit.get(context).userLogin(
+                            UserLoginCubit.get(context).userLogin(
                               email: emailController.text,
                               password: passwordController.text,
                             );
