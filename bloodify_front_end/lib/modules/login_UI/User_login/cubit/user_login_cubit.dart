@@ -1,17 +1,17 @@
 import 'package:bloc/bloc.dart';
-import 'package:bloodify_front_end/modules/login/cubit/user_states_login.dart';
+import 'package:bloodify_front_end/modules/login_UI/User_login/cubit/user_states_login.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../models/user_model.dart';
-import '../../../shared/network/remote/dio_helper.dart';
+import '../../../../models/user_model.dart';
+import '../../../../shared/network/remote/dio_helper.dart';
 
 class UserLoginCubit extends Cubit<UserLoginStates> {
   UserLoginCubit() : super(UserLoginInitialState());
 
   static UserLoginCubit get(context) => BlocProvider.of(context);
-  late LoginModel loginModel;
+  late UserLoginModel loginModel;
   void userLogin({
     required String email,
     required String password,
@@ -27,7 +27,7 @@ class UserLoginCubit extends Cubit<UserLoginStates> {
     ).then((value) {
       print(value.data);
       print(value.data);
-      loginModel = LoginModel.fromJson(value.data);
+      loginModel = UserLoginModel.fromJson(value.data);
       emit(UserLoginSuccessState(loginModel));
     });
     // .catchError((error) {

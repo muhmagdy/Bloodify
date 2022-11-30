@@ -1,16 +1,15 @@
-
-class UserLoginModel {
+class InstitutionLoginModel {
   late bool status;
   late String message;
-  UserData? data;
-  UserLoginModel.fromJson(Map<String, dynamic> json) {
+  InstitutionData? data;
+  InstitutionLoginModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];
-    data = json['data'] != null ? UserData.fromJson(json['data']) : null;
+    data = json['data'] != null ? InstitutionData.fromJson(json['data']) : null;
   }
 }
 
-class UserData {
+class InstitutionData {
   late int id;
   late String name;
   late String email;
@@ -18,7 +17,7 @@ class UserData {
 
   late String token;
 
-  UserData.fromJson(Map<String, dynamic> json) {
+  InstitutionData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     email = json['email'];

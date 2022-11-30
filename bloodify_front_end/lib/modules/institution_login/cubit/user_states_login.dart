@@ -7,7 +7,7 @@ class UserLoginInitialState extends UserLoginStates {}
 class UserLoginLoadingState extends UserLoginStates {}
 
 class UserLoginSuccessState extends UserLoginStates {
-  final LoginModel loginModel;
+  final UserLoginModel loginModel;
   UserLoginSuccessState(this.loginModel);
 }
 
