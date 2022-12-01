@@ -1,3 +1,4 @@
+import 'package:bloodify_front_end/shared/Constatnt/nationalIDValidator.dart';
 import 'package:bloodify_front_end/sign_up_pages/sign_up_2.dart';
 import 'package:flutter/material.dart';
 import 'package:bloodify_front_end/sign_up_State_management/sign_up_cubit.dart';
@@ -12,6 +13,7 @@ class SignUp1 extends StatelessWidget {
   final mailController = TextEditingController();
   final passController = TextEditingController();
   final passConfirmingController = TextEditingController();
+  NationalIDParser parser = EgyptNationalIDParser();
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -39,7 +41,7 @@ class SignUp1 extends StatelessWidget {
                 children: [
                   DefaultProgramPhoto(height: height, width: width),
                   Container(
-                    height: height * .8,
+                    height: height * .95,
                     margin: EdgeInsets.only(left: 20.0, right: 20.0),
                     child: Column(
                       children: [
@@ -48,10 +50,11 @@ class SignUp1 extends StatelessWidget {
                             Expanded(
                               child: DefaultInputText(
                                   controller: fNameController,
-                                  validate: (fName) =>
-                                      fName != null && fName != ""
-                                          ? null
-                                          : "First Name Not Entered",
+                                  validate: (fName) {
+                                    if(fName == null || fName == '') return "Enter Your First Name";
+                                    if(!validateName(fName)) return "Invalid Name";
+                                    return null;
+                                  },
                                   labelText: 'First Name',
                                   prefix: Icons.perm_identity),
                             ),
@@ -59,10 +62,11 @@ class SignUp1 extends StatelessWidget {
                             Expanded(
                               child: DefaultInputText(
                                   controller: lNameController,
-                                  validate: (lName) =>
-                                      lName != null && lName != ""
-                                          ? null
-                                          : "Last Name Not Entered",
+                                  validate: (lName) {
+                                    if(lName == null || lName == '') return "Enter Your Last Name";
+                                    if(!validateName(lName)) return "Invalid Name";
+                                    return null;
+                                  },
                                   labelText: 'Last Name',
                                   prefix: Icons.people_alt_outlined),
                             ),
@@ -74,7 +78,7 @@ class SignUp1 extends StatelessWidget {
                             validate: (number) {
                               if (number == null ||
                                   number == '' ||
-                                  number.toString().length != 14) {
+                                  !parser.validateNationalID(int.parse(number))) {
                                 return 'Invalid National Id';
                               }
                               return null;
@@ -98,10 +102,12 @@ class SignUp1 extends StatelessWidget {
                         SizedBox(height: 10),
                         DefaultInputText(
                             controller: passController,
-                            validate: (pass) => (pass == null || pass == '')
-                                ? 'Invalid Password'
-                                : null,
-                            labelText: 'Password',
+                            validate: (pass){
+                              if (pass == null || pass == '' || pass.length < 8) return "Password should be of > 7 characters";
+                              if(!validatePassword(pass)) return "Password MUST include uppercase letters,\nlowercase letters, digits, and _";
+                              return "null";
+                            },
+                            labelText: 'Password ',
                             isPassword:
                                 SignUpCubit.get(context).PasswordIsPassword,
                             suffix: SignUpCubit.get(context).PasswordSuffix,
@@ -128,6 +134,7 @@ class SignUp1 extends StatelessWidget {
                         DefaultButton(
                             onClick: () {
                               if (_formKey.currentState!.validate()) {
+                                SignUpCubit.get(context).setSupposedDateOfBirth(parser);
                                 SignUpCubit.get(context).user.fName =
                                     fNameController.text;
                                 SignUpCubit.get(context).user.lName =

@@ -16,7 +16,7 @@ import '../sign_up_State_management/sign_up_user_model.dart';
 class SignUp2 extends StatelessWidget {
   final dateController = TextEditingController();
   List<String> types = ['A+', 'B+', 'O+', 'AB+', 'A-', 'B-', 'O-', 'AB-'];
-  final _formKey = GlobalKey();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -61,6 +61,10 @@ class SignUp2 extends StatelessWidget {
                         validator: (String? value) {
                           if (value!.isEmpty) {
                             return "Enter Your birth date";
+                          }
+                          if (new DateFormat("yyyy-MM-dd").parse(value) != SignUpCubit.get(context).supposedDateOfBirth) {
+                            print("incorrect date");
+                            return "Not Correct Date Of Birth";
                           }
                           return null;
                         },
@@ -264,7 +268,7 @@ class SignUp2 extends StatelessWidget {
                         Expanded(
                           child: DefaultButton(
                               onClick: () {
-                                Navigator.pop(context);
+                                if(_formKey.currentState!.validate()) Navigator.pop(context);
                               },
                               text: "Back"),
                         ),
@@ -276,7 +280,7 @@ class SignUp2 extends StatelessWidget {
                             condition: state is! SignUpLoading,
                             builder: (context) => DefaultButton(
                                 onClick: () {
-                                  if (SignUpCubit.get(context).serviceEnabled) {
+                                  if (SignUpCubit.get(context).serviceEnabled && _formKey.currentState!.validate()) {
                                     print("object");
                                     SignUpCubit.get(context).userSignUp();
                                   }

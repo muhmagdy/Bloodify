@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:bloodify_front_end/shared/Constatnt/nationalIDValidator.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:meta/meta.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +13,7 @@ part 'sign_up_state.dart';
 class SignUpCubit extends Cubit<SignUpStates> {
   IconData PasswordSuffix = Icons.visibility_outlined;
   bool PasswordIsPassword = true;
-
+  DateTime supposedDateOfBirth = DateTime.now();
   IconData PasswordConfirmSuffix = Icons.visibility_outlined;
   bool PasswordConfirmIsPassword = true;
 
@@ -97,6 +98,11 @@ class SignUpCubit extends Cubit<SignUpStates> {
   void changeLocation(String location) {
     user.location = location;
     emit(ChangeLocation());
+  }
+
+  void setSupposedDateOfBirth(NationalIDParser parser){
+    supposedDateOfBirth = parser.getDOB();
+    emit(GetSupposedDateOfBirth());
   }
 
   void getLocation() {

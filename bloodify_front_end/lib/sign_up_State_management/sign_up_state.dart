@@ -49,6 +49,8 @@ class GetLocationsError extends SignUpStates {
   GetLocationsError(this.error);
 }
 
+class GetSupposedDateOfBirth extends SignUpStates{}
+
 class SiqnUpApiLoading extends SignUpStates {}
 
 class SiqnUpApiSucces extends SignUpStates {
@@ -60,3 +62,4 @@ class SiqnUpApiError extends SignUpStates {
   final String error;
   SiqnUpApiError(this.error);
 }
+

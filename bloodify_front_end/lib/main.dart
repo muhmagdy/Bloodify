@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [BlocProvider(create: (context) => SignUpCubit())],
       child: MaterialApp(
-        home: SignUp2(),
+        home: SignUp1(),
       ),
     );
   }
