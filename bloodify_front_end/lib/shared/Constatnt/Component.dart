@@ -16,8 +16,8 @@ Widget DefaultButton(
         Color backGround = Colors.red,
         required Function onClick,
         required String text,
-        merginLeft = 20.0,
-        merginRight = 20.0}) =>
+        merginLeft = 0.0,
+        merginRight = 0.0}) =>
     Container(
         width: width,
         height: height,
