@@ -1,11 +1,8 @@
 package com.bloodify.backend.controller;
 
 import java.util.Date;
-import java.util.Map;
 
-import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -59,8 +56,7 @@ public class LoginController {
                                                                                 .token(token)
                                                                                 .build()));
 
-        } catch (BadCredentialsException e){
-            System.out.println(e.getMessage());
+        } catch (Exception e){
             return ResponseEntity.status(401).body(new UserLoginResponse(false, "Wrong credentials", null));
         }
 
