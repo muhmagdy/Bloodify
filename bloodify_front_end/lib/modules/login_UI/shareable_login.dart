@@ -120,27 +120,29 @@ Widget loginUI({
             SizedBox(
               height: 20,
             ),
-            Container(
-                margin: const EdgeInsets.only(left: 20, right: 20),
-                child: Row(
-                  children: [
-                    Expanded(child: Container()),
-                    Text("Don't Have an account?"),
-                    InkWell(
-                      onTap: () {
-                        """
+            isUser
+                ? Container(
+                    margin: const EdgeInsets.only(left: 20, right: 20),
+                    child: Row(
+                      children: [
+                        Expanded(child: Container()),
+                        Text("Don't Have an account?"),
+                        InkWell(
+                          onTap: () {
+                            """
                         will be used 
                          navigateTo(context,SignUp());
                         """;
-                      },
-                      child: Text(
-                        "sign up",
-                        style:
-                            TextStyle(color: Color.fromARGB(255, 255, 78, 66)),
-                      ),
-                    )
-                  ],
-                ))
+                          },
+                          child: Text(
+                            "sign up",
+                            style: TextStyle(
+                                color: Color.fromARGB(255, 255, 78, 66)),
+                          ),
+                        )
+                      ],
+                    ))
+                : Container(),
           ]),
         ),
       ),
