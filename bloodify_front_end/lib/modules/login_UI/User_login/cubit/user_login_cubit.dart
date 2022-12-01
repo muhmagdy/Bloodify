@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../models/user_model.dart';
+import '../../../../models/login_mode.dart';
 import '../../../../shared/network/remote/dio_helper.dart';
 
 class UserLoginCubit extends Cubit<UserLoginStates> {

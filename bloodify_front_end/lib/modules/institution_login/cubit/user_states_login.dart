@@ -1,4 +1,4 @@
-import 'package:bloodify_front_end/models/user_model.dart';
+import 'package:bloodify_front_end/models/login_mode.dart';
 
 abstract class UserLoginStates {}
 

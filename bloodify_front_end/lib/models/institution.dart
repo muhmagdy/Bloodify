@@ -10,7 +10,6 @@ class InstitutionLoginModel {
 }
 
 class InstitutionData {
-  late int id;
   late String name;
   late String email;
   // late String bloodType;
@@ -18,7 +17,6 @@ class InstitutionData {
   late String token;
 
   InstitutionData.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
     name = json['name'];
     email = json['email'];
     // bloodType = json['bloodType'];

@@ -31,15 +31,15 @@ Widget loginUI({
                 SizedBox(height: 40),
                 DefaultInputText(
                   controller: firstFormController,
-                  labelText: isUser ? "Email" : "InstitutionID",
+                  labelText: isUser ? "Email" : "Institution Email",
                   prefix: Icons.email,
                   type: TextInputType.emailAddress,
                   validate: (String value) {
                     print(passwordController.text);
-                    if (isUser && value.isEmpty) {
+                    if (value.isEmpty) {
                       return 'email can\'t be empty';
                     }
-                    if (isUser && !validateEmail(value)) {
+                    if (!validateEmail(value)) {
                       return 'enter valid email';
                     }
 
@@ -66,7 +66,7 @@ Widget loginUI({
                     if (value.isEmpty) {
                       return 'password can\'t be empty';
                     }
-                    if (value.length < 6) {
+                    if (value.length < 8) {
                       return 'password can\'t be less than 8';
                     }
                     return null;
