@@ -50,6 +50,16 @@ class HomeLayout extends StatelessWidget {
               );
             }
           });
+          CachHelper.removeData(
+            key: 'isUser',
+          ).then((value) {
+            if (value) {
+              navigateAndFinish(
+                context,
+                StartWidget(),
+              );
+            }
+          });
         },
         backgroundColor: Colors.red,
         child: const Icon(Icons.logout_rounded),
