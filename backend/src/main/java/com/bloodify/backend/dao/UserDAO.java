@@ -1,6 +1,5 @@
 package com.bloodify.backend.dao;
 
-import com.bloodify.backend.dao.UserRepository;
 import com.bloodify.backend.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,6 +43,7 @@ public class UserDAO {
             return null;
         }
     }
+
 
     public boolean isUsernameAndPasswordMatching(String email, String password) {
         User signingIn = findUserByEmail(email);
