@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 public class AccountManagerServiceImp implements AccountManagerService {
     @Autowired
     UserDAO userDAO;
-    
+
     @Override
     public UserLogInResponse logIn(UserLogInRequest user) {
         return null;
