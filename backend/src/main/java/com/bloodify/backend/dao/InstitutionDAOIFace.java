@@ -1,5 +1,4 @@
 package com.bloodify.backend.dao;
 
-interface InstitutionRepository {
-
+public interface InstitutionDAOIFace {
 }
