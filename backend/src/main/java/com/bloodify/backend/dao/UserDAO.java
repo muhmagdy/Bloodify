@@ -1,4 +1,4 @@
-package com.bloodify.backend.service;
+package com.bloodify.backend.dao;
 
 import com.bloodify.backend.dao.UserRepository;
 import com.bloodify.backend.model.User;
@@ -13,16 +13,22 @@ import java.util.List;
  * get users with blood type 'bla'
  */
 @Service
-public class UserService {
+public class UserDAO {
     @Autowired
     UserRepository userRepo;
 
     public boolean saveUser (User newUser) {
-        List<User> foundUsers = userRepo.findByEmail(newUser.getEmail());
-        if(foundUsers.isEmpty()) {
+        List<User> foundUsersByMail = userRepo.findByEmail(newUser.getEmail());
+        List<User> foundUsersByNID = userRepo.findByNationalID(newUser.getNationalID());
+
+        if(foundUsersByMail.isEmpty() && foundUsersByNID.isEmpty()) {
             userRepo.save(newUser);
             return true;
         }
+        if(!foundUsersByMail.isEmpty())
+            System.out.println("Email is taken, try another one!");
+        else
+            System.out.println("User is already signed in with another mail (same National ID)");
         return false;
     }
 
