@@ -5,7 +5,7 @@ import jakarta.persistence.Id;
 
 import java.time.LocalDate;
 
-public class InstitutionDAO {
+class InstitutionDAO {
 
 
 }

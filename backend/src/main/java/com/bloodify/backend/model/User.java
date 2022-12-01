@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
+
 @Entity
 @Table
 @Data
@@ -32,22 +33,23 @@ public class User {
     @Id
     @GeneratedValue
     private int userID;
-    @Column(name = "first_name")
+    @Column(name = "first_name", nullable = false, length = 20)
     private String firstName;
-    @Column(name = "last_name")
+    @Column(name = "last_name", nullable = false, length = 20)
     private String lastName;
-    @Column(name = "national_id", unique = true)
+    @Column(name = "national_id", unique = true, nullable = false, length = 14)
     private String nationalID;
-    @Column(unique = true)
+    @Column(unique = true, nullable = false, length = 40)
     private String email;
-    @Column(name = "blood_type")
+    @Column(name = "blood_type", nullable = false, length = 2)
     private String bloodType;
-    @Column(name = "blood_type_sign")
+    @Column(name = "blood_type_sign", nullable = false)
     private char bloodTypeSign;
     @Column(name = "has_diseases")
     private boolean hasDiseases;
     @Column(name = "last_time_donated")
     private LocalDate lastTimeDonated;
+    @Column(nullable = false, length = 30)
     private String password;
 
     public User(String firstName, String lastName, String nationalID, String email, String bloodType,

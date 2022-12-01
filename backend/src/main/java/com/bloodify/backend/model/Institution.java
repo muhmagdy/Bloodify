@@ -6,16 +6,16 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 
-@Entity
-@Table
-@Data
-@NoArgsConstructor
+//@Entity
+//@Table
+//@Data
+//@NoArgsConstructor
 public class Institution {
-    private int institutionID;
-    private String email;
-    private String locationEnglish;
-    private float locationLatitude;
-    private float locationLongitude;
-    float workingHours;
+//    private int institutionID;
+//    private String email;
+//    private String locationEnglish;
+//    private float locationLatitude;
+//    private float locationLongitude;
+//    float workingHours;
 
 }
