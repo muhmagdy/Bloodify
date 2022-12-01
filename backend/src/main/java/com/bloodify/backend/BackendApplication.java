@@ -24,7 +24,6 @@ public class BackendApplication implements CommandLineRunner {
 	List<String> firstNames = new ArrayList<>();
 	List<String> lastNames = new ArrayList<>();
 	List<String> bloodTypes = new ArrayList<>();
-	List<Character> bloodSigns = new ArrayList<>();
 	List<String> emails = new ArrayList<>();
 	List<String> passwords = new ArrayList<>();
 	List<String> nationalIDs = new ArrayList<>();
@@ -67,11 +66,11 @@ public class BackendApplication implements CommandLineRunner {
 
 
 		User guy = new User("Joe", "Biden", "30014120200587",
-				"Yo@yo.com", "A", '-', false,
+				"Yo@yo.com", "A-", false,
 				LocalDate.now(), "strongPass");
 
 		User guy2 = new User("Bla", "BlaBla", "30094120200587",
-				"as@as.com", "O", '+', false,
+				"as@as.com", "O+", false,
 				LocalDate.now(), "Strrrii");
 
 		boolean isInserted = userService.saveUser(guy);

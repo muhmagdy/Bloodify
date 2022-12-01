@@ -46,7 +46,7 @@ public class TestUserDAO {
         for(int i=0; i<n; i++) {
             User user = new User(
                     firstNames.get(i), lastNames.get(i), nationalIDs.get(i), emails.get(i), bloodTypes.get(i),
-                    bloodSigns.get(i), haveDiseases.get(i), lastDonates.get(i), passwords.get(i)
+                    haveDiseases.get(i), lastDonates.get(i), passwords.get(i)
             );
             userDAO.saveUser(user);
         }

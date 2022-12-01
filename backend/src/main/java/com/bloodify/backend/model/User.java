@@ -41,10 +41,8 @@ public class User {
     private String nationalID;
     @Column(unique = true, nullable = false, length = 40)
     private String email;
-    @Column(name = "blood_type", nullable = false, length = 2)
+    @Column(name = "blood_type", nullable = false, length = 3)
     private String bloodType;
-    @Column(name = "blood_type_sign", nullable = false)
-    private char bloodTypeSign;
     @Column(name = "has_diseases")
     private boolean hasDiseases;
     @Column(name = "last_time_donated")
@@ -53,13 +51,12 @@ public class User {
     private String password;
 
     public User(String firstName, String lastName, String nationalID, String email, String bloodType,
-                char bloodTypeSign, boolean hasDiseases, LocalDate lastTimeDonated, String password) {
+                boolean hasDiseases, LocalDate lastTimeDonated, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.nationalID = nationalID;
         this.email = email;
         this.bloodType = bloodType;
-        this.bloodTypeSign = bloodTypeSign;
         this.hasDiseases = hasDiseases;
         this.lastTimeDonated = lastTimeDonated;
         this.password = password;
