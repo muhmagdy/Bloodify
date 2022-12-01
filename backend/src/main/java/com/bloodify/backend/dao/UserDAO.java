@@ -12,23 +12,33 @@ import java.util.List;
  * get users with blood type 'bla'
  */
 @Service
-class UserDAO implements UserDAOIFace {
+public class UserDAO implements UserDAOIFace {
     @Autowired
     UserRepository userRepo;
 
-    public boolean saveUser (User newUser) {
-        List<User> foundUsersByMail = userRepo.findByEmail(newUser.getEmail());
-        List<User> foundUsersByNID = userRepo.findByNationalID(newUser.getNationalID());
+//    public boolean saveUser (User newUser) {
+//        List<User> foundUsersByMail = userRepo.findByEmail(newUser.getEmail());
+//        List<User> foundUsersByNID = userRepo.findByNationalID(newUser.getNationalID());
+//
+//        if(foundUsersByMail.isEmpty() && foundUsersByNID.isEmpty()) {
+//            userRepo.save(newUser);
+//            return true;
+//        }
+//        if(!foundUsersByMail.isEmpty())
+//            System.out.println("Email is taken, try another one!");
+//        else
+//            System.out.println("User is already signed in with another mail (same National ID)");
+//        return false;
+//    }
 
-        if(foundUsersByMail.isEmpty() && foundUsersByNID.isEmpty()) {
+    public boolean saveUser (User newUser) {
+        try {
             userRepo.save(newUser);
             return true;
         }
-        if(!foundUsersByMail.isEmpty())
-            System.out.println("Email is taken, try another one!");
-        else
-            System.out.println("User is already signed in with another mail (same National ID)");
-        return false;
+        catch (Exception e) {
+            return false;
+        }
     }
 
     public User findUserByEmail(String email) {
@@ -44,6 +54,14 @@ class UserDAO implements UserDAOIFace {
         }
     }
 
+    public User findUserByNationalID(String nationalID) {
+        List<User> foundUsers = userRepo.findByNationalID(nationalID);
+
+        if(foundUsers.isEmpty())
+            return null;
+        else
+            return foundUsers.get(0);
+    }
 
     public boolean isUsernameAndPasswordMatching(String email, String password) {
         User signingIn = findUserByEmail(email);
@@ -57,5 +75,6 @@ class UserDAO implements UserDAOIFace {
     public List<User> getUsersByBloodType (String bloodType, char bloodSign) {
         return userRepo.findByBloodType(bloodType, bloodSign);
     }
+
 
 }
