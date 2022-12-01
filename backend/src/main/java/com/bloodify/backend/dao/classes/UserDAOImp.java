@@ -12,7 +12,7 @@ import java.util.List;
  * get users with blood type 'bla'
  */
 @Service
-public class UserDAO implements UserDAOIFace {
+public class UserDAOImp implements UserDAO {
     @Autowired
     UserRepository userRepo;
 
