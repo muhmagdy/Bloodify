@@ -1,4 +1,5 @@
-import 'package:bloodify_front_end/modules/login/userLogin.dart';
+import 'package:bloodify_front_end/layout/start_layout.dart';
+import 'package:bloodify_front_end/modules/login_UI/User_login/userLogin.dart';
 import 'package:bloodify_front_end/shared/network/local/cach_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
@@ -45,7 +46,17 @@ class HomeLayout extends StatelessWidget {
             if (value) {
               navigateAndFinish(
                 context,
-                UserLogin(),
+                StartWidget(),
+              );
+            }
+          });
+          CachHelper.removeData(
+            key: 'isUser',
+          ).then((value) {
+            if (value) {
+              navigateAndFinish(
+                context,
+                StartWidget(),
               );
             }
           });

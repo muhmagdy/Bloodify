@@ -1,22 +1,21 @@
 import 'package:bloc/bloc.dart';
-import 'package:bloodify_front_end/modules/login/cubit/states_login.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../models/user_model.dart';
-import '../../../shared/network/remote/dio_helper.dart';
+import '../../../../models/institution.dart';
+import '../../../../shared/network/remote/dio_helper.dart';
+import 'institution_states_login.dart';
 
-class LoginCubit extends Cubit<LoginStates> {
-  LoginCubit() : super(LoginInitialState());
+class InstitutionLoginCubit extends Cubit<InstitutionLoginStates> {
+  InstitutionLoginCubit() : super(InstitutionLoginInitialState());
 
-  static LoginCubit get(context) => BlocProvider.of(context);
-  late LoginModel loginModel;
-  void userLogin({
+  static InstitutionLoginCubit get(context) => BlocProvider.of(context);
+  late InstitutionLoginModel loginModel;
+  void institutionLogin({
     required String email,
     required String password,
   }) {
-    emit(LoginLoadingState());
+    emit(InstitutionLoginLoadingState());
 
     DioHelper.postData(
       url: 'login',
@@ -27,8 +26,8 @@ class LoginCubit extends Cubit<LoginStates> {
     ).then((value) {
       print(value.data);
       print(value.data);
-      loginModel = LoginModel.fromJson(value.data);
-      emit(LoginSuccessState(loginModel));
+      loginModel = InstitutionLoginModel.fromJson(value.data);
+      emit(InstitutionLoginSuccessState(loginModel));
     });
     // .catchError((error) {
     //   print("api " + error.toString());
@@ -44,6 +43,6 @@ class LoginCubit extends Cubit<LoginStates> {
     suffix =
         isPassword ? Icons.visibility_outlined : Icons.visibility_off_outlined;
 
-    emit(ChangePasswordVisibilityState());
+    emit(InstitutionChangePasswordVisibilityState());
   }
 }
