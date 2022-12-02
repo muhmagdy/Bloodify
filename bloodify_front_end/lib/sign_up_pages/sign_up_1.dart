@@ -105,7 +105,7 @@ class SignUp1 extends StatelessWidget {
                             validate: (pass){
                               if (pass == null || pass == '' || pass.length < 8) return "Password should be of > 7 characters";
                               if(!validatePassword(pass)) return "Password MUST include uppercase letters,\nlowercase letters, digits, and _";
-                              return "null";
+                              return null;
                             },
                             labelText: 'Password ',
                             isPassword:
