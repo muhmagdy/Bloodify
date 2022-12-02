@@ -44,8 +44,9 @@ class InstitutionLogin extends StatelessWidget {
               print(state.loginModel.message);
 
               showToast(
+                color: Colors.red,
                 text: state.loginModel.message,
-                state: ToastStates.ERROR,
+                time: 1000,
               );
             }
           }

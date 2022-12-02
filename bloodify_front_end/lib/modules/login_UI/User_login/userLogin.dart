@@ -46,7 +46,8 @@ class UserLogin extends StatelessWidget {
 
               showToast(
                 text: state.loginModel.message,
-                state: ToastStates.ERROR,
+                color: Colors.red,
+                time: 1000,
               );
             }
           }

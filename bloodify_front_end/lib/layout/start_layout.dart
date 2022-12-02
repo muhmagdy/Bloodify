@@ -6,6 +6,7 @@ import 'package:flutter/src/widgets/framework.dart';
 
 import '../shared/Constatnt/Component.dart';
 import '../shared/functions/sharedFunctions.dart';
+import '../sign_up_pages/sign_up_1.dart';
 
 class StartWidget extends StatelessWidget {
   Widget txb({
@@ -104,7 +105,7 @@ class StartWidget extends StatelessWidget {
               text: "Signup",
               icon: Icons.add,
               onClick: () {
-                // navigateTo(context, SignUp());
+                navigateTo(context, SignUp1());
               },
             ),
           ],
