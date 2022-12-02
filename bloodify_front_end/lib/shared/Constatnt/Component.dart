@@ -112,16 +112,18 @@ Widget DefaultInputText({
         border: OutlineInputBorder(),
       ),
     );
+
 void showToast({
   required String text,
-  required ToastStates state,
+  required Color color,
+  required time,
 }) =>
     Fluttertoast.showToast(
-      backgroundColor: Colors.red,
+      backgroundColor: color,
       msg: text,
       toastLength: Toast.LENGTH_LONG,
       gravity: ToastGravity.BOTTOM,
-      timeInSecForIosWeb: 1000,
+      timeInSecForIosWeb: time,
       textColor: Colors.white,
       fontSize: 16.0,
     );
