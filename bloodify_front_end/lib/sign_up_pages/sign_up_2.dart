@@ -12,11 +12,13 @@ import 'package:intl/intl.dart';
 
 import '../shared/Constatnt/sharedFunctions.dart';
 import '../sign_up_State_management/sign_up_user_model.dart';
+import 'package:bloodify_front_end/sign_up_pages/Languages.dart';
 
 class SignUp2 extends StatelessWidget {
   final dateController = TextEditingController();
   List<String> types = ['A+', 'B+', 'O+', 'AB+', 'A-', 'B-', 'O-', 'AB-'];
   final _formKey = GlobalKey<FormState>();
+  Language language = EnglishLanguage();
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +32,7 @@ class SignUp2 extends StatelessWidget {
           if (state.response.status) {
             SignUpCubit.get(context).user = new UserData();
             showToast(
-                text: "Verifiy Your Email link sended to you inbox",
+                text: language.getLabel('verification'),
                 color: Colors.green,
                 time: 5000);
             navigateAndFinish(
@@ -38,8 +40,7 @@ class SignUp2 extends StatelessWidget {
               SignUp1(),
             );
           } else {
-            showToast(
-                text: state.response.message, color: Colors.red, time: 5000);
+            showToast(text: state.response.message, color: Colors.red, time: 5000);
           }
         }
       },
@@ -59,12 +60,9 @@ class SignUp2 extends StatelessWidget {
                     DefaultProgramPhoto(width: width, height: height),
                     TextFormField(
                         validator: (String? value) {
-                          if (value!.isEmpty) {
-                            return "Enter Your birth date";
-                          }
+                          if (value!.isEmpty) return language.enterValue('dob');
                           if (new DateFormat("yyyy-MM-dd").parse(value) != SignUpCubit.get(context).supposedDateOfBirth) {
-                            print("incorrect date");
-                            return "Not Correct Date Of Birth";
+                            return language.showIncorrectDOB();
                           }
                           return null;
                         },
@@ -94,7 +92,7 @@ class SignUp2 extends StatelessWidget {
                             Icons.calendar_month_outlined,
                             color: Color.fromARGB(255, 255, 78, 66),
                           ),
-                          labelText: "Date of birth",
+                          labelText: language.getLabel('dob'),
                           focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(color: Colors.grey)),
                           border: OutlineInputBorder(
@@ -109,7 +107,7 @@ class SignUp2 extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text("Do You Have any Diseases?",
+                                Text(language.getLabel('having diseases'),
                                     style: TextStyle(color: Colors.grey[800])),
                                 SizedBox(
                                   height: 5,
@@ -144,7 +142,7 @@ class SignUp2 extends StatelessWidget {
                                                     Icons
                                                         .radio_button_off_outlined,
                                                     color: Colors.red),
-                                            label: Text('Yes',
+                                            label: Text(language.getLabel('yes'),
                                                 style: TextStyle(
                                                     color: Colors.grey[800]))),
                                       ),
@@ -180,7 +178,7 @@ class SignUp2 extends StatelessWidget {
                                                     Icons
                                                         .radio_button_off_outlined,
                                                     color: Colors.red),
-                                            label: Text('No',
+                                            label: Text(language.getLabel('no'),
                                                 style: TextStyle(
                                                     color: Colors.grey[800]))),
                                       ),
@@ -190,7 +188,7 @@ class SignUp2 extends StatelessWidget {
                                 SizedBox(
                                   height: 10,
                                 ),
-                                Text("Blood Type",
+                                Text(language.getLabel('blood type'),
                                     textAlign: TextAlign.left,
                                     style: TextStyle(color: Colors.grey[800])),
                                 DropdownButtonFormField(
@@ -227,7 +225,7 @@ class SignUp2 extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Text("Location",
+                                Text(language.getLabel('location'),
                                     textAlign: TextAlign.right,
                                     style: TextStyle(
                                       color: Colors.grey[800],
@@ -270,7 +268,7 @@ class SignUp2 extends StatelessWidget {
                               onClick: () {
                                 if(_formKey.currentState!.validate()) Navigator.pop(context);
                               },
-                              text: "Back"),
+                              text: language.getLabel('back')),
                         ),
                         SizedBox(
                           width: 10,
@@ -281,13 +279,12 @@ class SignUp2 extends StatelessWidget {
                             builder: (context) => DefaultButton(
                                 onClick: () {
                                   if (SignUpCubit.get(context).serviceEnabled && _formKey.currentState!.validate()) {
-                                    print("object");
                                     SignUpCubit.get(context).userSignUp();
                                   }
                                   ////////some checks on data and requests to the backend API
                                   // to decide whether to go to Home page or ask to complete the missing data
                                 },
-                                text: "Submit",
+                                text: language.getLabel('submit'),
                                 backGround: Colors.green),
                             fallback: (context) =>
                                 Center(child: CircularProgressIndicator()),

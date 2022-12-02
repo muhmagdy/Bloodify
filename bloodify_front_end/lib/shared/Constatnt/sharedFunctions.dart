@@ -2,29 +2,38 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 
 bool validateEmail(value) {
-  bool _validateEmail = RegExp(
-          r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-      .hasMatch(value);
-  return _validateEmail;
+  String mailAddress = "^\\w+([._-]?\\w+)*";
+  String mailHost = "@\\w+([._-]?\\w+)*";
+  String organisation = "(\\.\\w{2,3})+\$";
+  String REGEX = "$mailAddress$mailHost$organisation";
+  bool validateEmail = RegExp(REGEX).hasMatch(value.trim());
+  return validateEmail;
 }
 
+
 bool validateName(value){
-  String digits = '123456789';
   for(int i = 0; i < value.length; i++) {
-    if(digits.contains(value[i])) return false;
+    int ascii = value.codeUnitAt(i);
+    if(!(ascii >= 65 && ascii <= 90) && !(ascii >= 97 && ascii <= 122)) return false;
   }
   return true;
 }
 
+
 bool validatePassword(value){
-  String uppers = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', lowers = 'abcdefghijklmnopqrstuvwxyz', digits = '123456789';
   List<bool> arr = [false, false, false, false];
+  bool upper, lower, digit, underscore;
   for(int i = 0; i < value.length; i++) {
-    if(!digits.contains(value[i]) && !lowers.contains(value[i]) && !uppers.contains(value[i]) && value[i] != '_') return false;
-    arr[0] = arr[0] || digits.contains(value[i]);
-    arr[1] = arr[1] || lowers.contains(value[i]);
-    arr[2] = arr[2] || uppers.contains(value[i]);
-    arr[3] = arr[3] || ('_' == value[i]);
+    int ascii = value.codeUnitAt(i);
+    upper = (ascii >= 65 && ascii <= 90);
+    lower = (ascii >= 97 && ascii <= 122);
+    digit = (ascii >= 48 && ascii <= 57);
+    underscore = value[i] == '_';
+    if(!upper && !lower && !digit && !underscore) return false;
+    arr[0] = arr[0] || lower;
+    arr[1] = arr[1] || upper;
+    arr[2] = arr[2] || digit;
+    arr[3] = arr[3] || underscore;
   }
   return arr.reduce((acc, element) => acc = acc && element);
 }
