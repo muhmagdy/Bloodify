@@ -1,12 +1,15 @@
 package com.bloodify.backend.services.interfaces;
 
+import com.bloodify.backend.model.UserLoginResponseBody;
+import com.bloodify.backend.model.entities.Institution;
+import com.bloodify.backend.model.entities.User;
 import com.bloodify.backend.model.requests.UserLogInRequest;
-import com.bloodify.backend.model.requests.UserSignUpRequest;
-import com.bloodify.backend.model.responses.UserLogInResponse;
-import com.bloodify.backend.model.responses.UserSignUpResponse;
 
 public interface AccountManagerService {
-    UserLogInResponse logIn(UserLogInRequest user);
+    UserLoginResponseBody logIn(UserLogInRequest user);
 
-    UserSignUpResponse signUpUser(UserSignUpRequest user);
+
+    boolean signUpUser(User user) throws Exception;
+
+    boolean signUpInstitution(Institution institution) throws Exception;
 }
