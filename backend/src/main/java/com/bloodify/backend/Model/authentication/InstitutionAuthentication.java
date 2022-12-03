@@ -6,29 +6,29 @@ import java.util.List;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-public class UserAuthentication implements UserDetails {
+public class InstitutionAuthentication implements UserDetails {
+    
+    private Institution user;
 
-    private User user;
-    private List<GrantedAuthority> auth;
-
-    public UserAuthentication(User user, List<GrantedAuthority> auth){
+    public InstitutionAuthentication(Institution user){
         this.user = user;
-        this.auth = auth;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return auth;
+        return List.of();
     }
 
     @Override
     public String getPassword() {
-        return user.getPassword();
+        // return user.getPassword();
+        return null;
     }
 
     @Override
     public String getUsername() {
-        return user.getEmail();
+        // return user.getEmail();
+        return null;
     }
 
     @Override

@@ -80,7 +80,7 @@ public class UserDAOImp implements UserDAO {
         if(user == null)    throw new UsernameNotFoundException(username + " not found");
         log.info(user.getEmail());
         // if(!username.equals("foo")) throw new UsernameNotFoundException(username + " not found");
-        UserAuthentication userAuth = new UserAuthentication(user, List.of(new SimpleGrantedAuthority("User")));
+        UserAuthentication userAuth = new UserAuthentication(user);
         return userAuth;
         // return new User("foo", "foo", List.of());
     }
