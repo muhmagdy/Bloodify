@@ -7,8 +7,12 @@ import 'package:bloodify_front_end/shared/network/local/cach_helper.dart';
 import 'package:bloodify_front_end/shared/network/remote/dio_helper.dart';
 import 'package:bloodify_front_end/shared/styles/themes.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'layout/home_layout.dart';
+import 'modules/login_UI/User_login/cubit/user_login_cubit.dart';
+import 'modules/login_UI/institution_login/cubit/institution_login_cubit.dart';
+import 'modules/signUP_UI/sign_up_State_management/sign_up_cubit.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,12 +39,18 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: lightTheme,
-      darkTheme: darkTheme,
-      themeMode: false ? ThemeMode.dark : ThemeMode.light,
-      home: startWidget,
-    );
+    return MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (context) => SignUpCubit()),
+          BlocProvider(create: (context) => UserLoginCubit()),
+          BlocProvider(create: (context) => InstitutionLoginCubit()),
+        ],
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          theme: lightTheme,
+          darkTheme: darkTheme,
+          themeMode: false ? ThemeMode.dark : ThemeMode.light,
+          home: startWidget,
+        ));
   }
 }

@@ -1,7 +1,6 @@
 import 'dart:io';
 
-import 'package:bloodify_front_end/sign_up_State_management/sign_up_cubit.dart';
-import 'package:bloodify_front_end/sign_up_pages/sign_up_1.dart';
+import 'package:bloodify_front_end/modules/signUP_UI/sign_up_pages/sign_up_1.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -10,9 +9,11 @@ import 'package:bloodify_front_end/shared/Constatnt/Component.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
 
-import '../shared/Constatnt/sharedFunctions.dart';
-import '../sign_up_State_management/sign_up_user_model.dart';
-import 'package:bloodify_front_end/sign_up_pages/Languages.dart';
+import '../../../models/user.dart';
+import '../../../shared/Constatnt/sharedFunctions.dart';
+import 'package:bloodify_front_end/modules/signUP_UI/sign_up_pages/Languages.dart';
+
+import '../sign_up_State_management/sign_up_cubit.dart';
 
 class SignUp2 extends StatelessWidget {
   final dateController = TextEditingController();
@@ -40,7 +41,8 @@ class SignUp2 extends StatelessWidget {
               SignUp1(),
             );
           } else {
-            showToast(text: state.response.message, color: Colors.red, time: 5000);
+            showToast(
+                text: state.response.message, color: Colors.red, time: 5000);
           }
         }
       },
@@ -61,7 +63,8 @@ class SignUp2 extends StatelessWidget {
                     TextFormField(
                         validator: (String? value) {
                           if (value!.isEmpty) return language.enterValue('dob');
-                          if (new DateFormat("yyyy-MM-dd").parse(value) != SignUpCubit.get(context).supposedDateOfBirth) {
+                          if (new DateFormat("yyyy-MM-dd").parse(value) !=
+                              SignUpCubit.get(context).supposedDateOfBirth) {
                             return language.showIncorrectDOB();
                           }
                           return null;
@@ -142,7 +145,8 @@ class SignUp2 extends StatelessWidget {
                                                     Icons
                                                         .radio_button_off_outlined,
                                                     color: Colors.red),
-                                            label: Text(language.getLabel('yes'),
+                                            label: Text(
+                                                language.getLabel('yes'),
                                                 style: TextStyle(
                                                     color: Colors.grey[800]))),
                                       ),
@@ -266,7 +270,8 @@ class SignUp2 extends StatelessWidget {
                         Expanded(
                           child: DefaultButton(
                               onClick: () {
-                                if(_formKey.currentState!.validate()) Navigator.pop(context);
+                                if (_formKey.currentState!.validate())
+                                  Navigator.pop(context);
                               },
                               text: language.getLabel('back')),
                         ),
@@ -278,7 +283,8 @@ class SignUp2 extends StatelessWidget {
                             condition: state is! SignUpLoading,
                             builder: (context) => DefaultButton(
                                 onClick: () {
-                                  if (SignUpCubit.get(context).serviceEnabled && _formKey.currentState!.validate()) {
+                                  if (SignUpCubit.get(context).serviceEnabled &&
+                                      _formKey.currentState!.validate()) {
                                     SignUpCubit.get(context).userSignUp();
                                   }
                                   ////////some checks on data and requests to the backend API

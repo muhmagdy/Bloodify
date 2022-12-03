@@ -3,10 +3,11 @@ import 'package:bloodify_front_end/shared/Constatnt/nationalIDValidator.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:meta/meta.dart';
 import 'package:flutter/material.dart';
-import 'package:bloodify_front_end/sign_up_State_management/sign_up_user_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../shared/network/remote/dio_helper.dart';
+import '../../../models/sign_up.dart';
+import '../../../models/user.dart';
+import '../../../shared/network/remote/dio_helper.dart';
 
 part 'sign_up_state.dart';
 
@@ -100,7 +101,7 @@ class SignUpCubit extends Cubit<SignUpStates> {
     emit(ChangeLocation());
   }
 
-  void setSupposedDateOfBirth(NationalIDParser parser){
+  void setSupposedDateOfBirth(NationalIDParser parser) {
     supposedDateOfBirth = parser.getDOB();
     emit(GetSupposedDateOfBirth());
   }

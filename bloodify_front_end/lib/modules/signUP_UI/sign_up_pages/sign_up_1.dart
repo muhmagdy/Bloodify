@@ -1,11 +1,13 @@
+import 'package:bloodify_front_end/modules/login_UI/User_login/userLogin.dart';
 import 'package:bloodify_front_end/shared/Constatnt/nationalIDValidator.dart';
-import 'package:bloodify_front_end/sign_up_pages/sign_up_2.dart';
+import 'package:bloodify_front_end/modules/signUP_UI/sign_up_pages/sign_up_2.dart';
 import 'package:flutter/material.dart';
-import 'package:bloodify_front_end/sign_up_State_management/sign_up_cubit.dart';
 import 'package:bloodify_front_end/shared/Constatnt/Component.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:bloodify_front_end/shared/Constatnt/sharedFunctions.dart';
-import 'package:bloodify_front_end/sign_up_pages/Languages.dart';
+import 'package:bloodify_front_end/modules/signUP_UI/sign_up_pages/Languages.dart';
+
+import '../sign_up_State_management/sign_up_cubit.dart';
 
 class SignUp1 extends StatelessWidget {
   final fNameController = TextEditingController();
@@ -53,8 +55,10 @@ class SignUp1 extends StatelessWidget {
                               child: DefaultInputText(
                                   controller: fNameController,
                                   validate: (fName) {
-                                    if(fName == null || fName == '') return language.enterValue('fname');
-                                    if(!validateName(fName)) return language.showInvalidValue("fname");
+                                    if (fName == null || fName == '')
+                                      return language.enterValue('fname');
+                                    if (!validateName(fName))
+                                      return language.showInvalidValue("fname");
                                     return null;
                                   },
                                   labelText: language.getLabel('fname'),
@@ -65,8 +69,10 @@ class SignUp1 extends StatelessWidget {
                               child: DefaultInputText(
                                   controller: lNameController,
                                   validate: (lName) {
-                                    if(lName == null || lName == '') return language.enterValue('lname');
-                                    if(!validateName(lName)) return language.showInvalidValue("lname");
+                                    if (lName == null || lName == '')
+                                      return language.enterValue('lname');
+                                    if (!validateName(lName))
+                                      return language.showInvalidValue("lname");
                                     return null;
                                   },
                                   labelText: language.getLabel('lname'),
@@ -78,8 +84,10 @@ class SignUp1 extends StatelessWidget {
                         DefaultInputText(
                             controller: nationalIdController,
                             validate: (number) {
-                              if (number == null || number == '' ) return language.enterValue('natID');
-                              if (!parser.validateNationalID(int.parse(number))) return language.showInvalidValue('natID');
+                              if (number == null || number == '')
+                                return language.enterValue('natID');
+                              if (!parser.validateNationalID(int.parse(number)))
+                                return language.showInvalidValue('natID');
                               return null;
                             },
                             labelText: language.getLabel('natID'),
@@ -89,8 +97,11 @@ class SignUp1 extends StatelessWidget {
                         DefaultInputText(
                             controller: mailController,
                             validate: (String mail) {
-                              if (mail.isEmpty) return language.enterValue('mail');
-                              return validateEmail(mail) ? null : language.showInvalidValue('mail');
+                              if (mail.isEmpty)
+                                return language.enterValue('mail');
+                              return validateEmail(mail)
+                                  ? null
+                                  : language.showInvalidValue('mail');
                             },
                             labelText: language.getLabel('mail'),
                             type: TextInputType.emailAddress,
@@ -98,9 +109,11 @@ class SignUp1 extends StatelessWidget {
                         SizedBox(height: 10),
                         DefaultInputText(
                             controller: passController,
-                            validate: (pass){
-                              if (pass == null || pass == '' || pass.length < 8) return language.enterPassword();
-                              if(!validatePassword(pass)) return language.showInvalidPassword();
+                            validate: (pass) {
+                              if (pass == null || pass == '' || pass.length < 8)
+                                return language.enterPassword();
+                              if (!validatePassword(pass))
+                                return language.showInvalidPassword();
                               return null;
                             },
                             labelText: language.getLabel('pass'),
@@ -113,7 +126,8 @@ class SignUp1 extends StatelessWidget {
                         SizedBox(height: 10),
                         DefaultInputText(
                             controller: passConfirmingController,
-                            validate: (pass) => (pass == null || pass == '' ||
+                            validate: (pass) => (pass == null ||
+                                    pass == '' ||
                                     pass != passController.text)
                                 ? language.showInvalidPasswordConfirm()
                                 : null,
@@ -129,7 +143,8 @@ class SignUp1 extends StatelessWidget {
                         DefaultButton(
                             onClick: () {
                               if (_formKey.currentState!.validate()) {
-                                SignUpCubit.get(context).setSupposedDateOfBirth(parser);
+                                SignUpCubit.get(context)
+                                    .setSupposedDateOfBirth(parser);
                                 SignUpCubit.get(context).user.fName =
                                     fNameController.text;
                                 SignUpCubit.get(context).user.lName =
@@ -150,9 +165,12 @@ class SignUp1 extends StatelessWidget {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
-                              Text(language.getLabel("do you have an account?")),
+                              Text(
+                                  language.getLabel("do you have an account?")),
                               TextButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    navigateTo(context, UserLogin());
+                                  },
                                   child: Text(
                                     language.getLabel('login'),
                                     style: TextStyle(
