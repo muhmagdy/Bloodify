@@ -1,4 +1,4 @@
-package com.bloodify.backend.Services;
+package com.bloodify.backend.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

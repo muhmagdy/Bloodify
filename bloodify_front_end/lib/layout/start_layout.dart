@@ -5,7 +5,8 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
 import '../shared/Constatnt/Component.dart';
-import '../shared/functions/sharedFunctions.dart';
+import '../shared/Constatnt/sharedFunctions.dart';
+import '../modules/signUP_UI/sign_up_pages/sign_up_1.dart';
 
 class StartWidget extends StatelessWidget {
   Widget txb({
@@ -48,66 +49,68 @@ class StartWidget extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
-      body: Container(
-        margin: EdgeInsets.only(left: 20, right: 20),
-        child: Column(
-          children: [
-            DefaultProgramPhoto(height: height, width: width),
-            SizedBox(
-              height: 40,
-            ),
-            // DefaultButton(
-            //     onClick: () {
-            //       navigateTo(context, UserLogin());
-            //     },
-            //     text: "Login User"),
-            // SizedBox(
-            //   height: 40,
-            // ),
-            // DefaultButton(
-            //     onClick: () {
-            //       navigateTo(context, InstitutionLogin());
-            //     },
-            //     text: "Login Institution"),
-            // SizedBox(
-            //   height: 40,
-            // ),
-            // DefaultButton(
-            //     onClick: () {
-            //       // navigateTo(context, SignUp());
-            //     },
-            //     text: "Signup"),
-            SizedBox(
-              height: 40,
-            ),
-            txb(
-              text: "Login Institution",
-              icon: Icons.local_hospital_rounded,
-              onClick: () {
-                navigateTo(context, InstitutionLogin());
-              },
-            ),
-            SizedBox(
-              height: 40,
-            ),
-            txb(
-              text: "Login User",
-              icon: Icons.person,
-              onClick: () {
-                navigateTo(context, UserLogin());
-              },
-            ),
-            SizedBox(
-              height: 40,
-            ),
-            txb(
-              text: "Signup",
-              icon: Icons.add,
-              onClick: () {
-                // navigateTo(context, SignUp());
-              },
-            ),
-          ],
+      body: SingleChildScrollView(
+        child: Container(
+          margin: EdgeInsets.only(left: 20, right: 20),
+          child: Column(
+            children: [
+              DefaultProgramPhoto(height: height, width: width),
+              SizedBox(
+                height: 40,
+              ),
+              // DefaultButton(
+              //     onClick: () {
+              //       navigateTo(context, UserLogin());
+              //     },
+              //     text: "Login User"),
+              // SizedBox(
+              //   height: 40,
+              // ),
+              // DefaultButton(
+              //     onClick: () {
+              //       navigateTo(context, InstitutionLogin());
+              //     },
+              //     text: "Login Institution"),
+              // SizedBox(
+              //   height: 40,
+              // ),
+              // DefaultButton(
+              //     onClick: () {
+              //       // navigateTo(context, SignUp());
+              //     },
+              //     text: "Signup"),
+              SizedBox(
+                height: 40,
+              ),
+              txb(
+                text: "Login Institution",
+                icon: Icons.local_hospital_rounded,
+                onClick: () {
+                  navigateTo(context, InstitutionLogin());
+                },
+              ),
+              SizedBox(
+                height: 40,
+              ),
+              txb(
+                text: "Login User",
+                icon: Icons.person,
+                onClick: () {
+                  navigateTo(context, UserLogin());
+                },
+              ),
+              SizedBox(
+                height: 40,
+              ),
+              txb(
+                text: "Signup",
+                icon: Icons.add,
+                onClick: () {
+                  navigateTo(context, SignUp1());
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

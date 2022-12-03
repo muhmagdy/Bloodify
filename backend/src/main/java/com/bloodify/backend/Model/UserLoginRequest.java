@@ -1,4 +1,4 @@
-package com.bloodify.backend.Model;
+package com.bloodify.backend.model;
 
 public class UserLoginRequest {
     private String username;

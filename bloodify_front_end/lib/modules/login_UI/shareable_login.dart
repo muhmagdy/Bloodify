@@ -1,9 +1,10 @@
 import 'package:bloodify_front_end/modules/login_UI/institution_login/cubit/institution_login_cubit.dart';
+import 'package:bloodify_front_end/modules/signUP_UI/sign_up_pages/sign_up_1.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 
 import '../../shared/Constatnt/Component.dart';
-import '../../shared/functions/sharedFunctions.dart';
+import '../../shared/Constatnt/sharedFunctions.dart';
 import 'User_login/cubit/user_login_cubit.dart';
 import 'User_login/cubit/user_states_login.dart';
 import 'institution_login/cubit/institution_states_login.dart';
@@ -129,10 +130,7 @@ Widget loginUI({
                         Text("Don't Have an account?"),
                         InkWell(
                           onTap: () {
-                            """
-                        will be used 
-                         navigateTo(context,SignUp());
-                        """;
+                            navigateTo(context, SignUp1());
                           },
                           child: Text(
                             "sign up",
