@@ -1,23 +1,22 @@
 package com.bloodify.backend.controller;
 
-import com.bloodify.backend.Utils.JwtUtil;
-import com.bloodify.backend.model.UserLoginRequest;
-import com.bloodify.backend.model.UserLoginResponse;
-import com.bloodify.backend.model.UserLoginResponseBody;
+import com.bloodify.backend.Utils.TokenUtil;
+
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 
 
 /**
  * LoginController
  */
+@Slf4j
 @RestController
 @CrossOrigin
 @RequestMapping("/api/v1")
@@ -27,30 +26,18 @@ public class LoginController {
     AuthenticationManager authenticationManager;
 
     @Autowired
-    UserDetailsService userDetailsService;
+    UserDetailsService bloodifyUserDetailsService;
+
 
     @Autowired
-    JwtUtil jwtUtil;
+    TokenUtil tokenUtil;
 
 
     @PostMapping("/userlogin")
-    public ResponseEntity<UserLoginResponse> userLogin(@RequestBody UserLoginRequest request) {
-        System.out.println("login");
-        try {
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
-            UserDetails userDetails = userDetailsService.loadUserByUsername(request.getUsername());
-            String token = jwtUtil.generateToken(userDetails, new Date(System.currentTimeMillis()));
-            return ResponseEntity.ok(new UserLoginResponse(true,
-                    "good to go",
-                    UserLoginResponseBody.builder().name(request.getUsername())
-                            .email(request.getUsername() + "@gmail.com")
-                            .token(token)
-                            .build()));
-
-        } catch (Exception e) {
-            return ResponseEntity.status(401).body(new UserLoginResponse(false, "Wrong credentials", null));
-        }
-
+    public ResponseEntity<String> userLogin(Authentication auth) {
+        log.info("login");
+        String token = tokenUtil.generateToken(auth);
+        return ResponseEntity.ok(token);
 
     }
 

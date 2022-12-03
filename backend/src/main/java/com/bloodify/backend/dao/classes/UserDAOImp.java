@@ -3,6 +3,9 @@ package com.bloodify.backend.dao.classes;
 import com.bloodify.backend.dao.interfaces.UserDAO;
 import com.bloodify.backend.dao.interfaces.UserRepository;
 import com.bloodify.backend.model.entities.User;
+
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +17,7 @@ import java.util.List;
  * at sign up --> check that username is not repeated, insert new user (saveUser)
  * get users with blood type 'bla'
  */
+@Slf4j
 @Service
 public class UserDAOImp implements UserDAO {
     @Autowired
@@ -25,6 +29,7 @@ public class UserDAOImp implements UserDAO {
             userRepo.save(newUser);
             return true;
         } catch (Exception e) {
+            log.info(e.getMessage());
             return false;
         }
     }
