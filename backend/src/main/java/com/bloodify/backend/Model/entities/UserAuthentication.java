@@ -9,14 +9,16 @@ import org.springframework.security.core.userdetails.UserDetails;
 public class UserAuthentication implements UserDetails {
 
     private User user;
+    private List<GrantedAuthority> auth;
 
-    public UserAuthentication(User user){
+    public UserAuthentication(User user, List<GrantedAuthority> auth){
         this.user = user;
+        this.auth = auth;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+        return auth;
     }
 
     @Override

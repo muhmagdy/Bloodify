@@ -23,13 +23,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1")
 public class LoginController {
 
-    // @Autowired
-    // AuthenticationManager authenticationManager;
-
-    // @Autowired
-    // @Qualifier("UserDAO")
-    // UserDetailsService bloodifyUserDetailsService;
-
 
     @Autowired
     TokenUtil tokenUtil;
@@ -38,16 +31,28 @@ public class LoginController {
     @PostMapping("/userlogin")
     public ResponseEntity<String> userLogin(Authentication auth) {
         log.info("userlogin");
-        String token = tokenUtil.generateToken(auth);
-        return ResponseEntity.ok(token);
+        try{
+            String token = tokenUtil.generateToken(auth);
+            return ResponseEntity.ok(token);
+        }catch (Exception e){
+            log.info(e.getMessage());
+            return ResponseEntity.status(401).body("");
+        }
+
 
     }
 
     @PostMapping("/instlogin")
     public ResponseEntity<String> instLogin(Authentication auth) {
         log.info("instlogin");
-        String token = tokenUtil.generateToken(auth);
-        return ResponseEntity.ok(token);
+        try{
+            String token = tokenUtil.generateToken(auth);
+            return ResponseEntity.ok(token);
+        }catch (Exception e){
+            log.info(e.getMessage());
+
+            return ResponseEntity.status(401).body("");
+        }
 
     }
 

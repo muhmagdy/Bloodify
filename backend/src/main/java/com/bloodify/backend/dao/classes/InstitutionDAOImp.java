@@ -2,6 +2,7 @@ package com.bloodify.backend.dao.classes;
 
 import java.util.List;
 
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 // import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -29,7 +30,7 @@ public class InstitutionDAOImp implements InstitutionDAO {
         if(!username.equals("foo")) throw new UsernameNotFoundException(username + " not found");
         // UserAuthentication userAuth = new UserAuthentication(user);
         // return userAuth;
-        return new User("foo", "foo", List.of());
+        return new User("foo", "foo", List.of(new SimpleGrantedAuthority("Institution")));
     }
 
     @Override

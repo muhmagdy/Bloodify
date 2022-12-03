@@ -8,6 +8,7 @@ import com.bloodify.backend.model.entities.UserAuthentication;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -79,7 +80,7 @@ public class UserDAOImp implements UserDAO {
         if(user == null)    throw new UsernameNotFoundException(username + " not found");
         log.info(user.getEmail());
         // if(!username.equals("foo")) throw new UsernameNotFoundException(username + " not found");
-        UserAuthentication userAuth = new UserAuthentication(user);
+        UserAuthentication userAuth = new UserAuthentication(user, List.of(new SimpleGrantedAuthority("User")));
         return userAuth;
         // return new User("foo", "foo", List.of());
     }

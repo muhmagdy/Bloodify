@@ -6,11 +6,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -23,8 +21,6 @@ import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 import com.bloodify.backend.config.RsaKeyProperties;
-import com.bloodify.backend.dao.classes.InstitutionDAOImp;
-import com.bloodify.backend.dao.classes.UserDAOImp;
 import com.nimbusds.jose.jwk.JWK;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
@@ -67,55 +63,40 @@ public class SecurityConfiguration {
         return NoOpPasswordEncoder.getInstance();
     }
 
-    // @Bean
-    // abstract String getLoginEndpoint();
-
-    // @Bean
-    // abstract UserDetailsService userDetailsService();
     @Bean
     UserDetailsService userDetailsService(){
         return userDetailsService;
     }
 
     @Bean
-    UserDetailsService insDetailsService(){
+    UserDetailsService instDetailsService(){
         return insDetailsService;
     }
 
-    // @Bean
-    // public WebSecurityCustomizer webSecurityCustomizer() {
-    //     return (web) -> web.ignoring().requestMatchers("api/v1/instlogin", "api/v1/userlogin");
-    // }
-
-
-    // @Bean
     public AuthenticationManager userAuthenticationManager(HttpSecurity http) throws Exception {
          AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
          authenticationManagerBuilder
-               .userDetailsService(userDetailsService)
+               .userDetailsService(userDetailsService())
                .passwordEncoder(passwordEncoder());
          return authenticationManagerBuilder.build();
      }
 
-    //  @Bean
      public AuthenticationManager instAuthenticationManager(HttpSecurity http) throws Exception {
           AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
           authenticationManagerBuilder
-                .userDetailsService(insDetailsService)
+                .userDetailsService(instDetailsService())
                 .passwordEncoder(passwordEncoder());
 
           return authenticationManagerBuilder.build();
       }
 
     @Bean
-    @Order(2)
     public SecurityFilterChain userFilterChain(HttpSecurity http) throws Exception {
+        String endpoint = "/api/v1/userlogin";
         http
-            .securityMatcher("/api/v1/userlogin")
-
+            .securityMatcher(endpoint)
             .authorizeHttpRequests((auth) -> {
-                // auth.requestMatchers("/api/v1/instlogin").permitAll();
-                auth.requestMatchers("/api/v1/userlogin");
+                auth.requestMatchers(endpoint).permitAll();
                 auth.anyRequest().authenticated();
             }
 
@@ -133,11 +114,12 @@ public class SecurityConfiguration {
 
     @Bean
     @Order(1)
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain instFilterChain(HttpSecurity http) throws Exception {
+        String endpoint = "/api/v1/instlogin";
         http
-            .securityMatcher("/api/v1/instlogin")
+            .securityMatcher(endpoint)
             .authorizeHttpRequests((auth) -> {
-                auth.requestMatchers("/api/v1/instlogin").permitAll();
+                auth.requestMatchers(endpoint).permitAll();
                 auth.anyRequest().authenticated();
             }
 
@@ -153,5 +135,4 @@ public class SecurityConfiguration {
         return http.build();
     }
 
-    
 }
