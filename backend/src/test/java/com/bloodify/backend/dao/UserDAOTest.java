@@ -47,14 +47,6 @@ class UserDAOTest {
         }
     }
 
-    User createUser() {
-        RandomGenerations random = new RandomGenerations();
-
-        return new User(random.generateName(5, 10), random.generateName(5, 10), random.generateNationalID(),
-                random.generateEmail(8, 20), random.generateBloodType(), random.generateDiseases(),
-                random.generateDate(1980, 2022), random.generatePassword(10));
-    }
-
     /***********   INSERT TESTS   ***********/
 //  Testing normal insert
     @Test
