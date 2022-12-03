@@ -73,6 +73,8 @@ public class JwtUserFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
         }catch(Exception e){
             logger.info(e.getCause());
+            filterChain.doFilter(request, response);
+
         }
     }
     

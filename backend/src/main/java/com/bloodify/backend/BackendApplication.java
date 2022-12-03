@@ -7,13 +7,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
+import com.bloodify.backend.config.RsaKeyProperties;
 import com.bloodify.backend.dao.classes.UserDAOImp;
 import com.bloodify.backend.dao.interfaces.UserDAO;
 import com.bloodify.backend.model.entities.User;
 
 
 @SpringBootApplication
+@EnableConfigurationProperties(RsaKeyProperties.class)
 public class BackendApplication implements CommandLineRunner{
 
     public static void main(String[] args) {

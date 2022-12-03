@@ -14,8 +14,8 @@ import com.bloodify.backend.Filters.JwtUserFilter;
 @Order(1)
 public class UserSecurityConfiguration extends SecurityConfiguration {
 
-    @Autowired
-    JwtUserFilter jwtUserFilter;
+    // @Autowired
+    // JwtUserFilter jwtUserFilter;
 
     @Autowired
     UserDetailsService bloodifyUserDetailsService;
@@ -30,9 +30,9 @@ public class UserSecurityConfiguration extends SecurityConfiguration {
         return "/api/v1/userlogin";
     }
 
-    @Override
-    OncePerRequestFilter getJwtFilter() {
-        return jwtUserFilter;
-    }
+    // @Override
+    // OncePerRequestFilter getJwtFilter() {
+    //     return jwtUserFilter;
+    // }
     
 }
