@@ -1,4 +1,4 @@
-package com.bloodify.backend.model.entities;
+package com.bloodify.backend.model.authentication;
 
 import java.util.Collection;
 import java.util.List;
@@ -6,11 +6,13 @@ import java.util.List;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-public class UserAuthentication implements UserDetails {
+import com.bloodify.backend.model.entities.Institution;
 
-    private User user;
+public class InstitutionAuthentication implements UserDetails {
+    
+    private Institution user;
 
-    public UserAuthentication(User user){
+    public InstitutionAuthentication(Institution user){
         this.user = user;
     }
 
@@ -21,12 +23,14 @@ public class UserAuthentication implements UserDetails {
 
     @Override
     public String getPassword() {
-        return user.getPassword();
+        // return user.getPassword();
+        return null;
     }
 
     @Override
     public String getUsername() {
-        return user.getEmail();
+        // return user.getEmail();
+        return null;
     }
 
     @Override
