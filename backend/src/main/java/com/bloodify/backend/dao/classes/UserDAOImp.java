@@ -2,8 +2,8 @@ package com.bloodify.backend.dao.classes;
 
 import com.bloodify.backend.dao.interfaces.UserDAO;
 import com.bloodify.backend.dao.interfaces.UserRepository;
+import com.bloodify.backend.model.authentication.UserAuthentication;
 import com.bloodify.backend.model.entities.User;
-import com.bloodify.backend.model.entities.UserAuthentication;
 
 import lombok.extern.slf4j.Slf4j;
 
