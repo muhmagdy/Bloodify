@@ -1,15 +1,12 @@
 package com.bloodify.backend;
 
-import com.bloodify.backend.dao.UserDAO;
-import com.bloodify.backend.dao.UserDAOIFace;
-import com.bloodify.backend.model.User;
-import org.junit.jupiter.api.Test;
+
+import com.bloodify.backend.dao.interfaces.UserDAO;
+import com.bloodify.backend.model.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class TestUserDAO {
@@ -27,7 +24,7 @@ public class TestUserDAO {
 
     //  Inserting 100 values in the DB (randomly generated):
     @Autowired
-    UserDAOIFace userDAO;
+    UserDAO userDAO;
 
     public void insertValues() {
         int n = 100;
