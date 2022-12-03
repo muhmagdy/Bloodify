@@ -1,4 +1,4 @@
-package com.bloodify.backend.Services.interfaces;
+package com.bloodify.backend.Services.classes;
 
 import com.bloodify.backend.dao.interfaces.UserDAO;
 import com.bloodify.backend.model.entities.User;
@@ -15,9 +15,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.mockito.Mockito.when;
 
-
 @ExtendWith(MockitoExtension.class)
-class AccountManagerServiceTest {
+class AccountManagerServiceImpTest {
     @Mock
     UserDAO userDAO;
 
@@ -73,6 +72,4 @@ class AccountManagerServiceTest {
 
         Assertions.assertTrue(accountManagerService.signUpUser(new User()));
     }
-
-
 }
