@@ -25,6 +25,8 @@ public class UserDAOImp implements UserDAO {
             userRepo.save(newUser);
             return true;
         } catch (Exception e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
             return false;
         }
     }

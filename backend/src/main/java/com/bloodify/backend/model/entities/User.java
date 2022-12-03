@@ -1,8 +1,10 @@
 package com.bloodify.backend.model.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.time.LocalDate;
 
@@ -29,6 +31,7 @@ import java.time.LocalDate;
         resultClass = User.class
 )
 
+@ToString
 public class User {
     @Id
     @GeneratedValue
@@ -46,6 +49,7 @@ public class User {
     @Column(name = "has_diseases")
     private boolean hasDiseases;
     @Column(name = "last_time_donated")
+    @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate lastTimeDonated;
     @Column(nullable = false, length = 30)
     private String password;
