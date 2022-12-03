@@ -1,11 +1,12 @@
 package com.bloodify.backend.controller;
 
-import com.bloodify.backend.services.exceptions.SignupException;
+import com.bloodify.backend.services.exceptions.SignupDuplicateException;
 import com.bloodify.backend.model.entities.User;
 import com.bloodify.backend.model.responses.UserSignUpResponse;
 import com.bloodify.backend.services.interfaces.AccountManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,15 +18,14 @@ public class AccountController {
     @Autowired
     AccountManagerService accountManagerService;
 
-    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/user")
-    public UserSignUpResponse signUpUser(@RequestBody User user) throws Exception {
+    public ResponseEntity<UserSignUpResponse> signUpUser(@RequestBody User user) throws Exception {
         System.out.println(user.toString());
         boolean isCreated = accountManagerService.signUpUser(user);
         if(isCreated)
-            return new UserSignUpResponse(true, "Success");
+            return ResponseEntity.status(HttpStatus.CREATED).body(new UserSignUpResponse(true, "Success"));
         else
-            return new UserSignUpResponse(false, "Error occurred while signing up.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new UserSignUpResponse(false, "Error occurred while signing up."));
     }
 
     @PostMapping("/user/auth")
@@ -68,11 +68,12 @@ public class AccountController {
         return null;
     }
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(SignupException.class)
-    public UserSignUpResponse handleSignupException(SignupException exception){
+    @ResponseStatus(HttpStatus.CONFLICT)
+    @ExceptionHandler(SignupDuplicateException.class)
+    public UserSignUpResponse handleSignupException(SignupDuplicateException exception){
         return new UserSignUpResponse(false, exception.getMessage());
     }
+
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public UserSignUpResponse handleIncorrectFormatException(){
