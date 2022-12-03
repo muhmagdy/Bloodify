@@ -1,6 +1,6 @@
 package com.bloodify.backend.controller;
 
-import com.bloodify.backend.exception.SignupException;
+import com.bloodify.backend.services.exceptions.SignupException;
 import com.bloodify.backend.model.entities.User;
 import com.bloodify.backend.model.responses.UserSignUpResponse;
 import com.bloodify.backend.services.interfaces.AccountManagerService;

@@ -1,7 +1,7 @@
 package com.bloodify.backend.services.exceptions;
 
-public class EmailExistsException extends RuntimeException{
+public class EmailExistsException extends SignupException{
     public EmailExistsException() {
-        super("EmailExistsException");
+        super("An account already exists with the same email.");
     }
 }

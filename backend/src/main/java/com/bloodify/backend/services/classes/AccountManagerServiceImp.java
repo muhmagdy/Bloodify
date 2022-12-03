@@ -1,8 +1,6 @@
 package com.bloodify.backend.services.classes;
 
 import com.bloodify.backend.dao.interfaces.UserDAO;
-import com.bloodify.backend.exception.EmailExistsException;
-import com.bloodify.backend.exception.NationalIdExistsException;
 import com.bloodify.backend.model.UserLoginResponseBody;
 import com.bloodify.backend.model.entities.Institution;
 import com.bloodify.backend.model.entities.User;
