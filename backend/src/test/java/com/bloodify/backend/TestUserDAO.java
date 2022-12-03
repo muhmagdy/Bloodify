@@ -37,7 +37,7 @@ public class TestUserDAO {
             nationalIDs.add(random.generateNationalID());
             emails.add(random.generateEmail(10, 30));
             bloodTypes.add(random.generateBloodType());
-            bloodSigns.add(random.generateBloodSign());
+//            bloodSigns.add(random.generateBloodSign());
             haveDiseases.add(random.generateDiseases());
             lastDonates.add(random.generateDate(1980, 2022));
             passwords.add(random.generatePassword(15));

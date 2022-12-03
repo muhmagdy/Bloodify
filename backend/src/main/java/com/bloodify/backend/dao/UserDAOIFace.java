@@ -8,5 +8,5 @@ public interface UserDAOIFace {
     public User findUserByEmail(String email);
     public User findUserByNationalID(String nationalID);
     public boolean isUsernameAndPasswordMatching(String email, String password);
-    public List<User> getUsersByBloodType (String bloodType, char bloodSign);
+    public List<User> getUsersByBloodType (String bloodType);
 }

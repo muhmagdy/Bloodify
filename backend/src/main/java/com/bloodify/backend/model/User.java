@@ -25,7 +25,7 @@ import java.time.LocalDate;
 
 @NamedNativeQuery(
         name = "User.findByBloodType",
-        query = "SELECT * FROM user WHERE blood_type = ? AND blood_type_sign = ?",
+        query = "SELECT * FROM user WHERE blood_type = ?",
         resultClass = User.class
 )
 

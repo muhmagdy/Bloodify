@@ -72,8 +72,8 @@ public class UserDAO implements UserDAOIFace {
         return false;
     }
 
-    public List<User> getUsersByBloodType (String bloodType, char bloodSign) {
-        return userRepo.findByBloodType(bloodType, bloodSign);
+    public List<User> getUsersByBloodType (String bloodType) {
+        return userRepo.findByBloodType(bloodType);
     }
 
 

@@ -70,14 +70,9 @@ public class RandomGenerations {
 
     public String generateBloodType() {
         String[] types = {"A", "B", "AB", "O"};
+        char[] signs = {'+', '-'};
         int n = (int)(Math.random()*4);
-        return types[n];
-    }
-
-    public char generateBloodSign() {
-        char[] types = {'+', '-'};
-        int n = (int)(Math.random()*2);
-        return types[n];
+        return types[n] + signs[n/2];
     }
 
     public boolean generateDiseases() {
@@ -91,7 +86,7 @@ public class RandomGenerations {
     public static void main(String[] args) {
         RandomGenerations random = new RandomGenerations();
         for(int i=0; i<50; i++) {
-            System.out.println(random.generatePassword(10));
+            System.out.println(random.generateBloodType());
         }
     }
 }
