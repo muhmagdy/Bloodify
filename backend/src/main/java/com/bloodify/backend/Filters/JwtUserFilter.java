@@ -22,11 +22,11 @@ import lombok.extern.slf4j.Slf4j;
 
 @Component
 @Slf4j
-public class JwtFilter extends OncePerRequestFilter {
+public class JwtUserFilter extends OncePerRequestFilter {
 
     @Lazy
     @Autowired
-    UserDetailsService userDetailsService;
+    UserDetailsService bloodifyUserDetailsService;
 
     @Autowired
     JwtUtil jwtUtil;
@@ -53,7 +53,7 @@ public class JwtFilter extends OncePerRequestFilter {
             }
 
             if(username != null && SecurityContextHolder.getContext().getAuthentication() == null){
-                UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
+                UserDetails userDetails = this.bloodifyUserDetailsService.loadUserByUsername(username);
 
                 log.debug("Validation jwt token");
                 if(jwtUtil.validateToken(jwt, userDetails)) {

@@ -1,4 +1,4 @@
-package com.bloodify.backend.model;
+package com.bloodify.backend.model.responses;
 
 import lombok.Builder;
 

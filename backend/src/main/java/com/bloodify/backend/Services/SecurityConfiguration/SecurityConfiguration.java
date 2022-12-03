@@ -1,4 +1,4 @@
-package com.bloodify.backend.services;
+package com.bloodify.backend.services.SecurityConfiguration;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -14,20 +14,10 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.bloodify.backend.Filters.JwtFilter;
 
-
-@Configuration
-@EnableWebSecurity
-@EnableGlobalAuthentication
-public class SecurityConfig {
-
-    @Autowired
-    private UserDetailsService userDetailsService;
-
-    @Autowired
-    private JwtFilter jwtFilter;
+abstract public class SecurityConfiguration {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -36,9 +26,13 @@ public class SecurityConfig {
     }
 
     @Bean
-    UserDetailsService userDetailsService() {
-        return userDetailsService;
-    }
+    abstract OncePerRequestFilter getJwtFilter();
+
+    @Bean
+    abstract String getLoginEndpoint();
+
+    @Bean
+    abstract UserDetailsService userDetailsService();
 
     @Bean
     public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
@@ -53,16 +47,18 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests((authz) -> authz
-                .requestMatchers("/api/v1/userlogin").permitAll()
+                .requestMatchers(getLoginEndpoint()).permitAll()
                 .anyRequest().authenticated()
             )
             .csrf().disable()
             .httpBasic()
             .and()
             .sessionManagement()
-            .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            .and()
+            .authenticationProvider(null);
 
-        http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(getJwtFilter(), UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 
