@@ -5,6 +5,7 @@ import com.bloodify.backend.Utils.TokenUtil;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
@@ -22,11 +23,12 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1")
 public class LoginController {
 
-    @Autowired
-    AuthenticationManager authenticationManager;
+    // @Autowired
+    // AuthenticationManager authenticationManager;
 
-    @Autowired
-    UserDetailsService bloodifyUserDetailsService;
+    // @Autowired
+    // @Qualifier("UserDAO")
+    // UserDetailsService bloodifyUserDetailsService;
 
 
     @Autowired
@@ -35,7 +37,15 @@ public class LoginController {
 
     @PostMapping("/userlogin")
     public ResponseEntity<String> userLogin(Authentication auth) {
-        log.info("login");
+        log.info("userlogin");
+        String token = tokenUtil.generateToken(auth);
+        return ResponseEntity.ok(token);
+
+    }
+
+    @PostMapping("/instlogin")
+    public ResponseEntity<String> instLogin(Authentication auth) {
+        log.info("instlogin");
         String token = tokenUtil.generateToken(auth);
         return ResponseEntity.ok(token);
 

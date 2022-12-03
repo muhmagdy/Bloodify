@@ -3,10 +3,13 @@ package com.bloodify.backend.dao.classes;
 import com.bloodify.backend.dao.interfaces.UserDAO;
 import com.bloodify.backend.dao.interfaces.UserRepository;
 import com.bloodify.backend.model.entities.User;
+import com.bloodify.backend.model.entities.UserAuthentication;
 
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -67,6 +70,18 @@ public class UserDAOImp implements UserDAO {
 
     public List<User> getUsersByBloodType(String bloodType, char bloodSign) {
         return userRepo.findByBloodType(bloodType, bloodSign);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        log.info(username + " user");
+        User user = this.findUserByEmail(username);
+        if(user == null)    throw new UsernameNotFoundException(username + " not found");
+        log.info(user.getEmail());
+        // if(!username.equals("foo")) throw new UsernameNotFoundException(username + " not found");
+        UserAuthentication userAuth = new UserAuthentication(user);
+        return userAuth;
+        // return new User("foo", "foo", List.of());
     }
 
 
