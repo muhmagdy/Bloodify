@@ -1,0 +1,598 @@
+{
+	"info": {
+		"_postman_id": "146e0f21-60e7-41e8-a26f-4213bb3623f5",
+		"name": "Bloodyify",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Signup",
+					"item": [
+						{
+							"name": "Random User Data",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"function randomNumberString(start, end, minIntegerDigits) {\r",
+											"    if(minIntegerDigits == 2){\r",
+											"        return Math.floor(start + Math.random() * (end-start)).toLocaleString('en-US', {minimumIntegerDigits :2, useGrouping: false})\r",
+											"    }\r",
+											"    return Math.floor(start + Math.random() * (end-start)).toString();\r",
+											"}\r",
+											"\r",
+											"nid_random = randomNumberString(20000000000000, 30512319999999, 0);\r",
+											"\r",
+											"\r",
+											"d = randomNumberString(1,31,2) + \"-\" + randomNumberString(1,12,2) + \"-\" + randomNumberString(1960,2005,0);\r",
+											"\r",
+											"b = _.sample(['A+', 'A-', 'B+', 'B-', 'O+', 'O-', 'AB+', 'AB-']);\r",
+											"\r",
+											"pm.environment.set(\"nid\", pm.variables.replaceIn(nid_random));\r",
+											"pm.environment.set(\"b_type\", pm.variables.replaceIn(b));\r",
+											"pm.environment.set(\"dob\", pm.variables.replaceIn(d));\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"  pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"state is true\", function () {\r",
+											"    pm.expect(pm.response.json().state).to.eql(true)\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"firstName\": \"{{$randomFirstName}}\",\r\n    \"lastName\": \"{{$randomLastName}}\",\r\n    \"nationalID\": \"{{nid}}\",\r\n    \"email\": \"{{$randomExampleEmail}}\",\r\n    \"bloodType\": \"{{b_type}}\",\r\n    \"hasDiseases\": {{$randomBoolean}},\r\n    \"lastTimeDonated\": \"{{dob}}\",\r\n    \"password\": \"{{$randomPassword}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/api/v1/user",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"user"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "New User 1",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"  pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"state is true\", function () {\r",
+											"    pm.expect(pm.response.json().state).to.eql(true)\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"firstName\": \"John\",\r\n    \"lastName\": \"Legend\",\r\n    \"nationalID\": \"27901010102345\",\r\n    \"email\": \"john@legend.me\",\r\n    \"bloodType\": \"A-\",\r\n    \"hasDiseases\": false,\r\n    \"lastTimeDonated\": \"07-08-1979\",\r\n    \"password\": \"{{$randomPassword}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/api/v1/user",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"user"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "New User 2",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"  pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"state is true\", function () {\r",
+											"    pm.expect(pm.response.json().state).to.eql(true)\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"firstName\": \"Selena\",\r\n    \"lastName\": \"Gomez\",\r\n    \"nationalID\": \"30002020109999\",\r\n    \"email\": \"selena@hotmail.com\",\r\n    \"bloodType\": \"O+\",\r\n    \"hasDiseases\": false,\r\n    \"lastTimeDonated\": \"07-12-1999\",\r\n    \"password\": \"{{$randomPassword}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/api/v1/user",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"user"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "New User 3",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"  pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"state is true\", function () {\r",
+											"    pm.expect(pm.response.json().state).to.eql(true)\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"firstName\": \"Karim\",\r\n    \"lastName\": \"Alaa\",\r\n    \"nationalID\": \"20103050100123\",\r\n    \"email\": \"karim@gmail.com\",\r\n    \"bloodType\": \"B+\",\r\n    \"hasDiseases\": false,\r\n    \"lastTimeDonated\": \"05-03-2001\",\r\n    \"password\": \"{{$randomPassword}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/api/v1/user",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"user"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Email exist",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 409\", function () {\r",
+											"  pm.response.to.have.status(409);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"state is false\", function () {\r",
+											"    pm.expect(pm.response.json().state).to.eql(false)\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"firstName\": \"Ahmed\",\r\n    \"lastName\": \"Ashraf\",\r\n    \"nationalID\": \"26601010101245\",\r\n    \"email\": \"john@legend.me\",\r\n    \"bloodType\": \"A-\",\r\n    \"hasDiseases\": false,\r\n    \"lastTimeDonated\": \"01-09-1966\",\r\n    \"password\": \"{{$randomPassword}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/api/v1/user",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"user"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "National ID Exist",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 409\", function () {\r",
+											"  pm.response.to.have.status(409);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"state is false\", function () {\r",
+											"    pm.expect(pm.response.json().state).to.eql(false)\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"firstName\": \"Youssef\",\r\n    \"lastName\": \"Saber\",\r\n    \"nationalID\": \"30002020109999\",\r\n    \"email\": \"youssef@outlook.com\",\r\n    \"bloodType\": \"O+\",\r\n    \"hasDiseases\": false,\r\n    \"lastTimeDonated\": \"07-12-1999\",\r\n    \"password\": \"{{$randomPassword}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/api/v1/user",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"user"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "nid and email exist from same row",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 409\", function () {\r",
+											"  pm.response.to.have.status(409);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"state is false\", function () {\r",
+											"    pm.expect(pm.response.json().state).to.eql(false)\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"firstName\": \"Karim\",\r\n    \"lastName\": \"Ahmed\",\r\n    \"nationalID\": \"20103050100123\",\r\n    \"email\": \"karim@gmail.com\",\r\n    \"bloodType\": \"AB+\",\r\n    \"hasDiseases\": false,\r\n    \"lastTimeDonated\": \"05-03-2001\",\r\n    \"password\": \"{{$randomPassword}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/api/v1/user",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"user"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "nid and email exist from dif rows",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 409\", function () {\r",
+											"  pm.response.to.have.status(409);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"state is false\", function () {\r",
+											"    pm.expect(pm.response.json().state).to.eql(false)\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"firstName\": \"John\",\r\n    \"lastName\": \"Leg\",\r\n    \"nationalID\": \"27901010102345\",\r\n    \"email\": \"john@legend.me\",\r\n    \"bloodType\": \"O-\",\r\n    \"hasDiseases\": false,\r\n    \"lastTimeDonated\": \"02-09-1989\",\r\n    \"password\": \"{{$randomPassword}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/api/v1/user",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"user"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Incorrect Format",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"  pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"state is false\", function () {\r",
+											"    pm.expect(pm.response.json().state).to.eql(false)\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"firstName\": \"John\",\r\n    \"lastName\": \"Legend\",\r\n    \"nationalID\": \"21901010102345\",\r\n    \"bloodType\": \"A-\",\r\n    \"hasDiseases\": false,\r\n    \"lastTimeDonated\": \"07-08-1979\",\r\n    \"password\": \"{{$randomPassword}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/api/v1/user",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"user"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Null Email",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"  pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"state is false\", function () {\r",
+											"    pm.expect(pm.response.json().state).to.eql(false)\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"firstName\": \"John\",\r\n    \"lastName\": \"Legend\",\r\n    \"nationalID\": \"27801010102345\",\r\n    \"email\": null,\r\n    \"bloodType\": \"A-\",\r\n    \"hasDiseases\": false,\r\n    \"lastTimeDonated\": \"07-08-1979\",\r\n    \"password\": \"{{$randomPassword}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/api/v1/user",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"user"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Null NationalID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"  pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"state is false\", function () {\r",
+											"    pm.expect(pm.response.json().state).to.eql(false)\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"firstName\": \"John\",\r\n    \"lastName\": \"Legend\",\r\n    \"nationalID\": null,\r\n    \"email\": \"captainme@me.com\",\r\n    \"bloodType\": \"A-\",\r\n    \"hasDiseases\": false,\r\n    \"lastTimeDonated\": \"07-08-1979\",\r\n    \"password\": \"{{$randomPassword}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/api/v1/user",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"user"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Null Last Date Donatation",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"  pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"state is true\", function () {\r",
+											"    pm.expect(pm.response.json().state).to.eql(true)\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"firstName\": \"John\",\r\n    \"lastName\": \"Legend\",\r\n    \"nationalID\": \"23601010102345\",\r\n    \"email\": \"haha@me.com\",\r\n    \"bloodType\": \"A-\",\r\n    \"hasDiseases\": false,\r\n    \"lastTimeDonated\": null,\r\n    \"password\": \"{{$randomPassword}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/api/v1/user",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"user"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	]
+}
