@@ -1,7 +1,7 @@
 package com.bloodify.backend.services;
 
 
-import java.util.List;
+// import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 // import org.springframework.security.core.userdetails.User;
@@ -28,8 +28,8 @@ public class BloodifyUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         log.info(username);
         User user = userDao.findUserByEmail(username);
-        log.info(user.getEmail());
         if(user == null)    throw new UsernameNotFoundException(username + " not found");
+        log.info(user.getEmail());
         // if(!username.equals("foo")) throw new UsernameNotFoundException(username + " not found");
         UserAuthentication userAuth = new UserAuthentication(user);
         return userAuth;
