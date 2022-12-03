@@ -9,7 +9,7 @@ public interface AccountManagerService {
     UserLoginResponseBody logIn(UserLogInRequest user);
 
 
-    boolean signUpUser(User user) throws Exception;
+    boolean signUpUser(User user);
 
-    boolean signUpInstitution(Institution institution) throws Exception;
+    boolean signUpInstitution(Institution institution);
 }

@@ -5,17 +5,13 @@ import com.bloodify.backend.model.UserLoginResponseBody;
 import com.bloodify.backend.model.entities.Institution;
 import com.bloodify.backend.model.entities.User;
 import com.bloodify.backend.model.requests.UserLogInRequest;
-import com.bloodify.backend.model.responses.UserLogInResponse;
+import com.bloodify.backend.services.exceptions.BothEmailAndNationalIdExists;
+import com.bloodify.backend.services.exceptions.EmailExistsException;
+import com.bloodify.backend.services.exceptions.NationalIdExistsException;
 import com.bloodify.backend.services.interfaces.AccountManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
-class EmailExistsException extends RuntimeException {
-}
-
-class NationalIDExistsException extends RuntimeException {
-}
 
 @Service
 public class AccountManagerServiceImp implements AccountManagerService {
@@ -28,17 +24,23 @@ public class AccountManagerServiceImp implements AccountManagerService {
     }
 
     @Override
-    public boolean signUpUser(User user) throws Exception {
-        if (userDAO.findUserByNationalID(user.getNationalID()) == null) {
+    public boolean signUpUser(User user) {
+        boolean nationalIdExists = userDAO.findUserByNationalID(user.getNationalID()) != null;
+        boolean emailExists = userDAO.findUserByEmail(user.getEmail()) != null;
+
+        if (nationalIdExists) {
+            if (emailExists)
+                throw new BothEmailAndNationalIdExists();
+
+            throw new NationalIdExistsException();
+        } else if (emailExists)
             throw new EmailExistsException();
-        } else if (!userDAO.saveUser(user)) {
-            throw new NationalIDExistsException();
-        }
-        return true;
+
+        return userDAO.saveUser(user);
     }
 
     @Override
-    public boolean signUpInstitution(Institution institution) throws Exception {
+    public boolean signUpInstitution(Institution institution) {
         return false;
     }
 }
