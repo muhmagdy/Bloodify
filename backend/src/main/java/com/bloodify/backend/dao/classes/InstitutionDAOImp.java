@@ -1,6 +1,8 @@
 package com.bloodify.backend.dao.classes;
 
-class InstitutionDAOImp {
+import com.bloodify.backend.dao.interfaces.InstitutionDAO;
+
+public class InstitutionDAOImp implements InstitutionDAO {
 
 
 }

@@ -1,11 +1,11 @@
 package com.bloodify.backend.dao.classes;
 
-import com.bloodify.backend.dao.interfaces.InstitutionDAO;
 import com.bloodify.backend.dao.interfaces.UserDAO;
 import com.bloodify.backend.dao.interfaces.UserRepository;
 import com.bloodify.backend.model.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 /**
@@ -19,12 +19,12 @@ public class UserDAOImp implements UserDAO {
     @Autowired
     UserRepository userRepo;
 
-    public boolean saveUser (User newUser) {
+
+    public boolean saveUser(User newUser) {
         try {
             userRepo.save(newUser);
             return true;
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             return false;
         }
     }
@@ -32,9 +32,9 @@ public class UserDAOImp implements UserDAO {
     public User findUserByEmail(String email) {
         List<User> foundUsers = userRepo.findByEmail(email);
 
-        if(foundUsers.isEmpty())
+        if (foundUsers.isEmpty())
             return null;
-        else if(foundUsers.size() == 1)
+        else if (foundUsers.size() == 1)
             return foundUsers.get(0);
         else {
             System.out.println("Database is inconsistent");
@@ -45,7 +45,7 @@ public class UserDAOImp implements UserDAO {
     public User findUserByNationalID(String nationalID) {
         List<User> foundUsers = userRepo.findByNationalID(nationalID);
 
-        if(foundUsers.isEmpty())
+        if (foundUsers.isEmpty())
             return null;
         else
             return foundUsers.get(0);
@@ -53,15 +53,15 @@ public class UserDAOImp implements UserDAO {
 
     public boolean isUsernameAndPasswordMatching(String email, String password) {
         User signingIn = findUserByEmail(email);
-        if(signingIn!=null){
+        if (signingIn != null) {
             String currentPassword = signingIn.getPassword();
             return currentPassword.equals(password);
         }
         return false;
     }
 
-    public List<User> getUsersByBloodType (String bloodType) {
-        return userRepo.findByBloodType(bloodType);
+    public List<User> getUsersByBloodType(String bloodType, char bloodSign) {
+        return userRepo.findByBloodType(bloodType, bloodSign);
     }
 
 
