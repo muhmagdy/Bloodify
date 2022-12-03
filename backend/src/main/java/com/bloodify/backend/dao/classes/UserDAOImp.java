@@ -1,6 +1,9 @@
-package com.bloodify.backend.dao;
+package com.bloodify.backend.dao.classes;
 
-import com.bloodify.backend.model.User;
+import com.bloodify.backend.dao.interfaces.InstitutionDAO;
+import com.bloodify.backend.dao.interfaces.UserDAO;
+import com.bloodify.backend.dao.interfaces.UserRepository;
+import com.bloodify.backend.model.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -12,24 +15,9 @@ import java.util.List;
  * get users with blood type 'bla'
  */
 @Service
-public class UserDAO implements UserDAOIFace {
+public class UserDAOImp implements UserDAO {
     @Autowired
     UserRepository userRepo;
-
-//    public boolean saveUser (User newUser) {
-//        List<User> foundUsersByMail = userRepo.findByEmail(newUser.getEmail());
-//        List<User> foundUsersByNID = userRepo.findByNationalID(newUser.getNationalID());
-//
-//        if(foundUsersByMail.isEmpty() && foundUsersByNID.isEmpty()) {
-//            userRepo.save(newUser);
-//            return true;
-//        }
-//        if(!foundUsersByMail.isEmpty())
-//            System.out.println("Email is taken, try another one!");
-//        else
-//            System.out.println("User is already signed in with another mail (same National ID)");
-//        return false;
-//    }
 
     public boolean saveUser (User newUser) {
         try {

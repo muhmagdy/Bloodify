@@ -1,4 +1,4 @@
-package com.bloodify.backend.model;
+package com.bloodify.backend.model.entities;
 
 import jakarta.persistence.*;
 import lombok.Data;

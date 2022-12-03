@@ -1,7 +1,8 @@
 package com.bloodify.backend.dao;
 
 import com.bloodify.backend.RandomGenerations;
-import com.bloodify.backend.model.User;
+import com.bloodify.backend.dao.classes.UserDAOImp;
+import com.bloodify.backend.model.entities.User;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ class UserDAOTest {
 
     @Autowired
     @Mock
-    private UserDAO userDao;
+    private UserDAOImp userDao;
 
     static int dataLength = 10;
     static String[] fNames = new String[dataLength];
