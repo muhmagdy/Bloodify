@@ -1,10 +1,14 @@
 package com.bloodify.backend.services.SecurityConfiguration;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -25,8 +29,18 @@ import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
 
 
-abstract public class SecurityConfiguration {
+@Configuration
+@EnableWebSecurity
+public class SecurityConfiguration {
 
+
+    @Autowired
+    @Qualifier("userDAOImp")
+    UserDetailsService userDetailsService;
+
+    @Autowired
+    @Qualifier("institutionDAOImp")
+    UserDetailsService insDetailsService;
 
     @Autowired
     private RsaKeyProperties rsaKeys;
@@ -50,13 +64,16 @@ abstract public class SecurityConfiguration {
     }
 
     @Bean
-    abstract String getLoginEndpoint();
+    UserDetailsService userDetailsService(){
+        return userDetailsService;
+    }
 
     @Bean
-    abstract UserDetailsService userDetailsService();
+    UserDetailsService instDetailsService(){
+        return insDetailsService;
+    }
 
-    @Bean
-    public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
+    public AuthenticationManager userAuthenticationManager(HttpSecurity http) throws Exception {
          AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
          authenticationManagerBuilder
                .userDetailsService(userDetailsService())
@@ -64,16 +81,30 @@ abstract public class SecurityConfiguration {
          return authenticationManagerBuilder.build();
      }
 
+     public AuthenticationManager instAuthenticationManager(HttpSecurity http) throws Exception {
+          AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
+          authenticationManagerBuilder
+                .userDetailsService(instDetailsService())
+                .passwordEncoder(passwordEncoder());
+
+          return authenticationManagerBuilder.build();
+      }
+
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain userFilterChain(HttpSecurity http) throws Exception {
+        String endpoint = "/api/v1/userlogin";
         http
-            .authorizeHttpRequests((authz) -> authz
-                .requestMatchers(getLoginEndpoint()).permitAll()
-                .anyRequest().authenticated()
+            .securityMatcher(endpoint)
+            .authorizeHttpRequests((auth) -> {
+                auth.requestMatchers(endpoint).permitAll();
+                auth.anyRequest().authenticated();
+            }
+
             )
             .csrf().disable()
             .httpBasic()
             .and()
+            .authenticationManager(this.userAuthenticationManager(http))
             .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
             .sessionManagement()
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
@@ -81,5 +112,27 @@ abstract public class SecurityConfiguration {
         return http.build();
     }
 
-    
+    @Bean
+    @Order(1)
+    public SecurityFilterChain instFilterChain(HttpSecurity http) throws Exception {
+        String endpoint = "/api/v1/instlogin";
+        http
+            .securityMatcher(endpoint)
+            .authorizeHttpRequests((auth) -> {
+                auth.requestMatchers(endpoint).permitAll();
+                auth.anyRequest().authenticated();
+            }
+
+            )
+            .csrf().disable()
+            .httpBasic()
+            .and()
+            .authenticationManager(this.instAuthenticationManager(http))
+            .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
+            .sessionManagement()
+            .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
+        return http.build();
+    }
+
 }
