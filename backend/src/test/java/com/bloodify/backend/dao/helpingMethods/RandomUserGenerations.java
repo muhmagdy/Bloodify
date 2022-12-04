@@ -1,8 +1,8 @@
-package com.bloodify.backend;
+package com.bloodify.backend.dao.helpingMethods;
 
 import java.time.LocalDate;
 
-public class RandomGenerations {
+public class RandomUserGenerations {
     String capitals = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     String smalls = "abcdefghijklmnopqrstuvwxyz";
     String numbers = "0123456789";
@@ -81,12 +81,29 @@ public class RandomGenerations {
         return types[n];
     }
 
+    public int generateCount(int min, int max) {
+        return (int) (Math.random() * (max - min + 1) + min);
+    }
+
+    public String generateLocations() {
+        int nWords = (int)(Math.random() * 10) + 5;
+        StringBuilder location = new StringBuilder();
+        location.append(generateCount(1,60));
+        location.append(" ");
+        for(int i=0; i<nWords; i++) {
+            int wordLength = (int)(Math.random() * 6) + 4;
+            location.append(generateWord(wordLength));
+            location.append(" ");
+        }
+        return location.toString();
+    }
+
 
 
     public static void main(String[] args) {
-        RandomGenerations random = new RandomGenerations();
+        RandomUserGenerations random = new RandomUserGenerations();
         for(int i=0; i<50; i++) {
-            System.out.println(random.generateBloodType());
+            System.out.println(random.generateLocations());
         }
     }
 }

@@ -1,7 +1,6 @@
-package com.bloodify.backend.dao;
+package com.bloodify.backend.dao.interfaces;
 
-import com.bloodify.backend.RandomGenerations;
-import com.bloodify.backend.dao.classes.UserDAOImp;
+import com.bloodify.backend.dao.helpingMethods.RandomUserGenerations;
 import com.bloodify.backend.model.entities.User;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
@@ -20,7 +19,7 @@ class UserDAOTest {
 
     @Autowired
     @Mock
-    private UserDAOImp userDao;
+    private UserDAO userDao;
 
     static int dataLength = 10;
     static String[] fNames = new String[dataLength];
@@ -34,7 +33,7 @@ class UserDAOTest {
 
     @BeforeAll
     public static void setters() {
-        RandomGenerations random = new RandomGenerations();
+        RandomUserGenerations random = new RandomUserGenerations();
 
         for(int i=0; i<dataLength; i++) {
             fNames[i] = random.generateName(5, 10);
@@ -103,7 +102,7 @@ class UserDAOTest {
     void saveRepeatedDataExceptUniques() {
         int n=2;
         assertTrue(userDao.saveUser(new User(
-            fNames[n], lNames[n], IDs[9], emails[9], bloodTypes[n], isDisease[n], dates[n], passwords[n])));
+            fNames[n], lNames[n], IDs[9], emails[9], "A+", isDisease[n], dates[n], passwords[n])));
     }
 
 

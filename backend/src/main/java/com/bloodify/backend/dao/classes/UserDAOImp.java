@@ -34,12 +34,8 @@ public class UserDAOImp implements UserDAO {
 
         if (foundUsers.isEmpty())
             return null;
-        else if (foundUsers.size() == 1)
+        else
             return foundUsers.get(0);
-        else {
-            System.out.println("Database is inconsistent");
-            return null;
-        }
     }
 
     public User findUserByNationalID(String nationalID) {
