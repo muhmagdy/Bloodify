@@ -1,6 +1,6 @@
 package com.bloodify.backend.controller;
 
-import com.bloodify.backend.RandomGenerations;
+import com.bloodify.backend.dao.helpingMethods.RandomUserGenerations;
 import com.bloodify.backend.model.entities.User;
 import com.bloodify.backend.model.responses.UserSignUpResponse;
 import com.bloodify.backend.services.exceptions.BothEmailAndNationalIdExists;
@@ -47,7 +47,7 @@ class AccountControllerTest {
     @MockBean
     private AccountManagerService accountManagerService;
 
-    RandomGenerations random = new RandomGenerations();
+    RandomUserGenerations random = new RandomUserGenerations();
 
     private User generateRandomUser(){
         return new User(random.generateName(5,10), random.generateName(5,10), random.generateNationalID(),
