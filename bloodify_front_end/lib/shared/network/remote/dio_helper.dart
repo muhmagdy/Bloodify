@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -69,6 +71,22 @@ class DioHelper {
       url,
       queryParameters: query,
       data: data,
+    );
+  }
+
+  static Future<Response> putLogin({
+    required String url,
+    required email,
+    required password,
+  }) async {
+    var auth = 'Basic ' + base64Encode(utf8.encode('$email:$password'));
+    dio!.options.headers = {
+      'Authorization': auth,
+      'Content-Type': 'application/json',
+    };
+
+    return dio!.put(
+      url,
     );
   }
 }

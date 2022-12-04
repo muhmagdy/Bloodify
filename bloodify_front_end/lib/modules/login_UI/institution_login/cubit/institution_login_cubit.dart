@@ -17,12 +17,10 @@ class InstitutionLoginCubit extends Cubit<InstitutionLoginStates> {
   }) {
     emit(InstitutionLoginLoadingState());
 
-    DioHelper.postData(
+    DioHelper.putLogin(
       url: 'login',
-      data: {
-        'email': email,
-        'password': password,
-      },
+      email: email,
+      password: password,
     ).then((value) {
       print(value.data);
       print(value.data);

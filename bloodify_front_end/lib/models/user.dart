@@ -13,16 +13,16 @@ class UserData {
   String bloodType = 'A+';
   late String token;
   UserData.fromJson(Map<String, dynamic> json) {
-    // fName = json['first_name'];
+    fName = json['first_name'];
 
-    // lName = json['last_name'];
-    // nationalID = json['last_name'];
-    // email = json['email'];
-    // password = json['password'];
-    // location = json['location'];
-    // dOB = json['date_of_birth'];
-    // isPatient = json['isPatient'];
-    // bloodType = json['bloodType'];
+    lName = json['last_name'];
+    nationalID = json['last_name'];
+    email = json['email'];
+    password = json['password'];
+    location = json['location'];
+    dOB = json['date_of_birth'];
+    isPatient = json['isPatient'];
+    bloodType = json['bloodType'];
     token = json['token'];
   }
   UserData() {
