@@ -1,8 +1,7 @@
-package com.bloodify.backend.Services.classes;
+package com.bloodify.backend.services.classes;
 
 import com.bloodify.backend.dao.interfaces.UserDAO;
 import com.bloodify.backend.model.entities.User;
-import com.bloodify.backend.services.classes.AccountManagerServiceImp;
 import com.bloodify.backend.services.exceptions.BothEmailAndNationalIdExists;
 import com.bloodify.backend.services.exceptions.EmailExistsException;
 import com.bloodify.backend.services.exceptions.NationalIdExistsException;
