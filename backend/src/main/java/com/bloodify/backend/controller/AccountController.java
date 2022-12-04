@@ -25,7 +25,7 @@ public class AccountController {
         if(isCreated)
             return ResponseEntity.status(HttpStatus.CREATED).body(new UserSignUpResponse(true, "Success"));
         else
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new UserSignUpResponse(false, "Error occurred while signing up."));
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(new UserSignUpResponse(false, "Error occurred while signing up."));
     }
 
     @PostMapping("/user/auth")
@@ -74,9 +74,9 @@ public class AccountController {
         return new UserSignUpResponse(false, exception.getMessage());
     }
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public UserSignUpResponse handleIncorrectFormatException(){
-        return new UserSignUpResponse(false, "Incorrect request format");
+        return new UserSignUpResponse(false, "Incorrect format");
     }
 }

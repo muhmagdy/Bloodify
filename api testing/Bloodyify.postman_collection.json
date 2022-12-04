@@ -413,8 +413,8 @@
 									"listen": "test",
 									"script": {
 										"exec": [
-											"pm.test(\"Status code is 400\", function () {\r",
-											"  pm.response.to.have.status(400);\r",
+											"pm.test(\"Status code is 422\", function () {\r",
+											"  pm.response.to.have.status(422);\r",
 											"});\r",
 											"\r",
 											"pm.test(\"state is false\", function () {\r",
@@ -459,8 +459,8 @@
 									"listen": "test",
 									"script": {
 										"exec": [
-											"pm.test(\"Status code is 400\", function () {\r",
-											"  pm.response.to.have.status(400);\r",
+											"pm.test(\"Status code is 422\", function () {\r",
+											"  pm.response.to.have.status(422);\r",
 											"});\r",
 											"\r",
 											"pm.test(\"state is false\", function () {\r",
@@ -505,8 +505,8 @@
 									"listen": "test",
 									"script": {
 										"exec": [
-											"pm.test(\"Status code is 400\", function () {\r",
-											"  pm.response.to.have.status(400);\r",
+											"pm.test(\"Status code is 422\", function () {\r",
+											"  pm.response.to.have.status(422);\r",
 											"});\r",
 											"\r",
 											"pm.test(\"state is false\", function () {\r",
