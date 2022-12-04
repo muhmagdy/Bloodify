@@ -1,7 +1,7 @@
 package com.bloodify.backend.services.exceptions;
 
-public class BothEmailAndNationalIdExists extends RuntimeException{
+public class BothEmailAndNationalIdExists extends SignupDuplicateException {
     public BothEmailAndNationalIdExists() {
-        super("BothEmailAndNationalIdExists");
+        super("An account already exists with the same email and national id.");
     }
 }

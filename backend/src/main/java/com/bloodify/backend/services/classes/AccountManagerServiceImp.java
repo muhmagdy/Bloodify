@@ -12,7 +12,6 @@ import com.bloodify.backend.services.interfaces.AccountManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
 @Service
 public class AccountManagerServiceImp implements AccountManagerService {
     @Autowired
