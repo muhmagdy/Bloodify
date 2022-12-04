@@ -101,6 +101,10 @@ public class Institution {
     int institutionID;
     @Column(unique = true, nullable = false, length = 40)
     String email;
+
+    @Column(nullable = false, length = 40)
+    String name;   
+
     @Column(length = 50)
     String location;
     @Column()
@@ -128,6 +132,22 @@ public class Institution {
     int negativeAB_bagsCount;
     @Column(name = "count_On")
     int negativeO_bagsCount;
+
+    public Institution (String email, String name, String password, String location, int workingHours) {
+        this.email = email;
+        this.name = name;
+        this.password = password;
+        this.location = location;
+        this.workingHours = workingHours;
+        this.negativeA_bagsCount = 0;
+        this.negativeB_bagsCount = 0;
+        this.negativeAB_bagsCount = 0;
+        this.negativeO_bagsCount = 0;
+        this.positiveA_bagsCount = 0;
+        this.positiveB_bagsCount = 0;
+        this.positiveAB_bagsCount = 0;
+        this.positiveO_bagsCount = 0;
+    }
 
     public Institution (String email, String password, String location, int workingHours) {
         this.email = email;

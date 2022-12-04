@@ -1,34 +1,25 @@
 package com.bloodify.backend.model.responses;
 
-import lombok.Builder;
+import com.bloodify.backend.model.entities.Institution;
+import com.bloodify.backend.model.entities.User;
 
-@Builder
+import lombok.Data;
+
+
+@Data
 public class UserLoginResponseBody {
     private String name, email, token;
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
+    public UserLoginResponseBody(User user, String token){
+        this.email = user.getEmail();
+        this.name = user.getFirstName() + " " + user.getLastName();
         this.token = token;
     }
 
+    public UserLoginResponseBody(Institution inst, String token){
+        this.email = inst.getEmail();
+        this.name = inst.getName();
+        this.token = token;
+    }
 
 }
