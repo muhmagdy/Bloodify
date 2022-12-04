@@ -27,11 +27,10 @@ class UserLoginCubit extends Cubit<UserLoginStates> {
       print(value.data);
       loginModel = UserLoginModel.fromJson(value.data);
       emit(UserLoginSuccessState(loginModel));
+    }).catchError((error) {
+      print("api " + error.toString());
+      emit(UserLoginErrorState(error.toString()));
     });
-    // .catchError((error) {
-    //   print("api " + error.toString());
-    //   emit(LoginErrorState(error.toString()));
-    // });
   }
 
   IconData suffix = Icons.visibility_outlined;

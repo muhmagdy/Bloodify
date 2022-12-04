@@ -26,11 +26,10 @@ class InstitutionLoginCubit extends Cubit<InstitutionLoginStates> {
       print(value.data);
       loginModel = InstitutionLoginModel.fromJson(value.data);
       emit(InstitutionLoginSuccessState(loginModel));
+    }).catchError((error) {
+      print("api " + error.toString());
+      emit(InstitutionLoginErrorState(error.toString()));
     });
-    // .catchError((error) {
-    //   print("api " + error.toString());
-    //   emit(LoginErrorState(error.toString()));
-    // });
   }
 
   IconData suffix = Icons.visibility_outlined;
