@@ -47,6 +47,7 @@ public class AccountManagerServiceImp implements AccountManagerService {
         try{
             String token = tokenUtil.generateToken(auth);
             Institution inst = instDAO.findInstitutionByEmail(auth.getName());
+            log.info("login inst");
             return new UserLoginResponseBody(inst, token);
         }catch (Exception e){
             log.info(e.getMessage());

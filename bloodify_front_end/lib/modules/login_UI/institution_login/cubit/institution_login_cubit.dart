@@ -29,6 +29,9 @@ class InstitutionLoginCubit extends Cubit<InstitutionLoginStates> {
       emit(InstitutionLoginSuccessState(loginModel));
     }).catchError((error) {
       print(error.response);
+      if (error.response == null) {
+        emit(InstitutionLoginErrorState(error.toString()));
+      }
       if (error.response.statusCode == 401) {
         var loginResp = new InstitutionLoginModel(false);
         print("0000000");

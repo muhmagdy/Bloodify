@@ -35,8 +35,7 @@ class SignUp2 extends StatelessWidget {
           if (state.response.state) {
             SignUpCubit.get(context).user = new UserData();
             showToast(
-                // language.getLabel('verification'
-                text: "",
+                text: language.getLabel('verification'),
                 color: Colors.green,
                 time: 5000);
             navigateAndFinish(
