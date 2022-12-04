@@ -107,7 +107,7 @@ public class InstitutionDAOImp implements InstitutionDAO {
         log.info(username + " inst");
         Institution institution = this.findInstitutionByEmail(username);
         if(institution == null)    throw new UsernameNotFoundException(username + " not found");
-        // log.info(institution.getEmail());
+        log.info(institution.getEmail());
         // if(!username.equals("foo")) throw new UsernameNotFoundException(username + " not found");
         InstitutionAuthentication userAuth = new InstitutionAuthentication(institution);
         return userAuth;

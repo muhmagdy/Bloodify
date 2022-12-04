@@ -141,7 +141,7 @@ public class SecurityConfiguration {
     }
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().requestMatchers(this.endpoint + "/test/**");
+        return (web) -> web.ignoring().requestMatchers(this.endpoint + "/test/**",this.endpoint+"/user");
     }
 
 }

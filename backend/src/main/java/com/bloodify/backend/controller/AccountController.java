@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1")
 public class AccountController {
 
-    private static final String test = "/test";
+    private static final String test = "";
 
     @Autowired
     AccountManagerService accountManagerService;

@@ -17,22 +17,27 @@ class InstitutionLoginCubit extends Cubit<InstitutionLoginStates> {
   }) {
     emit(InstitutionLoginLoadingState());
 
-    DioHelper.postData(
-      url: 'login',
-      data: {
-        'email': email,
-        'password': password,
-      },
+    DioHelper.postLogin(
+      url: 'institution/auth',
+      email: email,
+      password: password,
     ).then((value) {
+      print("Success");
       print(value.data);
       print(value.data);
       loginModel = InstitutionLoginModel.fromJson(value.data);
       emit(InstitutionLoginSuccessState(loginModel));
+    }).catchError((error) {
+      print(error.response);
+      if (error.response.statusCode == 401) {
+        var loginResp = new InstitutionLoginModel(false);
+        print("0000000");
+        emit(InstitutionLoginSuccessState(loginResp));
+      } else {
+        print("api " + error.toString());
+        emit(InstitutionLoginErrorState(error.toString()));
+      }
     });
-    // .catchError((error) {
-    //   print("api " + error.toString());
-    //   emit(LoginErrorState(error.toString()));
-    // });
   }
 
   IconData suffix = Icons.visibility_outlined;
@@ -42,7 +47,7 @@ class InstitutionLoginCubit extends Cubit<InstitutionLoginStates> {
     isPassword = !isPassword;
     suffix =
         isPassword ? Icons.visibility_outlined : Icons.visibility_off_outlined;
-
+    print(isPassword);
     emit(InstitutionChangePasswordVisibilityState());
   }
 }

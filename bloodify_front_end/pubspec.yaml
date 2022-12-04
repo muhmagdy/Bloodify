@@ -46,7 +46,7 @@ dependencies:
   fluttertoast: ^8.1.1
   intl: ^0.17.0
   geolocator: ^9.0.2
-
+  http: ^0.13.5
 dev_dependencies:
   flutter_test:
     sdk: flutter
