@@ -6,12 +6,11 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
     List<User> findByEmail(String email);
 
     List<User> findByNationalID(String nationalID);
 
-    List<User> findByBloodType(String bloodType, char bloodSign);
+    List<User> findByBloodType(String bloodType);
 }

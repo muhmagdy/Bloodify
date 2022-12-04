@@ -8,7 +8,6 @@ import com.bloodify.backend.model.entities.User;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -33,7 +32,8 @@ public class UserDAOImp implements UserDAO {
             userRepo.save(newUser);
             return true;
         } catch (Exception e) {
-            log.info(e.getMessage());
+            System.out.println(e.getMessage());
+            e.printStackTrace();
             return false;
         }
     }
@@ -43,12 +43,8 @@ public class UserDAOImp implements UserDAO {
 
         if (foundUsers.isEmpty())
             return null;
-        else if (foundUsers.size() == 1)
+        else
             return foundUsers.get(0);
-        else {
-            System.out.println("Database is inconsistent");
-            return null;
-        }
     }
 
     public User findUserByNationalID(String nationalID) {
@@ -69,8 +65,8 @@ public class UserDAOImp implements UserDAO {
         return false;
     }
 
-    public List<User> getUsersByBloodType(String bloodType, char bloodSign) {
-        return userRepo.findByBloodType(bloodType, bloodSign);
+    public List<User> getUsersByBloodType(String bloodType) {
+        return userRepo.findByBloodType(bloodType);
     }
 
     @Override

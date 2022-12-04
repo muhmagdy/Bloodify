@@ -8,12 +8,13 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 
 
 public interface UserDAO extends UserDetailsService{
-    boolean saveUser(User newUser);
+    public boolean saveUser(User newUser);
 
-    User findUserByEmail(String email);
+    public User findUserByEmail(String email);
 
-    User findUserByNationalID(String nationalID);
-    boolean isUsernameAndPasswordMatching(String email, String password);
+    public User findUserByNationalID(String nationalID);
 
-    List<User> getUsersByBloodType(String bloodType, char bloodSign);
+    public boolean isUsernameAndPasswordMatching(String email, String password);
+
+    public List<User> getUsersByBloodType(String bloodType);
 }
