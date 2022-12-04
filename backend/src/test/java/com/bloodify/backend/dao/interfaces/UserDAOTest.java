@@ -2,9 +2,9 @@ package com.bloodify.backend.dao.interfaces;
 
 import com.bloodify.backend.dao.helpingMethods.RandomUserGenerations;
 import com.bloodify.backend.model.entities.User;
+import jakarta.annotation.Resource;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class UserDAOTest {
 
-    @Autowired
+    @Resource(name = "userDAOImp")
     @Mock
     private UserDAO userDao;
 
@@ -57,30 +57,30 @@ class UserDAOTest {
                 fNames[n], lNames[n], IDs[n], emails[n], "AB-", isDisease[n], dates[n], passwords[n]))) ;
     }
     @Test
-    @Order(2)
+    @Order(1)
     void saveUser2() {
         int n=1;
         assertTrue(userDao.saveUser(new User(
                 fNames[n], lNames[n], IDs[n], emails[n], "O+", isDisease[n], dates[n], passwords[n])));
     }
     @Test
-    @Order(3)
+    @Order(1)
     void saveUser3() {
         int n=2;
         assertTrue(userDao.saveUser(new User(
                 fNames[n], lNames[n], IDs[n], emails[n], "AB-", isDisease[n], dates[n], passwords[n])));
     }
     @Test
-    @Order(4)
+    @Order(1)
     void saveUser4() {
         int n=3;
         assertTrue(userDao.saveUser(new User(
-                fNames[n], lNames[n], IDs[n], emails[n], "A-", isDisease[n], dates[n], passwords[n])));
+                fNames[n], lNames[n], IDs[n], emails[n], "A-", isDisease[n], null, passwords[n])));
     }
 
 //  Testing inserting a user with the same ID of an already inserted user
     @Test
-    @Order(5)
+    @Order(2)
     void saveRepeatedID() {
         int n=4;
         assertFalse(userDao.saveUser(new User(
@@ -89,16 +89,34 @@ class UserDAOTest {
 
 //  Testing inserting a user with the same email of an already inserted user
     @Test
-    @Order(6)
+    @Order(2)
     void saveRepeatedEmail() {
         int n=5;
         assertFalse(userDao.saveUser(new User(
                 fNames[n], lNames[n], IDs[1], emails[n], bloodTypes[n], isDisease[n], dates[n], passwords[n])));
     }
+//  Testing entering null into nonNullable fields
+//  If we set them null through setters, an error is erased before the assertFalse statement
+    @Test
+    @Order(2)
+    void saveNullAttributes1() {
+        int n=6;
+        assertFalse(userDao.saveUser(new User(
+                fNames[n], null, IDs[1], emails[n], bloodTypes[n], isDisease[n], dates[n], passwords[n])));
+    }
+    @Test
+    @Order(2)
+    void saveNullAttributes2() {
+        int n=6;
+        User user = new User(
+                fNames[n], lNames[n], IDs[1], emails[n], null, isDisease[n], null, passwords[n]);
+        assertFalse(userDao.saveUser(user));
+    }
+
 
 //  Testing inserting a user with repeated attributes except for ID and email
     @Test
-    @Order(7)
+    @Order(3)
     void saveRepeatedDataExceptUniques() {
         int n=2;
         assertTrue(userDao.saveUser(new User(
@@ -109,33 +127,33 @@ class UserDAOTest {
     /***********   RETRIEVAL TESTS   ***********/
 //  finding by EMAIL
     @Test
-    @Order(8)
+    @Order(4)
     void get1() {
         User user = userDao.findUserByEmail(emails[1]);
         assertEquals(user.getFirstName(), fNames[1]);
     }
     @Test
-    @Order(8)
+    @Order(4)
     void get2() {
         User user = userDao.findUserByEmail(emails[3]);
         assertEquals(user.getLastName(), lNames[3]);
     }
 //  finding by NationalID
     @Test
-    @Order(8)
+    @Order(4)
     void get3() {
         User user = userDao.findUserByNationalID(IDs[0]);
         assertEquals(user.getFirstName(), fNames[0]);
     }
     @Test
-    @Order(8)
+    @Order(4)
     void get4() {
         User user = userDao.findUserByNationalID(IDs[2]);
         assertEquals(user.getLastTimeDonated(), dates[2]);
     }
 //  finding all users matching blood type
     @Test
-    @Order(8)
+    @Order(4)
     void get5() {
         List<User> gotUsers = userDao.getUsersByBloodType("AB-");
         List<String> gotEmails = new ArrayList<>();
@@ -148,7 +166,7 @@ class UserDAOTest {
         assertEquals(actualEmails, gotEmails);
     }
     @Test
-    @Order(8)
+    @Order(4)
     void get6() {
         List<User> gotUsers = userDao.getUsersByBloodType("O+");
         List<String> gotEmails = new ArrayList<>();
@@ -160,7 +178,7 @@ class UserDAOTest {
         assertEquals(actualEmails, gotEmails);
     }
     @Test
-    @Order(8)
+    @Order(4)
     void get7() {
         List<User> gotUsers = userDao.getUsersByBloodType("B+");
         List<String> gotEmails = new ArrayList<>();
@@ -172,17 +190,17 @@ class UserDAOTest {
 
     /****************   Matching email with password tests   **************/
     @Test
-    @Order(8)
+    @Order(4)
     void matchEmailAndPass1() {
         assertTrue(userDao.isUsernameAndPasswordMatching(emails[1], passwords[1]));
     }
     @Test
-    @Order(8)
+    @Order(4)
     void matchEmailAndPass2() {
         assertTrue(userDao.isUsernameAndPasswordMatching(emails[2], passwords[2]));
     }
     @Test
-    @Order(8)
+    @Order(4)
     void matchEmailAndPass3() {
         assertFalse(userDao.isUsernameAndPasswordMatching(emails[0], passwords[3]));
     }

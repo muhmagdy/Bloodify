@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
+@Repository("InstitutionRepository")
 public interface InstitutionRepository extends JpaRepository<Institution, Integer> {
     List<Institution> findByEmail(String email);
 

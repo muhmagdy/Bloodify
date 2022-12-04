@@ -3,6 +3,7 @@ package com.bloodify.backend.dao.interfaces;
 import com.bloodify.backend.dao.helpingMethods.RandomUserGenerations;
 import com.bloodify.backend.model.entities.Institution;
 import com.bloodify.backend.model.entities.User;
+import jakarta.annotation.Resource;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
@@ -18,12 +19,14 @@ import static org.junit.jupiter.api.Assertions.*;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class InstitutionDAOTest {
 
-    @Autowired
+//    @Autowired
+    @Resource(name = "institutionDAOImp")
     @Mock
     private InstitutionDAO instDao;
 
     static int dataLength = 10;
     static String[] emails = new String[dataLength];
+    static String[] names = new String[dataLength];
     static String[] passwords = new String[dataLength];
     static String[] locations = new String[dataLength];
     static int[] workingHours = new int[dataLength];
@@ -36,6 +39,7 @@ class InstitutionDAOTest {
 
         for(int i=0; i<dataLength; i++) {
             emails[i] = random.generateEmail(10,30);
+            names[i] = random.generateName(5, 10);
             passwords[i] = random.generatePassword(20);
             for(int j=0; j<8; j++) {
                 bloodCounts[i][j] = random.generateCount(0, 50);
@@ -49,57 +53,65 @@ class InstitutionDAOTest {
     void saveInstitution1() {
         int n=0;
         assertTrue(instDao.saveInstitution(new Institution(
-                emails[n], passwords[n], locations[n], workingHours[n]
+                emails[n], names[n], passwords[n], locations[n], workingHours[n]
         ))) ;
     }
 
 //  Legal Statement
     @Test
-    @Order(2)
+    @Order(1)
     void saveInstitution2() {
         int n=1;
         assertTrue(instDao.saveInstitution(new Institution(
-                emails[n], passwords[n], locations[n], workingHours[n]
+                emails[n], names[n], passwords[n], locations[n], workingHours[n]
         ))) ;
     }
 
 //  Legal Statement
     @Test
-    @Order(3)
+    @Order(1)
     void saveInstitution3() {
         int n=2;
         assertTrue(instDao.saveInstitution(new Institution(
-                emails[n], passwords[n], locations[n], workingHours[n]
+                emails[n], names[n], passwords[n], locations[n], workingHours[n]
         ))) ;
     }
 
-//  Legal Statement
+//  Legal Statement, location has not a not null constraint
     @Test
-    @Order(4)
+    @Order(1)
     void saveInstitution4() {
         int n=3;
         assertTrue(instDao.saveInstitution(new Institution(
-                emails[n], passwords[n], locations[n], workingHours[n]
+                emails[n], names[n], passwords[n], null, workingHours[n]
         ))) ;
     }
 
 //  Email is repeated
     @Test
-    @Order(5)
+    @Order(2)
     void saveInstitution5() {
         int n=4;
         assertFalse(instDao.saveInstitution(new Institution(
-                emails[2], passwords[n], locations[n], workingHours[n]
+                emails[2], names[n], passwords[n], locations[n], workingHours[n]
         ))) ;
+    }
+
+    @Test
+    @Order(2)
+    void saveInstitution6() {
+        int n=6;
+        Institution institution = new Institution(emails[n], null, passwords[n], locations[n], workingHours[n]);
+        assertFalse(instDao.saveInstitution(institution)) ;
     }
 
 //  All data are repeated except email
     @Test
-    @Order(6)
-    void saveInstitution6() {
+    @Order(3)
+    void saveInstitution7() {
         int n=5;
         assertTrue(instDao.saveInstitution(new Institution(
-                emails[n], passwords[1], locations[1], workingHours[1]
+                emails[n], names[n], passwords[1], locations[1], workingHours[1]
         ))) ;
     }
 
@@ -108,7 +120,7 @@ class InstitutionDAOTest {
 
 //  Here we set only -ve blood types, so +ve ones are all 0
     @Test
-    @Order(7)
+    @Order(4)
     void setPackets1() {
         Institution institution = instDao.findInstitutionByEmail(emails[0]);
         assertNotNull(institution);
@@ -126,7 +138,7 @@ class InstitutionDAOTest {
 
 //  Here we set only +ve blood types, so -ve ones are all 0
     @Test
-    @Order(7)
+    @Order(4)
     void setPackets2() {
         Institution institution = instDao.findInstitutionByEmail(emails[1]);
         assertNotNull(institution);
@@ -144,7 +156,7 @@ class InstitutionDAOTest {
 
 //  Here, only 'O' type is missing (rare blood type)
     @Test
-    @Order(7)
+    @Order(4)
     void setPackets3() {
         Institution institution = instDao.findInstitutionByEmail(emails[2]);
         assertNotNull(institution);
@@ -164,14 +176,14 @@ class InstitutionDAOTest {
 
 //  Email exists
     @Test
-    @Order(7)
+    @Order(4)
     void setPackets4() {
         Institution institution = instDao.findInstitutionByEmail(emails[3]);
         assertNotNull(institution);
     }
 
     @Test
-    @Order(7)
+    @Order(4)
     void setPackets5() {
         Institution institution = instDao.findInstitutionByEmail(emails[5]);
         assertNotNull(institution);
@@ -179,7 +191,7 @@ class InstitutionDAOTest {
 
 //  Email does NOT exist, so we expect institution to be null
     @Test
-    @Order(7)
+    @Order(4)
     void setPackets6() {
         Institution institution = instDao.findInstitutionByEmail(emails[8]);
         assertNull(institution);
@@ -188,7 +200,7 @@ class InstitutionDAOTest {
 
 //    /**********   Retrieving institutions with blood packets above threshold   **********/
 //    @Test
-//    @Order(8)
+//    @Order(5)
 //    void haveBloodPackets1() {
 //        List<Institution> expectedInstitutions = instDao.haveBloodPackets("Ap", 11);
 ////        11, 21
@@ -199,7 +211,7 @@ class InstitutionDAOTest {
 //    }
 //
 //    @Test
-//    @Order(8)
+//    @Order(5)
 //    void haveBloodPackets2() {
 //        List<Institution> expectedInstitutions = instDao.haveBloodPackets("An", 1);
 //        List<Institution> actualInstitutions = new ArrayList<>();
@@ -209,7 +221,7 @@ class InstitutionDAOTest {
 //    }
 //
 //    @Test
-//    @Order(8)
+//    @Order(5)
 //    void haveBloodPackets3() {
 //        List<Institution> expectedInstitutions = instDao.haveBloodPackets("Bn", 11);
 //        List<Institution> actualInstitutions = new ArrayList<>();
@@ -218,7 +230,7 @@ class InstitutionDAOTest {
 //    }
 //
 //    @Test
-//    @Order(8)
+//    @Order(5)
 //    void haveBloodPackets4() {
 //        List<Institution> expectedInstitutions = instDao.haveBloodPackets("Bn", 21);
 //        List<Institution> actualInstitutions = new ArrayList<>();
@@ -227,27 +239,27 @@ class InstitutionDAOTest {
 //    }
 //
 //    @Test
-//    @Order(8)
+//    @Order(5)
 //    void haveBloodPackets5() {
 //        List<Institution> expectedInstitutions = instDao.haveBloodPackets("On", 11);
 //        assertEquals(expectedInstitutions.size(), 0);
 //    }
 //
 //    @Test
-//    @Order(8)
+//    @Order(5)
 //    void haveBloodPackets6() {
 //        List<Institution> expectedInstitutions = instDao.haveBloodPackets("Op", 11);
 //        assertEquals(expectedInstitutions.size(), 1);
 //    }
 //
 //    @Test
-//    @Order(8)
+//    @Order(5)
 //    void countingPackets1() {
 //        assertEquals(instDao.findInstitutionByEmail(emails[0]).getNegativeA_bagsCount(), 2);
 //    }
 //
 //    @Test
-//    @Order(8)
+//    @Order(5)
 //    void countingPackets2() {
 //        assertEquals(instDao.findInstitutionByEmail(emails[1]).getPositiveAB_bagsCount(), 15);
 //    }
