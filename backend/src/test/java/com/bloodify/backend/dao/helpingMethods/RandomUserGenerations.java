@@ -97,6 +97,10 @@ public class RandomUserGenerations {
         }
         return location.toString();
     }
+    
+    public float generateFloat() {
+        return (float) (Float.MIN_VALUE + Math.random()*(Float.MAX_VALUE-Float.MIN_VALUE));
+    }
 
 
 

@@ -129,7 +129,7 @@ public class Institution {
     @Column(name = "count_On")
     int negativeO_bagsCount;
 
-    public Institution (String email, String password, String location, int workingHours) {
+    public Institution(String email, String password, String location, int workingHours) {
         this.email = email;
         this.password = password;
         this.location = location;
@@ -142,6 +142,16 @@ public class Institution {
         this.positiveB_bagsCount = 0;
         this.positiveAB_bagsCount = 0;
         this.positiveO_bagsCount = 0;
+    }
+
+    public Institution (String name, String email, String locationEnglish, float locationLatitude, float locationLongitude, String password)
+    {
+//        this.name = name;
+        this.email = email;
+        this.location = locationEnglish;
+        this.latitude = locationLatitude;
+        this.longitude = locationLongitude;
+        this.password = password;
     }
 
 }
