@@ -1,8 +1,9 @@
 package com.bloodify.backend.controller;
 
+import com.bloodify.backend.model.entities.Institution;
 import com.bloodify.backend.services.exceptions.SignupDuplicateException;
 import com.bloodify.backend.model.entities.User;
-import com.bloodify.backend.model.responses.UserSignUpResponse;
+import com.bloodify.backend.model.responses.SignUpResponse;
 import com.bloodify.backend.services.interfaces.AccountManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,13 +20,13 @@ public class AccountController {
     AccountManagerService accountManagerService;
 
     @PostMapping("/user")
-    public ResponseEntity<UserSignUpResponse> signUpUser(@RequestBody User user) throws Exception {
+    public ResponseEntity<SignUpResponse> signUpUser(@RequestBody User user) throws Exception {
         System.out.println(user.toString());
         boolean isCreated = accountManagerService.signUpUser(user);
         if(isCreated)
-            return ResponseEntity.status(HttpStatus.CREATED).body(new UserSignUpResponse(true, "Success"));
+            return ResponseEntity.status(HttpStatus.CREATED).body(new SignUpResponse(true, "Success"));
         else
-            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(new UserSignUpResponse(false, "Error occurred while signing up."));
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(new SignUpResponse(false, "Error occurred while signing up."));
     }
 
     @PostMapping("/user/auth")
@@ -45,11 +46,13 @@ public class AccountController {
     }
 
     @PostMapping("/institution")
-    public Object signUpInstitution(@RequestBody Object user){
-        // Here It will try to sign up the user then send an email to confirm
-        // Returns Status Code 201 CREATED if created successfully
-        // Returns Status Code 200 OK      if cannot be created, reason here : https://stackoverflow.com/a/53144807
-        return null;
+    public Object signUpInstitution(@RequestBody Institution institution){
+        System.out.println(institution.toString());
+        boolean isCreated = accountManagerService.signUpInstitution(institution);
+        if(isCreated)
+            return ResponseEntity.status(HttpStatus.CREATED).body(new SignUpResponse(true, "Success"));
+        else
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(new SignUpResponse(false, "Error occurred while signing up."));
     }
 
     @PostMapping("/institution/auth")
@@ -70,13 +73,13 @@ public class AccountController {
 
     @ResponseStatus(HttpStatus.CONFLICT)
     @ExceptionHandler(SignupDuplicateException.class)
-    public UserSignUpResponse handleSignupException(SignupDuplicateException exception){
-        return new UserSignUpResponse(false, exception.getMessage());
+    public SignUpResponse handleSignupException(SignupDuplicateException exception){
+        return new SignUpResponse(false, exception.getMessage());
     }
 
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
     @ExceptionHandler(HttpMessageNotReadableException.class)
-    public UserSignUpResponse handleIncorrectFormatException(){
-        return new UserSignUpResponse(false, "Incorrect format");
+    public SignUpResponse handleIncorrectFormatException(){
+        return new SignUpResponse(false, "Incorrect format");
     }
 }
