@@ -89,6 +89,7 @@ class SignUpCubit extends Cubit<SignUpStates> {
 
   void changeLastDonated(DateTime time) {
     user.last_donated_time = time;
+    print(user.last_donated_time);
     emit(lastDonated());
   }
 
@@ -126,13 +127,12 @@ class SignUpCubit extends Cubit<SignUpStates> {
 
   void userSignUp() {
     emit(SignUpLoading());
-    var last_time_donated = lastDonated == null
-        ? new DateFormat("yyyy-MM-dd").parse(user.last_donated_time.toString())
+    var last_time_donated = user.last_donated_time != null
+        ? new DateFormat("dd-MM-yyyy").format(user.last_donated_time!)
         : null;
-    var dof = new DateFormat("yyyy-MM-dd").format(user.dOB);
+    var dof = new DateFormat("dd-MM-yyyy").format(user.dOB);
     print("${last_time_donated} date ${dof}");
-    DioHelper.postData(
-        url: 'user',
+    DioHelper.postData(url: 'user',
         // data: {
         //   'name': name,
         //   'email': email,
@@ -146,8 +146,7 @@ class SignUpCubit extends Cubit<SignUpStates> {
           'email': user.email,
           'password': user.password,
           // 'location': user.location,
-          'date_of_birth': dof,
-          'last_time_donated': last_time_donated,
+          'lastTimeDonated': last_time_donated,
           'hasDiseases': user.isPatient,
           'bloodType': user.bloodType,
         }).then((value) {

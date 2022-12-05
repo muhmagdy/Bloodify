@@ -8,7 +8,7 @@ class UserData {
   late String password;
   DateTime dOB = DateTime(
       DateTime.now().year - 20, DateTime.now().month, DateTime.now().day);
-  DateTime? last_donated_time;
+  DateTime? last_donated_time = null;
   bool isPatient = false;
   String bloodType = 'A+';
   late String token;

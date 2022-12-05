@@ -22,11 +22,11 @@ class SignUp2 extends StatelessWidget {
   List<String> types = ['A+', 'B+', 'O+', 'AB+', 'A-', 'B-', 'O-', 'AB-'];
   final _formKey = GlobalKey<FormState>();
   Language language = EnglishLanguage();
+  var dateFormat = new DateFormat("dd-MM-yyyy");
 
   @override
   Widget build(BuildContext context) {
-    dateController.text =
-        DateFormat('yyyy-MM-dd').format(SignUpCubit.get(context).user.dOB);
+    dateController.text = dateFormat.format(SignUpCubit.get(context).user.dOB);
 
     return BlocConsumer<SignUpCubit, SignUpStates>(
       listener: (context, state) {
@@ -65,7 +65,7 @@ class SignUp2 extends StatelessWidget {
                     TextFormField(
                         validator: (String? value) {
                           if (value!.isEmpty) return language.enterValue('dob');
-                          if (new DateFormat("yyyy-MM-dd").parse(value) !=
+                          if (dateFormat.parse(value) !=
                               SignUpCubit.get(context).supposedDateOfBirth) {
                             return language.showIncorrectDOB();
                           }
@@ -84,7 +84,7 @@ class SignUp2 extends StatelessWidget {
                                 if (value != null)
                                   {
                                     dateController.text =
-                                        DateFormat('yyyy-MM-dd').format(value),
+                                        dateFormat.format(value),
                                     SignUpCubit.get(context)
                                         .changeDateOfBirth(value),
                                   }
@@ -284,8 +284,7 @@ class SignUp2 extends StatelessWidget {
                                             if (value != null)
                                               {
                                                 lastDonateddateController.text =
-                                                    DateFormat('yyyy-MM-dd')
-                                                        .format(value),
+                                                    dateFormat.format(value),
                                                 SignUpCubit.get(context)
                                                     .changeLastDonated(value),
                                               }
