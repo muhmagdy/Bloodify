@@ -1,8 +1,9 @@
 package com.bloodify.backend.controller;
 
 import com.bloodify.backend.dao.helpingMethods.RandomUserGenerations;
+import com.bloodify.backend.model.entities.Institution;
 import com.bloodify.backend.model.entities.User;
-import com.bloodify.backend.model.responses.UserSignUpResponse;
+import com.bloodify.backend.model.responses.SignUpResponse;
 import com.bloodify.backend.services.exceptions.BothEmailAndNationalIdExists;
 import com.bloodify.backend.services.exceptions.EmailExistsException;
 import com.bloodify.backend.services.exceptions.NationalIdExistsException;
@@ -10,12 +11,12 @@ import com.bloodify.backend.services.interfaces.AccountManagerService;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.*;
@@ -37,9 +38,9 @@ class UserWithNoEmail{
     @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate lastTimeDonated;
 }
-
+@AutoConfigureMockMvc(addFilters = false)
 @WebMvcTest(controllers = AccountController.class)
-class AccountControllerTest {
+class AccountControllerUserSignUpTest {
     @Autowired
     private MockMvc mockMvc;
     @Autowired
@@ -49,8 +50,8 @@ class AccountControllerTest {
 
     RandomUserGenerations random = new RandomUserGenerations();
 
-    private User generateRandomUser(){
-        return new User(random.generateName(5,10), random.generateName(5,10), random.generateNationalID(),
+    private User generateRandomUser() {
+        return new User(random.generateName(5, 10), random.generateName(5, 10), random.generateNationalID(),
                 random.generateEmail(10, 30), "A+", random.generateDiseases(),
                 random.generateDate(1980, 2022), random.generatePassword(15));
     }
@@ -59,7 +60,7 @@ class AccountControllerTest {
      * Checks if the controller listens to sign up http request
      */
     @Test
-    void whenEmptySignupResponse_thenReturns422() throws Exception{
+    void whenEmptySignupResponse_thenReturns422() throws Exception {
         mockMvc.perform(post("/api/v1/user").
                 contentType("application/json")).
                 andExpect(status().isUnprocessableEntity());
@@ -69,7 +70,7 @@ class AccountControllerTest {
      * Checks input deserialization
      */
     @Test
-    void whenValidSignupInput_thenReturns201() throws Exception{
+    void whenValidSignupInput_thenReturns201() throws Exception {
         User user = generateRandomUser();
         when(accountManagerService.signUpUser(user)).thenReturn(true);
         mockMvc.perform(post("/api/v1/user").
@@ -79,19 +80,19 @@ class AccountControllerTest {
     }
 
     @Test
-    void whenEmailIsMissingSignup() throws  Exception{
-        UserWithNoEmail user = new UserWithNoEmail(random.generateName(5,10), random.generateName(5,10),
+    void whenEmailIsMissingSignup() throws Exception {
+        UserWithNoEmail user = new UserWithNoEmail(random.generateName(5, 10), random.generateName(5, 10),
                 random.generateNationalID(), "A+", random.generatePassword(15),
                 random.generateDiseases(), random.generateDate(1980, 2022));
-                mockMvc.perform(post("/api/v1/user").
+        mockMvc.perform(post("/api/v1/user").
                 contentType("application/json").
                 content(objectMapper.writeValueAsString(user))).
                 andExpect(status().isUnprocessableEntity());
     }
 
     @Test
-    void emailIsNullSignupTest() throws Exception{
-        User user = new User(random.generateName(5,10), random.generateName(5,10), random.generateNationalID(),
+    void emailIsNullSignupTest() throws Exception {
+        User user = new User(random.generateName(5, 10), random.generateName(5, 10), random.generateNationalID(),
                 null, "A+", random.generateDiseases(),
                 random.generateDate(1980, 2022), random.generatePassword(15));
         mockMvc.perform(post("/api/v1/user").
@@ -101,7 +102,7 @@ class AccountControllerTest {
     }
 
     @Test
-    void validInputSignupTest() throws Exception{
+    void validInputSignupTest() throws Exception {
         User user = generateRandomUser();
         mockMvc.perform(post("/api/v1/user").
                 contentType("application/json").
@@ -119,22 +120,22 @@ class AccountControllerTest {
     }
 
     @Test
-    void validInputSignupReturnsValidResponse() throws Exception{
+    void validInputSignupReturnsValidResponse() throws Exception {
         User user = generateRandomUser();
         when(accountManagerService.signUpUser(user)).thenReturn(true);
         MvcResult mvcResult = mockMvc.perform(post("/api/v1/user").
-                                contentType("application/json").
-                                content(objectMapper.writeValueAsString(user))).
-                                andExpect(status().isCreated()).
-                                andReturn();
-        String expected = objectMapper.writeValueAsString(new UserSignUpResponse(true, "Success"));
+                contentType("application/json").
+                content(objectMapper.writeValueAsString(user))).
+                andExpect(status().isCreated()).
+                andReturn();
+        String expected = objectMapper.writeValueAsString(new SignUpResponse(true, "Success"));
         String actual = mvcResult.getResponse().getContentAsString();
         assertThat(actual).isEqualToIgnoringWhitespace(expected);
     }
 
     @Test
-    void whenEmailExistInSignup_thenEmailExIsThrown() throws Exception{
-        User user = new User(random.generateName(5,10), random.generateName(5,10), random.generateNationalID(),
+    void whenEmailExistInSignup_thenEmailExIsThrown() throws Exception {
+        User user = new User(random.generateName(5, 10), random.generateName(5, 10), random.generateNationalID(),
                 "existing@email.com", "A+", random.generateDiseases(),
                 random.generateDate(1980, 2022), random.generatePassword(15));
         when(accountManagerService.signUpUser(user)).thenThrow(new EmailExistsException());
@@ -144,15 +145,15 @@ class AccountControllerTest {
                 andExpect(status().isConflict()).
                 andReturn();
         String expected = objectMapper.
-                writeValueAsString(new UserSignUpResponse(false, "An account already exists with the same email."));
+                writeValueAsString(new SignUpResponse(false, "An account already exists with the same email."));
         String actual = mvcResult.getResponse().getContentAsString();
         assertThat(actual).isEqualToIgnoringWhitespace(expected);
     }
 
     @Test
-    void whenNationalIDExistInSignup_thenNationalIDExIsThrown() throws Exception{
-        User user = new User(random.generateName(5,10), random.generateName(5,10), "30000000000000",
-                random.generateEmail(10,15), "A+", random.generateDiseases(),
+    void whenNationalIDExistInSignup_thenNationalIDExIsThrown() throws Exception {
+        User user = new User(random.generateName(5, 10), random.generateName(5, 10), "30000000000000",
+                random.generateEmail(10, 15), "A+", random.generateDiseases(),
                 random.generateDate(1980, 2022), random.generatePassword(15));
         when(accountManagerService.signUpUser(user)).thenThrow(new NationalIdExistsException());
         MvcResult mvcResult = mockMvc.perform(post("/api/v1/user").
@@ -162,14 +163,14 @@ class AccountControllerTest {
                 andReturn();
         String expected = objectMapper.
                 writeValueAsString(
-                        new UserSignUpResponse(false, "An account already exists with the same National ID."));
+                        new SignUpResponse(false, "An account already exists with the same National ID."));
         String actual = mvcResult.getResponse().getContentAsString();
         assertThat(actual).isEqualToIgnoringWhitespace(expected);
     }
 
     @Test
-    void whenEmailAndNationalIDExistInSignup_thenExIsThrown() throws Exception{
-        User user = new User(random.generateName(5,10), random.generateName(5,10), "30000000000000",
+    void whenEmailAndNationalIDExistInSignup_thenExIsThrown() throws Exception {
+        User user = new User(random.generateName(5, 10), random.generateName(5, 10), "30000000000000",
                 "exisiting@email.com", "A+", random.generateDiseases(),
                 random.generateDate(1980, 2022), random.generatePassword(15));
         when(accountManagerService.signUpUser(user)).thenThrow(new BothEmailAndNationalIdExists());
@@ -180,7 +181,7 @@ class AccountControllerTest {
                 andReturn();
         String expected = objectMapper.
                 writeValueAsString(
-                        new UserSignUpResponse(false, "An account already exists with the same email and national id."));
+                        new SignUpResponse(false, "An account already exists with the same email and national id."));
         String actual = mvcResult.getResponse().getContentAsString();
         assertThat(actual).isEqualToIgnoringWhitespace(expected);
     }

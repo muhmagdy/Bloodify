@@ -18,22 +18,24 @@ class UserLoginCubit extends Cubit<UserLoginStates> {
   }) {
     emit(UserLoginLoadingState());
 
-    DioHelper.postData(
-      url: 'login',
-      data: {
-        'email': email,
-        'password': password,
-      },
+    DioHelper.postLogin(
+      url: 'user/auth',
+      email: email,
+      password: password,
     ).then((value) {
       print(value.data);
       print(value.data);
       loginModel = UserLoginModel.fromJson(value.data);
       emit(UserLoginSuccessState(loginModel));
+    }).catchError((error) {
+      if (error.response.statusCode == 401) {
+        var loginResp = new UserLoginModel(false);
+        emit(UserLoginSuccessState(loginResp));
+      } else {
+        print("api " + error.toString());
+        emit(UserLoginErrorState(error.toString()));
+      }
     });
-    // .catchError((error) {
-    //   print("api " + error.toString());
-    //   emit(LoginErrorState(error.toString()));
-    // });
   }
 
   IconData suffix = Icons.visibility_outlined;

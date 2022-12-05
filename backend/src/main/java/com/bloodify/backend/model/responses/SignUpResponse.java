@@ -7,7 +7,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Setter
 @Getter
-public class UserSignUpResponse {
+public class SignUpResponse {
     private boolean state;
     private String message;
 }

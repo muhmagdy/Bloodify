@@ -4,7 +4,10 @@ import com.bloodify.backend.model.entities.User;
 
 import java.util.List;
 
-public interface UserDAO {
+import org.springframework.security.core.userdetails.UserDetailsService;
+
+
+public interface UserDAO extends UserDetailsService{
     public boolean saveUser(User newUser);
 
     public User findUserByEmail(String email);

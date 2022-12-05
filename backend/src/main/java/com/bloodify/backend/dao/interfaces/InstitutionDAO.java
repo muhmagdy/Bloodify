@@ -4,7 +4,10 @@ import com.bloodify.backend.model.entities.Institution;
 
 import java.util.List;
 
-public interface InstitutionDAO {
+import org.springframework.security.core.userdetails.UserDetailsService;
+
+
+public interface InstitutionDAO extends UserDetailsService{
     public boolean saveInstitution(Institution newInst);
 
     public Institution findInstitutionByEmail(String email);

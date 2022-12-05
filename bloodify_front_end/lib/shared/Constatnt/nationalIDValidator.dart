@@ -20,13 +20,15 @@ class EgyptNationalIDParser extends NationalIDParser{
     centuryNumber -= 2;
     int years = int.parse(ID.substring(1, 3));
     years = 1900 + (centuryNumber) * 100 + years;
+    int minYear = (DateTime.now().year - 60), maxYear = (DateTime.now().year - 18);
+    if(years < minYear || years > maxYear) return false;
     int months = int.parse(ID.substring(3, 5)) ;
     int days = int.parse(ID.substring(5, 7));
 
     bool thirty_Days_Month = Thirty_Days_Month(months, days);
     bool thirty_one_Days_Month = Thirty_one_Days_Month(months, days);
     bool february = February(years, months, days);
-    if (!(thirty_Days_Month || thirty_one_Days_Month || february)) return false;
+    if (days == 0 || !(thirty_Days_Month || thirty_one_Days_Month || february)) return false;
     dob = new DateFormat("yyyy-MM-dd").parse('$years-$months-$days');
     print(dob);
     return true;
@@ -44,13 +46,17 @@ class EgyptNationalIDParser extends NationalIDParser{
   }
 
   bool isLeapYear(int year){
-    if(year % 4 == 0 && year % 100 != 0) return true;
-    if(year % 400 == 0)  return true;
-    return false;
+    return isleapYear(year);
   }
 
   @override
   DateTime getDOB() {
     return dob;
   }
+}
+
+bool isleapYear(int year){
+  if(year % 4 == 0 && year % 100 != 0) return true;
+  if(year % 400 == 0)  return true;
+  return false;
 }
