@@ -61,7 +61,7 @@ class AccountControllerTest {
      */
     @Test
     void whenEmptySignupResponse_thenReturns422() throws Exception{
-        mockMvc.perform(post("/api/v1/test/user").
+        mockMvc.perform(post("/api/v1/user").
                 contentType("application/json")).
                 andExpect(status().isUnprocessableEntity());
     }
@@ -73,7 +73,7 @@ class AccountControllerTest {
     void whenValidSignupInput_thenReturns201() throws Exception{
         User user = generateRandomUser();
         when(accountManagerService.signUpUser(user)).thenReturn(true);
-        mockMvc.perform(post("/api/v1/test/user").
+        mockMvc.perform(post("/api/v1/user").
                 contentType("application/json").
                 content(objectMapper.writeValueAsString(user))).
                 andExpect(status().isCreated());
@@ -84,7 +84,7 @@ class AccountControllerTest {
         UserWithNoEmail user = new UserWithNoEmail(random.generateName(5,10), random.generateName(5,10),
                 random.generateNationalID(), "A+", random.generatePassword(15),
                 random.generateDiseases(), random.generateDate(1980, 2022));
-                mockMvc.perform(post("/api/v1/test/user").
+                mockMvc.perform(post("/api/v1/user").
                 contentType("application/json").
                 content(objectMapper.writeValueAsString(user))).
                 andExpect(status().isUnprocessableEntity());
@@ -95,7 +95,7 @@ class AccountControllerTest {
         User user = new User(random.generateName(5,10), random.generateName(5,10), random.generateNationalID(),
                 null, "A+", random.generateDiseases(),
                 random.generateDate(1980, 2022), random.generatePassword(15));
-        mockMvc.perform(post("/api/v1/test/user").
+        mockMvc.perform(post("/api/v1/user").
                 contentType("application/json").
                 content(objectMapper.writeValueAsString(user))).
                 andExpect(status().isUnprocessableEntity());
@@ -104,7 +104,7 @@ class AccountControllerTest {
     @Test
     void validInputSignupTest() throws Exception{
         User user = generateRandomUser();
-        mockMvc.perform(post("/api/v1/test/user").
+        mockMvc.perform(post("/api/v1/user").
                 contentType("application/json").
                 content(objectMapper.writeValueAsString(user)));
         ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
@@ -123,7 +123,7 @@ class AccountControllerTest {
     void validInputSignupReturnsValidResponse() throws Exception{
         User user = generateRandomUser();
         when(accountManagerService.signUpUser(user)).thenReturn(true);
-        MvcResult mvcResult = mockMvc.perform(post("/api/v1/test/user").
+        MvcResult mvcResult = mockMvc.perform(post("/api/v1/user").
                                 contentType("application/json").
                                 content(objectMapper.writeValueAsString(user))).
                                 andExpect(status().isCreated()).
@@ -139,7 +139,7 @@ class AccountControllerTest {
                 "existing@email.com", "A+", random.generateDiseases(),
                 random.generateDate(1980, 2022), random.generatePassword(15));
         when(accountManagerService.signUpUser(user)).thenThrow(new EmailExistsException());
-        MvcResult mvcResult = mockMvc.perform(post("/api/v1/test/user").
+        MvcResult mvcResult = mockMvc.perform(post("/api/v1/user").
                 contentType("application/json").
                 content(objectMapper.writeValueAsString(user))).
                 andExpect(status().isConflict()).
@@ -156,7 +156,7 @@ class AccountControllerTest {
                 random.generateEmail(10,15), "A+", random.generateDiseases(),
                 random.generateDate(1980, 2022), random.generatePassword(15));
         when(accountManagerService.signUpUser(user)).thenThrow(new NationalIdExistsException());
-        MvcResult mvcResult = mockMvc.perform(post("/api/v1/test/user").
+        MvcResult mvcResult = mockMvc.perform(post("/api/v1/user").
                 contentType("application/json").
                 content(objectMapper.writeValueAsString(user))).
                 andExpect(status().isConflict()).
@@ -174,7 +174,7 @@ class AccountControllerTest {
                 "exisiting@email.com", "A+", random.generateDiseases(),
                 random.generateDate(1980, 2022), random.generatePassword(15));
         when(accountManagerService.signUpUser(user)).thenThrow(new BothEmailAndNationalIdExists());
-        MvcResult mvcResult = mockMvc.perform(post("/api/v1/test/user").
+        MvcResult mvcResult = mockMvc.perform(post("/api/v1/user").
                 contentType("application/json").
                 content(objectMapper.writeValueAsString(user))).
                 andExpect(status().isConflict()).
