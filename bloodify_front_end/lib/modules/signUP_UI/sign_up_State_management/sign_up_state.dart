@@ -49,7 +49,7 @@ class GetLocationsError extends SignUpStates {
   GetLocationsError(this.error);
 }
 
-class GetSupposedDateOfBirth extends SignUpStates{}
+class GetSupposedDateOfBirth extends SignUpStates {}
 
 class SiqnUpApiLoading extends SignUpStates {}
 
@@ -63,3 +63,4 @@ class SiqnUpApiError extends SignUpStates {
   SiqnUpApiError(this.error);
 }
 
+class lastDonated extends SignUpStates {}

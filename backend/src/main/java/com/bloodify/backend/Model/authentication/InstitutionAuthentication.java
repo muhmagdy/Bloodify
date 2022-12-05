@@ -23,14 +23,12 @@ public class InstitutionAuthentication implements UserDetails {
 
     @Override
     public String getPassword() {
-        // return user.getPassword();
-        return null;
+        return user.getPassword();
     }
 
     @Override
     public String getUsername() {
-        // return user.getEmail();
-        return null;
+        return user.getEmail();
     }
 
     @Override

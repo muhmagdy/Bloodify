@@ -1,12 +1,20 @@
 package com.bloodify.backend.services.interfaces;
 
-import com.bloodify.backend.model.requests.UserLogInRequest;
-import com.bloodify.backend.model.requests.UserSignUpRequest;
-import com.bloodify.backend.model.responses.UserLogInResponse;
-import com.bloodify.backend.model.responses.UserSignUpResponse;
+import com.bloodify.backend.model.responses.UserLoginResponseBody;
+
+import org.springframework.security.core.Authentication;
+
+import com.bloodify.backend.model.entities.Institution;
+import com.bloodify.backend.model.entities.User;
+// import com.bloodify.backend.model.requests.UserLogInRequest;
 
 public interface AccountManagerService {
-    UserLogInResponse logIn(UserLogInRequest user);
+    UserLoginResponseBody userlogIn(Authentication auth);
+    UserLoginResponseBody instlogIn(Authentication auth);
 
-    UserSignUpResponse signUpUser(UserSignUpRequest user);
+
+
+    boolean signUpUser(User user);
+
+    boolean signUpInstitution(Institution institution);
 }

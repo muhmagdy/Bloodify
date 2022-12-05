@@ -9,6 +9,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -73,7 +74,7 @@ public class SecurityConfiguration {
         return insDetailsService;
     }
 
-    public AuthenticationManager userAuthenticationManager(HttpSecurity http) throws Exception {
+    private AuthenticationManager userAuthenticationManager(HttpSecurity http) throws Exception {
          AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
          authenticationManagerBuilder
                .userDetailsService(userDetailsService())
@@ -81,22 +82,26 @@ public class SecurityConfiguration {
          return authenticationManagerBuilder.build();
      }
 
-     public AuthenticationManager instAuthenticationManager(HttpSecurity http) throws Exception {
+     private AuthenticationManager instAuthenticationManager(HttpSecurity http) throws Exception {
           AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
           authenticationManagerBuilder
                 .userDetailsService(instDetailsService())
                 .passwordEncoder(passwordEncoder());
 
           return authenticationManagerBuilder.build();
-      }
+    }
+
+
+    private final String endpoint = "/api/v1";
 
     @Bean
+    @Order(2)
     public SecurityFilterChain userFilterChain(HttpSecurity http) throws Exception {
-        String endpoint = "/api/v1/userlogin";
+        String endpoint =  this.endpoint + "/user";
         http
-            .securityMatcher(endpoint)
+            .securityMatcher(endpoint + "/**")
             .authorizeHttpRequests((auth) -> {
-                auth.requestMatchers(endpoint).permitAll();
+                auth.requestMatchers(endpoint + "/auth").permitAll();
                 auth.anyRequest().authenticated();
             }
 
@@ -115,11 +120,11 @@ public class SecurityConfiguration {
     @Bean
     @Order(1)
     public SecurityFilterChain instFilterChain(HttpSecurity http) throws Exception {
-        String endpoint = "/api/v1/instlogin";
+        String endpoint =  this.endpoint + "/institution";
         http
-            .securityMatcher(endpoint)
+            .securityMatcher(endpoint + "/**")
             .authorizeHttpRequests((auth) -> {
-                auth.requestMatchers(endpoint).permitAll();
+                auth.requestMatchers(endpoint + "/auth").permitAll();
                 auth.anyRequest().authenticated();
             }
 
@@ -133,6 +138,10 @@ public class SecurityConfiguration {
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         return http.build();
+    }
+    @Bean
+    public WebSecurityCustomizer webSecurityCustomizer() {
+        return (web) -> web.ignoring().requestMatchers(this.endpoint + "/test/**",this.endpoint+"/user");
     }
 
 }

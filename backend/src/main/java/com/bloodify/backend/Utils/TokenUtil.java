@@ -1,12 +1,13 @@
 package com.bloodify.backend.Utils;
 
+import java.security.Principal;
 import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import java.util.stream.Collectors;
+// import java.time.temporal.ChronoUnit;
+// import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
+// import org.springframework.security.core.Authentication;
+// import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
@@ -18,7 +19,7 @@ public class TokenUtil {
     @Autowired
     private JwtEncoder encoder;
 
-    public String generateToken(Authentication authentication) {
+    public String generateToken(Principal authentication) {
         Instant now = Instant.now();
         // String scope = authentication.getAuthorities().stream()
         //         .map(GrantedAuthority::getAuthority)

@@ -55,12 +55,19 @@ Widget loginUI({
                   labelText: "password",
                   isPassword: isUser
                       ? UserLoginCubit.get(context).isPassword
-                      : InstitutionLoginCubit().isPassword,
+                      : InstitutionLoginCubit.get(context).isPassword,
                   suffix: isUser
                       ? UserLoginCubit.get(context).suffix
                       : InstitutionLoginCubit.get(context).suffix,
-                  suffixPressed: () =>
-                      UserLoginCubit.get(context).changePasswordVisibility(),
+                  suffixPressed: () {
+                    if (isUser)
+                      UserLoginCubit.get(context).changePasswordVisibility();
+                    else {
+                      print("Clicked");
+                      InstitutionLoginCubit.get(context)
+                          .changePasswordVisibility();
+                    }
+                  },
                   prefix: Icons.lock,
                   validate: (String value) {
                     print(passwordController.text);
