@@ -41,7 +41,6 @@ class UserLogin extends StatelessWidget {
           } else {
             print("             ");
             print(state.loginModel.message);
-
             showToast(
               text: state.loginModel.message,
               color: Colors.red,

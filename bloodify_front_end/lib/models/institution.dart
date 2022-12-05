@@ -2,6 +2,9 @@ class InstitutionLoginModel {
   late bool status;
   late String message;
   InstitutionData? data;
+  InstitutionLoginModel(this.status) {
+    this.message = "Invalid user name or Password";
+  }
   InstitutionLoginModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];

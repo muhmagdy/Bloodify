@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:bloodify_front_end/layout/start_layout.dart';
 import 'package:bloodify_front_end/modules/signUP_UI/sign_up_pages/sign_up_1.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:dio/dio.dart';
@@ -17,6 +18,7 @@ import '../sign_up_State_management/sign_up_cubit.dart';
 
 class SignUp2 extends StatelessWidget {
   final dateController = TextEditingController();
+  final lastDonateddateController = TextEditingController();
   List<String> types = ['A+', 'B+', 'O+', 'AB+', 'A-', 'B-', 'O-', 'AB-'];
   final _formKey = GlobalKey<FormState>();
   Language language = EnglishLanguage();
@@ -30,7 +32,7 @@ class SignUp2 extends StatelessWidget {
       listener: (context, state) {
         // TODO: implement listener
         if (state is SiqnUpApiSucces) {
-          if (state.response.status) {
+          if (state.response.state) {
             SignUpCubit.get(context).user = new UserData();
             showToast(
                 text: language.getLabel('verification'),
@@ -38,7 +40,7 @@ class SignUp2 extends StatelessWidget {
                 time: 5000);
             navigateAndFinish(
               context,
-              SignUp1(),
+              StartWidget(),
             );
           } else {
             showToast(
@@ -229,37 +231,81 @@ class SignUp2 extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Text(language.getLabel('location'),
-                                    textAlign: TextAlign.right,
-                                    style: TextStyle(
-                                      color: Colors.grey[800],
-                                    )),
-                                SizedBox(
-                                  height: 20,
-                                ),
-                                ConditionalBuilder(
-                                  condition: state is! GetLocationsLoading,
-                                  builder: (context) => Container(
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
-                                          width: 10, color: Colors.grey),
-                                      color: Color.fromARGB(255, 237, 237, 237),
-                                      shape: BoxShape.circle,
-                                    ),
-                                    child: IconButton(
-                                      iconSize: 80,
-                                      icon: const Icon(
-                                        Icons.gps_fixed_rounded,
-                                        color: Colors.pink,
+                                // Text(language.getLabel('location'),
+                                //     textAlign: TextAlign.right,
+                                //     style: TextStyle(
+                                //       color: Colors.grey[800],
+                                //     )),
+                                // SizedBox(
+                                //   height: 20,
+                                // ),
+                                // ConditionalBuilder(
+                                //   condition: state is! GetLocationsLoading,
+                                //   builder: (context) => Container(
+                                //     decoration: BoxDecoration(
+                                //       border: Border.all(
+                                //           width: 10, color: Colors.grey),
+                                //       color: Color.fromARGB(255, 237, 237, 237),
+                                //       shape: BoxShape.circle,
+                                //     ),
+                                //     child: IconButton(
+                                //       iconSize: 80,
+                                //       icon: const Icon(
+                                //         Icons.gps_fixed_rounded,
+                                //         color: Colors.pink,
+                                //       ),
+                                //       onPressed: () {
+                                //         SignUpCubit.get(context).getLocation();
+                                //       },
+                                //     ),
+                                //   ),
+                                //   fallback: (context) => Center(
+                                //       child: CircularProgressIndicator()),
+                                // ),
+                                TextFormField(
+                                    onTap: () {
+                                      DateTime now = DateTime.now();
+                                      showDatePicker(
+                                        context: context,
+                                        initialDate: DateTime(
+                                            SignUpCubit.get(context)
+                                                    .user
+                                                    .dOB
+                                                    .year +
+                                                18),
+                                        firstDate: DateTime(
+                                            SignUpCubit.get(context)
+                                                    .user
+                                                    .dOB
+                                                    .year +
+                                                18),
+                                        lastDate: now,
+                                      ).then((value) => {
+                                            if (value != null)
+                                              {
+                                                lastDonateddateController.text =
+                                                    DateFormat('yyyy-MM-dd')
+                                                        .format(value),
+                                                SignUpCubit.get(context)
+                                                    .changeLastDonated(value),
+                                              }
+                                          });
+                                    },
+                                    controller: lastDonateddateController,
+                                    keyboardType: TextInputType.datetime,
+                                    decoration: InputDecoration(
+                                      labelText: 'last donted time',
+                                      prefix: Icon(
+                                        Icons.calendar_month_outlined,
+                                        color: Color.fromARGB(255, 255, 78, 66),
                                       ),
-                                      onPressed: () {
-                                        SignUpCubit.get(context).getLocation();
-                                      },
-                                    ),
-                                  ),
-                                  fallback: (context) => Center(
-                                      child: CircularProgressIndicator()),
-                                )
+                                      focusedBorder: OutlineInputBorder(
+                                          borderSide:
+                                              BorderSide(color: Colors.grey)),
+                                      border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10)),
+                                    )),
                               ],
                             ))
                       ],
@@ -283,8 +329,7 @@ class SignUp2 extends StatelessWidget {
                             condition: state is! SignUpLoading,
                             builder: (context) => DefaultButton(
                                 onClick: () {
-                                  if (SignUpCubit.get(context).serviceEnabled &&
-                                      _formKey.currentState!.validate()) {
+                                  if (_formKey.currentState!.validate()) {
                                     SignUpCubit.get(context).userSignUp();
                                   }
                                   ////////some checks on data and requests to the backend API
@@ -308,3 +353,7 @@ class SignUp2 extends StatelessWidget {
     );
   }
 }
+/*
+30102120202512
+
+*/ 

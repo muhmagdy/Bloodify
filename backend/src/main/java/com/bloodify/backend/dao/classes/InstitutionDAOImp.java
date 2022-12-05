@@ -1,15 +1,24 @@
 package com.bloodify.backend.dao.classes;
 
-import com.bloodify.backend.dao.interfaces.InstitutionDAO;
-import com.bloodify.backend.dao.interfaces.InstitutionRepository;
-import com.bloodify.backend.dao.interfaces.UserRepository;
-import com.bloodify.backend.model.entities.Institution;
-import com.bloodify.backend.model.entities.User;
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.List;
+
+// import org.springframework.security.core.authority.SimpleGrantedAuthority;
+// import org.springframework.beans.factory.annotation.Autowired;
+// import org.springframework.security.core.userdetails.User;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.bloodify.backend.dao.interfaces.InstitutionDAO;
+import com.bloodify.backend.model.authentication.InstitutionAuthentication;
+import com.bloodify.backend.model.entities.Institution;
+import com.bloodify.backend.dao.interfaces.InstitutionRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.ArrayList;
-import java.util.List;
 
 
 /**
@@ -19,10 +28,11 @@ import java.util.List;
  * get institutions having blood packets of type 'bla' and for a quantity of 'blabla'
  */
 
-
+@Slf4j
 @Service
 public class InstitutionDAOImp implements InstitutionDAO {
     @Autowired
+    @Qualifier("InstitutionRepository")
     InstitutionRepository instRepo;
 
     public boolean saveInstitution(Institution newInst) {
@@ -35,6 +45,7 @@ public class InstitutionDAOImp implements InstitutionDAO {
     }
 
     public Institution findInstitutionByEmail(String email) {
+
         List<Institution> foundInstitutions = instRepo.findByEmail(email);
 
         if (foundInstitutions.isEmpty())
@@ -94,5 +105,15 @@ public class InstitutionDAOImp implements InstitutionDAO {
 //    }
 
 
-
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        log.info(username + " inst");
+        Institution institution = this.findInstitutionByEmail(username);
+        if(institution == null)    throw new UsernameNotFoundException(username + " not found");
+        log.info(institution.getEmail());
+        // if(!username.equals("foo")) throw new UsernameNotFoundException(username + " not found");
+        InstitutionAuthentication userAuth = new InstitutionAuthentication(institution);
+        return userAuth;
+        // return new User("foo", "foo", List.of(new SimpleGrantedAuthority("Institution")));
+    }
 }
