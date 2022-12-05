@@ -3,6 +3,7 @@ package com.bloodify.backend.model.entities;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @Table
@@ -94,7 +95,6 @@ import lombok.NoArgsConstructor;
 //        query = "UPDATE institution SET count_On = ? WHERE email = ?",
 //        resultClass = Institution.class
 //)
-
 public class Institution {
     @Id
     @GeneratedValue
@@ -108,30 +108,30 @@ public class Institution {
     @Column(length = 50)
     String location;
     @Column()
-    double latitude;
+    Double latitude;
     @Column()
-    double longitude;
+    Double longitude;
     @Column(name = "working_hours")
-    int workingHours;
+    Integer workingHours;
     @Column(nullable = false, length = 30)
     String password;
 
     @Column(name = "count_Ap")
-    int positiveA_bagsCount;
+    Integer positiveA_bagsCount;
     @Column(name = "count_Bp")
-    int positiveB_bagsCount;
+    Integer positiveB_bagsCount;
     @Column(name = "count_ABp")
-    int positiveAB_bagsCount;
+    Integer positiveAB_bagsCount;
     @Column(name = "count_Op")
-    int positiveO_bagsCount;
+    Integer positiveO_bagsCount;
     @Column(name = "count_An")
-    int negativeA_bagsCount;
+    Integer negativeA_bagsCount;
     @Column(name = "count_Bn")
-    int negativeB_bagsCount;
+    Integer negativeB_bagsCount;
     @Column(name = "count_ABn")
-    int negativeAB_bagsCount;
+    Integer negativeAB_bagsCount;
     @Column(name = "count_On")
-    int negativeO_bagsCount;
+    Integer negativeO_bagsCount;
 
     public Institution (String email, String name, String password, String location, int workingHours) {
         this.email = email;

@@ -45,6 +45,7 @@ public class InstitutionDAOImp implements InstitutionDAO {
     }
 
     public Institution findInstitutionByEmail(String email) {
+
         List<Institution> foundInstitutions = instRepo.findByEmail(email);
 
         if (foundInstitutions.isEmpty())
