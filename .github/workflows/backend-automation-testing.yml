@@ -1,0 +1,26 @@
+name: Maven Run Tests when push to Main branch and newly created PRs.
+
+on:
+    push:
+        branches:
+            - master
+    pull_request:
+        branches:
+            - '**'
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
+            - uses: mirromutth/mysql-action@v1.1
+              with:
+                mysql database: 'BloodifyDB'
+                mysql root password: 'pass'
+            - name: Set up JDK
+              uses: actions/setup-java@v3.6.0
+              with:
+                  java-version: '17'
+                  distribution: 'corretto'
+            - name: Test with Maven
+              run: mvn -B test --file backend/pom.xml

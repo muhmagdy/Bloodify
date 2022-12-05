@@ -1,0 +1,24 @@
+name: Test Flutter
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: "**"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.3.9'
+          channel: 'stable'
+      - name: Install dependencies
+        working-directory: ./bloodify_front_end
+        run: flutter pub get
+      - name: Run tests
+        working-directory: ./bloodify_front_end
+        run: flutter test
