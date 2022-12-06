@@ -31,6 +31,9 @@ public class AccountManagerServiceImp implements AccountManagerService {
     @Autowired
     TokenUtil tokenUtil;
 
+    @Autowired
+    EncoderService encoderService;
+
     @Override
     public LoginResponseBody userLogIn(Authentication auth) {
         try{
@@ -58,7 +61,7 @@ public class AccountManagerServiceImp implements AccountManagerService {
 
     @Override
     public boolean userSignUp(User user) {
-        user.setPassword(new BCryptPasswordEncoder(10).encode(user.getPassword()));
+        user.setPassword(encoderService.encode(user.getPassword()));
         System.out.println(user.getPassword());
         boolean nationalIdExists = userDAO.findUserByNationalID(user.getNationalID()) != null;
         boolean emailExists = userDAO.findUserByEmail(user.getEmail()) != null;
@@ -76,7 +79,7 @@ public class AccountManagerServiceImp implements AccountManagerService {
 
     @Override
     public boolean instSignUp(Institution institution) {
-        institution.setPassword(new BCryptPasswordEncoder(10).encode(institution.getPassword()));
+        institution.setPassword(encoderService.encode(institution.getPassword()));
         boolean emailExists = instDAO.findInstitutionByEmail(institution.getEmail()) != null;
         if (emailExists)
             throw new EmailExistsException();

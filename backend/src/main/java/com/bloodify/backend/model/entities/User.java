@@ -72,7 +72,7 @@ public class User {
     private LocalDate lastTimeDonated;
 
     @NonNull
-    @Size(max = 100, message = "Password is too long")
+    @Size(max = 60, message = "Password is too long")
     @Size(min = 8, message = "Password is too short")
     @Column(nullable = false, length = 100)
     private String password = "";

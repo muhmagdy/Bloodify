@@ -1,5 +1,6 @@
 package com.bloodify.backend.config.SecurityConfiguration;
 
+import com.bloodify.backend.services.classes.EncoderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -47,6 +48,9 @@ public class SecurityConfiguration {
     @Autowired
     private RsaKeyProperties rsaKeys;
 
+    @Autowired
+    EncoderService encoderService;
+
     @Bean
     JwtDecoder jwtDecoder() {
         return NimbusJwtDecoder.withPublicKey(rsaKeys.publicKey()).build();
@@ -61,7 +65,7 @@ public class SecurityConfiguration {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(10);
+        return encoderService.getPasswordEncoder();
     }
 
     @Bean

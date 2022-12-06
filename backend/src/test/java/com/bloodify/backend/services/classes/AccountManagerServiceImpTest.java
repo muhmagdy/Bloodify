@@ -13,6 +13,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 import static org.mockito.Mockito.when;
 
@@ -20,6 +21,9 @@ import static org.mockito.Mockito.when;
 class AccountManagerServiceImpTest {
     @Mock
     UserDAO userDAO;
+
+    @Mock
+    EncoderService encoderService;
 
     @InjectMocks
     AccountManagerServiceImp accountManagerService;
@@ -34,6 +38,9 @@ class AccountManagerServiceImpTest {
         when(userDAO.findUserByEmail(new User().getEmail()))
                 .thenReturn(new User());
 
+        when(encoderService.encode(""))
+                .thenReturn("");
+
         Assertions.assertThrows(EmailExistsException.class,
                 () -> accountManagerService.userSignUp(new User()));
     }
@@ -46,6 +53,9 @@ class AccountManagerServiceImpTest {
         when(userDAO.findUserByEmail(new User().getEmail()))
                 .thenReturn(null);
 
+        when(encoderService.encode(""))
+                .thenReturn("");
+
         Assertions.assertThrows(NationalIdExistsException.class,
                 () -> accountManagerService.userSignUp(new User()));
     }
@@ -57,6 +67,9 @@ class AccountManagerServiceImpTest {
 
         when(userDAO.findUserByEmail(new User().getEmail()))
                 .thenReturn(new User());
+
+        when(encoderService.encode(""))
+                .thenReturn("");
 
         Assertions.assertThrows(BothEmailAndNationalIdExists.class,
                 () -> accountManagerService.userSignUp(new User()));
@@ -73,6 +86,9 @@ class AccountManagerServiceImpTest {
 
         when(userDAO.saveUser(user))
                 .thenReturn(true);
+
+        when(encoderService.encode(user.getPassword()))
+                .thenReturn(user.getPassword());
 
         Assertions.assertTrue(accountManagerService.userSignUp(user));
     }

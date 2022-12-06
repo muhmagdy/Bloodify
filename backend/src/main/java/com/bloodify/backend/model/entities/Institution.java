@@ -105,7 +105,7 @@ public class Institution {
     @Column(nullable = false, length = 40)
     String name;   
 
-    @Column(length = 50)
+    @Column(nullable = false, length = 50)
     String location;
     @Column()
     Double latitude;

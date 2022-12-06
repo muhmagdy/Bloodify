@@ -86,7 +86,7 @@ public class AccountController {
     }
 
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
-    @ExceptionHandler(HttpMessageNotReadableException.class)
+    @ExceptionHandler({HttpMessageNotReadableException.class, IllegalArgumentException.class})
     public SignUpResponse handleIncorrectFormatException(){
         return new SignUpResponse(false, "Incorrect format");
     }
