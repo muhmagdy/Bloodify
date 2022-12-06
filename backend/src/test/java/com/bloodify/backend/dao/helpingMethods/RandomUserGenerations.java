@@ -1,5 +1,7 @@
 package com.bloodify.backend.dao.helpingMethods;
 
+import com.bloodify.backend.model.entities.User;
+
 import java.time.LocalDate;
 
 public class RandomUserGenerations {
@@ -102,6 +104,11 @@ public class RandomUserGenerations {
         return (float) (Float.MIN_VALUE + Math.random()*(Float.MAX_VALUE-Float.MIN_VALUE));
     }
 
+    public User generateRandomUser() {
+        return new User(generateName(5, 10), generateName(5, 10), generateNationalID(),
+                generateEmail(10, 30), "A+", generateDiseases(),
+                generateDate(1980, 2022), generatePassword(15));
+    }
 
 
     public static void main(String[] args) {

@@ -4,7 +4,7 @@ package com.bloodify.backend.services.classes;
 import com.bloodify.backend.Utils.TokenUtil;
 import com.bloodify.backend.dao.interfaces.InstitutionDAO;
 import com.bloodify.backend.dao.interfaces.UserDAO;
-import com.bloodify.backend.model.responses.UserLoginResponseBody;
+import com.bloodify.backend.model.responses.LoginResponseBody;
 import com.bloodify.backend.model.entities.Institution;
 import com.bloodify.backend.model.entities.User;
 import com.bloodify.backend.services.exceptions.BothEmailAndNationalIdExists;
@@ -16,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -31,11 +32,11 @@ public class AccountManagerServiceImp implements AccountManagerService {
     TokenUtil tokenUtil;
 
     @Override
-    public UserLoginResponseBody userlogIn(Authentication auth) {
+    public LoginResponseBody userLogIn(Authentication auth) {
         try{
             String token = tokenUtil.generateToken(auth);
             User user = userDAO.findUserByEmail(auth.getName());
-            return new UserLoginResponseBody(user, token);
+            return new LoginResponseBody(user, token);
         }catch (Exception e){
             log.info(e.getMessage());
             return null;
@@ -43,12 +44,12 @@ public class AccountManagerServiceImp implements AccountManagerService {
     }
 
     @Override
-    public UserLoginResponseBody instlogIn(Authentication auth) {
+    public LoginResponseBody instLogIn(Authentication auth) {
         try{
             String token = tokenUtil.generateToken(auth);
             Institution inst = instDAO.findInstitutionByEmail(auth.getName());
             log.info("login inst");
-            return new UserLoginResponseBody(inst, token);
+            return new LoginResponseBody(inst, token);
         }catch (Exception e){
             log.info(e.getMessage());
             return null;
@@ -56,7 +57,9 @@ public class AccountManagerServiceImp implements AccountManagerService {
     }
 
     @Override
-    public boolean signUpUser(User user) {
+    public boolean userSignUp(User user) {
+        user.setPassword(new BCryptPasswordEncoder(10).encode(user.getPassword()));
+        System.out.println(user.getPassword());
         boolean nationalIdExists = userDAO.findUserByNationalID(user.getNationalID()) != null;
         boolean emailExists = userDAO.findUserByEmail(user.getEmail()) != null;
 
@@ -72,8 +75,20 @@ public class AccountManagerServiceImp implements AccountManagerService {
     }
 
     @Override
-    public boolean signUpInstitution(Institution institution) {
-        return false;
+    public boolean instSignUp(Institution institution) {
+        institution.setPassword(new BCryptPasswordEncoder(10).encode(institution.getPassword()));
+        boolean emailExists = instDAO.findInstitutionByEmail(institution.getEmail()) != null;
+        if (emailExists)
+            throw new EmailExistsException();
+        return instDAO.saveInstitution(institution);
+    }
+
+    @Override
+    public void userSignOut(Authentication auth) {
+    }
+
+    @Override
+    public void instSignOut(Authentication auth) {
     }
 
 

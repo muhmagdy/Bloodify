@@ -1,7 +1,6 @@
 package com.bloodify.backend.controller;
 
 import com.bloodify.backend.dao.helpingMethods.RandomUserGenerations;
-import com.bloodify.backend.model.entities.Institution;
 import com.bloodify.backend.model.entities.User;
 import com.bloodify.backend.model.responses.SignUpResponse;
 import com.bloodify.backend.services.exceptions.BothEmailAndNationalIdExists;
@@ -72,7 +71,7 @@ class AccountControllerUserSignUpTest {
     @Test
     void whenValidSignupInput_thenReturns201() throws Exception {
         User user = generateRandomUser();
-        when(accountManagerService.signUpUser(user)).thenReturn(true);
+        when(accountManagerService.userSignUp(user)).thenReturn(true);
         mockMvc.perform(post("/api/v1/user").
                 contentType("application/json").
                 content(objectMapper.writeValueAsString(user))).
@@ -108,7 +107,7 @@ class AccountControllerUserSignUpTest {
                 contentType("application/json").
                 content(objectMapper.writeValueAsString(user)));
         ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
-        verify(accountManagerService, times(1)).signUpUser(userCaptor.capture());
+        verify(accountManagerService, times(1)).userSignUp(userCaptor.capture());
         assertEquals(userCaptor.getValue().getFirstName(), user.getFirstName());
         assertEquals(userCaptor.getValue().getLastName(), user.getLastName());
         assertEquals(userCaptor.getValue().getEmail(), user.getEmail());
@@ -122,7 +121,7 @@ class AccountControllerUserSignUpTest {
     @Test
     void validInputSignupReturnsValidResponse() throws Exception {
         User user = generateRandomUser();
-        when(accountManagerService.signUpUser(user)).thenReturn(true);
+        when(accountManagerService.userSignUp(user)).thenReturn(true);
         MvcResult mvcResult = mockMvc.perform(post("/api/v1/user").
                 contentType("application/json").
                 content(objectMapper.writeValueAsString(user))).
@@ -138,7 +137,7 @@ class AccountControllerUserSignUpTest {
         User user = new User(random.generateName(5, 10), random.generateName(5, 10), random.generateNationalID(),
                 "existing@email.com", "A+", random.generateDiseases(),
                 random.generateDate(1980, 2022), random.generatePassword(15));
-        when(accountManagerService.signUpUser(user)).thenThrow(new EmailExistsException());
+        when(accountManagerService.userSignUp(user)).thenThrow(new EmailExistsException());
         MvcResult mvcResult = mockMvc.perform(post("/api/v1/user").
                 contentType("application/json").
                 content(objectMapper.writeValueAsString(user))).
@@ -155,7 +154,7 @@ class AccountControllerUserSignUpTest {
         User user = new User(random.generateName(5, 10), random.generateName(5, 10), "30000000000000",
                 random.generateEmail(10, 15), "A+", random.generateDiseases(),
                 random.generateDate(1980, 2022), random.generatePassword(15));
-        when(accountManagerService.signUpUser(user)).thenThrow(new NationalIdExistsException());
+        when(accountManagerService.userSignUp(user)).thenThrow(new NationalIdExistsException());
         MvcResult mvcResult = mockMvc.perform(post("/api/v1/user").
                 contentType("application/json").
                 content(objectMapper.writeValueAsString(user))).
@@ -173,7 +172,7 @@ class AccountControllerUserSignUpTest {
         User user = new User(random.generateName(5, 10), random.generateName(5, 10), "30000000000000",
                 "exisiting@email.com", "A+", random.generateDiseases(),
                 random.generateDate(1980, 2022), random.generatePassword(15));
-        when(accountManagerService.signUpUser(user)).thenThrow(new BothEmailAndNationalIdExists());
+        when(accountManagerService.userSignUp(user)).thenThrow(new BothEmailAndNationalIdExists());
         MvcResult mvcResult = mockMvc.perform(post("/api/v1/user").
                 contentType("application/json").
                 content(objectMapper.writeValueAsString(user))).

@@ -1,5 +1,6 @@
 package com.bloodify.backend.services.classes;
 
+import com.bloodify.backend.dao.helpingMethods.RandomUserGenerations;
 import com.bloodify.backend.dao.interfaces.UserDAO;
 import com.bloodify.backend.model.entities.User;
 import com.bloodify.backend.services.exceptions.BothEmailAndNationalIdExists;
@@ -11,6 +12,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.mockito.Mockito.when;
 
@@ -22,6 +24,8 @@ class AccountManagerServiceImpTest {
     @InjectMocks
     AccountManagerServiceImp accountManagerService;
 
+    RandomUserGenerations random = new RandomUserGenerations();
+
     @Test
     public void testSignUpUserWithExistingEmailOnly() {
         when(userDAO.findUserByNationalID(new User().getNationalID()))
@@ -31,7 +35,7 @@ class AccountManagerServiceImpTest {
                 .thenReturn(new User());
 
         Assertions.assertThrows(EmailExistsException.class,
-                () -> accountManagerService.signUpUser(new User()));
+                () -> accountManagerService.userSignUp(new User()));
     }
 
     @Test
@@ -43,7 +47,7 @@ class AccountManagerServiceImpTest {
                 .thenReturn(null);
 
         Assertions.assertThrows(NationalIdExistsException.class,
-                () -> accountManagerService.signUpUser(new User()));
+                () -> accountManagerService.userSignUp(new User()));
     }
 
     @Test
@@ -55,20 +59,21 @@ class AccountManagerServiceImpTest {
                 .thenReturn(new User());
 
         Assertions.assertThrows(BothEmailAndNationalIdExists.class,
-                () -> accountManagerService.signUpUser(new User()));
+                () -> accountManagerService.userSignUp(new User()));
     }
 
     @Test
     public void testSignUserUpSuccessfully() {
-        when(userDAO.findUserByNationalID(new User().getNationalID()))
+        User user = random.generateRandomUser();
+        when(userDAO.findUserByNationalID(user.getNationalID()))
                 .thenReturn(null);
 
-        when(userDAO.findUserByEmail(new User().getNationalID()))
+        when(userDAO.findUserByEmail(user.getEmail()))
                 .thenReturn(null);
 
-        when(userDAO.saveUser(new User()))
+        when(userDAO.saveUser(user))
                 .thenReturn(true);
 
-        Assertions.assertTrue(accountManagerService.signUpUser(new User()));
+        Assertions.assertTrue(accountManagerService.userSignUp(user));
     }
 }

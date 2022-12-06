@@ -72,10 +72,10 @@ public class User {
     private LocalDate lastTimeDonated;
 
     @NonNull
-    @Size(max = 30, message = "Password is too long")
+    @Size(max = 100, message = "Password is too long")
     @Size(min = 8, message = "Password is too short")
-    @Column(nullable = false, length = 30)
-    private String password;
+    @Column(nullable = false, length = 100)
+    private String password = "";
 
     public User(String firstName, String lastName, String nationalID, String email, String bloodType,
                 boolean hasDiseases, LocalDate lastTimeDonated, String password) {

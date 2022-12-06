@@ -113,7 +113,7 @@ public class Institution {
     Double longitude;
     @Column(name = "working_hours")
     Integer workingHours;
-    @Column(nullable = false, length = 30)
+    @Column(nullable = false, length = 60)
     String password;
 
     @Column(name = "count_Ap")
