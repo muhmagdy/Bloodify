@@ -1,5 +1,6 @@
 package com.bloodify.backend.services.classes;
 
+import com.bloodify.backend.dao.helpingMethods.RandomUserGenerations;
 import com.bloodify.backend.dao.interfaces.UserDAO;
 import com.bloodify.backend.model.entities.User;
 import com.bloodify.backend.services.exceptions.BothEmailAndNationalIdExists;
@@ -11,6 +12,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 import static org.mockito.Mockito.when;
 
@@ -19,8 +22,13 @@ class AccountManagerServiceImpTest {
     @Mock
     UserDAO userDAO;
 
+    @Mock
+    EncoderService encoderService;
+
     @InjectMocks
     AccountManagerServiceImp accountManagerService;
+
+    RandomUserGenerations random = new RandomUserGenerations();
 
     @Test
     public void testSignUpUserWithExistingEmailOnly() {
@@ -30,8 +38,11 @@ class AccountManagerServiceImpTest {
         when(userDAO.findUserByEmail(new User().getEmail()))
                 .thenReturn(new User());
 
+        when(encoderService.encode(""))
+                .thenReturn("");
+
         Assertions.assertThrows(EmailExistsException.class,
-                () -> accountManagerService.signUpUser(new User()));
+                () -> accountManagerService.userSignUp(new User()));
     }
 
     @Test
@@ -42,8 +53,11 @@ class AccountManagerServiceImpTest {
         when(userDAO.findUserByEmail(new User().getEmail()))
                 .thenReturn(null);
 
+        when(encoderService.encode(""))
+                .thenReturn("");
+
         Assertions.assertThrows(NationalIdExistsException.class,
-                () -> accountManagerService.signUpUser(new User()));
+                () -> accountManagerService.userSignUp(new User()));
     }
 
     @Test
@@ -54,21 +68,28 @@ class AccountManagerServiceImpTest {
         when(userDAO.findUserByEmail(new User().getEmail()))
                 .thenReturn(new User());
 
+        when(encoderService.encode(""))
+                .thenReturn("");
+
         Assertions.assertThrows(BothEmailAndNationalIdExists.class,
-                () -> accountManagerService.signUpUser(new User()));
+                () -> accountManagerService.userSignUp(new User()));
     }
 
     @Test
     public void testSignUserUpSuccessfully() {
-        when(userDAO.findUserByNationalID(new User().getNationalID()))
+        User user = random.generateRandomUser();
+        when(userDAO.findUserByNationalID(user.getNationalID()))
                 .thenReturn(null);
 
-        when(userDAO.findUserByEmail(new User().getNationalID()))
+        when(userDAO.findUserByEmail(user.getEmail()))
                 .thenReturn(null);
 
-        when(userDAO.saveUser(new User()))
+        when(userDAO.saveUser(user))
                 .thenReturn(true);
 
-        Assertions.assertTrue(accountManagerService.signUpUser(new User()));
+        when(encoderService.encode(user.getPassword()))
+                .thenReturn(user.getPassword());
+
+        Assertions.assertTrue(accountManagerService.userSignUp(user));
     }
 }

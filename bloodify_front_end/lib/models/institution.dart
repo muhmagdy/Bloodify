@@ -20,7 +20,7 @@ class InstitutionData {
   late String token;
 
   InstitutionData.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
+    name = json['institutionName'];
     email = json['email'];
     // bloodType = json['bloodType'];
     token = json['token'];

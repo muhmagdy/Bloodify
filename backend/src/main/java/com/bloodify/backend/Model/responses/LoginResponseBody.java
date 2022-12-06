@@ -7,11 +7,11 @@ import lombok.Data;
 
 
 @Data
-public class UserLoginResponseBody {
+public class LoginResponseBody {
     private String first_name,last_name, email, token,nationalID,institutionName,bloodType;
     boolean hasDiseases;
 
-    public UserLoginResponseBody(User user, String token){
+    public LoginResponseBody(User user, String token){
         this.email = user.getEmail();
         this.first_name = user.getFirstName() ;
         this.last_name= user.getLastName();
@@ -21,7 +21,7 @@ public class UserLoginResponseBody {
         this.token = token;
     }
 
-    public UserLoginResponseBody(Institution inst, String token){
+    public LoginResponseBody(Institution inst, String token){
         this.email = inst.getEmail();
         this.institutionName = inst.getName();
         this.token = token;

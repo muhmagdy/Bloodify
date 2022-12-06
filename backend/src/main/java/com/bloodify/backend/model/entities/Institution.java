@@ -105,7 +105,7 @@ public class Institution {
     @Column(nullable = false, length = 40)
     String name;   
 
-    @Column(length = 50)
+    @Column(nullable = false, length = 50)
     String location;
     @Column()
     Double latitude;
@@ -113,7 +113,7 @@ public class Institution {
     Double longitude;
     @Column(name = "working_hours")
     Integer workingHours;
-    @Column(nullable = false, length = 30)
+    @Column(nullable = false, length = 60)
     String password;
 
     @Column(name = "count_Ap")

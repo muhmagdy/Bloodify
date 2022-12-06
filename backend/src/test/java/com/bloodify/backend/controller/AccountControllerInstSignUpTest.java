@@ -64,7 +64,7 @@ class AccountControllerInstSignUpTest {
     @Test
     void whenValidSignupInput_thenReturns201() throws Exception {
         Institution Institution = generateRandomInst();
-        when(accountManagerService.signUpInstitution(Institution)).thenReturn(true);
+        when(accountManagerService.instSignUp(Institution)).thenReturn(true);
         mockMvc.perform(post("/api/v1/institution").
                 contentType("application/json").
                 content(objectMapper.writeValueAsString(Institution))).
@@ -98,7 +98,7 @@ class AccountControllerInstSignUpTest {
                 contentType("application/json").
                 content(objectMapper.writeValueAsString(Institution)));
         ArgumentCaptor<Institution> InstitutionCaptor = ArgumentCaptor.forClass(Institution.class);
-        verify(accountManagerService, times(1)).signUpInstitution(InstitutionCaptor.capture());
+        verify(accountManagerService, times(1)).instSignUp(InstitutionCaptor.capture());
         assertEquals(InstitutionCaptor.getValue().getEmail(), Institution.getEmail());
 //        assertEquals(InstitutionCaptor.getValue().getName(), Institution.getName());
         assertEquals(InstitutionCaptor.getValue().getPassword(), Institution.getPassword());
@@ -110,7 +110,7 @@ class AccountControllerInstSignUpTest {
     @Test
     void validInputSignupReturnsValidResponse() throws Exception {
         Institution Institution = generateRandomInst();
-        when(accountManagerService.signUpInstitution(Institution)).thenReturn(true);
+        when(accountManagerService.instSignUp(Institution)).thenReturn(true);
         MvcResult mvcResult = mockMvc.perform(post("/api/v1/institution").
                 contentType("application/json").
                 content(objectMapper.writeValueAsString(Institution))).
@@ -126,7 +126,7 @@ class AccountControllerInstSignUpTest {
         Institution Institution = new Institution(random.generateName(5, 10), "existing@email.com",
                 random.generateName(10, 10), random.generateFloat(), random.generateFloat(),
                 random.generatePassword(20));
-        when(accountManagerService.signUpInstitution(Institution)).thenThrow(new EmailExistsException());
+        when(accountManagerService.instSignUp(Institution)).thenThrow(new EmailExistsException());
         MvcResult mvcResult = mockMvc.perform(post("/api/v1/institution").
                 contentType("application/json").
                 content(objectMapper.writeValueAsString(Institution))).

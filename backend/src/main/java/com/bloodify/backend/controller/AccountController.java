@@ -4,8 +4,8 @@ import com.bloodify.backend.model.entities.Institution;
 import com.bloodify.backend.services.exceptions.SignupDuplicateException;
 import com.bloodify.backend.model.entities.User;
 import com.bloodify.backend.model.responses.SignUpResponse;
-import com.bloodify.backend.model.responses.UserLogInResponse;
-import com.bloodify.backend.model.responses.UserLoginResponseBody;
+import com.bloodify.backend.model.responses.LogInResponse;
+import com.bloodify.backend.model.responses.LoginResponseBody;
 import com.bloodify.backend.services.interfaces.AccountManagerService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -34,63 +34,50 @@ public class AccountController {
     @PostMapping(test + "/user")
     public ResponseEntity<SignUpResponse> signUpUser(@RequestBody User user) throws Exception {
         System.out.println(user.toString());
-        boolean isCreated = accountManagerService.signUpUser(user);
+        boolean isCreated = accountManagerService.userSignUp(user);
         if(isCreated)
             return ResponseEntity.status(HttpStatus.CREATED).body(new SignUpResponse(true, "Success"));
         else
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(new SignUpResponse(false, "Error occurred while signing up."));
     }
 
+    // Check the password with db, it correct assign new token
+    // and return it.
+    // Returns Status Code 200 OK                   if signed in successfully
+    // Returns Status Code 422 UNPROCESSABLE ENTITY if email/password incorrect
     @PostMapping(test + "/user/auth")
-    public Object signInUser(Authentication credentials){
-        // Check the password with db, it correct assign new token
-        // and return it.
-        // Returns Status Code 200 OK                   if signed in successfully
-        // Returns Status Code 422 UNPROCESSABLE ENTITY if email/password incorrect
-        UserLoginResponseBody body = accountManagerService.userlogIn(credentials);
+    public ResponseEntity<LogInResponse> signInUser(Authentication credentials){
+        LoginResponseBody body = accountManagerService.userLogIn(credentials);
         if(body == null){
-            return ResponseEntity.status(422).body(new UserLogInResponse(false, "wrong credentials", body));
+            return ResponseEntity.status(422).body(new LogInResponse(false, "wrong credentials", body));
         }
-        return ResponseEntity.ok(new UserLogInResponse(true, "login successful", body));
-
-    }
-
-    @PutMapping(test + "/user/password")
-    public Object resetPasswordUser(@RequestBody Object email){
-        // Sends an email with reset password link
-        // Always returns 200 OK (even if email doesn't exist)
-        return null;
+        return ResponseEntity.ok(new LogInResponse(true, "login successful", body));
     }
 
     @PostMapping(test + "/institution")
-    public Object signUpInstitution(@RequestBody Institution institution){
+    public ResponseEntity<SignUpResponse> signUpInstitution(@RequestBody Institution institution){
         System.out.println(institution.toString());
-        boolean isCreated = accountManagerService.signUpInstitution(institution);
+        boolean isCreated = accountManagerService.instSignUp(institution);
         if(isCreated)
             return ResponseEntity.status(HttpStatus.CREATED).body(new SignUpResponse(true, "Success"));
         else
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(new SignUpResponse(false, "Error occurred while signing up."));
     }
 
+    // Check the password with db, it correct assign new token
+    // and return it.
+    // Returns Status Code 200 OK                   if signed in successfully
+    // Returns Status Code 422 UNPROCESSABLE ENTITY if email/password incorrect
     @PostMapping(test + "/institution/auth")
-    public Object signInInstitution(Authentication credentials){
-        // Check the password with db, it correct assign new token
-        // and return it.
-        // Returns Status Code 200 OK                   if signed in successfully
-        // Returns Status Code 422 UNPROCESSABLE ENTITY if email/password incorrect
-        UserLoginResponseBody body = accountManagerService.instlogIn(credentials);
+    public ResponseEntity<LogInResponse> signInInstitution(Authentication credentials){
+        LoginResponseBody body = accountManagerService.instLogIn(credentials);
         if(body == null){
-            return ResponseEntity.status(422).body(new UserLogInResponse(false, "wrong credentials", body));
+            return ResponseEntity.status(422).body(new LogInResponse(false, "wrong credentials", body));
         }
-        return ResponseEntity.ok(new UserLogInResponse(true, "login successful", body));
+        return ResponseEntity.ok(new LogInResponse(true, "login successful", body));
     }
 
-    @PutMapping(test + "/institution/password")
-    public Object resetPasswordInstitution(@RequestBody Object email){
-        // Sends an email with reset password link
-        // Always returns 200 OK (even if email doesn't exist)
-        return null;
-    }
+
 
     @ResponseStatus(HttpStatus.CONFLICT)
     @ExceptionHandler(SignupDuplicateException.class)
@@ -99,7 +86,7 @@ public class AccountController {
     }
 
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
-    @ExceptionHandler(HttpMessageNotReadableException.class)
+    @ExceptionHandler({HttpMessageNotReadableException.class, IllegalArgumentException.class})
     public SignUpResponse handleIncorrectFormatException(){
         return new SignUpResponse(false, "Incorrect format");
     }

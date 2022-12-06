@@ -44,6 +44,7 @@ class InstitutionDAOTest {
             for(int j=0; j<8; j++) {
                 bloodCounts[i][j] = random.generateCount(0, 50);
             }
+            locations[i] = random.generateName(5,20);
         }
     }
 
@@ -82,9 +83,9 @@ class InstitutionDAOTest {
     @Order(1)
     void saveInstitution4() {
         int n=3;
-        assertTrue(instDao.saveInstitution(new Institution(
+        assertFalse(instDao.saveInstitution(new Institution(
                 emails[n], names[n], passwords[n], null, workingHours[n]
-        ))) ;
+        ))); ;
     }
 
 //  Email is repeated
@@ -178,7 +179,7 @@ class InstitutionDAOTest {
     @Test
     @Order(4)
     void setPackets4() {
-        Institution institution = instDao.findInstitutionByEmail(emails[3]);
+        Institution institution = instDao.findInstitutionByEmail(emails[1]);
         assertNotNull(institution);
     }
 

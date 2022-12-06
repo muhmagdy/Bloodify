@@ -38,7 +38,6 @@ class InstitutionLogin extends StatelessWidget {
               );
             });
           } else {
-            print("      555       ");
             print(state.loginModel.message);
 
             showToast(

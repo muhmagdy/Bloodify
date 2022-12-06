@@ -1,5 +1,6 @@
-package com.bloodify.backend.services.SecurityConfiguration;
+package com.bloodify.backend.config.SecurityConfiguration;
 
+import com.bloodify.backend.services.classes.EncoderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -13,6 +14,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
@@ -46,6 +48,9 @@ public class SecurityConfiguration {
     @Autowired
     private RsaKeyProperties rsaKeys;
 
+    @Autowired
+    EncoderService encoderService;
+
     @Bean
     JwtDecoder jwtDecoder() {
         return NimbusJwtDecoder.withPublicKey(rsaKeys.publicKey()).build();
@@ -60,8 +65,7 @@ public class SecurityConfiguration {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        //TODO: Password Encoder
-        return NoOpPasswordEncoder.getInstance();
+        return encoderService.getPasswordEncoder();
     }
 
     @Bean
@@ -141,7 +145,10 @@ public class SecurityConfiguration {
     }
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().requestMatchers(this.endpoint + "/test/**",this.endpoint+"/user");
+        return (web) -> web.ignoring().requestMatchers(
+                this.endpoint + "/test/**",
+                this.endpoint+"/user",
+                this.endpoint+"/institution");
     }
 
 }

@@ -420,6 +420,10 @@
 											"\r",
 											"pm.test(\"state is false\", function () {\r",
 											"    pm.expect(pm.response.json().state).to.eql(false)\r",
+											"})\r",
+											"\r",
+											"pm.test(\"state is false\", function () {\r",
+											"    pm.expect(pm.response.json().message).to.eql(\"Incorrect format\")\r",
 											"})"
 										],
 										"type": "text/javascript"
@@ -431,7 +435,99 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"firstName\": \"John\",\r\n    \"lastName\": \"Legend\",\r\n    \"nationalID\": \"21901010102345\",\r\n    \"bloodType\": \"A-\",\r\n    \"hasDiseases\": false,\r\n    \"lastTimeDonated\": \"07-08-1979\",\r\n    \"password\": \"{{$randomPassword}}\"\r\n}",
+									"raw": "{\r\n    \"firstName\": \"John\",\r\n    \"lastName\": \"Legend\",\r\n    \"nationalID\": \"21901010102345\",\r\n    \"bloodType\": \"A-\",\r\n    \"hasDiseases\": false,\r\n    \"lastTimeDonated\": \"07-08-1979\"\r\n    \"password\": \"{{$randomPassword}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/api/v1/user",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"user"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Without Email",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 422\", function () {\r",
+											"  pm.response.to.have.status(422);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"state is false\", function () {\r",
+											"    pm.expect(pm.response.json().state).to.eql(false)\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"firstName\": \"John\",\r\n    \"lastName\": \"Legend\",\r\n    \"nationalID\": \"27801010102345\",\r\n    \"bloodType\": \"A-\",\r\n    \"hasDiseases\": false,\r\n    \"lastTimeDonated\": \"07-08-1979\",\r\n    \"password\": \"{{$randomPassword}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/api/v1/user",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"user"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Without Password",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 422\", function () {\r",
+											"  pm.response.to.have.status(422);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"state is false\", function () {\r",
+											"    pm.expect(pm.response.json().state).to.eql(false)\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"firstName\": \"John\",\r\n    \"lastName\": \"Legend\",\r\n    \"nationalID\": \"30101010109870\",\r\n    \"email\": \"captainme@me.com\",\r\n    \"bloodType\": \"A-\",\r\n    \"hasDiseases\": false,\r\n    \"lastTimeDonated\": \"07-08-1979\",\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -546,6 +642,52 @@
 							"response": []
 						},
 						{
+							"name": "Null Password",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 422\", function () {\r",
+											"  pm.response.to.have.status(422);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"state is false\", function () {\r",
+											"    pm.expect(pm.response.json().state).to.eql(false)\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"firstName\": \"John\",\r\n    \"lastName\": \"Legend\",\r\n    \"nationalID\": \"30101010109870\",\r\n    \"email\": \"captainme@me.com\",\r\n    \"bloodType\": \"A-\",\r\n    \"hasDiseases\": false,\r\n    \"lastTimeDonated\": \"07-08-1979\",\r\n    \"password\": null\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/api/v1/user",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"user"
+									]
+								}
+							},
+							"response": []
+						},
+						{
 							"name": "Null Last Date Donatation",
 							"event": [
 								{
@@ -597,7 +739,7 @@
 					"name": "Signin",
 					"item": [
 						{
-							"name": "Correct Sign",
+							"name": "Correct Password Signin",
 							"event": [
 								{
 									"listen": "test",
@@ -650,7 +792,7 @@
 							"response": []
 						},
 						{
-							"name": "Incorrect Signin",
+							"name": "Incorrect Password Signin",
 							"event": [
 								{
 									"listen": "test",
@@ -699,7 +841,73 @@
 							"response": []
 						},
 						{
+							"name": "Incorrect Email Signin",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 401\", function () {\r",
+											"  pm.response.to.have.status(401);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "username",
+											"value": "joh@legend.me",
+											"type": "string"
+										},
+										{
+											"key": "password",
+											"value": "HAHAhaha123",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/api/v1/user/auth",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"auth"
+									]
+								}
+							},
+							"response": []
+						},
+						{
 							"name": "Signin without auth",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 422\", function () {\r",
+											"  pm.response.to.have.status(422);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"status is false\", function () {\r",
+											"    pm.expect(pm.response.json().status).to.eql(false)\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
 							"request": {
 								"method": "POST",
 								"header": [],
@@ -728,11 +936,712 @@
 			"item": [
 				{
 					"name": "Signup",
-					"item": []
+					"item": [
+						{
+							"name": "New Random Inst",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"  pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"state is true\", function () {\r",
+											"    pm.expect(pm.response.json().state).to.eql(true)\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"{{$randomExampleEmail}}\",\r\n    \"name\": \"{{$randomLoremWord}}\",\r\n    \"password\": \"{{$randomPassword}}\",\r\n    \"location\": \"{{$randomCity}}\",\r\n    \"latitude\": {{$randomLatitude}},\r\n    \"longitude\": {{$randomLongitude}}\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/api/v1/institution",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"institution"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "New Inst 1",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"  pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"state is true\", function () {\r",
+											"    pm.expect(pm.response.json().state).to.eql(true)\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"ok@email.com\",\r\n    \"name\": \"Hospital1\",\r\n    \"password\": \"OKOKokok123_\",\r\n    \"location\": \"Alex\",\r\n    \"latitude\": 123.456,\r\n    \"longitude\": 456.789\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/api/v1/institution",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"institution"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "New Inst 2",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"  pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"state is true\", function () {\r",
+											"    pm.expect(pm.response.json().state).to.eql(true)\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"hospital@gmail.com\",\r\n    \"name\": \"Hospital1\",\r\n    \"password\": \"{{$randomPassword}}\",\r\n    \"location\": \"Cairo\",\r\n    \"latitude\": 786.987,\r\n    \"longitude\": 203.2345\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/api/v1/institution",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"institution"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "New Inst 3",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"  pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"state is true\", function () {\r",
+											"    pm.expect(pm.response.json().state).to.eql(true)\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"luxorh@hospital.org\",\r\n    \"name\": \"Luxor General Hospital\",\r\n    \"password\": \"{{$randomPassword}}\",\r\n    \"location\": \"Luxor\",\r\n    \"latitude\": 999.321,\r\n    \"longitude\": 129.225\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/api/v1/institution",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"institution"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Email Exist",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 409\", function () {\r",
+											"  pm.response.to.have.status(409);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"state is false\", function () {\r",
+											"    pm.expect(pm.response.json().state).to.eql(false)\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"ok@email.com\",\r\n    \"name\": \"{{$randomLoremWord}}\",\r\n    \"password\": \"{{$randomPassword}}\",\r\n    \"location\": \"{{$randomCity}}\",\r\n    \"latitude\": {{$randomLatitude}},\r\n    \"longitude\": {{$randomLongitude}}\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/api/v1/institution",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"institution"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Incorrect Format",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 422\", function () {\r",
+											"  pm.response.to.have.status(422);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"state is false\", function () {\r",
+											"    pm.expect(pm.response.json().state).to.eql(false)\r",
+											"})\r",
+											"\r",
+											"pm.test(\"state is false\", function () {\r",
+											"    pm.expect(pm.response.json().message).to.eql(\"Incorrect format\")\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"ok@email.com\",\r\n    \"name\": \"{{$randomLoremWord}}\",\r\n    \"password\": \"{{$randomPassword}}\",\r\n    \"location\": \"{{$randomCity}}\",\r\n    \"latitude\": {{$randomLatitude}}\r\n    \"longitude\": {{$randomLongitude}}\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/api/v1/institution",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"institution"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Null Email",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 422\", function () {\r",
+											"  pm.response.to.have.status(422);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"state is false\", function () {\r",
+											"    pm.expect(pm.response.json().state).to.eql(false)\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": null,\r\n    \"name\": \"{{$randomLoremWord}}\",\r\n    \"password\": \"{{$randomPassword}}\",\r\n    \"location\": \"{{$randomCity}}\",\r\n    \"latitude\": {{$randomLatitude}},\r\n    \"longitude\": {{$randomLongitude}}\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/api/v1/institution",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"institution"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Null Password",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 422\", function () {\r",
+											"  pm.response.to.have.status(422);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"state is false\", function () {\r",
+											"    pm.expect(pm.response.json().state).to.eql(false)\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"{{$randomExampleEmail}}\",\r\n    \"name\": \"{{$randomLoremWord}}\",\r\n    \"password\": null,\r\n    \"location\": \"{{$randomCity}}\",\r\n    \"latitude\": {{$randomLatitude}},\r\n    \"longitude\": {{$randomLongitude}}\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/api/v1/institution",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"institution"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Null Name",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 422\", function () {\r",
+											"  pm.response.to.have.status(422);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"state is false\", function () {\r",
+											"    pm.expect(pm.response.json().state).to.eql(false)\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"{{$randomExampleEmail}}\",\r\n    \"name\": null,\r\n    \"password\": \"{{$randomPassword}}\",\r\n    \"location\": \"{{$randomCity}}\",\r\n    \"latitude\": {{$randomLatitude}},\r\n    \"longitude\": {{$randomLongitude}}\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/api/v1/institution",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"institution"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Null Location",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 422\", function () {\r",
+											"  pm.response.to.have.status(422);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"state is false\", function () {\r",
+											"    pm.expect(pm.response.json().state).to.eql(false)\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"{{$randomExampleEmail}}\",\r\n    \"name\": \"{{$randomLoremWord}}\",\r\n    \"password\": \"{{$randomPassword}}\",\r\n    \"location\": null,\r\n    \"latitude\": {{$randomLatitude}},\r\n    \"longitude\": {{$randomLongitude}}\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/api/v1/institution",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"institution"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Null Longtiude",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"  pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"state is true\", function () {\r",
+											"    pm.expect(pm.response.json().state).to.eql(true)\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"{{$randomExampleEmail}}\",\r\n    \"name\": \"{{$randomLoremWord}}\",\r\n    \"password\": \"{{$randomPassword}}\",\r\n    \"location\": \"{{$randomCity}}\",\r\n    \"latitude\": {{$randomLatitude}},\r\n    \"longitude\": null\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/api/v1/institution",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"institution"
+									]
+								}
+							},
+							"response": []
+						}
+					]
 				},
 				{
 					"name": "Signin",
-					"item": []
+					"item": [
+						{
+							"name": "Correct Password Signin",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"  pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"state is true\", function () {\r",
+											"    pm.expect(pm.response.json().status).to.eql(true)\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "OKOKokok123_",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "ok@email.com",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/api/v1/institution/auth",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"institution",
+										"auth"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Incorrect Password Signin",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 401\", function () {\r",
+											"  pm.response.to.have.status(401);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "username",
+											"value": "ok@email.com",
+											"type": "string"
+										},
+										{
+											"key": "password",
+											"value": "HAHAhaha123",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/api/v1/institution/auth",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"institution",
+										"auth"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Incorrect Email Signin",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 401\", function () {\r",
+											"  pm.response.to.have.status(401);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "username",
+											"value": "okkk@email.com",
+											"type": "string"
+										},
+										{
+											"key": "password",
+											"value": "HAHAhaha123",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/api/v1/institution/auth",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"institution",
+										"auth"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Signin without auth",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 422\", function () {\r",
+											"  pm.response.to.have.status(422);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"status is false\", function () {\r",
+											"    pm.expect(pm.response.json().status).to.eql(false)\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/api/v1/institution/auth",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"institution",
+										"auth"
+									]
+								}
+							},
+							"response": []
+						}
+					]
 				}
 			]
 		}
