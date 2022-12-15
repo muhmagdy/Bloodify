@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:bloc/bloc.dart';
 
 class MyBlocObserver extends BlocObserver {
@@ -10,6 +12,7 @@ class MyBlocObserver extends BlocObserver {
   @override
   void onChange(BlocBase bloc, Change change) {
     super.onChange(bloc, change);
+
     print('onChange -- ${bloc.runtimeType}, $change');
   }
 

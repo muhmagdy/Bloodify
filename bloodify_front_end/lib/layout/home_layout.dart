@@ -1,10 +1,7 @@
 import 'package:bloodify_front_end/layout/start_layout.dart';
-import 'package:bloodify_front_end/modules/login_UI/User_login/userLogin.dart';
 import 'package:bloodify_front_end/shared/network/local/cach_helper.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-
+import '../modules/transaction_UI/transaction.dart';
 import '../shared/Constatnt/sharedFunctions.dart';
 
 class HomeLayout extends StatelessWidget {
@@ -13,15 +10,16 @@ class HomeLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      body: Transaction(),
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 255, 78, 66),
+        backgroundColor: const Color.fromARGB(255, 255, 78, 66),
         title: Row(children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(70),
             child: Container(
               width: 40,
               height: 40,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                   color: Colors.white,
                   image: DecorationImage(
                       image:
@@ -29,10 +27,10 @@ class HomeLayout extends StatelessWidget {
                       fit: BoxFit.contain)),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             width: 10,
           ),
-          Text(
+          const Text(
             'Home',
             style: TextStyle(color: Colors.white),
           )
@@ -46,7 +44,7 @@ class HomeLayout extends StatelessWidget {
             if (value) {
               navigateAndFinish(
                 context,
-                StartWidget(),
+                const StartWidget(),
               );
             }
           });
@@ -56,7 +54,7 @@ class HomeLayout extends StatelessWidget {
             if (value) {
               navigateAndFinish(
                 context,
-                StartWidget(),
+                const StartWidget(),
               );
             }
           });

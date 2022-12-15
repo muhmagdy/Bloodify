@@ -1,7 +1,5 @@
-import 'package:bloc/bloc.dart';
 import 'package:bloodify_front_end/layout/start_layout.dart';
-import 'package:bloodify_front_end/modules/login_UI/User_login/userLogin.dart';
-import 'package:bloodify_front_end/modules/login_UI/institution_login/institutionLogin.dart';
+import 'package:bloodify_front_end/modules/transaction_UI/cubit/transaction_cubit.dart';
 import 'package:bloodify_front_end/shared/bloc_observer.dart';
 import 'package:bloodify_front_end/shared/network/local/cach_helper.dart';
 import 'package:bloodify_front_end/shared/network/remote/dio_helper.dart';
@@ -18,11 +16,12 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await CachHelper.init();
   String? token = CachHelper.getData(key: 'token');
-  var widget;
-  if (token != null)
-    widget = HomeLayout();
-  else
-    widget = StartWidget();
+  Widget widget;
+  if (token != null) {
+    widget = const HomeLayout();
+  } else {
+    widget = const StartWidget();
+  }
   Bloc.observer = MyBlocObserver();
   DioHelper.init();
   runApp(MyApp(
@@ -32,7 +31,8 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   final Widget startWidget;
-  MyApp({
+  const MyApp({
+    super.key,
     required this.startWidget,
   });
 
@@ -44,13 +44,16 @@ class MyApp extends StatelessWidget {
           BlocProvider(create: (context) => SignUpCubit()),
           BlocProvider(create: (context) => UserLoginCubit()),
           BlocProvider(create: (context) => InstitutionLoginCubit()),
+          BlocProvider(create: (context) => TransactionCubit())
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: lightTheme,
           darkTheme: darkTheme,
-          themeMode: false ? ThemeMode.dark : ThemeMode.light,
-          home: startWidget,
+          // themeMode: false ? ThemeMode.dark : ThemeMode.light,
+          themeMode: ThemeMode.light,
+          // home: startWidget,
+          home: const HomeLayout(),
         ));
   }
 }

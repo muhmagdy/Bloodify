@@ -9,7 +9,7 @@ class DioHelper {
   static init() {
     dio = Dio(
       BaseOptions(
-        baseUrl: 'http://192.168.1.113:8080/api/v1/',
+        baseUrl: 'https://student.valuxapps.com/api/',
         receiveDataWhenStatusError: true,
         headers: {
           'Content-Type': 'application/json',
@@ -43,7 +43,6 @@ class DioHelper {
     String? token,
   }) async {
     dio!.options.headers = {
-      'Content-Type': 'application/json',
       'lang': lang,
       'Authorization': token,
     };
@@ -52,23 +51,6 @@ class DioHelper {
       url,
       queryParameters: query,
       data: data,
-    );
-  }
-
-  static Future<Response> postLogin({
-    required String url,
-    required email,
-    required password,
-  }) async {
-    var auth = 'Basic ' + base64Encode(utf8.encode('$email:$password'));
-    print(auth);
-    dio!.options.headers = {
-      'authorization': auth,
-      'Content-Type': 'application/json',
-    };
-
-    return dio!.post(
-      url,
     );
   }
 
@@ -89,6 +71,22 @@ class DioHelper {
       url,
       queryParameters: query,
       data: data,
+    );
+  }
+
+  static Future<Response> postLogin({
+    required String url,
+    required email,
+    required password,
+  }) async {
+    var auth = 'Basic ' + base64Encode(utf8.encode('$email:$password'));
+    dio!.options.headers = {
+      'Authorization': auth,
+      'Content-Type': 'application/json',
+    };
+
+    return dio!.post(
+      url,
     );
   }
 }

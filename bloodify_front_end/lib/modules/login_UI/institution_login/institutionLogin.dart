@@ -1,9 +1,7 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:bloodify_front_end/layout/home_layout.dart';
-import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../shared/Constatnt/Component.dart';
@@ -17,12 +15,13 @@ class InstitutionLogin extends StatelessWidget {
   var loginKey = GlobalKey<FormState>();
   var emailController = TextEditingController();
   var passwordController = TextEditingController();
+
+  InstitutionLogin({super.key});
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<InstitutionLoginCubit, InstitutionLoginStates>(
       listener: (context, state) {
         if (state is InstitutionLoginSuccessState) {
-          bool login_state = state.loginModel.status;
           if (state.loginModel.status) {
             print(state.loginModel.message);
             print(state.loginModel.data!.token);
@@ -34,7 +33,7 @@ class InstitutionLogin extends StatelessWidget {
             ).then((value) {
               navigateAndFinish(
                 context,
-                HomeLayout(),
+                const HomeLayout(),
               );
             });
           } else {

@@ -1,13 +1,8 @@
-import 'dart:io';
-
 import 'package:bloodify_front_end/layout/start_layout.dart';
-import 'package:bloodify_front_end/modules/signUP_UI/sign_up_pages/sign_up_1.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:bloodify_front_end/shared/Constatnt/Component.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
 
 import '../../../models/user.dart';
@@ -16,13 +11,16 @@ import 'package:bloodify_front_end/modules/signUP_UI/sign_up_pages/Languages.dar
 
 import '../sign_up_State_management/sign_up_cubit.dart';
 
+// ignore: must_be_immutable
 class SignUp2 extends StatelessWidget {
   final dateController = TextEditingController();
   final lastDonateddateController = TextEditingController();
   List<String> types = ['A+', 'B+', 'O+', 'AB+', 'A-', 'B-', 'O-', 'AB-'];
   final _formKey = GlobalKey<FormState>();
   Language language = EnglishLanguage();
-  var dateFormat = new DateFormat("dd-MM-yyyy");
+  var dateFormat = DateFormat("dd-MM-yyyy");
+
+  SignUp2({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -30,17 +28,16 @@ class SignUp2 extends StatelessWidget {
 
     return BlocConsumer<SignUpCubit, SignUpStates>(
       listener: (context, state) {
-        // TODO: implement listener
         if (state is SiqnUpApiSucces) {
           if (state.response.state) {
-            SignUpCubit.get(context).user = new UserData();
+            SignUpCubit.get(context).user = UserData();
             showToast(
                 text: language.getLabel('verification'),
                 color: Colors.green,
                 time: 5000);
             navigateAndFinish(
               context,
-              StartWidget(),
+              const StartWidget(),
             );
           } else {
             showToast(
@@ -61,7 +58,7 @@ class SignUp2 extends StatelessWidget {
                 key: _formKey,
                 child: Column(
                   children: [
-                    DefaultProgramPhoto(width: width, height: height),
+                    defaultProgramPhoto(width: width, height: height),
                     TextFormField(
                         validator: (String? value) {
                           if (value!.isEmpty) return language.enterValue('dob');
@@ -93,17 +90,17 @@ class SignUp2 extends StatelessWidget {
                         controller: dateController,
                         keyboardType: TextInputType.datetime,
                         decoration: InputDecoration(
-                          prefix: Icon(
+                          prefix: const Icon(
                             Icons.calendar_month_outlined,
                             color: Color.fromARGB(255, 255, 78, 66),
                           ),
                           labelText: language.getLabel('dob'),
-                          focusedBorder: OutlineInputBorder(
+                          focusedBorder: const OutlineInputBorder(
                               borderSide: BorderSide(color: Colors.grey)),
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10)),
                         )),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     Row(
                       children: [
                         Flexible(
@@ -114,7 +111,7 @@ class SignUp2 extends StatelessWidget {
                               children: [
                                 Text(language.getLabel('having diseases'),
                                     style: TextStyle(color: Colors.grey[800])),
-                                SizedBox(
+                                const SizedBox(
                                   height: 5,
                                 ),
                                 Row(
@@ -139,11 +136,11 @@ class SignUp2 extends StatelessWidget {
                                             icon: SignUpCubit.get(context)
                                                     .user
                                                     .isPatient
-                                                ? Icon(
+                                                ? const Icon(
                                                     Icons
                                                         .radio_button_checked_outlined,
                                                     color: Colors.red)
-                                                : Icon(
+                                                : const Icon(
                                                     Icons
                                                         .radio_button_off_outlined,
                                                     color: Colors.red),
@@ -153,7 +150,7 @@ class SignUp2 extends StatelessWidget {
                                                     color: Colors.grey[800]))),
                                       ),
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       width: 5,
                                     ),
                                     Flexible(
@@ -176,11 +173,11 @@ class SignUp2 extends StatelessWidget {
                                             icon: !SignUpCubit.get(context)
                                                     .user
                                                     .isPatient
-                                                ? Icon(
+                                                ? const Icon(
                                                     Icons
                                                         .radio_button_checked_outlined,
                                                     color: Colors.red)
-                                                : Icon(
+                                                : const Icon(
                                                     Icons
                                                         .radio_button_off_outlined,
                                                     color: Colors.red),
@@ -191,7 +188,7 @@ class SignUp2 extends StatelessWidget {
                                     )
                                   ],
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 10,
                                 ),
                                 Text(language.getLabel('blood type'),
@@ -202,17 +199,17 @@ class SignUp2 extends StatelessWidget {
                                         SignUpCubit.get(context).user.bloodType,
                                     items: types
                                         .map((e) => DropdownMenuItem(
+                                              value: e,
                                               child: Text(
                                                 "    $e",
-                                                style: TextStyle(
+                                                style: const TextStyle(
                                                     color: Colors.red,
                                                     fontWeight: FontWeight.bold,
                                                     fontSize: 18),
                                               ),
-                                              value: e,
                                             ))
                                         .toList(),
-                                    icon: Icon(
+                                    icon: const Icon(
                                       Icons.bloodtype_outlined,
                                       color: Colors.red,
                                     ),
@@ -222,7 +219,7 @@ class SignUp2 extends StatelessWidget {
                                     })
                               ],
                             )),
-                        SizedBox(
+                        const SizedBox(
                           width: 10,
                         ),
                         Flexible(
@@ -294,11 +291,11 @@ class SignUp2 extends StatelessWidget {
                                     keyboardType: TextInputType.datetime,
                                     decoration: InputDecoration(
                                       labelText: 'last donted time',
-                                      prefix: Icon(
+                                      prefix: const Icon(
                                         Icons.calendar_month_outlined,
                                         color: Color.fromARGB(255, 255, 78, 66),
                                       ),
-                                      focusedBorder: OutlineInputBorder(
+                                      focusedBorder: const OutlineInputBorder(
                                           borderSide:
                                               BorderSide(color: Colors.grey)),
                                       border: OutlineInputBorder(
@@ -309,24 +306,25 @@ class SignUp2 extends StatelessWidget {
                             ))
                       ],
                     ),
-                    SizedBox(height: 30),
+                    const SizedBox(height: 30),
                     Row(
                       children: [
                         Expanded(
-                          child: DefaultButton(
+                          child: defaultButton(
                               onClick: () {
-                                if (_formKey.currentState!.validate())
+                                if (_formKey.currentState!.validate()) {
                                   Navigator.pop(context);
+                                }
                               },
                               text: language.getLabel('back')),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 10,
                         ),
                         Expanded(
                           child: ConditionalBuilder(
                             condition: state is! SignUpLoading,
-                            builder: (context) => DefaultButton(
+                            builder: (context) => defaultButton(
                                 onClick: () {
                                   if (_formKey.currentState!.validate()) {
                                     SignUpCubit.get(context).userSignUp();
@@ -336,8 +334,8 @@ class SignUp2 extends StatelessWidget {
                                 },
                                 text: language.getLabel('submit'),
                                 backGround: Colors.green),
-                            fallback: (context) =>
-                                Center(child: CircularProgressIndicator()),
+                            fallback: (context) => const Center(
+                                child: CircularProgressIndicator()),
                           ),
                         )
                       ],
@@ -352,7 +350,3 @@ class SignUp2 extends StatelessWidget {
     );
   }
 }
-/*
-30102120202512
-
-*/ 

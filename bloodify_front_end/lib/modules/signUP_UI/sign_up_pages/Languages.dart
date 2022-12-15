@@ -36,7 +36,7 @@ class EnglishLanguage extends Language {
   String showInvalidPasswordConfirm() => "Non Matching Passwords";
   String showInvalidValue(value) => "Invalid ${dictionary[value]}";
   String enterPassword() => "Password should be of > 7 characters";
-  String enterValue(value) => "Enter Your  ${dictionary[value]}";
+  String enterValue(value) => "${dictionary[value]} musn't be embty  ";
   String getLabel(abbrev) => '${dictionary[abbrev]}';
   String showIncorrectDOB() => 'Not Correct Date of Birth';
   String showIncorrectLDT() => 'Not Correct Last Donated Time';
