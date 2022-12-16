@@ -1,5 +1,6 @@
 package com.bloodify.backend.AccountManagement.model.entities;
 
+import com.bloodify.backend.UserRequests.model.entities.Post;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
@@ -9,6 +10,8 @@ import org.springframework.lang.NonNull;
 import lombok.ToString;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -77,6 +80,12 @@ public class User {
     @Column(nullable = false, length = 100)
     private String password = "";
 
+    @OneToMany(
+            mappedBy = "user",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<Post> posts;
     public User(String firstName, String lastName, String nationalID, String email, String bloodType,
                 boolean hasDiseases, LocalDate lastTimeDonated, String password) {
         this.firstName = firstName;
@@ -87,5 +96,7 @@ public class User {
         this.hasDiseases = hasDiseases;
         this.lastTimeDonated = lastTimeDonated;
         this.password = password;
+        this.posts = new ArrayList<>();
     }
+
 }

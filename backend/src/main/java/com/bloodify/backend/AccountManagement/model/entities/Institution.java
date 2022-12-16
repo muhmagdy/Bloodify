@@ -1,8 +1,12 @@
 package com.bloodify.backend.AccountManagement.model.entities;
 
+import com.bloodify.backend.UserRequests.model.entities.Post;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table
@@ -132,6 +136,11 @@ public class Institution {
     @Column(name = "count_On")
     Integer negativeO_bagsCount;
 
+    @OneToMany(
+            mappedBy = "institution",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    List<Post> posts;
     public Institution (String email, String name, String password, String location, int workingHours) {
         this.email = email;
         this.name = name;
@@ -146,6 +155,7 @@ public class Institution {
         this.positiveB_bagsCount = 0;
         this.positiveAB_bagsCount = 0;
         this.positiveO_bagsCount = 0;
+        this.posts = new ArrayList<>();
     }
 
     public Institution(String email, String password, String location, int workingHours) {

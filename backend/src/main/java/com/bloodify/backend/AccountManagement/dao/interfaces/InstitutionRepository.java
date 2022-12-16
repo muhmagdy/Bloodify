@@ -10,7 +10,7 @@ import java.util.List;
 @Repository("InstitutionRepository")
 public interface InstitutionRepository extends JpaRepository<Institution, Integer> {
     List<Institution> findByEmail(String email);
-
+    List<Institution> findByInstitutionID(int institutionID);
     List<Institution> haveBloodPacketsPositiveA(int quantity);
     List<Institution> haveBloodPacketsPositiveB(int quantity);
     List<Institution> haveBloodPacketsPositiveAB(int quantity);
