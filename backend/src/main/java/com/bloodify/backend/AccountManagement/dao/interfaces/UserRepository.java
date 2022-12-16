@@ -13,4 +13,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     List<User> findByNationalID(String nationalID);
 
     List<User> findByBloodType(String bloodType);
+
+    List<User> findByBloodTypeIn(List<String> bloodTypes);
 }

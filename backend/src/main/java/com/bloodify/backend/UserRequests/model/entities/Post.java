@@ -52,4 +52,20 @@ public class Post {
         this.startTime = startTime;
         this.bloodType = bloodType;
     }
+
+    public Post(int postID, @NonNull User user, @NonNull Institution institution, @NonNull int bagsNum,
+                @NonNull LocalDateTime startTime, @NonNull String bloodType) {
+        this.postID = postID;
+        this.user = user;
+        this.institution = institution;
+        this.bagsNum = bagsNum;
+        this.startTime = startTime;
+        this.bloodType = bloodType;
+    }
+
+    public Post(@NonNull User user, @NonNull Institution institution, @NonNull String bloodType) {
+        this.user = user;
+        this.institution = institution;
+        this.bloodType = bloodType;
+    }
 }

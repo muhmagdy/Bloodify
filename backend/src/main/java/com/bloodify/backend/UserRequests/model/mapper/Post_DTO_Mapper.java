@@ -2,8 +2,12 @@ package com.bloodify.backend.UserRequests.model.mapper;
 
 import com.bloodify.backend.AccountManagement.dao.interfaces.InstitutionDAO;
 import com.bloodify.backend.AccountManagement.dao.interfaces.UserDAO;
+import com.bloodify.backend.AccountManagement.model.entities.Institution;
+import com.bloodify.backend.AccountManagement.model.entities.User;
 import com.bloodify.backend.UserRequests.dto.entities.PostDto;
 import com.bloodify.backend.UserRequests.model.entities.Post;
+import com.bloodify.backend.UserRequests.service.exceptions.InstitutionNotFoundException;
+import com.bloodify.backend.UserRequests.service.exceptions.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +21,11 @@ public class Post_DTO_Mapper {
     InstitutionDAO institutionDAO;
 
     public Post map_to_Post(PostDto dto){
-        return new Post(userDAO.findUserByEmail(dto.getUserEmail()), institutionDAO.findInstitutionByID(dto.getInstitutionID()),
-                dto.getRequiredBags(), LocalDateTime.now(), dto.getBloodType().toString());
+        User user = userDAO.findUserByEmail(dto.getUserEmail());
+        Institution institution = institutionDAO.findInstitutionByID(dto.getInstitutionID());
+        if (user == null) throw new UserNotFoundException();
+        if (institution == null) throw new InstitutionNotFoundException();
+        return new Post(user, institution, dto.getRequiredBags(),
+                LocalDateTime.now(), dto.getBloodType().toString());
     }
 }

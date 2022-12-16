@@ -72,6 +72,11 @@ public class UserDAOImp implements UserDAO {
     }
 
     @Override
+    public List<User> findByBloodTypeIn(List<String> bloodTypes) {
+        return this.userRepo.findByBloodTypeIn(bloodTypes);
+    }
+
+    @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         log.info(username + " user");
         User user = this.findUserByEmail(username);
