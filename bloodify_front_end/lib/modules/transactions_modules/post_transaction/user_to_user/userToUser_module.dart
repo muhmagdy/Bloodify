@@ -1,17 +1,24 @@
-import 'package:bloodify_front_end/shared/Constatnt/Component.dart';
+// ignore_for_file: must_be_immutable
+
+import 'package:bloodify_front_end/shared/Constatnt/sharedFunctions.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/src/widgets/container.dart';
+import 'package:flutter/src/widgets/framework.dart';
 
-// ignore: must_be_immutable
-class TransactionUserToUser extends StatelessWidget {
-  var fromController = TextEditingController();
-  var toController = TextEditingController();
+import '../../../../models/post_model.dart';
+import '../../../../shared/Constatnt/Component.dart';
+import '../cubit/post_cubit.dart';
 
-  var formKey = GlobalKey<FormState>();
-
-  TransactionUserToUser({super.key});
-
+class UserToUser extends StatelessWidget {
+  UserToUser({super.key});
+  final toController = TextEditingController();
+  final fromController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
+    Post post = PostCubit.get(context).post;
+    toController.text = post.user_ID;
     return Form(
       key: formKey,
       child: Column(
@@ -21,15 +28,16 @@ class TransactionUserToUser extends StatelessWidget {
               prefix: Icons.credit_card_rounded,
               controller: fromController,
               validate: (id) => nationalValidate(id),
-              labelText: "donor user-id"),
+              labelText: "donor national-ID"),
           const SizedBox(
             height: 20,
           ),
           defaultInputText(
+              isClickable: false,
               type: TextInputType.number,
               prefix: Icons.credit_card_rounded,
               controller: toController,
-              validate: (id) => nationalValidate(id),
+              validate: (id) => null,
               labelText: "acceptor user-id"),
           const SizedBox(
             height: 20,

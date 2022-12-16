@@ -33,7 +33,7 @@ class InstitutionLogin extends StatelessWidget {
             ).then((value) {
               navigateAndFinish(
                 context,
-                const HomeLayout(),
+                HomeLayout(),
               );
             });
           } else {

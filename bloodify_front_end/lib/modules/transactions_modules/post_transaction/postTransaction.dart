@@ -1,24 +1,25 @@
+// ignore_for_file: prefer_typing_uninitialized_variables, file_names
+
+import 'package:bloodify_front_end/modules/transactions_modules/post_transaction/cubit/post_cubit.dart';
+import 'package:bloodify_front_end/modules/transactions_modules/post_transaction/cubit/post_state.dart';
 import 'package:dropdown_button2/custom_dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../shared/Constatnt/Component.dart';
-import 'cubit/transaction_cubit.dart';
-import 'cubit/transaction_state.dart';
-
-enum Status { userToUser, userToInstitution, institutionToInstitution }
+import '../../../shared/Constatnt/Component.dart';
 
 // ignore: must_be_immutable
-class Transaction extends StatelessWidget {
-  Transaction({super.key});
+class PostTransaction extends StatelessWidget {
+  final post;
+  PostTransaction({super.key, this.post});
 
   var transactionsContoller = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    var cubit = TransactionCubit.get(context);
+    var cubit = PostCubit.get(context);
     // print(transactions);
-
-    return BlocConsumer<TransactionCubit, TransactionStates>(
+    cubit.post = post;
+    return BlocConsumer<PostCubit, PostStates>(
       listener: (context, state) {},
       builder: (context, state) {
         double width = MediaQuery.of(context).size.width;
@@ -45,10 +46,8 @@ class Transaction extends StatelessWidget {
                     onChanged: (newValue) {
                       if (newValue == "User to User") {
                         cubit.changeScreen(0);
-                      } else if (newValue == "User to Institutions") {
+                      } else if (newValue == "Institution to user") {
                         cubit.changeScreen(1);
-                      } else {
-                        cubit.changeScreen(2);
                       }
                     },
                   ),

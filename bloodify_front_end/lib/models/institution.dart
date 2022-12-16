@@ -18,7 +18,7 @@ class InstitutionData {
   // late String bloodType;
 
   late String token;
-
+  InstitutionData(this.name, this.email, this.token);
   InstitutionData.fromJson(Map<String, dynamic> json) {
     name = json['institutionName'];
     email = json['email'];

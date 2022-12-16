@@ -1,16 +1,27 @@
 import 'package:bloodify_front_end/layout/start_layout.dart';
+import 'package:bloodify_front_end/models/event_model.dart';
+import 'package:bloodify_front_end/modules/transactions_modules/event_transaction/eventTransaction_module.dart';
+import 'package:bloodify_front_end/modules/transactions_modules/post_transaction/postTransaction.dart';
 import 'package:bloodify_front_end/shared/network/local/cach_helper.dart';
 import 'package:flutter/material.dart';
-import '../modules/transaction_UI/transaction.dart';
+import '../models/post_model.dart';
 import '../shared/Constatnt/sharedFunctions.dart';
 
+// ignore: must_be_immutable
 class HomeLayout extends StatelessWidget {
-  const HomeLayout({super.key});
-
+  HomeLayout({super.key});
+  var post = Post(1, "3010010152045", 4, "A.con");
+  var event = Event_model(
+      title: "tbor3",
+      to_date: DateTime.now(),
+      from_date: DateTime.now(),
+      event_ID: 1);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Transaction(),
+      body: PostTransaction(
+        post: post,
+      ),
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 255, 78, 66),
         title: Row(children: [
