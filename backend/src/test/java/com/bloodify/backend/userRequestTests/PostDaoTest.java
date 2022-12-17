@@ -12,29 +12,15 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
 class PostDaoTest {
-
     @Mock
     PostRepository postRepository;
-
     @InjectMocks
     PostDao postDaoToTest = new PostDaoImp();
-
-    private Randomizer randomizer = new Randomizer();
-
-//    @BeforeEach
-//    void set_up(){
-//        postDaoToTest = new PostDaoImp();
-//    }
-//
-//    @AfterEach
-//    void tear_down(){
-//
-//    }
+    private final Randomizer randomizer = new Randomizer();
     @Test
     void addNewPost() { /// check post has no duplicate
         List<Post> savedPosts = randomizer.generateValidPost();
@@ -49,6 +35,7 @@ class PostDaoTest {
 
         assertTrue(this.postDaoToTest.addPost(post3));
     }
+
 
     @Test
     void addDuplicatePost(){

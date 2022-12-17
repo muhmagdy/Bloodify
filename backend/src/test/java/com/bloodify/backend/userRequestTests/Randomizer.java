@@ -56,13 +56,9 @@ public class Randomizer {
         return savedPosts;
     }
 
-
-
-
-
-    private Institution generateRandomInstitution(){
-        return new Institution(randomUserGenerations.generateEmail(5, 20),
-        randomUserGenerations.generateName(10, 15), randomUserGenerations.generatePassword(10)
-        , random.nextInt(10));
+    public Institution generateRandomInstitution(){
+        return new Institution(randomUserGenerations.generateName(10, 15), randomUserGenerations.generateEmail(5, 20),
+        randomUserGenerations.generateLocations().substring(0, 10), randomUserGenerations.generateFloat(),
+                randomUserGenerations.generateFloat(), randomUserGenerations.generatePassword(10));
     }
 }

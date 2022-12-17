@@ -85,7 +85,7 @@ public class PostDaoImp implements PostDao {
 
     @Override
     public void deleteUnnecessaryPosts(){
-        this.postRepository.deleteAllByStartTimeIsBeforeAndBagsNum(LocalDateTime.now().minusDays(7), 0);
+        this.postRepository.deletePostsByStartTimeBeforeOrBagsNum(LocalDateTime.now().minusDays(7), 0);
     }
 
     @Override

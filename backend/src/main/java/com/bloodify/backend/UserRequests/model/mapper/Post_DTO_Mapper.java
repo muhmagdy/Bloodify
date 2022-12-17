@@ -6,8 +6,8 @@ import com.bloodify.backend.AccountManagement.model.entities.Institution;
 import com.bloodify.backend.AccountManagement.model.entities.User;
 import com.bloodify.backend.UserRequests.dto.entities.PostDto;
 import com.bloodify.backend.UserRequests.model.entities.Post;
-import com.bloodify.backend.UserRequests.service.exceptions.InstitutionNotFoundException;
-import com.bloodify.backend.UserRequests.service.exceptions.UserNotFoundException;
+import com.bloodify.backend.UserRequests.exceptions.InstitutionNotFoundException;
+import com.bloodify.backend.UserRequests.exceptions.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
