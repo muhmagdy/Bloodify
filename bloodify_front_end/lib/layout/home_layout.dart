@@ -1,4 +1,5 @@
 import 'package:bloodify_front_end/layout/start_layout.dart';
+import 'package:bloodify_front_end/modules/create_event/create_event.dart';
 import 'package:bloodify_front_end/modules/login_UI/User_login/userLogin.dart';
 import 'package:bloodify_front_end/shared/network/local/cach_helper.dart';
 import 'package:flutter/material.dart';
@@ -64,6 +65,7 @@ class HomeLayout extends StatelessWidget {
         backgroundColor: Colors.red,
         child: const Icon(Icons.logout_rounded),
       ),
+      body: CreateEvent(),
     );
   }
 }

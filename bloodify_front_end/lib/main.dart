@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:bloodify_front_end/layout/start_layout.dart';
+import 'package:bloodify_front_end/modules/create_event/create_event_cubit/create_event_cubit.dart';
 import 'package:bloodify_front_end/modules/login_UI/User_login/userLogin.dart';
 import 'package:bloodify_front_end/modules/login_UI/institution_login/institutionLogin.dart';
 import 'package:bloodify_front_end/shared/bloc_observer.dart';
@@ -19,10 +20,11 @@ void main() async {
   await CachHelper.init();
   String? token = CachHelper.getData(key: 'token');
   var widget;
-  if (token != null)
-    widget = HomeLayout();
-  else
-    widget = StartWidget();
+  if (token != null) {
+    widget = const HomeLayout();
+  } else {
+    widget = const StartWidget();
+  }
   Bloc.observer = MyBlocObserver();
   DioHelper.init();
   runApp(MyApp(
@@ -44,13 +46,14 @@ class MyApp extends StatelessWidget {
           BlocProvider(create: (context) => SignUpCubit()),
           BlocProvider(create: (context) => UserLoginCubit()),
           BlocProvider(create: (context) => InstitutionLoginCubit()),
+          BlocProvider(create: (context) => CreateEventCubit()),
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: lightTheme,
           darkTheme: darkTheme,
           themeMode: false ? ThemeMode.dark : ThemeMode.light,
-          home: startWidget,
+          home: HomeLayout(),
         ));
   }
 }
