@@ -204,4 +204,18 @@ class UserDAOTest {
     void matchEmailAndPass3() {
         assertFalse(userDao.isUsernameAndPasswordMatching(emails[0], passwords[3]));
     }
+
+    @Test
+    @Order(4)
+    void updateUserStatus() {
+        userDao.updateStatus(userDao.findUserByEmail(emails[1]).getUserID(), 1);
+        assertEquals(1, userDao.findUserByEmail(emails[1]).getStatus());
+    }
+
+    @Test
+    @Order(4)
+    void originalUserStatus() {
+        assertEquals(0, userDao.findUserByEmail(emails[2]).getStatus());
+    }
+
 }

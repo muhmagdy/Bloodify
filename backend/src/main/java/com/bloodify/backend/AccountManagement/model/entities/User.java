@@ -80,6 +80,9 @@ public class User {
     @Column(nullable = false, length = 100)
     private String password = "";
 
+    @Column(name= "status")
+    private int status;
+
     @OneToMany(
             mappedBy = "user",
             cascade = CascadeType.ALL,

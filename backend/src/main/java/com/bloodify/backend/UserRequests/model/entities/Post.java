@@ -45,7 +45,6 @@ public class Post {
 
     public Post(@NonNull User user, @NonNull Institution institution,
                 @NonNull int bagsNum, @NonNull LocalDateTime startTime, @NonNull String bloodType) {
-        this.postID = postID;
         this.user = user;
         this.institution = institution;
         this.bagsNum = bagsNum;

@@ -46,8 +46,8 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
 
     @Transactional
     @Modifying
-    @Query(value = "UPDATE Post SET institution_institutionid = :institutionID, blood_type = :bloodType, req_bags_number = :req_bags WHERE postID = :id",
-    nativeQuery = true)
+    @Query(value = "UPDATE Post SET institution_institutionid = :institutionID, blood_type = :bloodType, " +
+            "req_bags_number = :req_bags WHERE postID = :id", nativeQuery = true)
     void updatePostSet(@Param("institutionID") int institutionID, @Param("req_bags") int req_bags,
                        @Param("bloodType") String bloodType, @Param("id") int postID);
 
