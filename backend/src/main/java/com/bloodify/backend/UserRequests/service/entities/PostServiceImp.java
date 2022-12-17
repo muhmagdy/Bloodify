@@ -38,6 +38,7 @@ public class PostServiceImp implements PostService {
         boolean status = this.postDao.addPost(postToSave);
         if (status) {
             List<User> users = this.getUsersToBeNotified(postToSave);
+            userDAO.updateStatus(postToSave.getUser().getUserID(), 0);
             /****************  Notification Goes Here *****8****/
         }
         return status;
