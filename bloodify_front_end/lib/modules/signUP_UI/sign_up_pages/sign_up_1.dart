@@ -115,14 +115,16 @@ class SignUp1 extends StatelessWidget {
                             labelText: language.getLabel('mail'),
                             type: TextInputType.emailAddress,
                             prefix: Icons.mail_outline),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
                         defaultInputText(
                             controller: passController,
                             validate: (pass) {
-                              if (pass == null || pass == '' || pass.length < 8)
+                              if (pass == null || pass == '' || pass.length < 8) {
                                 return language.enterPassword();
-                              if (!validatePassword(pass))
+                              }
+                              if (!validatePassword(pass)) {
                                 return language.showInvalidPassword();
+                              }
                               return null;
                             },
                             labelText: language.getLabel('pass'),
@@ -168,7 +170,7 @@ class SignUp1 extends StatelessWidget {
                               }
                             },
                             text: language.getLabel('next')),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 10),
                           child: Row(

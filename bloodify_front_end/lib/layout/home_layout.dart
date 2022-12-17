@@ -1,6 +1,5 @@
 import 'package:bloodify_front_end/layout/start_layout.dart';
 import 'package:bloodify_front_end/models/event_model.dart';
-import 'package:bloodify_front_end/modules/transactions_modules/event_transaction/eventTransaction_module.dart';
 import 'package:bloodify_front_end/modules/transactions_modules/post_transaction/postTransaction.dart';
 import 'package:bloodify_front_end/shared/network/local/cach_helper.dart';
 import 'package:flutter/material.dart';
