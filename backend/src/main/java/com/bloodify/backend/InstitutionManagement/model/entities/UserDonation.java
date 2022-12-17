@@ -14,7 +14,7 @@ import java.time.LocalDate;
 @Setter
 public class UserDonation {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer userDonationId;
 
     @ManyToOne(cascade = CascadeType.ALL, optional = false)
