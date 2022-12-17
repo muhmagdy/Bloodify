@@ -47,6 +47,8 @@ dependencies:
   intl: ^0.17.0
   geolocator: ^9.0.2
   http: ^0.13.5
+  persistent_bottom_nav_bar: any
+  google_fonts: ^3.0.1
 dev_dependencies:
   flutter_test:
     sdk: flutter
