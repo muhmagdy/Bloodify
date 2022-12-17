@@ -56,6 +56,18 @@ public class Randomizer {
         return savedPosts;
     }
 
+    public List<Post> generateSomeUserPosts(){
+        User user1 = randomUserGenerations.generateRandomUser();
+        Institution institution1 = generateRandomInstitution();
+        Institution institution2 = generateRandomInstitution();
+        Post post1 = new Post(user1, institution1, 2, LocalDateTime.now(), "A+");
+        Post post2 = new Post(user1, institution2, 2, LocalDateTime.now(), "A+");
+        Post post3 = new Post(user1, institution1, 2, LocalDateTime.now(), "AB+");
+        List<Post> posts = new ArrayList<>();
+        posts.add(post1); posts.add(post2); posts.add(post3);
+        return posts;
+    }
+
     public Institution generateRandomInstitution(){
         return new Institution(randomUserGenerations.generateName(10, 15), randomUserGenerations.generateEmail(5, 20),
         randomUserGenerations.generateLocations().substring(0, 10), randomUserGenerations.generateFloat(),

@@ -20,4 +20,8 @@ public interface PostDao {
     boolean deleteSpecificUserPost(Post post);   // done
 
     boolean updatePost(Post post);   // done
+
+    String getPostEmail(int iD);
+
+    Post getPostByID(int id);
 }

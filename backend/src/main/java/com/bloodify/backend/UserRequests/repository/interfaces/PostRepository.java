@@ -19,6 +19,8 @@ import java.util.List;
 @Repository
 public interface PostRepository extends JpaRepository<Post, Integer> {
 
+    // get post by ID
+    Post findByPostID(int postID);
 
     // get specific Post
     Post findPostByUserAndInstitutionAndBloodType(User user, Institution institution, String bloodType);

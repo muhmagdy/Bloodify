@@ -7,23 +7,19 @@ import com.bloodify.backend.AccountManagement.model.entities.Institution;
 import com.bloodify.backend.AccountManagement.model.entities.User;
 import com.bloodify.backend.UserRequests.model.entities.Post;
 import com.bloodify.backend.UserRequests.repository.interfaces.PostRepository;
-import com.bloodify.backend.UserRequests.service.entities.PostDaoImp;
-import com.bloodify.backend.UserRequests.service.interfaces.PostDao;
 import jakarta.annotation.Resource;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-public class PostDaoTryTest {
+public class RepositoryTest {
     @Autowired
     PostRepository postRepository;
 
@@ -171,5 +167,6 @@ public class PostDaoTryTest {
         this.postRepository.updatePostSet(institution2.getInstitutionID(), 5, "O-", post1.getPostID());
         post1 = this.postRepository.findPostByUserAndInstitutionAndBloodType(user1, institution2, "O-");
         assertNotNull(post1);
+        assertEquals(post1.getBloodType(), "O-");
     }
 }

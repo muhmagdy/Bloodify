@@ -1,5 +1,6 @@
 package com.bloodify.backend.UserRequests.service.interfaces;
 
+import com.bloodify.backend.AccountManagement.model.entities.Institution;
 import com.bloodify.backend.AccountManagement.model.entities.User;
 import com.bloodify.backend.UserRequests.controller.request.entity.PostRequest;
 import com.bloodify.backend.UserRequests.dto.entities.PostDto;
@@ -13,7 +14,14 @@ public interface PostService {
     boolean deletePost(PostDto dto);
     List<PostRequest> getUserPosts(String userEmail);
     Post getSpecificPost(String userEmail, int institutionID, String BloodType);
-
     void deleteRedundantPosts();
     List<User> getUsersToBeNotified(Post AcceptedPost);
+
+    int getPostID(PostDto dto);
+
+    User getReceiverFromPost(int postID);
+
+    boolean decrementBags(int postID);
+
+    Institution getInstitutionFromPost(int postID);
 }

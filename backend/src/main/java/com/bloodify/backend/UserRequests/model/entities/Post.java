@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 public class Post {
     @Id
     @GeneratedValue
-    int postID;
+    Integer postID;
 
     @NonNull
     @ManyToOne(fetch = FetchType.LAZY)
@@ -31,7 +31,7 @@ public class Post {
     Institution institution;
     @NonNull
     @Column(name = "req_bags_number", nullable = false)
-    int bagsNum;
+    Integer bagsNum;
 
     @NonNull
     @JsonFormat(timezone = "HH:mm dd-MM-yyyy")

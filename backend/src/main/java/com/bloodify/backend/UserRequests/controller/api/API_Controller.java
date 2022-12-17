@@ -35,7 +35,6 @@ public class API_Controller {
         boolean status = this.postService.updatePost(postDto, postID);
         return new PostResponse<>(status, status? "Your Request Edited Successfully" : "Failed to Edit Your Request");
     }
-
     @PutMapping("/delete_post")
     public PostResponse<String> deletePost(@RequestBody PostRequest request){
         PostDto postDto = this.mapper.mapToPostDto(request);
@@ -46,9 +45,14 @@ public class API_Controller {
     @GetMapping("get_posts/{email}")
     public PostResponse<List<PostRequest>> getLatestUserRequest(@PathVariable("email") String userEmail){
         List<PostRequest> userPosts = this.postService.getUserPosts(userEmail);
-        boolean status = userPosts.size() == 0;
+        boolean status = userPosts.size() != 0;
         return new PostResponse<>(status, status? userPosts : null);
     }
 
-
+    @GetMapping("/get_post_id")
+    public PostResponse<Integer> getPostID(@RequestBody PostRequest request){
+        PostDto postDto = this.mapper.mapToPostDto(request);
+        int postID = this.postService.getPostID(postDto);
+        return new PostResponse<>(postID != -1, postID);
+    }
 }

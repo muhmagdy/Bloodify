@@ -4,6 +4,7 @@ import com.bloodify.backend.AccountManagement.dao.interfaces.InstitutionDAO;
 import com.bloodify.backend.AccountManagement.dao.interfaces.UserDAO;
 import com.bloodify.backend.AccountManagement.model.entities.Institution;
 import com.bloodify.backend.AccountManagement.model.entities.User;
+import com.bloodify.backend.UserRequests.exceptions.DuplicatePostException;
 import com.bloodify.backend.UserRequests.model.entities.Post;
 import com.bloodify.backend.UserRequests.repository.interfaces.PostRepository;
 import com.bloodify.backend.UserRequests.service.interfaces.PostDao;
@@ -29,8 +30,8 @@ public class PostDaoImp implements PostDao {
     @Override
     public boolean addPost(Post post){
         Post duplicatedPost = getSpecificUserPost(post);
-        if (duplicatedPost != null) return false;
-        try{
+        try {
+            if (duplicatedPost != null) throw new DuplicatePostException();
             this.postRepository.save(post);
             return true;
         }catch (Exception e){
@@ -42,11 +43,21 @@ public class PostDaoImp implements PostDao {
 
     @Override
     public boolean updatePost(Post post){
-        post = getSpecificUserPost(post);
-        if(post == null) return false;
         this.postRepository.updatePostSet(post.getInstitution().getInstitutionID(), post.getBagsNum(),
                 post.getBloodType(), post.getPostID());
         return true;
+    }
+
+    @Override
+    public String getPostEmail(int iD) {
+        Post post = this.getPostByID(iD);
+        if (post == null) return null;
+        return post.getUser().getEmail();
+    }
+
+    @Override
+    public Post getPostByID(int id) {
+        return this.postRepository.findByPostID(id);
     }
 
     @Override
@@ -69,15 +80,19 @@ public class PostDaoImp implements PostDao {
             e.printStackTrace();
             return null;
         }
-
     }
 
     @Override
     public List<Post> getInstitutionAllPosts(int institutionID){
-        Institution institution = this.institutionDAO.findInstitutionByID(institutionID);
-        return this.postRepository.findPostsByInstitution(institution);
+        try {
+            Institution institution = this.institutionDAO.findInstitutionByID(institutionID);
+            return this.postRepository.findPostsByInstitution(institution);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+            return null;
+        }
     }
-
     @Override
     public List<Post> getAllBloodTypePosts(String bloodType){
         return this.postRepository.findAllByBloodType(bloodType);
