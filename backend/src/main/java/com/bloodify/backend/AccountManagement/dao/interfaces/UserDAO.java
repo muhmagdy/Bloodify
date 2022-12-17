@@ -19,4 +19,6 @@ public interface UserDAO extends UserDetailsService{
     public List<User> getUsersByBloodType(String bloodType);
 
     public List<User> findByBloodTypeIn(List<String> bloodTypes);
+
+    public void updateStatus(int userID, int userStatus);
 }
