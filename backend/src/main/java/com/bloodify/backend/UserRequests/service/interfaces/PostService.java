@@ -16,7 +16,7 @@ public interface PostService {
     Post getSpecificPost(String userEmail, int institutionID, String BloodType);
     void deleteRedundantPosts();
     List<User> getUsersToBeNotified(Post AcceptedPost);
-
+    public List<User> getUsersToBeNotified(Post acceptedPost, Double instLongitude, Double instLatitude, int threshold);
     int getPostID(PostDto dto);
 
     User getReceiverFromPost(int postID);

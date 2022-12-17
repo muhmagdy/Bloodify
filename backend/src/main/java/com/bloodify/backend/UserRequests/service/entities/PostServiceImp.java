@@ -38,6 +38,9 @@ public class PostServiceImp implements PostService {
         this.postDtoMapper = postDtoMapper;
     }
 
+
+    Criteria criteria = new Criteria();
+
     @Override
     public boolean savePost(PostDto dto) {
         Post postToSave;
@@ -46,6 +49,7 @@ public class PostServiceImp implements PostService {
             boolean status = this.postDao.addPost(postToSave);
             if (status) {
                 List<User> users = this.getUsersToBeNotified(postToSave);
+                userDAO.updateStatus(postToSave.getUser().getUserID(), 0);
                 /****************  Notification Goes Here *****8****/
             }
             return status;
@@ -184,5 +188,15 @@ public class PostServiceImp implements PostService {
     @Scheduled(fixedRate = 3600000)
     public void deleteOldPosts(){
         this.postDao.deleteUnnecessaryPosts();
+    }
+
+    /**  Potential users are based on 3 criteria: matching blood type, user.status=0, distance < threshold  */
+    @Override
+    public List<User> getUsersToBeNotified(Post acceptedPost, Double instLongitude, Double instLatitude, int threshold) {
+        List<User> matchingBloodType = criteria.getUsersMatchingWithPostBloodType(acceptedPost);
+        List<User> potentialDonors = criteria.getPotentialDonorsOnStatus(0);
+//      Get their intersection
+        potentialDonors.retainAll(matchingBloodType);
+        return criteria.filterOnDistance(potentialDonors, instLongitude, instLatitude, threshold);
     }
 }
