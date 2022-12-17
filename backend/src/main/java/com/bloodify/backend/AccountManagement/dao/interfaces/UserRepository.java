@@ -20,6 +20,8 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     List<User> findByBloodTypeIn(List<String> bloodTypes);
 
+    List<User> findByStatus(int status);
+
 
     @Transactional
     @Modifying
@@ -29,5 +31,17 @@ public interface UserRepository extends JpaRepository<User, Integer> {
             "WHERE userID = :userID",
             nativeQuery = true)
     void updateUserStatus(@Param("userID") int userID, @Param("newStatus") int newStatus);
+
+    @Transactional
+    @Modifying
+    @Query(value =
+            "UPDATE User " +
+                    "SET longitude = :currentLongitude, latitude = :currentLatitude " +
+                    "WHERE userID = :userID",
+            nativeQuery = true)
+    void updateLongitudeAndLatitude(@Param("userID") int userID,
+                                    @Param("currentLongitude") Double currentLongitude,
+                                    @Param("currentLatitude") Double currentLatitude);
+
 
 }

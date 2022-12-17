@@ -16,4 +16,5 @@ public interface PostService {
 
     void deleteRedundantPosts();
     List<User> getUsersToBeNotified(Post AcceptedPost);
+    List<User> getUsersToBeNotified(Post acceptedPost, Double instLongitude, Double instLatitude, int threshold);
 }
