@@ -24,4 +24,5 @@ public interface PostService {
     boolean decrementBags(int postID);
 
     Institution getInstitutionFromPost(int postID);
+
 }

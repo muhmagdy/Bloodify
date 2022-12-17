@@ -38,7 +38,6 @@ public class PostServiceImp implements PostService {
         this.postDtoMapper = postDtoMapper;
     }
 
-
     Criteria criteria = new Criteria();
 
     @Override
