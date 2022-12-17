@@ -83,6 +83,13 @@ public class User {
     @Column(name= "status")
     private int status;
 
+    @Column()
+    Double latitude;
+
+    @Column()
+    Double longitude;
+
+
     @OneToMany(
             mappedBy = "user",
             cascade = CascadeType.ALL,

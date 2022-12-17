@@ -205,17 +205,40 @@ class UserDAOTest {
         assertFalse(userDao.isUsernameAndPasswordMatching(emails[0], passwords[3]));
     }
 
+
+    /****************   Updating Tests   **************/
+//  updating donation status
     @Test
     @Order(4)
     void updateUserStatus() {
         userDao.updateStatus(userDao.findUserByEmail(emails[1]).getUserID(), 1);
         assertEquals(1, userDao.findUserByEmail(emails[1]).getStatus());
     }
-
+//  testing default donation status
     @Test
     @Order(4)
     void originalUserStatus() {
         assertEquals(0, userDao.findUserByEmail(emails[2]).getStatus());
     }
+
+//  updating longitude and latitude
+    @Test
+    @Order(4)
+    void updateLongAndLang1() {
+        Double long1 = 29.882137;
+        Double lat1 = 31.210453;
+        userDao.updateLongitudeAndLatitude(userDao.findUserByEmail(emails[0]).getUserID(), long1, lat1);
+
+        assertEquals(long1, userDao.findUserByEmail(emails[0]).getLongitude());
+        assertEquals(lat1, userDao.findUserByEmail(emails[0]).getLatitude());
+    }
+//  default value for longitude and latitude
+    @Test
+    @Order(4)
+    void initialLongAndLang() {
+        assertNull(userDao.findUserByEmail(emails[1]).getLongitude());
+    }
+
+
 
 }
