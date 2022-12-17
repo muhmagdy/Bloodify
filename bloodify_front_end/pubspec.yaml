@@ -47,6 +47,7 @@ dependencies:
   intl: ^0.17.0
   geolocator: ^9.0.2
   http: ^0.13.5
+  flutter_spinbox: ^0.11.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
