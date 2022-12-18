@@ -35,7 +35,8 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
     // get posts by blood type
     List<Post> findAllByBloodType(String bloodType);
 
-    List<User> findAcceptingUsersByRequester(User user);
+    @Query("SELECT p.acceptingUsers FROM Post as p WHERE p.user = :user")
+    List<User> findAcceptingUsersByRequester(@Param("user") User user);
 
 
     // delete after certain period or those satisfying required bagsNum
