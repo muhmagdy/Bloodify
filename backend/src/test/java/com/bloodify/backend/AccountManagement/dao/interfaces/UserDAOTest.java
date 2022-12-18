@@ -187,12 +187,12 @@ class UserDAOTest {
         }
         assertEquals(0, gotEmails.size());
     }
-    @Test
-    @Order(4)
-    void get8() {
-        List<User> gotUsers = userDao.getUsersByStatusAndDiseases(0, false);
-        assertEquals(2, gotUsers.size());
-    }
+//    @Test
+//    @Order(4)
+//    void get8() {
+//        List<User> gotUsers = userDao.getUsersByStatusAndDiseases(0, false);
+//        assertEquals(2, gotUsers.size());
+//    }
 
     /****************   Matching email with password tests   **************/
     @Test
@@ -215,21 +215,21 @@ class UserDAOTest {
     /****************   Updating Tests   **************/
 //  updating donation status
     @Test
-    @Order(4)
+    @Order(5)
     void updateUserStatus() {
         userDao.updateStatus(userDao.findUserByEmail(emails[1]).getUserID(), 1);
         assertEquals(1, userDao.findUserByEmail(emails[1]).getStatus());
     }
 //  testing default donation status
     @Test
-    @Order(4)
+    @Order(5)
     void originalUserStatus() {
         assertEquals(0, userDao.findUserByEmail(emails[2]).getStatus());
     }
 
 //  updating longitude and latitude
     @Test
-    @Order(4)
+    @Order(5)
     void updateLongAndLang1() {
         Double long1 = 29.882137;
         Double lat1 = 31.210453;
@@ -240,7 +240,7 @@ class UserDAOTest {
     }
 //  default value for longitude and latitude
     @Test
-    @Order(4)
+    @Order(5)
     void initialLongAndLang() {
         assertNull(userDao.findUserByEmail(emails[1]).getLongitude());
     }

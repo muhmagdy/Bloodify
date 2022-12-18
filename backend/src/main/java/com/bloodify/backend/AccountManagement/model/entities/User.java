@@ -1,5 +1,6 @@
 package com.bloodify.backend.AccountManagement.model.entities;
 
+import com.bloodify.backend.UserRequests.model.entities.Accept;
 import com.bloodify.backend.UserRequests.model.entities.Post;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
@@ -96,6 +97,14 @@ public class User {
             orphanRemoval = true
     )
     private List<Post> posts;
+
+    @OneToMany(
+            mappedBy = "user",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<Accept> accepts;
+
     public User(String firstName, String lastName, String nationalID, String email, String bloodType,
                 boolean hasDiseases, LocalDate lastTimeDonated, String password) {
         this.firstName = firstName;
@@ -107,6 +116,7 @@ public class User {
         this.lastTimeDonated = lastTimeDonated;
         this.password = password;
         this.posts = new ArrayList<>();
+        this.accepts = new ArrayList<>();
     }
 
 }

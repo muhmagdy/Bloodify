@@ -12,6 +12,8 @@ import lombok.NonNull;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Entity
@@ -43,6 +45,14 @@ public class Post {
     @Column(name = "blood_type", nullable = false, length = 3)
     String bloodType;
 
+    @OneToMany(
+            mappedBy = "post",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<Accept> accepts;
+
+
     public Post(@NonNull User user, @NonNull Institution institution,
                 @NonNull int bagsNum, @NonNull LocalDateTime startTime, @NonNull String bloodType) {
         this.user = user;
@@ -50,6 +60,7 @@ public class Post {
         this.bagsNum = bagsNum;
         this.startTime = startTime;
         this.bloodType = bloodType;
+        this.accepts = new ArrayList<>();
     }
 
     public Post(int postID, @NonNull User user, @NonNull Institution institution, @NonNull int bagsNum,
@@ -60,11 +71,13 @@ public class Post {
         this.bagsNum = bagsNum;
         this.startTime = startTime;
         this.bloodType = bloodType;
+        this.accepts = new ArrayList<>();
     }
 
     public Post(@NonNull User user, @NonNull Institution institution, @NonNull String bloodType) {
         this.user = user;
         this.institution = institution;
         this.bloodType = bloodType;
+        this.accepts = new ArrayList<>();
     }
 }
