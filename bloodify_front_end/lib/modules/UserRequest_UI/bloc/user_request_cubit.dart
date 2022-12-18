@@ -49,7 +49,48 @@ class UserRequestFormCubit extends Cubit<UserRequestFormState> {
 
   Future<List<String>> getInstitutions() async {
     return await Future.delayed(
-        Duration(seconds: 2), (() => ["one", "two", "three"]));
+        Duration(seconds: 2),
+        (() => [
+              "one",
+              "two",
+              "three",
+              "one",
+              "two",
+              "three",
+              "one",
+              "two",
+              "three",
+              "one",
+              "two",
+              "three",
+              "one",
+              "two",
+              "three",
+              "one",
+              "two",
+              "three",
+              "one",
+              "two",
+              "three",
+              "one",
+              "two",
+              "three",
+              "one",
+              "two",
+              "three",
+              "one",
+              "two",
+              "three",
+              "one",
+              "two",
+              "three",
+              "one",
+              "two",
+              "three",
+              "one",
+              "two",
+              "three"
+            ]));
   }
 
   void changeInstitution(String institution) {

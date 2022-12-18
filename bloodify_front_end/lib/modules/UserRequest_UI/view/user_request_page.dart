@@ -1,6 +1,7 @@
 import 'package:bloodify_front_end/modules/UserRequest_UI/bloc/user_request_cubit.dart';
 import 'package:bloodify_front_end/modules/signUP_UI/sign_up_pages/Languages.dart';
 import 'package:bloodify_front_end/shared/Constatnt/colors.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 // import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
@@ -173,15 +174,20 @@ Padding makeDropDown(
     String title, List<String> list, Function(String value) changed) {
   return Padding(
       padding: const EdgeInsets.all(10.0),
-      child: DropdownButtonFormField<String>(
-        decoration: InputDecoration(labelText: title),
-        value: null,
-        items: list.map<DropdownMenuItem<String>>((String value) {
-          return DropdownMenuItem<String>(
-            value: value,
-            child: Text(value),
-          );
-        }).toList(),
+      child: DropdownSearch<String>(
+        popupProps: PopupProps.menu(
+            showSelectedItems: true,
+            showSearchBox: true,
+            searchFieldProps: TextFieldProps(
+                decoration: InputDecoration(
+                    enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: defaultColor))))),
+        items: list,
+        dropdownDecoratorProps: DropDownDecoratorProps(
+            dropdownSearchDecoration: InputDecoration(
+              labelText: title,
+            ),
+            baseStyle: TextStyle(fontSize: 18)),
         onChanged: (value) => {changed(value!)},
       ));
 }
