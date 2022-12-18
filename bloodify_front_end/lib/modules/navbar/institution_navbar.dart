@@ -1,5 +1,6 @@
 // import 'package:bloodify_front_end/modules/home_UI/user_home/userHome.dart';
 import 'package:bloodify_front_end/modules/home_UI/institution_home/instHome.dart';
+import 'package:bloodify_front_end/modules/institution/eventInstitution.dart';
 import 'package:bloodify_front_end/shared/Constatnt/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +14,7 @@ class InstNavBar extends StatelessWidget {
       InstitutionHome(),
       const Screen2(),
       const Screen3(),
-      const Screen4(),
+      InstitutionEventPage(),
       const Screen5()
     ];
   }
