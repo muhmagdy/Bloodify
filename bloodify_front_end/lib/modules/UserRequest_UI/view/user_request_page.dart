@@ -156,7 +156,11 @@ class _SubmitButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     void submit() {
-      UserRequestFormCubit.get(context).submit();
+      if (UserRequestFormCubit.get(context).validate()) {
+        UserRequestFormCubit.get(context).submit();
+      } else {
+        showError(context, "Form is incomplete!");
+      }
     }
 
     return Padding(
@@ -198,9 +202,14 @@ Center makeDatePicker(
   return Center(
       child: TextField(
     controller: TextEditingController()
-      ..text = context.select((UserRequestFormCubit cubit) => dateFormat
-          .format(cubit.state.expiryDate ?? DateTime.now())
-          .toString()),
+      ..text = context.select((UserRequestFormCubit cubit) {
+        if (cubit.state.expiryDate != null) {
+          return dateFormat
+              .format(cubit.state.expiryDate ?? DateTime.now())
+              .toString();
+        }
+        return "";
+      }),
     decoration: InputDecoration(
         icon: const Icon(Icons.calendar_today), labelText: labelText),
     readOnly: true,
@@ -215,12 +224,16 @@ Center makeDatePicker(
         if (pickedDate.isAfter(DateTime.now())) {
           changed(pickedDate);
         } else {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            duration: Duration(seconds: 5),
-            content: Text('Invalid Date'),
-          ));
+          showError(context, 'Invalid Date');
         }
       }
     },
+  ));
+}
+
+void showError(context, String errMsg) {
+  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    duration: Duration(seconds: 5),
+    content: Text(errMsg),
   ));
 }

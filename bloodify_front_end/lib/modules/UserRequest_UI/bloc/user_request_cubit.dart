@@ -7,7 +7,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 
 part 'user_request_state.dart';
-part 'user_request_event.dart';
 
 class UserRequestFormCubit extends Cubit<UserRequestFormState> {
   //TODO add data repo
@@ -22,10 +21,10 @@ class UserRequestFormCubit extends Cubit<UserRequestFormState> {
 
   static UserRequestFormCubit get(context) => BlocProvider.of(context);
 
-  void onUserRequestFormLoaded(
-    UserRequestFormLoaded event,
-    Emitter<UserRequestFormState> emit,
-  ) {}
+  // void onUserRequestFormLoaded(
+  //   UserRequestFormLoaded event,
+  //   Emitter<UserRequestFormState> emit,
+  // ) {}
 
   void changeBloodType(String bloodType) {
     emit(state.copyWith(pickedBloodType: bloodType));
@@ -95,6 +94,13 @@ class UserRequestFormCubit extends Cubit<UserRequestFormState> {
 
   void changeInstitution(String institution) {
     emit(state.copyWith(pickedInstitution: institution));
+  }
+
+  bool validate() {
+    return state.bloodBagsCount != null &&
+        state.expiryDate != null &&
+        state.pickedBloodType != null &&
+        state.pickedInstitution != null;
   }
 
   void submit() {
