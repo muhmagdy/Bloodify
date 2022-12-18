@@ -45,12 +45,13 @@ public class Post {
     @Column(name = "blood_type", nullable = false, length = 3)
     String bloodType;
 
+
     @OneToMany(
-            mappedBy = "post",
+            mappedBy = "acceptedPost",
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    private List<Accept> accepts;
+    private List<User> acceptingUsers;
 
 
     public Post(@NonNull User user, @NonNull Institution institution,
@@ -60,7 +61,7 @@ public class Post {
         this.bagsNum = bagsNum;
         this.startTime = startTime;
         this.bloodType = bloodType;
-        this.accepts = new ArrayList<>();
+        acceptingUsers = new ArrayList<>();
     }
 
     public Post(int postID, @NonNull User user, @NonNull Institution institution, @NonNull int bagsNum,
@@ -71,13 +72,13 @@ public class Post {
         this.bagsNum = bagsNum;
         this.startTime = startTime;
         this.bloodType = bloodType;
-        this.accepts = new ArrayList<>();
+        acceptingUsers = new ArrayList<>();
     }
 
     public Post(@NonNull User user, @NonNull Institution institution, @NonNull String bloodType) {
         this.user = user;
         this.institution = institution;
         this.bloodType = bloodType;
-        this.accepts = new ArrayList<>();
+        acceptingUsers = new ArrayList<>();
     }
 }
