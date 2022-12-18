@@ -7,7 +7,6 @@ import com.bloodify.backend.UserRequests.controller.request.entity.PostRequest;
 import com.bloodify.backend.UserRequests.controller.request.mappers.Post_PostRequestMapper;
 import com.bloodify.backend.UserRequests.dto.entities.PostDto;
 import com.bloodify.backend.UserRequests.exceptions.IllegalPostAccessException;
-import com.bloodify.backend.UserRequests.exceptions.UserNotFoundException;
 import com.bloodify.backend.UserRequests.model.entities.Post;
 import com.bloodify.backend.UserRequests.model.mapper.Post_DTO_Mapper;
 import com.bloodify.backend.UserRequests.service.bloodTypes.BloodType;
@@ -19,7 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
