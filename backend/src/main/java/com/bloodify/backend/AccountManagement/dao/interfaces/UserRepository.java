@@ -1,10 +1,12 @@
 package com.bloodify.backend.AccountManagement.dao.interfaces;
 
 import com.bloodify.backend.AccountManagement.model.entities.User;
+import com.bloodify.backend.UserRequests.model.entities.Post;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +25,9 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     List<User> findByStatus(int status);
 
     List<User> findByStatusAndHasDiseases(int status, boolean hasDisease);
+
+    @Query("SELECT u.id FROM User u where u.email = :email")
+    Post findAcceptedPostByAcceptorEmail(@Param("email") String acceptorEmail);
 
 
     @Transactional

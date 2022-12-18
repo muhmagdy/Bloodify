@@ -116,4 +116,9 @@ public class PostDaoImp implements PostDao {
         }
     }
 
+    @Override
+    public List<User> findAcceptingUsersByRequester(User user) {
+        return this.postRepository.findAcceptingUsersByRequester(user);
+    }
+
 }

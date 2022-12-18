@@ -5,6 +5,7 @@ import com.bloodify.backend.AccountManagement.dao.interfaces.UserRepository;
 import com.bloodify.backend.AccountManagement.model.authentication.UserAuthentication;
 import com.bloodify.backend.AccountManagement.model.entities.User;
 
+import com.bloodify.backend.UserRequests.model.entities.Post;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -106,6 +107,12 @@ public class UserDAOImp implements UserDAO {
         UserAuthentication userAuth = new UserAuthentication(user);
         return userAuth;
         // return new User("foo", "foo", List.of());
+    }
+
+    @Override
+    public Post findAcceptedPostByAcceptor (User user) {
+        String acceptorEmail = user.getEmail();
+        return userRepo.findAcceptedPostByAcceptorEmail(acceptorEmail);
     }
 
 

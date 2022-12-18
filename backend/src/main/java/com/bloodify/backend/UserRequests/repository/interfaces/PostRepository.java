@@ -26,7 +26,7 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
     Post findPostByUserAndInstitutionAndBloodType(User user, Institution institution, String bloodType);
 
 
-    // get all posts related to some user
+    // get all posts related to some user as a requester
     List<Post> findPostsByUser(User user);
 
     // get all posts related to some institution
@@ -34,6 +34,8 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
 
     // get posts by blood type
     List<Post> findAllByBloodType(String bloodType);
+
+    List<User> findAcceptingUsersByRequester(User user);
 
 
     // delete after certain period or those satisfying required bagsNum

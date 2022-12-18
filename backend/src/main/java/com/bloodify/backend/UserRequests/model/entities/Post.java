@@ -19,6 +19,13 @@ import java.util.List;
 @Entity
 @Table
 @NoArgsConstructor
+
+@NamedNativeQuery(
+        name = "Post.findAcceptingUsersByRequester",
+        query = "SELECT accepting_users FROM Post as p WHERE p.user = ?",
+        resultClass = User.class
+)
+
 public class Post {
     @Id
     @GeneratedValue
@@ -51,8 +58,11 @@ public class Post {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
+    @Column(name = "accepting_users")
     private List<User> acceptingUsers;
-
+    String query = "SELECT accepting_users" +
+            "FROM Post as p" +
+            "WHERE p.user = ?";
 
     public Post(@NonNull User user, @NonNull Institution institution,
                 @NonNull int bagsNum, @NonNull LocalDateTime startTime, @NonNull String bloodType) {
