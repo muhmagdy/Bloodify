@@ -22,6 +22,8 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     List<User> findByStatus(int status);
 
+    List<User> findByStatusAndHasDiseases(int status, boolean hasDisease);
+
 
     @Transactional
     @Modifying

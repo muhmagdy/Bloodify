@@ -54,28 +54,28 @@ class UserDAOTest {
     void saveUser1() {
         int n=0;
         assertTrue(userDao.saveUser(new User(
-                fNames[n], lNames[n], IDs[n], emails[n], "AB-", isDisease[n], dates[n], passwords[n]))) ;
+                fNames[n], lNames[n], IDs[n], emails[n], "AB-", false, dates[n], passwords[n]))) ;
     }
     @Test
     @Order(1)
     void saveUser2() {
         int n=1;
         assertTrue(userDao.saveUser(new User(
-                fNames[n], lNames[n], IDs[n], emails[n], "O+", isDisease[n], dates[n], passwords[n])));
+                fNames[n], lNames[n], IDs[n], emails[n], "O+", true, dates[n], passwords[n])));
     }
     @Test
     @Order(1)
     void saveUser3() {
         int n=2;
         assertTrue(userDao.saveUser(new User(
-                fNames[n], lNames[n], IDs[n], emails[n], "AB-", isDisease[n], dates[n], passwords[n])));
+                fNames[n], lNames[n], IDs[n], emails[n], "AB-", false, dates[n], passwords[n])));
     }
     @Test
     @Order(1)
     void saveUser4() {
         int n=3;
         assertTrue(userDao.saveUser(new User(
-                fNames[n], lNames[n], IDs[n], emails[n], "A-", isDisease[n], null, passwords[n])));
+                fNames[n], lNames[n], IDs[n], emails[n], "A-", true, null, passwords[n])));
     }
 
 //  Testing inserting a user with the same ID of an already inserted user
@@ -186,6 +186,12 @@ class UserDAOTest {
             gotEmails.add(gotUser.getEmail());
         }
         assertEquals(0, gotEmails.size());
+    }
+    @Test
+    @Order(4)
+    void get8() {
+        List<User> gotUsers = userDao.getUsersByStatusAndDiseases(0, false);
+        assertEquals(2, gotUsers.size());
     }
 
     /****************   Matching email with password tests   **************/

@@ -39,8 +39,10 @@ public class Criteria {
         return userDAO.findByBloodTypeIn(typesInString);
     }
 
+//  Potential donors are those who have: status = 0 (don't have request), no diseases
     public List<User> getPotentialDonorsOnStatus (int status) {
-        return userDAO.getUsersByStatus(status);
+//        return userDAO.getUsersByStatusAndDiseases(status, false);
+        return userDAO.getUsersByStatusAndDiseases(status, false);
     }
 
     public List<User> filterOnDistance (List<User> potentialDonors, Double instLongitude, Double instLatitude, int threshold) {

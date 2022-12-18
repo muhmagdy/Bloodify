@@ -77,6 +77,11 @@ public class UserDAOImp implements UserDAO {
     }
 
     @Override
+    public List<User> getUsersByStatusAndDiseases(int status, boolean hasDisease) {
+        return userRepo.findByStatusAndHasDiseases(status, hasDisease);
+    }
+
+    @Override
     public List<User> findByBloodTypeIn(List<String> bloodTypes) {
         return this.userRepo.findByBloodTypeIn(bloodTypes);
     }

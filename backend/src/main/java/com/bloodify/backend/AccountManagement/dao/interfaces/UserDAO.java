@@ -20,6 +20,8 @@ public interface UserDAO extends UserDetailsService{
 
     public List<User> getUsersByStatus(int status);
 
+    public List<User> getUsersByStatusAndDiseases(int status, boolean hasDisease);
+
     public List<User> findByBloodTypeIn(List<String> bloodTypes);
 
     public void updateStatus(int userID, int userStatus);
