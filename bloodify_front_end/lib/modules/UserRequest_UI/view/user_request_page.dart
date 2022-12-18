@@ -3,11 +3,13 @@ import 'package:bloodify_front_end/modules/signUP_UI/sign_up_pages/Languages.dar
 import 'package:bloodify_front_end/shared/Constatnt/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+// import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_spinbox/material.dart';
 import 'package:intl/intl.dart';
+import 'package:omni_datetime_picker/omni_datetime_picker.dart';
 
 Language language = EnglishLanguage();
-var dateFormat = new DateFormat("dd-MM-yyyy");
+var dateFormat = new DateFormat("E, d MMM yyy, h:mm a");
 
 class UserRequestForm extends StatelessWidget {
   UserRequestForm({super.key});
@@ -197,14 +199,21 @@ Center makeDatePicker(
         icon: const Icon(Icons.calendar_today), labelText: labelText),
     readOnly: true,
     onTap: () async {
-      DateTime? pickedDate = await showDatePicker(
+      DateTime? pickedDate = await showOmniDateTimePicker(
           context: context,
-          initialDate: now,
-          firstDate: now,
-          lastDate: now.add(requestDuration));
+          startInitialDate: now,
+          startFirstDate: now,
+          startLastDate: now.add(requestDuration));
 
       if (pickedDate != null) {
-        changed(pickedDate);
+        if (pickedDate.isAfter(DateTime.now())) {
+          changed(pickedDate);
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            duration: Duration(seconds: 5),
+            content: Text('Invalid Date'),
+          ));
+        }
       }
     },
   ));
