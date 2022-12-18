@@ -6,6 +6,7 @@ import com.bloodify.backend.AccountManagement.model.entities.User;
 import com.bloodify.backend.UserRequests.controller.request.entity.PostRequest;
 import com.bloodify.backend.UserRequests.controller.request.mappers.Post_PostRequestMapper;
 import com.bloodify.backend.UserRequests.dto.entities.PostDto;
+import com.bloodify.backend.UserRequests.exceptions.IllegalPostAccessException;
 import com.bloodify.backend.UserRequests.exceptions.UserNotFoundException;
 import com.bloodify.backend.UserRequests.model.entities.Post;
 import com.bloodify.backend.UserRequests.model.mapper.Post_DTO_Mapper;
@@ -18,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,8 +40,6 @@ public class PostServiceImp implements PostService {
         this.postDtoMapper = postDtoMapper;
     }
 
-    Criteria criteria = new Criteria();
-
     @Override
     public boolean savePost(PostDto dto) {
         Post postToSave;
@@ -48,8 +48,7 @@ public class PostServiceImp implements PostService {
             boolean status = this.postDao.addPost(postToSave);
             if (status) {
                 List<User> users = this.getUsersToBeNotified(postToSave);
-                userDAO.updateStatus(postToSave.getUser().getUserID(), 0);
-                /****************  Notification Goes Here *****8****/
+                //TODO   Notification Goes Here
             }
             return status;
         }catch (Exception e){
@@ -60,14 +59,11 @@ public class PostServiceImp implements PostService {
     }
 
     @Override
-    public boolean updatePost(PostDto dto, int postID) {
+    public boolean updatePost(PostDto dto) {
         Post postToEdit;
         try{
-            String userEmail = this.postDao.getPostEmail(postID);
-            if (userEmail == null) throw new UserNotFoundException();
-            if(!userEmail.equals(dto.getUserEmail())) throw new IllegalAccessException();
             postToEdit = this.postDtoMapper.map_to_Post(dto);
-            postToEdit.setPostID(postID);
+            postToEdit.setPostID(dto.getPostID());
             return this.postDao.updatePost(postToEdit);
         }catch (Exception e){
             System.out.println(e.getMessage());
@@ -75,12 +71,13 @@ public class PostServiceImp implements PostService {
             return false;
         }
     }
-
     @Override
-    public boolean deletePost(PostDto dto) {
+    public boolean deletePost(int postID, String userEmail){
         Post postToDelete;
         try {
-           postToDelete = this.postDtoMapper.map_to_Post(dto);
+           postToDelete = this.postDao.getPostByID(postID);
+           if (!postToDelete.getUser().getEmail().equals(userEmail))
+               throw new IllegalPostAccessException();
         } catch (Exception e){
             System.out.println(e.getMessage());
             e.printStackTrace();
@@ -88,7 +85,6 @@ public class PostServiceImp implements PostService {
         }
         return this.postDao.deleteSpecificUserPost(postToDelete);
     }
-
     @Override
     public List<PostRequest> getUserPosts(String userEmail) {
         List<Post> posts = this.postDao.getUserAllPosts(userEmail);
@@ -97,25 +93,16 @@ public class PostServiceImp implements PostService {
         for (Post post: posts) requestsToShow.add(requestMapper.map_to_request(post));
         return requestsToShow;
     }
-
     @Override
     public Post getSpecificPost(String userEmail, int institutionID, String bloodType) {
-        BloodTypeFactory factory = BloodTypeFactory.getFactory();
-        PostDto postDto = new PostDto(userEmail, institutionID, 0, factory.generateFromString(bloodType));
         try {
-            return this.postDao.getSpecificUserPost(this.postDtoMapper.map_to_Post(postDto));
+            return this.postDao.getSpecificUserPost(userEmail, institutionID, bloodType);
         }catch (Exception e){
             System.out.println(e.getMessage());
             e.printStackTrace();
             return null;
         }
     }
-
-    @Override
-    public void deleteRedundantPosts() {
-        this.postDao.deleteUnnecessaryPosts();
-    }
-
     @Override
     public List<User> getUsersToBeNotified(Post acceptedPost) {
         BloodTypeFactory factory = BloodTypeFactory.getFactory();
@@ -125,7 +112,10 @@ public class PostServiceImp implements PostService {
         for (BloodType bType: compatibleTypes) typesInString.add(bType.toString());
         return userDAO.findByBloodTypeIn(typesInString);
     }
-
+    @Override
+    public List<User> getUsersToBeNotified(Post acceptedPost, Double instLongitude, Double instLatitude, int threshold) {
+        return null;
+    }
     @Override
     public int getPostID(PostDto dto) {
         Post postToRetrieve;
@@ -139,7 +129,6 @@ public class PostServiceImp implements PostService {
             return -1;
         }
     }
-
     @Override
     public User getReceiverFromPost(int postID) {
         Post postToRetrieve;
@@ -153,7 +142,6 @@ public class PostServiceImp implements PostService {
             return null;
         }
     }
-
     @Override
     public boolean decrementBags(int postID) {
         Post postToRetrieve;
@@ -169,7 +157,6 @@ public class PostServiceImp implements PostService {
             return false;
         }
     }
-
     @Override
     public Institution getInstitutionFromPost(int postID){
         Post postToRetrieve;
@@ -183,19 +170,8 @@ public class PostServiceImp implements PostService {
             return null;
         }
     }
-
     @Scheduled(fixedRate = 3600000)
     public void deleteOldPosts(){
         this.postDao.deleteUnnecessaryPosts();
-    }
-
-    /**  Potential users are based on 3 criteria: matching blood type, user.status=0, distance < threshold  */
-    @Override
-    public List<User> getUsersToBeNotified(Post acceptedPost, Double instLongitude, Double instLatitude, int threshold) {
-        List<User> matchingBloodType = criteria.getUsersMatchingWithPostBloodType(acceptedPost);
-        List<User> potentialDonors = criteria.getPotentialDonorsOnStatus(0);
-//      Get their intersection
-        potentialDonors.retainAll(matchingBloodType);
-        return criteria.filterOnDistance(potentialDonors, instLongitude, instLatitude, threshold);
     }
 }

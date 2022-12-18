@@ -9,7 +9,6 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
-import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 
@@ -38,33 +37,44 @@ public class Post {
     @Column(name = "created_at")
     LocalDateTime startTime;
 
+
+    @NonNull
+    @JsonFormat(timezone = "HH:mm dd-MM-yyyy")
+    @Column(name = "expiry_at")
+    LocalDateTime lastTime;
+
     @NonNull
     @Size(max = 3, message = "blood type is too long")
     @Column(name = "blood_type", nullable = false, length = 3)
     String bloodType;
 
-    public Post(@NonNull User user, @NonNull Institution institution,
-                @NonNull int bagsNum, @NonNull LocalDateTime startTime, @NonNull String bloodType) {
+    public Post(@NonNull User user, @NonNull Institution institution, @NonNull Integer bagsNum,
+                @NonNull LocalDateTime startTime, @NonNull LocalDateTime lastTime, @NonNull String bloodType) {
         this.user = user;
         this.institution = institution;
         this.bagsNum = bagsNum;
         this.startTime = startTime;
+        this.lastTime = lastTime;
         this.bloodType = bloodType;
     }
 
-    public Post(int postID, @NonNull User user, @NonNull Institution institution, @NonNull int bagsNum,
-                @NonNull LocalDateTime startTime, @NonNull String bloodType) {
+    public Post(Integer postID, @NonNull User user, @NonNull Institution institution, @NonNull Integer bagsNum,
+                @NonNull LocalDateTime startTime, @NonNull LocalDateTime lastTime, @NonNull String bloodType) {
         this.postID = postID;
         this.user = user;
         this.institution = institution;
         this.bagsNum = bagsNum;
         this.startTime = startTime;
+        this.lastTime = lastTime;
         this.bloodType = bloodType;
     }
 
-    public Post(@NonNull User user, @NonNull Institution institution, @NonNull String bloodType) {
+    public Post(@NonNull User user, @NonNull Institution institution, @NonNull Integer bagsNum,
+                @NonNull LocalDateTime lastTime, @NonNull String bloodType) {
         this.user = user;
         this.institution = institution;
+        this.bagsNum = bagsNum;
+        this.lastTime = lastTime;
         this.bloodType = bloodType;
     }
 }

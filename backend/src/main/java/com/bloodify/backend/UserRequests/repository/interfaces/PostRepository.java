@@ -25,7 +25,6 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
     // get specific Post
     Post findPostByUserAndInstitutionAndBloodType(User user, Institution institution, String bloodType);
 
-
     // get all posts related to some user
     List<Post> findPostsByUser(User user);
 
@@ -37,8 +36,11 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
 
 
     // delete after certain period or those satisfying required bagsNum
+//    @Transactional
+//    void deletePostsByStartTimeBeforeOrBagsNum(LocalDateTime startTime, int bagsNum);
+
     @Transactional
-    void deletePostsByStartTimeBeforeOrBagsNum(LocalDateTime startTime, int bagsNum);
+    void deletePostsByLastTimeBeforeOrBagsNum(LocalDateTime startTime, int bagsNum);
 
     // delete specific Post
     @Transactional
@@ -47,8 +49,9 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
     @Transactional
     @Modifying
     @Query(value = "UPDATE Post SET institution_institutionid = :institutionID, blood_type = :bloodType, " +
-            "req_bags_number = :req_bags WHERE postID = :id", nativeQuery = true)
+            "req_bags_number = :req_bags, expiry_at = :expiry_at, created_at = :created_at WHERE postID = :id", nativeQuery = true)
     void updatePostSet(@Param("institutionID") int institutionID, @Param("req_bags") int req_bags,
-                       @Param("bloodType") String bloodType, @Param("id") int postID);
+                       @Param("bloodType") String bloodType, @Param("id") int postID,
+                       @Param("expiry_at") LocalDateTime lastUpdateTime, @Param("created_at") LocalDateTime expiryTime);
 
 }

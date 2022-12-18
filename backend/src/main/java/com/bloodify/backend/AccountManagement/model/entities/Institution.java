@@ -115,26 +115,26 @@ public class Institution {
     @Column()
     Double longitude;
     @Column(name = "working_hours")
-    Integer workingHours;
+    Integer workingHours = 0;
     @Column(nullable = false, length = 60)
     String password;
 
     @Column(name = "count_Ap")
-    Integer positiveA_bagsCount;
+    Integer positiveA_bagsCount = 0;
     @Column(name = "count_Bp")
-    Integer positiveB_bagsCount;
+    Integer positiveB_bagsCount = 0;
     @Column(name = "count_ABp")
-    Integer positiveAB_bagsCount;
+    Integer positiveAB_bagsCount = 0;
     @Column(name = "count_Op")
-    Integer positiveO_bagsCount;
+    Integer positiveO_bagsCount = 0;
     @Column(name = "count_An")
-    Integer negativeA_bagsCount;
+    Integer negativeA_bagsCount = 0;
     @Column(name = "count_Bn")
-    Integer negativeB_bagsCount;
+    Integer negativeB_bagsCount = 0;
     @Column(name = "count_ABn")
-    Integer negativeAB_bagsCount;
+    Integer negativeAB_bagsCount = 0;
     @Column(name = "count_On")
-    Integer negativeO_bagsCount;
+    Integer negativeO_bagsCount = 0;
 
     @OneToMany(
             mappedBy = "institution",

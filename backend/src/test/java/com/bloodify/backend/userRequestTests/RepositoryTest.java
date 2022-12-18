@@ -120,14 +120,16 @@ public class RepositoryTest {
         Institution institution1 = randomizer.generateRandomInstitution();
         User user2 = userGenerations.generateRandomUser();
         Institution institution2 = randomizer.generateRandomInstitution();
-        Post post1 = new Post(user1, institution1, 1, LocalDateTime.now().minusDays(10), "A+");
-        Post post2 = new Post(user2, institution2, 2, LocalDateTime.now(), "A-");
+
+        Post post1 = new Post(user1, institution1, 1, LocalDateTime.now().minusDays(10),
+                LocalDateTime.now().minusDays(2), "A+");
+        Post post2 = new Post(user2, institution2, 2, LocalDateTime.now(), LocalDateTime.now().plusDays(30), "A-");
 
         this.userDAO.saveUser(user1); this.userDAO.saveUser(user2);
         this.instDao.saveInstitution(institution1); this.instDao.saveInstitution(institution2);
         this.postRepository.save(post1); this.postRepository.save(post2);
 
-        this.postRepository.deletePostsByStartTimeBeforeOrBagsNum(LocalDateTime.now().minusDays(7), 0);
+        this.postRepository.deletePostsByLastTimeBeforeOrBagsNum(LocalDateTime.now(), 0);
 
         assertEquals(this.postRepository.findPostsByUser(user1).size(), 0);
         assertNotNull(this.postRepository.findPostsByUser(user2).get(0));
@@ -164,7 +166,8 @@ public class RepositoryTest {
         this.userDAO.saveUser(user1); this.userDAO.saveUser(user2);
         this.instDao.saveInstitution(institution1); this.instDao.saveInstitution(institution2);
         this.postRepository.save(post1); this.postRepository.save(post2);
-        this.postRepository.updatePostSet(institution2.getInstitutionID(), 5, "O-", post1.getPostID());
+        this.postRepository.updatePostSet(institution2.getInstitutionID(), 5, "O-", post1.getPostID(),
+                LocalDateTime.now(), LocalDateTime.now());
         post1 = this.postRepository.findPostByUserAndInstitutionAndBloodType(user1, institution2, "O-");
         assertNotNull(post1);
         assertEquals(post1.getBloodType(), "O-");
