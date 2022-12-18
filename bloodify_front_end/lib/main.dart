@@ -2,10 +2,12 @@ import 'package:bloc/bloc.dart';
 import 'package:bloodify_front_end/layout/start_layout.dart';
 import 'package:bloodify_front_end/modules/login_UI/User_login/userLogin.dart';
 import 'package:bloodify_front_end/modules/login_UI/institution_login/institutionLogin.dart';
+import 'package:bloodify_front_end/modules/navbar/institution_navbar.dart';
 import 'package:bloodify_front_end/shared/bloc_observer.dart';
 import 'package:bloodify_front_end/shared/network/local/cach_helper.dart';
 import 'package:bloodify_front_end/shared/network/remote/dio_helper.dart';
 import 'package:bloodify_front_end/shared/styles/themes.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -39,6 +41,9 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    if (kDebugMode) {
+      return MaterialApp(debugShowCheckedModeBanner: false, home: InstNavBar());
+    }
     return MultiBlocProvider(
         providers: [
           BlocProvider(create: (context) => SignUpCubit()),
