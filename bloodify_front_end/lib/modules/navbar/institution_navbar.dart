@@ -28,8 +28,8 @@ class InstNavBar extends StatelessWidget {
         inactiveColorPrimary: grey,
       ),
       PersistentBottomNavBarItem(
-        icon: const Icon(CupertinoIcons.bell_fill),
-        title: ("Notifications"),
+        icon: const Icon(Icons.bar_chart),
+        title: ("Stats"),
         activeColorPrimary: blue,
         inactiveColorPrimary: grey,
       ),
