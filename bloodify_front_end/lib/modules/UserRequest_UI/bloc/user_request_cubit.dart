@@ -43,7 +43,6 @@ class UserRequestFormCubit extends Cubit<UserRequestFormState> {
     if (state.institutions.isEmpty) {
       try {
         var data = await getInstitutions();
-        print("yaaaaw");
         emit(state.copyWith(institutions: data));
       } catch (e) {
         print(e);

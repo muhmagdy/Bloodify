@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:bloodify_front_end/layout/start_layout.dart';
-import 'package:bloodify_front_end/modules/InstitutionSearch/view/institution_search_page.dart';
+import 'package:bloodify_front_end/modules/InstitutionSearch/bloc/blood_finder_cubit.dart';
+import 'package:bloodify_front_end/modules/InstitutionSearch/view/blood_finder_page.dart';
 import 'package:bloodify_front_end/modules/UserRequest_UI/user_request.dart';
 import 'package:bloodify_front_end/modules/UserRequest_UI/view/user_request_page.dart';
 import 'package:bloodify_front_end/modules/login_UI/User_login/userLogin.dart';
@@ -47,7 +48,8 @@ class MyApp extends StatelessWidget {
           BlocProvider(create: (context) => SignUpCubit()),
           BlocProvider(create: (context) => UserLoginCubit()),
           BlocProvider(create: (context) => InstitutionLoginCubit()),
-          BlocProvider(create: (context) => UserRequestFormCubit())
+          BlocProvider(create: (context) => UserRequestFormCubit()),
+          BlocProvider(create: (context) => BloodFinderCubit()),
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
