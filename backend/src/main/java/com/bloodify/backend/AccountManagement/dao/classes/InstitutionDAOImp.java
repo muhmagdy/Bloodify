@@ -148,8 +148,4 @@ public class InstitutionDAOImp implements InstitutionDAO {
         // return new User("foo", "foo", List.of(new SimpleGrantedAuthority("Institution")));
     }
 
-    @Override
-    public void deleteAll() {
-        instRepo.deleteAll();
-    }
 }

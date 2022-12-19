@@ -9,10 +9,12 @@ import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.lang.NonNull;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -67,6 +69,10 @@ public class UserDAOImp implements UserDAO {
         return false;
     }
 
+    public int updateLastTimeDonatedByNationalID(@NonNull LocalDate lastTimeDonated, String nationalID) {
+        return this.userRepo.updateLastTimeDonatedByNationalID(lastTimeDonated, nationalID);
+    }
+
     public List<User> getUsersByBloodType(String bloodType) {
         return userRepo.findByBloodType(bloodType);
     }
@@ -82,6 +88,5 @@ public class UserDAOImp implements UserDAO {
         return userAuth;
         // return new User("foo", "foo", List.of());
     }
-
 
 }

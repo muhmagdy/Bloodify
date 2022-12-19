@@ -18,5 +18,4 @@ public interface InstitutionDAO extends UserDetailsService{
 
     int updateBagsCount(String email, String bloodType, Integer newBagsCount);
 
-    void deleteAll();
 }
