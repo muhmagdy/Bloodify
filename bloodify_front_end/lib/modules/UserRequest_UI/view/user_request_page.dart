@@ -24,6 +24,7 @@ class UserRequestForm extends StatelessWidget {
               backgroundColor: Colors.white,
               resizeToAvoidBottomInset: false,
               appBar: AppBar(
+                iconTheme: IconThemeData(color: Colors.white),
                 backgroundColor: defaultColor,
                 title: Text(
                   title,

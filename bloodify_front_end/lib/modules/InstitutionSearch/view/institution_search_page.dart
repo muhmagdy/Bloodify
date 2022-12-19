@@ -55,11 +55,16 @@ class _CreatePostButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
         width: width * 0.7,
-        child:
-            ElevatedButton(onPressed: createPost, child: Text("Create Post")));
+        child: ElevatedButton(
+            onPressed: () => createPost(context), child: Text("Create Post")));
   }
 
-  void createPost() {}
+  void createPost(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => UserRequestForm()),
+    );
+  }
 }
 
 class _SearchBar extends StatelessWidget {
