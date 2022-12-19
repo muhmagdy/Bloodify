@@ -1,4 +1,4 @@
-package com.bloodify.backend.InstitutionManagement.model.entities;
+package com.bloodify.backend.InstitutionManagement.model;
 
 import com.bloodify.backend.AccountManagement.model.entities.Institution;
 import com.bloodify.backend.AccountManagement.model.entities.User;
@@ -18,12 +18,16 @@ public class InstitutionDonation {
     private Integer institutionDonationId;
 
     @ManyToOne(cascade = CascadeType.ALL, optional = false)
-    private User acceptor;
-
-    @ManyToOne(cascade = CascadeType.ALL, optional = false)
     private Institution institution;
 
-    // private enum BloodType ? will that help in statistics ?
+    @Column(nullable = false)
+    private String acceptorNationalID;
+
+    @Column(nullable = false)
+    private String bloodType;
+
+    @Column(nullable = false)
+    private Integer bagsCount;
 
     @Column(nullable = false)
     @JsonFormat(pattern = "dd-MM-yyyy")
