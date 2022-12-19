@@ -18,7 +18,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class UserDAOTest {
 
     @Resource(name = "userDAOImp")
-    @Mock
     private UserDAO userDao;
 
     static int dataLength = 10;
