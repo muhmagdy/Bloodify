@@ -110,7 +110,7 @@ class _SearchResults extends StatelessWidget {
 
   Card makeInstitutionCard(FoundInstitutionWithDistance inst) {
     Function formatter = (double x) => '${x.ceil()} m';
-    if (inst.distance >= 1000) {
+    if (inst.getDistance() >= 1000) {
       formatter = (double x) => '${(x / 1000).toStringAsFixed(2)} Km';
     }
     return Card(
@@ -124,18 +124,17 @@ class _SearchResults extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  InstitutionName(
-                      institutionName: inst.institution.institutionName),
-                  DistanceWidget(formatter: formatter, distance: inst.distance)
+                  InstitutionName(institutionName: inst.getName()),
+                  DistanceWidget(
+                      formatter: formatter, distance: inst.getDistance())
                 ],
               ),
             ),
-            InstitutionAddress(
-                institutionLocation: inst.institution.institutionLocation),
+            InstitutionAddress(institutionLocation: inst.getLocation()),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: AvailableBloodTypesWidget(
-                availableBloodTypes: inst.institution.types_bags.entries,
+                availableBloodTypes: inst.getBloodBags().entries,
               ),
             ),
           ],
