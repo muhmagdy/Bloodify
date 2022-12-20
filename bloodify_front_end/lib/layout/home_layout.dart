@@ -19,9 +19,7 @@ class HomeLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: PostTransaction(
-        post: post,
-      ),
+      body: InstituteTransaction(),
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 255, 78, 66),
         title: Row(children: [

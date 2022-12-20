@@ -3,13 +3,15 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 
+import '../../Constatnt/userInfo.dart';
+
 class DioHelper {
   static Dio? dio;
 
   static init() {
     dio = Dio(
       BaseOptions(
-        baseUrl: 'http://192.168.1.113:8080/api/v1/',
+        baseUrl: 'http://192.168.1.5:8080/api/v1/',
         receiveDataWhenStatusError: true,
         headers: {
           'Content-Type': 'application/json',
@@ -40,7 +42,6 @@ class DioHelper {
     Map<String, dynamic>? query,
     required Map<String, dynamic> data,
     String lang = 'en',
-    String? token,
   }) async {
     String? auth;
     if (token == null) {
@@ -55,6 +56,7 @@ class DioHelper {
         'Authorization': "Bearer $token",
       };
     }
+    print(dio!.options.headers);
     return dio!.post(
       url,
       queryParameters: query,

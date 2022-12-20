@@ -2,12 +2,12 @@ import 'package:conditional_builder_null_safety/conditional_builder_null_safety.
 import 'package:dropdown_button2/custom_dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_spinbox/flutter_spinbox.dart';
 
 import '../../../../shared/Constatnt/Component.dart';
 import '../cubic/institution_transaction_cubit.dart';
 import '../cubic/institution_transaction_states.dart';
 
+// ignore: must_be_immutable
 class UserToInstitute extends StatelessWidget {
   UserToInstitute({super.key});
   var fromUserContoller = TextEditingController();
@@ -18,8 +18,6 @@ class UserToInstitute extends StatelessWidget {
     return BlocConsumer<InstituteTransactionCubit, InstituteTransactionStates>(
         listener: (context, state) {},
         builder: (context, state) {
-          double width = MediaQuery.of(context).size.width;
-
           return SingleChildScrollView(
             child: Form(
                 key: _formKey,

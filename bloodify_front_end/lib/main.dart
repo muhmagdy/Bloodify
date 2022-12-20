@@ -63,7 +63,7 @@ class MyApp extends StatelessWidget {
           // themeMode: false ? ThemeMode.dark : ThemeMode.light,
           themeMode: ThemeMode.light,
           // home: startWidget,
-          home: HomeLayout(),
+          home: startWidget,
         ));
   }
 }

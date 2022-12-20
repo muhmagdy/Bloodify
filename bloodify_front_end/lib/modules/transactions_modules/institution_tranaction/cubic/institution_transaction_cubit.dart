@@ -13,7 +13,7 @@ import 'institution_transaction_states.dart';
 
 class InstituteTransactionCubit extends Cubit<InstituteTransactionStates> {
   var currentIndex = 0;
-  double bloodBags = 0.0;
+  double bloodBags = 1.0;
   var currentBloodType = 0;
   List<String> types = ['A+', 'B+', 'O+', 'AB+', 'A-', 'B-', 'O-', 'AB-'];
   var post;
@@ -49,13 +49,21 @@ class InstituteTransactionCubit extends Cubit<InstituteTransactionStates> {
       "bloodType": types[currentBloodType],
       "bagsCount": bloodBags
     })
-        .then((value) => {
+        .then((Response value) => {
               response = TransactionResponse.fromJson(value.data),
               emit(InstituteTransactionInstituteToUserSuccess(response!))
             })
-        .catchError((onError) {
+        .catchError((error) {
+      print(error.response);
+      print(error.response.statusCode);
+      if (error.response.statusCode == 406) {
+        print(error.response);
+        response = TransactionResponse.fromJson(error.response.data);
+
+        emit(InstituteTransactionInstituteToUserSuccess(response!));
+      }
       print(onError.toString());
-      InstituteTransactionInstituteToUserError(onError.toString());
+      emit(InstituteTransactionInstituteToUserError(onError.toString()));
     });
   }
 
