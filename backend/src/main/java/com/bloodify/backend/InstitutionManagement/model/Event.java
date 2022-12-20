@@ -1,4 +1,4 @@
-package com.bloodify.backend.InstitutionManagement.model.entities;
+package com.bloodify.backend.InstitutionManagement.model;
 
 import com.bloodify.backend.AccountManagement.model.entities.Institution;
 import jakarta.persistence.*;

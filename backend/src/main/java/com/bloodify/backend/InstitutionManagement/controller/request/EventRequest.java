@@ -1,12 +1,16 @@
 package com.bloodify.backend.InstitutionManagement.controller.request;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-public class EventCreationRequest {
+@Getter
+@Setter
+public class EventRequest {
     private String title;
 
     @JsonFormat(pattern = "dd-MM-yyyy")
