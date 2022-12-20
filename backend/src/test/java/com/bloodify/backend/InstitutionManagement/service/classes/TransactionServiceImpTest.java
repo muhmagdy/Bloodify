@@ -89,7 +89,7 @@ class TransactionServiceImpTest {
     @BeforeAll
     public static void randomConstructor() {
         Random random = new Random();
-        smallBagsCount = random.nextInt(BOUNDARY);
+        smallBagsCount = random.nextInt(BOUNDARY) + 1;
         largeBagsCount = random.nextInt(BOUNDARY) + BOUNDARY + 1;
     }
 
@@ -203,6 +203,12 @@ class TransactionServiceImpTest {
                 instToUserDonDTO.getBloodType()))
                 .thenReturn(smallBagsCount);
 
+        when(instDAO.updateBagsCount(
+                instToUserDonDTO.getInstitutionEmail(),
+                instToUserDonDTO.getBloodType(),
+                0))
+                .thenReturn(1);
+
         when(instToUserDonDAO.save(instToUserDonation))
                 .thenReturn(true);
 
@@ -225,6 +231,12 @@ class TransactionServiceImpTest {
         when(instDAO.getBagsCount(instToUserDonDTO.getInstitutionEmail(),
                 instToUserDonDTO.getBloodType()))
                 .thenReturn(largeBagsCount);
+
+        when(instDAO.updateBagsCount(
+                instToUserDonDTO.getInstitutionEmail(),
+                instToUserDonDTO.getBloodType(),
+                largeBagsCount - smallBagsCount))
+                .thenReturn(1);
 
         when(instToUserDonDAO.save(instToUserDonation))
                 .thenReturn(true);
@@ -249,9 +261,6 @@ class TransactionServiceImpTest {
                 instToUserDonDTO.getBloodType()))
                 .thenReturn(largeBagsCount);
 
-        when(instToUserDonDAO.save(instToUserDonation))
-                .thenReturn(false);
-
         Assertions.assertThrows(TransactionException.class,
                 () -> transactionService.applyInstToUserDonation(instToUserDonDTO));
     }
@@ -264,6 +273,12 @@ class TransactionServiceImpTest {
     void savingUserToInstDonFailure() {
         when(userToInstDonModelMapper.mapToModel(userToInstDonDTO))
                 .thenReturn(userToInstDonation);
+
+        when(instDAO.incrementBagsCountBy(
+                userToInstDonDTO.getInstitutionEmail(),
+                userToInstDonDTO.getBloodType(),
+                1
+        )).thenReturn(1);
 
         when(userToInstDonDAO.save(userToInstDonation))
                 .thenReturn(false);
@@ -283,6 +298,11 @@ class TransactionServiceImpTest {
 
         when(userToInstDonDAO.save(userToInstDonation))
                 .thenReturn(true);
+
+        when(instDAO.incrementBagsCountBy(userToInstDonDTO.getInstitutionEmail(),
+                userToInstDonDTO.getBloodType(),
+                1))
+                .thenReturn(1);
 
         Assertions.assertDoesNotThrow(
                 () -> transactionService.applyUserToInstDonation(userToInstDonDTO));
