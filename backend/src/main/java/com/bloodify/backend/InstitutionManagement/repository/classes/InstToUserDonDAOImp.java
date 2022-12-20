@@ -5,11 +5,12 @@ import com.bloodify.backend.InstitutionManagement.repository.interfaces.InstToUs
 import com.bloodify.backend.InstitutionManagement.repository.interfaces.InstToUserDonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
 
-@Component
+@Service
 public class InstToUserDonDAOImp implements InstToUserDonDAO {
 
     @Autowired
