@@ -7,19 +7,29 @@ class UserRequestFormState extends Equatable {
   final DateTime? expiryDate;
   late List<InstitutionBrief> institutions;
   final InstitutionBrief? pickedInstitution;
+  bool isLoading;
 
-  UserRequestFormState._({
-    this.bloodTypes = const ['A+', 'B+', 'O+', 'AB+', 'A-', 'B-', 'O-', 'AB-'],
-    this.pickedBloodType,
-    this.bloodBagsCount = 1,
-    this.expiryDate,
-    this.institutions = const <InstitutionBrief>[],
-    this.pickedInstitution,
-  });
+  UserRequestFormState._(
+      {this.bloodTypes = const [
+        'A+',
+        'B+',
+        'O+',
+        'AB+',
+        'A-',
+        'B-',
+        'O-',
+        'AB-'
+      ],
+      this.pickedBloodType,
+      this.bloodBagsCount = 1,
+      this.expiryDate,
+      this.institutions = const <InstitutionBrief>[],
+      this.pickedInstitution,
+      this.isLoading = false});
 
   UserRequestFormState.initial() : this._();
 
-  UserRequestFormState.institutionsLoadInProgress() : this._();
+  UserRequestFormState.institutionsLoadInProgress() : this._(isLoading: true);
 
   UserRequestFormState.institutionsLoadSuccess(
       {required List<InstitutionBrief> institutions})
@@ -31,14 +41,16 @@ class UserRequestFormState extends Equatable {
       double? bloodBagsCount,
       DateTime? expiryDate,
       List<InstitutionBrief>? institutions,
-      InstitutionBrief? pickedInstitution}) {
+      InstitutionBrief? pickedInstitution,
+      bool? isLoading}) {
     return UserRequestFormState._(
         bloodTypes: bloodTypes ?? this.bloodTypes,
         pickedBloodType: pickedBloodType ?? this.pickedBloodType,
         bloodBagsCount: bloodBagsCount ?? this.bloodBagsCount,
         expiryDate: expiryDate ?? this.expiryDate,
         institutions: institutions ?? this.institutions,
-        pickedInstitution: pickedInstitution ?? this.pickedInstitution);
+        pickedInstitution: pickedInstitution ?? this.pickedInstitution,
+        isLoading: isLoading ?? this.isLoading);
   }
 
   @override
@@ -48,6 +60,7 @@ class UserRequestFormState extends Equatable {
         bloodBagsCount,
         expiryDate,
         institutions,
-        pickedInstitution
+        pickedInstitution,
+        isLoading
       ];
 }

@@ -1,12 +1,10 @@
 import 'dart:io';
 
 import 'package:bloodify_front_end/models/found_institution.dart';
-import 'package:bloodify_front_end/modules/BloodFinding/blood_finding.dart';
-import 'package:bloodify_front_end/modules/UserRequest_UI/user_request.dart';
-import 'package:bloodify_front_end/modules/signUP_UI/sign_up_State_management/sign_up_cubit.dart';
+import 'package:bloodify_front_end/shared/Constatnt/Component.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:equatable/equatable.dart';
 
 part 'user_request_state.dart';
 
@@ -32,20 +30,32 @@ class UserRequestFormCubit extends Cubit<UserRequestFormState> {
     emit(state.copyWith(pickedBloodType: bloodType));
   }
 
-  void changeBloodBagsCountChan(double bloodBagsCount) {
+  void changeBloodBagsCount(double bloodBagsCount) {
     emit(state.copyWith(bloodBagsCount: bloodBagsCount));
   }
 
   void changeRequestExpiryDate(DateTime expiryDate) {
-    print(expiryDate);
     emit(state.copyWith(expiryDate: expiryDate));
   }
 
   void loadInstitutions() async {
     if (state.institutions.isEmpty) {
       try {
+        var currState = state.copyWith();
+        emit(UserRequestFormState.institutionsLoadInProgress().copyWith(
+            pickedBloodType: currState.pickedBloodType,
+            expiryDate: currState.expiryDate,
+            bloodBagsCount: currState.bloodBagsCount));
+        // emit(UserRequestFormState.institutionsLoadInProgress());
+
         var data = await getInstitutions();
-        emit(state.copyWith(institutions: data));
+        emit(UserRequestFormState.institutionsLoadSuccess(institutions: data)
+            .copyWith(
+                pickedBloodType: currState.pickedBloodType,
+                expiryDate: currState.expiryDate,
+                bloodBagsCount: currState.bloodBagsCount));
+
+        // emit(UserRequestFormState.institutionsLoadSuccess(institutions: data));
       } catch (e) {
         print(e);
       }
@@ -54,7 +64,7 @@ class UserRequestFormCubit extends Cubit<UserRequestFormState> {
 
   Future<List<InstitutionBrief>> getInstitutions() async {
     return await Future.delayed(
-        Duration(seconds: 2),
+        Duration(seconds: 5),
         (() => [
               InstitutionBrief(institutionID: 1, name: "one", location: "alex"),
               InstitutionBrief(institutionID: 2, name: "two", location: "alex"),
@@ -74,7 +84,7 @@ class UserRequestFormCubit extends Cubit<UserRequestFormState> {
             ]));
   }
 
-  void changeInstitution(InstitutionBrief institution) {
+  dynamic changeInstitution(dynamic institution) {
     emit(state.copyWith(pickedInstitution: institution));
   }
 

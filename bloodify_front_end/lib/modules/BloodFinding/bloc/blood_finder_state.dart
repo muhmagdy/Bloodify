@@ -5,6 +5,7 @@ class BloodFinderState extends Equatable {
   final List<String> bloodTypes;
   late String? pickedBloodType;
   late Position? location;
+  bool isLoading;
 
   BloodFinderState._(
       {this.bloodTypes = const [
@@ -19,11 +20,12 @@ class BloodFinderState extends Equatable {
       ],
       this.foundInstitutions = const <FoundInstitutionWithDistance>[],
       this.pickedBloodType,
-      this.location});
+      this.location,
+      this.isLoading = false});
 
   BloodFinderState.initial() : this._();
 
-  BloodFinderState.findingInstitutions() : this._();
+  BloodFinderState.findingInstitutions() : this._(isLoading: true);
 
   BloodFinderState.findingInstitutionsSuccess(
       {required List<FoundInstitutionWithDistance> institutions})
@@ -33,15 +35,17 @@ class BloodFinderState extends Equatable {
       {List<FoundInstitutionWithDistance>? foundInstitutions,
       List<String>? bloodTypes,
       String? pickedBloodType,
-      Position? location}) {
+      Position? location,
+      bool? isLoading}) {
     return BloodFinderState._(
         bloodTypes: bloodTypes ?? this.bloodTypes,
         foundInstitutions: foundInstitutions ?? this.foundInstitutions,
         pickedBloodType: pickedBloodType ?? this.pickedBloodType,
-        location: location ?? this.location);
+        location: location ?? this.location,
+        isLoading: isLoading ?? this.isLoading);
   }
 
   @override
   List<Object?> get props =>
-      [bloodTypes, foundInstitutions, pickedBloodType, location];
+      [bloodTypes, foundInstitutions, pickedBloodType, location, isLoading];
 }

@@ -48,8 +48,8 @@ class MyApp extends StatelessWidget {
           BlocProvider(create: (context) => SignUpCubit()),
           BlocProvider(create: (context) => UserLoginCubit()),
           BlocProvider(create: (context) => InstitutionLoginCubit()),
-          BlocProvider(create: (context) => UserRequestFormCubit()),
           BlocProvider(create: (context) => BloodFinderCubit()),
+          // BlocProvider(create: (context) => UserRequestFormCubit()),
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,

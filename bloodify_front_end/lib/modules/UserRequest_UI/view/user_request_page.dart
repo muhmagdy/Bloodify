@@ -14,36 +14,48 @@ Language language = EnglishLanguage();
 var dateFormat = new DateFormat("E, d MMM yyy, h:mm a");
 
 class UserRequestForm extends StatelessWidget {
-  UserRequestForm({super.key});
-  var title = "Post Request";
+  const UserRequestForm({super.key});
+  final String title = "Post Request";
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<UserRequestFormCubit, UserRequestFormState>(
-        builder: (context, state) {
-          return Scaffold(
-              backgroundColor: Colors.white,
-              resizeToAvoidBottomInset: false,
-              appBar: AppBar(
-                iconTheme: IconThemeData(color: Colors.white),
-                backgroundColor: defaultColor,
-                title: Text(
-                  title,
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
-              body: BlocProvider(
-                create: (_) => UserRequestFormCubit(),
-                child: _UserRequestForm(),
-              ));
-        },
-        listener: (context, state) {});
+    return BlocProvider(
+      create: (context) => UserRequestFormCubit(),
+      child: _MainFormScreen(title: title),
+    );
+  }
+}
+
+class _MainFormScreen extends StatelessWidget {
+  const _MainFormScreen({
+    Key? key,
+    required this.title,
+  }) : super(key: key);
+
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        backgroundColor: Colors.white,
+        resizeToAvoidBottomInset: false,
+        appBar: AppBar(
+          iconTheme: IconThemeData(color: Colors.white),
+          backgroundColor: defaultColor,
+          title: Text(
+            title,
+            style: TextStyle(color: Colors.white),
+          ),
+        ),
+        body: _UserRequestForm());
   }
 }
 
 class _UserRequestForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final cubit = context.watch<UserRequestFormCubit>();
+
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return SingleChildScrollView(
@@ -62,8 +74,10 @@ class _UserRequestForm extends StatelessWidget {
                 ],
               ),
               _RequestExpiration(),
-              _InstitutionPicker(),
-              _SubmitButton(width)
+              cubit.state.isLoading
+                  ? AbsorbPointer(child: _InstitutionPicker())
+                  : _InstitutionPicker(),
+              _SubmitButton(width),
             ],
           ),
         ),
@@ -80,12 +94,12 @@ class _BloodTypeDropDown extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<String> types =
-        context.select((UserRequestFormCubit cubit) => cubit.state.bloodTypes);
+    final cubit = context.watch<UserRequestFormCubit>();
+    final List<String> types = cubit.state.bloodTypes;
 
     bloodTypeChanged(dynamic value) {
       print(value);
-      UserRequestFormCubit.get(context).changeBloodType(value);
+      cubit.changeBloodType(value);
     }
 
     return SizedBox(
@@ -103,8 +117,9 @@ class _BloodBagsCounter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cubit = context.watch<UserRequestFormCubit>();
     changedBloodCount(double value) {
-      UserRequestFormCubit.get(context).changeBloodBagsCountChan(value);
+      cubit.changeBloodBagsCount(value);
     }
 
     return SizedBox(
@@ -113,8 +128,7 @@ class _BloodBagsCounter extends StatelessWidget {
         decoration: InputDecoration(labelText: bloodBags),
         min: 1,
         max: 4,
-        value: context
-            .select((UserRequestFormCubit cubit) => cubit.state.bloodBagsCount),
+        value: cubit.state.bloodBagsCount,
         onChanged: (value) => {changedBloodCount(value)},
       ),
     );
@@ -125,8 +139,11 @@ class _RequestExpiration extends StatelessWidget {
   final String postExpiration = "Post Expiration Date";
   @override
   Widget build(BuildContext context) {
+    final cubit = context.watch<UserRequestFormCubit>();
+
     changeRequestExpiration(DateTime value) {
-      UserRequestFormCubit.get(context).changeRequestExpiryDate(value);
+      // UserRequestFormCubit.get(context).changeRequestExpiryDate(value);
+      cubit.changeRequestExpiryDate(value);
     }
 
     return makeDatePicker(context, postExpiration, changeRequestExpiration);
@@ -138,12 +155,16 @@ class _InstitutionPicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    UserRequestFormCubit.get(context).loadInstitutions();
+    final cubit = context.watch<UserRequestFormCubit>();
 
-    List<InstitutionBrief> institutions = context
-        .select((UserRequestFormCubit cubit) => cubit.state.institutions);
-    institutionChanged(dynamic value) {
-      UserRequestFormCubit.get(context).changeInstitution(value);
+    // UserRequestFormCubit.get(context).loadInstitutions();
+    cubit.loadInstitutions();
+
+    List<InstitutionBrief> institutions = cubit.state.institutions;
+
+    void institutionChanged(dynamic value) {
+      // UserRequestFormCubit.get(context).changeInstitution(value);
+      cubit.changeInstitution(value);
     }
 
     return makeDropDown(institutionLabel, institutions, institutionChanged);
@@ -157,9 +178,11 @@ class _SubmitButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cubit = context.watch<UserRequestFormCubit>();
+
     void submit() {
-      if (UserRequestFormCubit.get(context).validate()) {
-        UserRequestFormCubit.get(context).submit();
+      if (cubit.validate()) {
+        cubit.submit();
       } else {
         showError(context, "Form is incomplete!");
       }
@@ -168,9 +191,12 @@ class _SubmitButton extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(15.0),
       child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-        SizedBox(
-            width: width / 5,
-            child: ElevatedButton(onPressed: submit, child: Text(buttonText)))
+        cubit.state.isLoading
+            ? CircularProgressIndicator()
+            : SizedBox(
+                width: width / 5,
+                child:
+                    ElevatedButton(onPressed: submit, child: Text(buttonText)))
       ]),
     );
   }
@@ -203,6 +229,7 @@ Padding makeDropDown(
 Center makeDatePicker(
     BuildContext context, String labelText, Function(DateTime value) changed) {
   var now = DateTime.now(), requestDuration = const Duration(days: 30);
+
   return Center(
       child: TextField(
     controller: TextEditingController()

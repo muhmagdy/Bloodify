@@ -30,7 +30,7 @@ class BloodFinderCubit extends Cubit<BloodFinderState> {
           types_bags: Map.of({"A+": 1, "B+": 2}),
           working_hours: 24),
       FoundInstitution(
-          institutionId: 1,
+          institutionId: 2,
           institutionName: "two",
           institutionLocation: "loc",
           longitude: 13,
@@ -38,7 +38,7 @@ class BloodFinderCubit extends Cubit<BloodFinderState> {
           types_bags: Map.of({"A+": 1, "B+": 2}),
           working_hours: 24),
       FoundInstitution(
-          institutionId: 1,
+          institutionId: 3,
           institutionName: "three",
           institutionLocation: "loc",
           longitude: -40,
@@ -46,7 +46,7 @@ class BloodFinderCubit extends Cubit<BloodFinderState> {
           types_bags: Map.of({"A+": 1, "B+": 2}),
           working_hours: 24),
       FoundInstitution(
-          institutionId: 1,
+          institutionId: 4,
           institutionName: "four",
           institutionLocation: "loc",
           longitude: 13,
@@ -61,6 +61,14 @@ class BloodFinderCubit extends Cubit<BloodFinderState> {
             "C+": 1,
             "D+": 2,
           }),
+          working_hours: 24),
+      FoundInstitution(
+          institutionId: 4,
+          institutionName: "five",
+          institutionLocation: "loc",
+          longitude: -13,
+          latitude: 104,
+          types_bags: Map.of({"A+": 1, "B+": 2}),
           working_hours: 24),
     ];
     // print(foundInstitutions);

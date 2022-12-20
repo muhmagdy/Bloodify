@@ -3,6 +3,7 @@ import 'package:bloodify_front_end/modules/BloodFinding/bloc/blood_finder_cubit.
 import 'package:bloodify_front_end/modules/UserRequest_UI/view/user_request_page.dart';
 import 'package:bloodify_front_end/shared/Constatnt/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -97,7 +98,9 @@ class _SearchBar extends StatelessWidget {
           child: makeDropDown(bloodTypelabel,
               BloodFinderCubit.get(context).state.bloodTypes, bloodTypeChanged),
         ),
-        IconButton(onPressed: find, icon: Icon(Icons.search_rounded))
+        BloodFinderCubit.get(context).state.isLoading
+            ? CircularProgressIndicator()
+            : IconButton(onPressed: find, icon: Icon(Icons.search_rounded))
       ],
     );
   }
@@ -145,16 +148,20 @@ class _SearchResults extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      shrinkWrap: true,
-      itemBuilder: (context, i) {
-        return Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: makeInstitutionCard(
-              BloodFinderCubit.get(context).state.foundInstitutions[i]),
-        );
-      },
-      itemCount: BloodFinderCubit.get(context).state.foundInstitutions.length,
+    return Container(
+      height: MediaQuery.of(context).size.height * 0.7,
+      child: ListView.builder(
+        physics: const AlwaysScrollableScrollPhysics(),
+        shrinkWrap: true,
+        itemBuilder: (context, i) {
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: makeInstitutionCard(
+                BloodFinderCubit.get(context).state.foundInstitutions[i]),
+          );
+        },
+        itemCount: BloodFinderCubit.get(context).state.foundInstitutions.length,
+      ),
     );
   }
 }
