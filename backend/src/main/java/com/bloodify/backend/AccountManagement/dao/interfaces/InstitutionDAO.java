@@ -18,4 +18,6 @@ public interface InstitutionDAO extends UserDetailsService{
 
     int updateBagsCount(String email, String bloodType, Integer newBagsCount);
 
+    int incrementBagsCountBy(String email, String bloodType, Integer addedBagsCount);
+
 }

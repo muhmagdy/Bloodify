@@ -66,4 +66,47 @@ public interface InstitutionRepository extends JpaRepository<Institution, Intege
     @Query("update Institution i set i.negativeO_bagsCount = ?1 where i.email = ?2")
     int updateNegativeO_bagsCountByEmail(@NonNull Integer negativeO_bagsCount, String email);
 
+    @Transactional
+    @Modifying
+    @Query("update Institution i set i.positiveA_bagsCount = i.positiveA_bagsCount + ?1 where i.email = ?2")
+    int incrementAPosBagsCountBy(Integer positiveA_bagsCount, @NonNull String email);
+
+    @Transactional
+    @Modifying
+    @Query("update Institution i set i.positiveB_bagsCount = i.positiveB_bagsCount + ?1 where i.email = ?2")
+    int incrementBPosBagsCountBy(@NonNull Integer positiveB_bagsCount, @NonNull String email);
+
+    @Transactional
+    @Modifying
+    @Query("update Institution i set i.positiveAB_bagsCount = i.positiveAB_bagsCount + ?1 where i.email = ?2")
+    int incrementABPosBagsCountBy(@NonNull Integer positiveAB_bagsCount, String email);
+
+    @Transactional
+    @Modifying
+    @Query("update Institution i set i.positiveO_bagsCount = i.positiveO_bagsCount + ?1 where i.email = ?2")
+    int incrementOPosBagsCountBy(@NonNull Integer positiveO_bagsCount, @NonNull String email);
+
+    @Transactional
+    @Modifying
+    @Query("update Institution i set i.negativeA_bagsCount = i.negativeA_bagsCount + ?1 where i.email = ?2")
+    int incrementANegBagsCountBy(@NonNull Integer negativeA_bagsCount, @NonNull String email);
+
+    @Transactional
+    @Modifying
+    @Query("update Institution i set i.negativeB_bagsCount = i.negativeB_bagsCount + ?1 where i.email = ?2")
+    int incrementBNegBagsCountBy(@NonNull Integer negativeB_bagsCount, @NonNull String email);
+
+    @Transactional
+    @Modifying
+    @Query("update Institution i set i.negativeAB_bagsCount = i.negativeAB_bagsCount + ?1 where i.email = ?2")
+    int incrementABNegBagsCountBy(@NonNull Integer negativeAB_bagsCount, @NonNull String email);
+
+    @Transactional
+    @Modifying
+    @Query("update Institution i set i.negativeO_bagsCount = i.negativeO_bagsCount + ?1 where i.email = ?2")
+    int incrementONegBagsCountBy(@NonNull Integer negativeO_bagsCount, @NonNull String email);
+
+
+
+
 }

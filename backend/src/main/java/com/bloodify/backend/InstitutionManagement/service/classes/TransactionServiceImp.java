@@ -6,6 +6,7 @@ import com.bloodify.backend.InstitutionManagement.dto.InstToUserDonDTO;
 import com.bloodify.backend.InstitutionManagement.dto.UserToInstDonDTO;
 import com.bloodify.backend.InstitutionManagement.dto.UserToUserDonDTO;
 import com.bloodify.backend.InstitutionManagement.exceptions.transactionexceptions.InsufficientBloodBags;
+import com.bloodify.backend.InstitutionManagement.exceptions.transactionexceptions.InvalidBloodType;
 import com.bloodify.backend.InstitutionManagement.exceptions.transactionexceptions.TransactionException;
 import com.bloodify.backend.InstitutionManagement.model.InstToUserDonation;
 import com.bloodify.backend.InstitutionManagement.model.UserToInstDonation;
@@ -77,23 +78,26 @@ public class TransactionServiceImp implements TransactionService {
     public void applyInstToUserDonation(InstToUserDonDTO instToUserDonDTO) {
         InstToUserDonation model = instToUserDonModelMapper.mapToModel(instToUserDonDTO);
 
-        Integer currentBags = institutionDAO.getBagsCount(
+        int currentBags = institutionDAO.getBagsCount(
                 instToUserDonDTO.getInstitutionEmail(),
                 instToUserDonDTO.getBloodType()
         );
 
-        Integer requiredBags = instToUserDonDTO.getBagsCount();
+        if(currentBags == -1)
+            throw new InvalidBloodType();
+
+        int requiredBags = instToUserDonDTO.getBagsCount();
 
         if (currentBags < requiredBags)
             throw new InsufficientBloodBags();
 
-        institutionDAO.updateBagsCount(
+        int updatedRows = institutionDAO.updateBagsCount(
                 instToUserDonDTO.getInstitutionEmail(),
                 instToUserDonDTO.getBloodType(),
                 currentBags - requiredBags
         );
 
-        if(!instToUserDonDAO.save(model))
+        if (!(updatedRows > 0 && instToUserDonDAO.save(model)))
             throw new TransactionException("Invalid Transaction!");
     }
 
@@ -109,7 +113,17 @@ public class TransactionServiceImp implements TransactionService {
                 userToInsDonDTO.getDonorNationalID()
         );
 
-        if(!userToInstDonDAO.save(model))
+        int updatedRows = institutionDAO.incrementBagsCountBy(
+                userToInsDonDTO.getInstitutionEmail(),
+                userToInsDonDTO.getBloodType(),
+                1
+        );
+
+        if (updatedRows == -1)
+            throw new InvalidBloodType();
+
+
+        if (!(updatedRows > 0 && userToInstDonDAO.save(model)))
             throw new TransactionException("Invalid Transaction!");
 
     }

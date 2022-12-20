@@ -99,6 +99,21 @@ public class InstitutionDAOImp implements InstitutionDAO {
         };
     }
 
+    @Override
+    public int incrementBagsCountBy(String email, String bloodType, Integer addedBagsCount) {
+        return switch (bloodType) {
+            case "A+" -> instRepo.incrementAPosBagsCountBy(addedBagsCount, email);
+            case "B+" -> instRepo.incrementBPosBagsCountBy(addedBagsCount, email);
+            case "AB+" -> instRepo.incrementABPosBagsCountBy(addedBagsCount, email);
+            case "O+" -> instRepo.incrementOPosBagsCountBy(addedBagsCount, email);
+            case "A-" -> instRepo.incrementANegBagsCountBy(addedBagsCount, email);
+            case "B-" -> instRepo.incrementBNegBagsCountBy(addedBagsCount, email);
+            case "AB-" -> instRepo.incrementABNegBagsCountBy(addedBagsCount, email);
+            case "O-" -> instRepo.incrementONegBagsCountBy(addedBagsCount, email);
+            default -> -1;
+        };
+    }
+
 //    public void setChangedPacketCount(List<String> changes, Institution institution) {
 //        for(String change: changes) {
 //            switch (change) {
