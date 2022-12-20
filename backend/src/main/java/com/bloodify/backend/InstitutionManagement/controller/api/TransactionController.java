@@ -25,7 +25,7 @@ public class TransactionController {
     public ResponseEntity<TransactionResponse> createInstToUserDon(@RequestBody InstToUserDonRequest donationRequest,
                                                                    Authentication auth) {
 
-        transactionService.applyInstitutionDonation(
+        transactionService.applyInstToUserDonation(
                 new InstToUserDonDTOMapper().mapToDTO(donationRequest, auth.getName())
         );
 
@@ -38,7 +38,7 @@ public class TransactionController {
     public ResponseEntity<TransactionResponse> createUserToUserDon(@RequestBody UserToUserDonRequest donationRequest,
                                                                    Authentication auth) {
 
-        transactionService.applyUserDonation(
+        transactionService.applyUserToUserDonation(
                 new UserToUserDonDTOMapper().mapToDTO(donationRequest, auth.getName())
         );
 

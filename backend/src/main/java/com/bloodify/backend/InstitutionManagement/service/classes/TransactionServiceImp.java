@@ -3,14 +3,18 @@ package com.bloodify.backend.InstitutionManagement.service.classes;
 import com.bloodify.backend.AccountManagement.dao.interfaces.InstitutionDAO;
 import com.bloodify.backend.AccountManagement.dao.interfaces.UserDAO;
 import com.bloodify.backend.InstitutionManagement.dto.InstToUserDonDTO;
+import com.bloodify.backend.InstitutionManagement.dto.UserToInstDonDTO;
 import com.bloodify.backend.InstitutionManagement.dto.UserToUserDonDTO;
 import com.bloodify.backend.InstitutionManagement.exceptions.transactionexceptions.InsufficientBloodBags;
 import com.bloodify.backend.InstitutionManagement.exceptions.transactionexceptions.TransactionException;
 import com.bloodify.backend.InstitutionManagement.model.InstToUserDonation;
+import com.bloodify.backend.InstitutionManagement.model.UserToInstDonation;
 import com.bloodify.backend.InstitutionManagement.model.UserToUserDonation;
 import com.bloodify.backend.InstitutionManagement.model.mapper.InstToUserDonModelMapper;
+import com.bloodify.backend.InstitutionManagement.model.mapper.UserToInstDonModelMapper;
 import com.bloodify.backend.InstitutionManagement.model.mapper.UserToUserDonModelMapper;
 import com.bloodify.backend.InstitutionManagement.repository.interfaces.InstToUserDonDAO;
+import com.bloodify.backend.InstitutionManagement.repository.interfaces.UserToInstDonDAO;
 import com.bloodify.backend.InstitutionManagement.repository.interfaces.UserToUserDonDAO;
 import com.bloodify.backend.InstitutionManagement.service.interfaces.TransactionService;
 import com.bloodify.backend.UserRequests.service.interfaces.PostService;
@@ -35,6 +39,9 @@ public class TransactionServiceImp implements TransactionService {
     UserToUserDonDAO userToUserDonDAO;
 
     @Autowired
+    UserToInstDonDAO userToInstDonDAO;
+
+    @Autowired
     PostService postService;
 
     @Autowired
@@ -43,8 +50,12 @@ public class TransactionServiceImp implements TransactionService {
     @Autowired
     UserToUserDonModelMapper userToUserDonModelMapper;
 
+    @Autowired
+    UserToInstDonModelMapper userToInstDonModelMapper;
+
+    @Override
     @Transactional(rollbackFor = TransactionException.class)
-    public void applyUserDonation(UserToUserDonDTO userToUserDonDTO) {
+    public void applyUserToUserDonation(UserToUserDonDTO userToUserDonDTO) {
 
         UserToUserDonation model = userToUserDonModelMapper.mapToModel(userToUserDonDTO);
 
@@ -61,8 +72,9 @@ public class TransactionServiceImp implements TransactionService {
 
     }
 
+    @Override
     @Transactional(rollbackFor = TransactionException.class)
-    public void applyInstitutionDonation(InstToUserDonDTO instToUserDonDTO) {
+    public void applyInstToUserDonation(InstToUserDonDTO instToUserDonDTO) {
         InstToUserDonation model = instToUserDonModelMapper.mapToModel(instToUserDonDTO);
 
         Integer currentBags = institutionDAO.getBagsCount(
@@ -83,6 +95,23 @@ public class TransactionServiceImp implements TransactionService {
 
         if(!instToUserDonDAO.save(model))
             throw new TransactionException("Invalid Transaction!");
+    }
+
+    @Override
+    @Transactional(rollbackFor = TransactionException.class)
+    public void applyUserToInstDonation(UserToInstDonDTO userToInsDonDTO) {
+        UserToInstDonation model = userToInstDonModelMapper.mapToModel(userToInsDonDTO);
+
+        // update only happens if the user is already registered otherwise no changes happen
+        userDAO.updateLastTimeDonatedAndBloodTypeByNationalID(
+                LocalDate.now(),
+                userToInsDonDTO.getBloodType(),
+                userToInsDonDTO.getDonorNationalID()
+        );
+
+        if(!userToInstDonDAO.save(model))
+            throw new TransactionException("Invalid Transaction!");
+
     }
 
 }

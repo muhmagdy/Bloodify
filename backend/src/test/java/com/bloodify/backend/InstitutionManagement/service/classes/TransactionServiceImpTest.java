@@ -3,14 +3,18 @@ package com.bloodify.backend.InstitutionManagement.service.classes;
 import com.bloodify.backend.AccountManagement.dao.interfaces.InstitutionDAO;
 import com.bloodify.backend.AccountManagement.dao.interfaces.UserDAO;
 import com.bloodify.backend.InstitutionManagement.dto.InstToUserDonDTO;
+import com.bloodify.backend.InstitutionManagement.dto.UserToInstDonDTO;
 import com.bloodify.backend.InstitutionManagement.dto.UserToUserDonDTO;
 import com.bloodify.backend.InstitutionManagement.exceptions.transactionexceptions.InsufficientBloodBags;
 import com.bloodify.backend.InstitutionManagement.exceptions.transactionexceptions.TransactionException;
 import com.bloodify.backend.InstitutionManagement.model.InstToUserDonation;
+import com.bloodify.backend.InstitutionManagement.model.UserToInstDonation;
 import com.bloodify.backend.InstitutionManagement.model.UserToUserDonation;
 import com.bloodify.backend.InstitutionManagement.model.mapper.InstToUserDonModelMapper;
+import com.bloodify.backend.InstitutionManagement.model.mapper.UserToInstDonModelMapper;
 import com.bloodify.backend.InstitutionManagement.model.mapper.UserToUserDonModelMapper;
 import com.bloodify.backend.InstitutionManagement.repository.interfaces.InstToUserDonDAO;
+import com.bloodify.backend.InstitutionManagement.repository.interfaces.UserToInstDonDAO;
 import com.bloodify.backend.InstitutionManagement.repository.interfaces.UserToUserDonDAO;
 import com.bloodify.backend.UserRequests.service.interfaces.PostService;
 import org.junit.jupiter.api.Assertions;
@@ -62,8 +66,21 @@ class TransactionServiceImpTest {
     @Mock
     InstToUserDonation instToUserDonation;
 
+    @Mock
+    UserToInstDonDAO userToInstDonDAO;
+
+    @Mock
+    UserToInstDonDTO userToInstDonDTO;
+
+    @Mock
+    UserToInstDonModelMapper userToInstDonModelMapper;
+
+    @Mock
+    UserToInstDonation userToInstDonation;
+
     @InjectMocks
     TransactionServiceImp transactionService;
+
 
     final static int BOUNDARY = 1000;
     static int smallBagsCount;
@@ -81,7 +98,7 @@ class TransactionServiceImpTest {
      * decrementing post blood bags -> success
      */
     @Test
-    public void savingUserDonFailure() {
+    public void savingUserToUserDonFailure() {
         when(userToUserDonModelMapper.mapToModel(userToUserDonDTO))
                 .thenReturn(userToUserDonation);
 
@@ -97,7 +114,7 @@ class TransactionServiceImpTest {
                 .thenReturn(true);
 
         Assertions.assertThrows(TransactionException.class,
-                () -> transactionService.applyUserDonation(userToUserDonDTO));
+                () -> transactionService.applyUserToUserDonation(userToUserDonDTO));
     }
 
     /**
@@ -122,7 +139,7 @@ class TransactionServiceImpTest {
                 .thenReturn(false);
 
         Assertions.assertThrows(TransactionException.class,
-                () -> transactionService.applyUserDonation(userToUserDonDTO));
+                () -> transactionService.applyUserToUserDonation(userToUserDonDTO));
     }
 
     /**
@@ -149,7 +166,7 @@ class TransactionServiceImpTest {
         when(postService.decrementBags(randomPostID))
                 .thenReturn(true);
 
-        Assertions.assertDoesNotThrow(() -> transactionService.applyUserDonation(userToUserDonDTO));
+        Assertions.assertDoesNotThrow(() -> transactionService.applyUserToUserDonation(userToUserDonDTO));
     }
 
 
@@ -167,7 +184,7 @@ class TransactionServiceImpTest {
                 .thenReturn(smallBagsCount);
 
         Assertions.assertThrows(InsufficientBloodBags.class,
-                () -> transactionService.applyInstitutionDonation(instToUserDonDTO));
+                () -> transactionService.applyInstToUserDonation(instToUserDonDTO));
     }
 
     /**
@@ -189,10 +206,11 @@ class TransactionServiceImpTest {
         when(instToUserDonDAO.save(instToUserDonation))
                 .thenReturn(true);
 
-        Assertions.assertDoesNotThrow(() -> transactionService.applyInstitutionDonation(instToUserDonDTO));
+        Assertions.assertDoesNotThrow(() -> transactionService.applyInstToUserDonation(instToUserDonDTO));
     }
 
     /**
+     * tests that no exception is thrown if everything was correct in inst to user donation
      * institution blood bags > required bags
      * saving successful
      */
@@ -211,7 +229,7 @@ class TransactionServiceImpTest {
         when(instToUserDonDAO.save(instToUserDonation))
                 .thenReturn(true);
 
-        Assertions.assertDoesNotThrow(() -> transactionService.applyInstitutionDonation(instToUserDonDTO));
+        Assertions.assertDoesNotThrow(() -> transactionService.applyInstToUserDonation(instToUserDonDTO));
     }
 
 
@@ -220,7 +238,7 @@ class TransactionServiceImpTest {
      * institution blood bags > required bags
      */
     @Test
-    public void savingInstDonFailure() {
+    public void savingInstToUserDonFailure() {
         when(instToUserDonModelMapper.mapToModel(instToUserDonDTO))
                 .thenReturn(instToUserDonation);
 
@@ -235,8 +253,39 @@ class TransactionServiceImpTest {
                 .thenReturn(false);
 
         Assertions.assertThrows(TransactionException.class,
-                () -> transactionService.applyInstitutionDonation(instToUserDonDTO));
+                () -> transactionService.applyInstToUserDonation(instToUserDonDTO));
     }
 
+    /**
+     * tests that an exception is thrown if something wrong happened saving
+     * the user to institution donation
+     */
+    @Test
+    void savingUserToInstDonFailure() {
+        when(userToInstDonModelMapper.mapToModel(userToInstDonDTO))
+                .thenReturn(userToInstDonation);
+
+        when(userToInstDonDAO.save(userToInstDonation))
+                .thenReturn(false);
+
+        Assertions.assertThrows(TransactionException.class,
+                () -> transactionService.applyUserToInstDonation(userToInstDonDTO));
+    }
+
+    /**
+     * tests that an exception is thrown if saving the user to institution
+     * donation was successful
+     */
+    @Test
+    void savingUserToInstDonSuccess() {
+        when(userToInstDonModelMapper.mapToModel(userToInstDonDTO))
+                .thenReturn(userToInstDonation);
+
+        when(userToInstDonDAO.save(userToInstDonation))
+                .thenReturn(true);
+
+        Assertions.assertDoesNotThrow(
+                () -> transactionService.applyUserToInstDonation(userToInstDonDTO));
+    }
 
 }
