@@ -14,7 +14,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @NoArgsConstructor
-public class UserDonation {
+public class UserToUserDonation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer userDonationId;
@@ -31,7 +31,7 @@ public class UserDonation {
     @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate donationDate;
 
-    public UserDonation(String donorNationalID, User acceptor, Institution institution, LocalDate donationDate) {
+    public UserToUserDonation(String donorNationalID, User acceptor, Institution institution, LocalDate donationDate) {
         this.donorNationalID = donorNationalID;
         this.acceptor = acceptor;
         this.institution = institution;

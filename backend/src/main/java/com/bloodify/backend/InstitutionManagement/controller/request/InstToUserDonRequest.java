@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class InstitutionDonationRequest {
+public class InstToUserDonRequest {
     private String acceptorNationalID;
 
     private String bloodType;

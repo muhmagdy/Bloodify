@@ -5,10 +5,12 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class UserDonationDTO {
-    private Integer postID;
-
+public class InstToUserDonDTO {
     private String institutionEmail;
 
-    private String donorNationalID;
+    private String acceptorNationalID;
+
+    private String bloodType;
+
+    private Integer bagsCount;
 }

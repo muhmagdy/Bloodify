@@ -1,11 +1,10 @@
 package com.bloodify.backend.InstitutionManagement.controller.api;
 
-import com.bloodify.backend.InstitutionManagement.controller.reponse.InstToUserDonResponse;
-import com.bloodify.backend.InstitutionManagement.controller.reponse.UserToUserDonResponse;
-import com.bloodify.backend.InstitutionManagement.controller.request.InstitutionDonationRequest;
-import com.bloodify.backend.InstitutionManagement.controller.request.UserDonationRequest;
-import com.bloodify.backend.InstitutionManagement.dto.mapper.InstitutionDonationDTOMapper;
-import com.bloodify.backend.InstitutionManagement.dto.mapper.UserDonationDTOMapper;
+import com.bloodify.backend.InstitutionManagement.controller.reponse.TransactionResponse;
+import com.bloodify.backend.InstitutionManagement.controller.request.InstToUserDonRequest;
+import com.bloodify.backend.InstitutionManagement.controller.request.UserToUserDonRequest;
+import com.bloodify.backend.InstitutionManagement.dto.mapper.InstToUserDonDTOMapper;
+import com.bloodify.backend.InstitutionManagement.dto.mapper.UserToUserDonDTOMapper;
 import com.bloodify.backend.InstitutionManagement.exceptions.transactionexceptions.TransactionException;
 import com.bloodify.backend.InstitutionManagement.service.interfaces.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,36 +22,36 @@ public class TransactionController {
     private TransactionService transactionService;
 
     @PostMapping("/institution/transaction/instToUser")
-    public ResponseEntity<InstToUserDonResponse> instDonation(@RequestBody InstitutionDonationRequest donationRequest,
-                                                              Authentication auth) {
+    public ResponseEntity<TransactionResponse> createInstToUserDon(@RequestBody InstToUserDonRequest donationRequest,
+                                                                   Authentication auth) {
 
         transactionService.applyInstitutionDonation(
-                new InstitutionDonationDTOMapper().mapToDTO(donationRequest, auth.getName())
+                new InstToUserDonDTOMapper().mapToDTO(donationRequest, auth.getName())
         );
 
         return ResponseEntity.status(HttpStatus.ACCEPTED)
-                    .body(new InstToUserDonResponse(true, "Transaction Successful!"));
+                .body(new TransactionResponse(true, "Transaction Successful!"));
 
     }
 
     @PostMapping("/institution/transaction/userToUser")
-    public ResponseEntity<UserToUserDonResponse> userDonation(@RequestBody UserDonationRequest donationRequest,
-                                                              Authentication auth) {
+    public ResponseEntity<TransactionResponse> createUserToUserDon(@RequestBody UserToUserDonRequest donationRequest,
+                                                                   Authentication auth) {
 
-        boolean updatedLastTimeDon = transactionService.applyUserDonation(
-                new UserDonationDTOMapper().mapToDTO(donationRequest, auth.getName())
+        transactionService.applyUserDonation(
+                new UserToUserDonDTOMapper().mapToDTO(donationRequest, auth.getName())
         );
 
         return ResponseEntity.status(HttpStatus.ACCEPTED)
-                .body(new UserToUserDonResponse(true, "Transaction Successful!", updatedLastTimeDon));
+                .body(new TransactionResponse(true, "Transaction Successful!"));
 
     }
 
 
     @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
     @ExceptionHandler(TransactionException.class)
-    public InstToUserDonResponse handleTransactionException(TransactionException exception) {
-        return new InstToUserDonResponse(false, exception.getMessage());
+    public TransactionResponse handleTransactionException(TransactionException exception) {
+        return new TransactionResponse(false, exception.getMessage());
     }
 
 }

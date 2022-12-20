@@ -3,7 +3,7 @@ package com.bloodify.backend.InstitutionManagement.model.mapper;
 import com.bloodify.backend.AccountManagement.dao.helpingMethods.RandomUserGenerations;
 import com.bloodify.backend.AccountManagement.dao.interfaces.InstitutionDAO;
 import com.bloodify.backend.AccountManagement.model.entities.Institution;
-import com.bloodify.backend.InstitutionManagement.dto.InstitutionDonationDTO;
+import com.bloodify.backend.InstitutionManagement.dto.InstToUserDonDTO;
 import com.bloodify.backend.InstitutionManagement.exceptions.transactionexceptions.InvalidAcceptorNID;
 import com.bloodify.backend.InstitutionManagement.exceptions.transactionexceptions.InvalidBloodBagsCount;
 import com.bloodify.backend.InstitutionManagement.exceptions.transactionexceptions.InvalidInstitution;
@@ -17,7 +17,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class InstitutionDonationModelMapperTest {
+class InstToUserDonModelMapperTest {
 
     // mocking the dao responsible for checking the existence of the institution
     @Mock
@@ -25,10 +25,10 @@ class InstitutionDonationModelMapperTest {
 
     // mocking the argument of the mapToModel method
     @Mock
-    InstitutionDonationDTO dto;
+    InstToUserDonDTO dto;
 
     @InjectMocks
-    InstitutionDonationModelMapper mapper;
+    InstToUserDonModelMapper mapper;
 
     private final RandomUserGenerations randomizer = new RandomUserGenerations();
 

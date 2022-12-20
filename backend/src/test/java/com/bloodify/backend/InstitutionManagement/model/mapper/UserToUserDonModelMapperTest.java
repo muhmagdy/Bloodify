@@ -4,7 +4,7 @@ import com.bloodify.backend.AccountManagement.dao.helpingMethods.RandomUserGener
 import com.bloodify.backend.AccountManagement.dao.interfaces.InstitutionDAO;
 import com.bloodify.backend.AccountManagement.model.entities.Institution;
 import com.bloodify.backend.AccountManagement.model.entities.User;
-import com.bloodify.backend.InstitutionManagement.dto.UserDonationDTO;
+import com.bloodify.backend.InstitutionManagement.dto.UserToUserDonDTO;
 import com.bloodify.backend.InstitutionManagement.exceptions.transactionexceptions.InvalidDonorNID;
 import com.bloodify.backend.InstitutionManagement.exceptions.transactionexceptions.InvalidInstitution;
 import com.bloodify.backend.InstitutionManagement.exceptions.transactionexceptions.PostAcceptorNotFound;
@@ -19,7 +19,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class UserDonationModelMapperTest {
+class UserToUserDonModelMapperTest {
 
     // mocking the dao responsible for checking the existence of the institution
     @Mock
@@ -27,14 +27,14 @@ class UserDonationModelMapperTest {
 
     // mocking the argument of the mapToModel method
     @Mock
-    UserDonationDTO dto;
+    UserToUserDonDTO dto;
 
     // mocking the service responsible for getting the acceptor user from the post
     @Mock
     PostService postService;
 
     @InjectMocks
-    UserDonationModelMapper mapper;
+    UserToUserDonModelMapper mapper;
 
     private final RandomUserGenerations randomizer = new RandomUserGenerations();
 

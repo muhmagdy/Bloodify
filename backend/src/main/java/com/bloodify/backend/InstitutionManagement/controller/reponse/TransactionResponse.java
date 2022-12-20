@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class InstToUserDonResponse {
+public class TransactionResponse {
     private boolean state;
 
     private String message;

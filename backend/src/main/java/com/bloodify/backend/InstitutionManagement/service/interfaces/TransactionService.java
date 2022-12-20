@@ -1,12 +1,12 @@
 package com.bloodify.backend.InstitutionManagement.service.interfaces;
 
-import com.bloodify.backend.InstitutionManagement.dto.InstitutionDonationDTO;
-import com.bloodify.backend.InstitutionManagement.dto.UserDonationDTO;
+import com.bloodify.backend.InstitutionManagement.dto.InstToUserDonDTO;
+import com.bloodify.backend.InstitutionManagement.dto.UserToUserDonDTO;
 
 public interface TransactionService {
 
-    boolean applyUserDonation(UserDonationDTO userDonationDTO);
+    void applyUserDonation(UserToUserDonDTO userToUserDonDTO);
 
-    void applyInstitutionDonation(InstitutionDonationDTO institutionDonationDTO);
+    void applyInstitutionDonation(InstToUserDonDTO instToUserDonDTO);
 
 }

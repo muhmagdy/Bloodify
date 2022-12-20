@@ -1,23 +1,23 @@
 package com.bloodify.backend.InstitutionManagement.repository.interfaces;
 
-import com.bloodify.backend.InstitutionManagement.model.InstitutionDonation;
+import com.bloodify.backend.InstitutionManagement.model.InstToUserDonation;
 import org.springframework.lang.NonNull;
 
 import java.time.LocalDate;
 import java.util.List;
 
-public interface InstitutionDonationDAO {
+public interface InstToUserDonDAO {
 
     // save the institution to user donation
-    boolean save(@NonNull InstitutionDonation institutionDonation);
+    boolean save(@NonNull InstToUserDonation instToUserDonation);
 
     // finds all the (institution to user) donations where the institution specified (by its string)
     // was part of
-    List<InstitutionDonation> findByInstitutionEmail(@NonNull String email);
+    List<InstToUserDonation> findByInstitutionEmail(@NonNull String email);
 
     // finds all the (institution to user) donations where the institution specified (by its ID)
     // was part of and that happened at a certain date
-    List<InstitutionDonation> findByInstitutionEmailAndDate(@NonNull String email,
-                                                            @NonNull LocalDate transactionDate);
+    List<InstToUserDonation> findByInstitutionEmailAndDate(@NonNull String email,
+                                                           @NonNull LocalDate transactionDate);
 
 }
