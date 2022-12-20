@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-Widget DefaultProgramPhoto({required width, required height}) => Center(
+import '../../modules/signUP_UI/sign_up_pages/Languages.dart';
+import 'nationalIDValidator.dart';
+
+Widget defaultProgramPhoto({required width, required height}) => Center(
       child: Container(
         width: width * 3 / 4,
         height: height * 0.3 + height / 10,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
             image: DecorationImage(
                 image: AssetImage("assets/images/bloodify.png"),
                 fit: BoxFit.contain)),
       ),
     );
-Widget DefaultButton(
+Widget defaultButton(
         {double width = double.infinity,
         double height = 60,
         Color backGround = Colors.red,
@@ -31,7 +34,7 @@ Widget DefaultButton(
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
-              side: BorderSide(color: Color.fromARGB(255, 139, 92, 89)),
+              side: const BorderSide(color: Color.fromARGB(255, 139, 92, 89)),
             )),
           ),
           onPressed: () {
@@ -39,10 +42,10 @@ Widget DefaultButton(
           },
           child: Text(
             text = text.toUpperCase(),
-            style: TextStyle(color: Colors.white, fontSize: 20),
+            style: const TextStyle(color: Colors.white, fontSize: 20),
           ),
         ));
-Widget DefaultInputText({
+Widget defaultInputText({
   required TextEditingController controller,
   TextInputType? type,
   Function? onSubmit,
@@ -87,7 +90,7 @@ Widget DefaultInputText({
         labelText: labelText,
         prefixIcon: Icon(
           prefix,
-          color: Color.fromARGB(255, 255, 78, 66),
+          color: const Color.fromARGB(255, 255, 78, 66),
         ),
         suffixIcon: (() {
           if (suffix != null) {
@@ -96,11 +99,11 @@ Widget DefaultInputText({
                 suffixPressed!.call();
               },
               child: isPassword
-                  ? Icon(
+                  ? const Icon(
                       Icons.visibility,
                       color: Color.fromARGB(255, 255, 78, 66),
                     )
-                  : Icon(
+                  : const Icon(
                       Icons.visibility_off,
                       color: Color.fromARGB(255, 255, 78, 66),
                     ),
@@ -109,10 +112,11 @@ Widget DefaultInputText({
             return null;
           }
         }()),
-        border: OutlineInputBorder(),
+        border: const OutlineInputBorder(),
       ),
     );
-
+NationalIDParser parser = EgyptNationalIDParser();
+Language language = EnglishLanguage();
 void showToast({
   required String text,
   required Color color,
@@ -127,24 +131,12 @@ void showToast({
       textColor: Colors.white,
       fontSize: 16.0,
     );
-
-// enum
-enum ToastStates { SUCCESS, ERROR, WARNING }
-
-Color chooseToastColor(ToastStates state) {
-  Color color;
-
-  switch (state) {
-    case ToastStates.SUCCESS:
-      color = Colors.green;
-      break;
-    case ToastStates.ERROR:
-      color = Colors.red;
-      break;
-    case ToastStates.WARNING:
-      color = Colors.amber;
-      break;
+nationalValidate(number) {
+  if (number == null || number == '') {
+    return language.enterValue('natID');
   }
-
-  return color;
+  if (!parser.validateNationalID(int.parse(number))) {
+    return language.showInvalidValue('natID');
+  }
+  return null;
 }

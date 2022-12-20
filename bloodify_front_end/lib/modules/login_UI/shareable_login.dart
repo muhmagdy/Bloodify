@@ -25,12 +25,12 @@ Widget loginUI({
         child: Form(
           key: loginKey,
           child: Column(children: [
-            DefaultProgramPhoto(height: height, width: width),
+            defaultProgramPhoto(height: height, width: width),
             Container(
               margin: const EdgeInsets.only(left: 20, right: 20),
               child: Column(children: [
-                SizedBox(height: 40),
-                DefaultInputText(
+                const SizedBox(height: 40),
+                defaultInputText(
                   controller: firstFormController,
                   labelText: isUser ? "Email" : "Institution Email",
                   prefix: Icons.email,
@@ -47,10 +47,10 @@ Widget loginUI({
                     return null;
                   },
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
-                DefaultInputText(
+                defaultInputText(
                   controller: passwordController,
                   labelText: "password",
                   isPassword: isUser
@@ -60,9 +60,9 @@ Widget loginUI({
                       ? UserLoginCubit.get(context).suffix
                       : InstitutionLoginCubit.get(context).suffix,
                   suffixPressed: () {
-                    if (isUser)
+                    if (isUser) {
                       UserLoginCubit.get(context).changePasswordVisibility();
-                    else {
+                    } else {
                       print("Clicked");
                       InstitutionLoginCubit.get(context)
                           .changePasswordVisibility();
@@ -80,7 +80,7 @@ Widget loginUI({
                     return null;
                   },
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Row(
@@ -88,7 +88,7 @@ Widget loginUI({
                     Expanded(child: Container()),
                     InkWell(
                       onTap: () {},
-                      child: new Text(
+                      child: const Text(
                         "Forgotten password?",
                         style:
                             TextStyle(color: Color.fromARGB(255, 255, 78, 66)),
@@ -98,13 +98,13 @@ Widget loginUI({
                 )
               ]),
             ),
-            SizedBox(
+            const SizedBox(
               height: 40,
             ),
             ConditionalBuilder(
               condition: (state is! UserLoginLoadingState && isUser) ||
                   (state is! InstitutionLoginLoadingState && !isUser),
-              builder: (context) => DefaultButton(
+              builder: (context) => defaultButton(
                   onClick: () {
                     print(
                         "${firstFormController.text} ${passwordController.text}");
@@ -123,9 +123,10 @@ Widget loginUI({
                     } else {}
                   },
                   text: "LOGIN"),
-              fallback: (context) => Center(child: CircularProgressIndicator()),
+              fallback: (context) =>
+                  const Center(child: CircularProgressIndicator()),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             isUser
@@ -134,12 +135,12 @@ Widget loginUI({
                     child: Row(
                       children: [
                         Expanded(child: Container()),
-                        Text("Don't Have an account?"),
+                        const Text("Don't Have an account?"),
                         InkWell(
                           onTap: () {
                             navigateTo(context, SignUp1());
                           },
-                          child: Text(
+                          child: const Text(
                             "sign up",
                             style: TextStyle(
                                 color: Color.fromARGB(255, 255, 78, 66)),

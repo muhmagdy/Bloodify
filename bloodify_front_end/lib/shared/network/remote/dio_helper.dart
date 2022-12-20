@@ -42,12 +42,19 @@ class DioHelper {
     String lang = 'en',
     String? token,
   }) async {
-    dio!.options.headers = {
-      'Content-Type': 'application/json',
-      'lang': lang,
-      'Authorization': token,
-    };
-
+    String? auth;
+    if (token == null) {
+      dio!.options.headers = {
+        'Content-Type': 'application/json',
+        'lang': lang,
+      };
+    } else {
+      dio!.options.headers = {
+        'Content-Type': 'application/json',
+        'lang': lang,
+        'Authorization': "Bearer $token",
+      };
+    }
     return dio!.post(
       url,
       queryParameters: query,
@@ -60,7 +67,7 @@ class DioHelper {
     required email,
     required password,
   }) async {
-    var auth = 'Basic ' + base64Encode(utf8.encode('$email:$password'));
+    var auth = 'Basic ${base64Encode(utf8.encode('$email:$password'))}';
     print(auth);
     dio!.options.headers = {
       'authorization': auth,

@@ -1,6 +1,5 @@
-import 'package:bloc/bloc.dart';
 import 'package:bloodify_front_end/modules/login_UI/User_login/cubit/user_states_login.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -19,22 +18,23 @@ class UserLoginCubit extends Cubit<UserLoginStates> {
     emit(UserLoginLoadingState());
 
     DioHelper.postLogin(
-      url: 'user/auth',
+      url: 'login',
       email: email,
       password: password,
-    ).then((value) {
+    ).then((Response value) {
+      if (value.statusCode == 422) {
+        print("422");
+      }
+      if (value.statusMessage == "ok") {
+        print("ok");
+      }
       print(value.data);
       print(value.data);
       loginModel = UserLoginModel.fromJson(value.data);
       emit(UserLoginSuccessState(loginModel));
     }).catchError((error) {
-      if (error.response.statusCode == 401) {
-        var loginResp = new UserLoginModel(false);
-        emit(UserLoginSuccessState(loginResp));
-      } else {
-        print("api " + error.toString());
-        emit(UserLoginErrorState(error.toString()));
-      }
+      print("api " + error.toString());
+      emit(UserLoginErrorState(error.toString()));
     });
   }
 

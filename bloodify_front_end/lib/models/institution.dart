@@ -3,7 +3,7 @@ class InstitutionLoginModel {
   late String message;
   InstitutionData? data;
   InstitutionLoginModel(this.status) {
-    this.message = "Invalid user name or Password";
+    message = "Invalid user name or Password";
   }
   InstitutionLoginModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
@@ -18,7 +18,7 @@ class InstitutionData {
   // late String bloodType;
 
   late String token;
-
+  InstitutionData(this.name, this.email, this.token);
   InstitutionData.fromJson(Map<String, dynamic> json) {
     name = json['institutionName'];
     email = json['email'];

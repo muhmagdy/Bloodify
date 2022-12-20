@@ -9,6 +9,7 @@ import 'package:bloodify_front_end/modules/signUP_UI/sign_up_pages/Languages.dar
 
 import '../sign_up_State_management/sign_up_cubit.dart';
 
+// ignore: must_be_immutable
 class SignUp1 extends StatelessWidget {
   final fNameController = TextEditingController();
   final lNameController = TextEditingController();
@@ -20,6 +21,8 @@ class SignUp1 extends StatelessWidget {
   Language language = EnglishLanguage();
   final _formKey = GlobalKey<FormState>();
 
+  SignUp1({super.key});
+
   @override
   Widget build(BuildContext context) {
     fNameController.addListener(() {});
@@ -29,9 +32,7 @@ class SignUp1 extends StatelessWidget {
     passController.addListener(() {});
 
     return BlocConsumer<SignUpCubit, SignUpStates>(
-      listener: (context, state) {
-        // TODO: implement listener
-      },
+      listener: (context, state) {},
       builder: (context, state) {
         double width = MediaQuery.of(context).size.width;
         double height = MediaQuery.of(context).size.height;
@@ -43,36 +44,40 @@ class SignUp1 extends StatelessWidget {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  DefaultProgramPhoto(height: height, width: width),
+                  defaultProgramPhoto(height: height, width: width),
                   Container(
                     height: height * .95,
-                    margin: EdgeInsets.only(left: 20.0, right: 20.0),
+                    margin: const EdgeInsets.only(left: 20.0, right: 20.0),
                     child: Column(
                       children: [
                         Row(
                           children: [
                             Expanded(
-                              child: DefaultInputText(
+                              child: defaultInputText(
                                   controller: fNameController,
                                   validate: (fName) {
-                                    if (fName == null || fName == '')
+                                    if (fName == null || fName == '') {
                                       return language.enterValue('fname');
-                                    if (!validateName(fName))
+                                    }
+                                    if (!validateName(fName)) {
                                       return language.showInvalidValue("fname");
+                                    }
                                     return null;
                                   },
                                   labelText: language.getLabel('fname'),
                                   prefix: Icons.perm_identity),
                             ),
-                            SizedBox(width: 10),
+                            const SizedBox(width: 10),
                             Expanded(
-                              child: DefaultInputText(
+                              child: defaultInputText(
                                   controller: lNameController,
                                   validate: (lName) {
-                                    if (lName == null || lName == '')
+                                    if (lName == null || lName == '') {
                                       return language.enterValue('lname');
-                                    if (!validateName(lName))
+                                    }
+                                    if (!validateName(lName)) {
                                       return language.showInvalidValue("lname");
+                                    }
                                     return null;
                                   },
                                   labelText: language.getLabel('lname'),
@@ -80,25 +85,29 @@ class SignUp1 extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(height: 10),
-                        DefaultInputText(
+                        const SizedBox(height: 10),
+                        defaultInputText(
                             controller: nationalIdController,
                             validate: (number) {
-                              if (number == null || number == '')
+                              if (number == null || number == '') {
                                 return language.enterValue('natID');
-                              if (!parser.validateNationalID(int.parse(number)))
+                              }
+                              if (!parser
+                                  .validateNationalID(int.parse(number))) {
                                 return language.showInvalidValue('natID');
+                              }
                               return null;
                             },
                             labelText: language.getLabel('natID'),
                             type: TextInputType.number,
                             prefix: Icons.credit_card_rounded),
-                        SizedBox(height: 10),
-                        DefaultInputText(
+                        const SizedBox(height: 10),
+                        defaultInputText(
                             controller: mailController,
                             validate: (String mail) {
-                              if (mail.isEmpty)
+                              if (mail.isEmpty) {
                                 return language.enterValue('mail');
+                              }
                               return validateEmail(mail)
                                   ? null
                                   : language.showInvalidValue('mail');
@@ -106,14 +115,16 @@ class SignUp1 extends StatelessWidget {
                             labelText: language.getLabel('mail'),
                             type: TextInputType.emailAddress,
                             prefix: Icons.mail_outline),
-                        SizedBox(height: 10),
-                        DefaultInputText(
+                        const SizedBox(height: 10),
+                        defaultInputText(
                             controller: passController,
                             validate: (pass) {
-                              if (pass == null || pass == '' || pass.length < 8)
+                              if (pass == null || pass == '' || pass.length < 8) {
                                 return language.enterPassword();
-                              if (!validatePassword(pass))
+                              }
+                              if (!validatePassword(pass)) {
                                 return language.showInvalidPassword();
+                              }
                               return null;
                             },
                             labelText: language.getLabel('pass'),
@@ -123,8 +134,8 @@ class SignUp1 extends StatelessWidget {
                             suffixPressed: SignUpCubit.get(context)
                                 .changePassWordVisibilityPass,
                             prefix: Icons.lock_outline_rounded),
-                        SizedBox(height: 10),
-                        DefaultInputText(
+                        const SizedBox(height: 10),
+                        defaultInputText(
                             controller: passConfirmingController,
                             validate: (pass) => (pass == null ||
                                     pass == '' ||
@@ -139,8 +150,8 @@ class SignUp1 extends StatelessWidget {
                                 SignUpCubit.get(context).PasswordConfirmSuffix,
                             suffixPressed: SignUpCubit.get(context)
                                 .changePassWordVisibilityConfirm),
-                        SizedBox(height: 20),
-                        DefaultButton(
+                        const SizedBox(height: 20),
+                        defaultButton(
                             onClick: () {
                               if (_formKey.currentState!.validate()) {
                                 SignUpCubit.get(context)
@@ -159,7 +170,7 @@ class SignUp1 extends StatelessWidget {
                               }
                             },
                             text: language.getLabel('next')),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 10),
                           child: Row(
@@ -173,7 +184,7 @@ class SignUp1 extends StatelessWidget {
                                   },
                                   child: Text(
                                     language.getLabel('login'),
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         decoration: TextDecoration.underline,
                                         color:
                                             Color.fromARGB(255, 255, 78, 66)),
