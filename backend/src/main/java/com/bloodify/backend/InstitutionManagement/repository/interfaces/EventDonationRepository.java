@@ -1,4 +1,4 @@
-package com.bloodify.backend.InstitutionManagement.repository;
+package com.bloodify.backend.InstitutionManagement.repository.interfaces;
 
 import com.bloodify.backend.InstitutionManagement.model.entities.EventDonation;
 import org.springframework.data.jpa.repository.JpaRepository;

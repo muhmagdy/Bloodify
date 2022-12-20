@@ -1,7 +1,6 @@
 package com.bloodify.backend.InstitutionManagement.model.entities;
 
-import com.bloodify.backend.AccountManagement.model.entities.User;
-import com.bloodify.backend.InstitutionManagement.model.entities.compositekey.EventDonationID;
+import com.bloodify.backend.AccountManagement.model.entities.Institution;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -10,17 +9,17 @@ import lombok.Setter;
 import java.time.LocalDate;
 
 @Entity
-@IdClass(EventDonationID.class)
 @Getter
 @Setter
 public class EventDonation {
     @Id
-    @ManyToOne(cascade = CascadeType.ALL, optional = false)
-    private User donor;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer eventDonationID;
 
-    @Id
+    private String donorNationalID;
+
     @ManyToOne(cascade = CascadeType.ALL, optional = false)
-    private Event event;
+    private Institution institution;
 
     @Column(nullable = false)
     @JsonFormat(pattern = "dd-MM-yyyy")
