@@ -26,8 +26,8 @@ public class Randomizer {
         Institution institution1 = generateRandomInstitution();
         Institution institution2 = generateRandomInstitution();
 
-        Post post1 = new Post(user1, institution1, 2, LocalDateTime.now(), "A+");
-        Post post2 = new Post(user2, institution2, 4, LocalDateTime.now(), "AB-");
+        Post post1 = new Post(user1, institution1, 2, LocalDateTime.now(), LocalDateTime.now().plusDays(2), "A+");
+        Post post2 = new Post(user2, institution2, 4, LocalDateTime.now(), LocalDateTime.now().plusDays(4), "AB-");
         List<Post> savedPosts = new ArrayList<>();
         savedPosts.add(post1); savedPosts.add(post2);
 
@@ -48,8 +48,8 @@ public class Randomizer {
         Institution institution1 = generateRandomInstitution();
         Institution institution2 = generateRandomInstitution();
 
-        Post post1 = new Post(user1, institution1, 2, LocalDateTime.now(), "A+");
-        Post post2 = new Post(user2, institution2, 4, LocalDateTime.now(), "AB-");
+        Post post1 = new Post(user1, institution1, 2, LocalDateTime.now(), LocalDateTime.now().plusDays(2), "A+");
+        Post post2 = new Post(user2, institution2, 4, LocalDateTime.now(), LocalDateTime.now().plusDays(5), "AB-");
         List<Post> savedPosts = new ArrayList<>();
         savedPosts.add(post1); savedPosts.add(post2);
         savedPosts.add(post2);
