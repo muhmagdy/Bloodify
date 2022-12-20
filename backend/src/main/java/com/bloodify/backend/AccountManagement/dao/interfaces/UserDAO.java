@@ -20,6 +20,10 @@ public interface UserDAO extends UserDetailsService{
 
     public List<User> getUsersByBloodType(String bloodType);
 
-    int updateLastTimeDonatedByNationalID(@NonNull LocalDate lastTimeDonated, String nationalID);
+    int updateLastTimeDonatedByNationalID(LocalDate lastTimeDonated, String nationalID);
+
+    int updateLastTimeDonatedAndBloodTypeByNationalID(LocalDate lastTimeDonated,
+                                                      String bloodType,
+                                                      String nationalID);
 
 }

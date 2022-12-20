@@ -22,5 +22,13 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     @Transactional
     @Modifying
     @Query("update User u set u.lastTimeDonated = ?1 where u.nationalID = ?2")
-    int updateLastTimeDonatedByNationalID(@NonNull LocalDate lastTimeDonated, String nationalID);
+    int updateLastTimeDonatedByNationalID(@NonNull LocalDate lastTimeDonated,
+                                          @NonNull String nationalID);
+
+    @Transactional
+    @Modifying
+    @Query("update User u set u.lastTimeDonated = ?1, u.bloodType = ?2 where u.nationalID = ?3")
+    int updateLastTimeDonatedAndBloodTypeByNationalID(@NonNull LocalDate lastTimeDonated,
+                                                      @NonNull String bloodType,
+                                                      @NonNull String nationalID);
 }
