@@ -15,7 +15,7 @@ class PostTransactionCubit extends Cubit<PostTransactionStates> {
     required String id,
   }) {
     emit(PostTransactionLoadingState());
-    DioHelper.postData(url: '/institution/transaction/UserToinst', data: {
+    DioHelper.postData(url: '/institution/transaction/userToUser', data: {
       "donorNationalID": id,
       "postID": post.postID,
     })

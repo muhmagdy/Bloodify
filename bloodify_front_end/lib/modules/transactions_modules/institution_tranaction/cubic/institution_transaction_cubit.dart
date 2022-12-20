@@ -69,7 +69,7 @@ class InstituteTransactionCubit extends Cubit<InstituteTransactionStates> {
 
   void submitUsertoInstitute({required String id}) {
     emit(InstituteTransactionUserToInstituteLoading());
-    DioHelper.postData(url: '/institution/transaction/UserToinst', data: {
+    DioHelper.postData(url: '/institution/transaction/userToInst', data: {
       "donorNationalID": id,
       "bloodType": types[currentBloodType],
     })
@@ -77,9 +77,15 @@ class InstituteTransactionCubit extends Cubit<InstituteTransactionStates> {
               response = TransactionResponse.fromJson(value.data),
               emit(InstituteTransactionUserToInstituteSuccess(response!))
             })
-        .catchError((onError) {
-      print(onError.toString());
-      InstituteTransactionUserToInstituteError(onError.toString());
+        .catchError((error) {
+      if (error.response.statusCode == 406) {
+        // print(error.response);
+        response = TransactionResponse.fromJson(error.response.data);
+
+        emit(InstituteTransactionInstituteToUserSuccess(response!));
+      }
+      // print(error.toString());
+      InstituteTransactionUserToInstituteError(error.toString());
     });
   }
 }
