@@ -141,6 +141,13 @@ public class Institution {
             cascade = CascadeType.ALL,
             orphanRemoval = true)
     List<Post> posts;
+
+    @OneToMany(
+            mappedBy = "institution",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    List<Post> history;
+
     public Institution (String email, String name, String password, String location, int workingHours) {
         this.email = email;
         this.name = name;
@@ -156,6 +163,7 @@ public class Institution {
         this.positiveAB_bagsCount = 0;
         this.positiveO_bagsCount = 0;
         this.posts = new ArrayList<>();
+        this.history = new ArrayList<>();
     }
 
     public Institution(String email, String password, String location, int workingHours) {
@@ -171,6 +179,7 @@ public class Institution {
         this.positiveB_bagsCount = 0;
         this.positiveAB_bagsCount = 0;
         this.positiveO_bagsCount = 0;
+        this.history = new ArrayList<>();
     }
 
     public Institution (String name, String email, String locationEnglish, float locationLatitude, float locationLongitude, String password)
@@ -179,6 +188,7 @@ public class Institution {
         this.email = email;
         this.location = locationEnglish;
         this.password = password;
+        this.history = new ArrayList<>();
     }
 
 }

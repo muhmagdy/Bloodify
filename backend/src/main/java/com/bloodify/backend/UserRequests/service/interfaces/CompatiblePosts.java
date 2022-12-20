@@ -6,5 +6,5 @@ import com.bloodify.backend.UserRequests.model.entities.Post;
 import java.util.List;
 
 public interface CompatiblePosts {
-    public List<Post> allPostsMatching (User user, double threshold);
+    public List<Post> allPostsMatching (User user, int threshold);
 }

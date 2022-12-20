@@ -32,12 +32,18 @@ public class Post {
     Integer postID;
 
     @NonNull
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     User user;
 
     @NonNull
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     Institution institution;
+
+//    @NonNull
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    Institution institutionHistory;
+
+
     @NonNull
     @Column(name = "req_bags_number", nullable = false)
     Integer bagsNum;

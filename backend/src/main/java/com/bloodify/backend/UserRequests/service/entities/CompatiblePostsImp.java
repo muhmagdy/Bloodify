@@ -1,21 +1,29 @@
 package com.bloodify.backend.UserRequests.service.entities;
 
+import com.bloodify.backend.AccountManagement.model.entities.Institution;
 import com.bloodify.backend.AccountManagement.model.entities.User;
 import com.bloodify.backend.UserRequests.model.entities.Post;
+import com.bloodify.backend.UserRequests.repository.interfaces.PostRepository;
 import com.bloodify.backend.UserRequests.service.interfaces.CompatiblePosts;
 import com.bloodify.backend.UserRequests.service.interfaces.PostDao;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Slf4j
+
 public class CompatiblePostsImp implements CompatiblePosts {
     @Autowired
-    private PostDao postDAO;
+//    private PostDao postDAO;
+    PostRepository postRepository;
 
-    double distance(double lat1, double long1, double lat2, double long2) {
+
+    int distance(double lat1, double long1, double lat2, double long2) {
 //      Radius of the earth
         final int R = 6371;
 
@@ -28,24 +36,27 @@ public class CompatiblePostsImp implements CompatiblePosts {
 
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
-        return R * c;
+        return (int)Math.round(R * c);
     }
 
+//    @Bean
     List<Post> getAllPostsMatchingBloodType(String bloodType) {
-        return this.postDAO.getAllBloodTypePosts(bloodType);
+//        return this.postDAO.getAllBloodTypePosts(bloodType);
+        return this.postRepository.findAllByBloodType(bloodType);
     }
 
-    boolean isPostMatchingUserDistance(User user, Post post, double threshold) {
+    boolean isPostMatchingUserDistance(User user, Post post, int threshold) {
         double longUser = user.getLongitude();
         double latUser = user.getLatitude();
 
-        double longInst = post.getInstitution().getLongitude();
-        double latInst = post.getInstitution().getLatitude();
+        Institution involvedInstitution = post.getInstitution();
+        double longInst = involvedInstitution.getLongitude();
+        double latInst = involvedInstitution.getLatitude();
 
-        return distance(latUser, longUser, latInst, longInst) < threshold;
+        return distance(latUser, longUser, latInst, longInst) <= threshold;
     }
 
-    public List<Post> allPostsMatching (User user, double threshold) {
+    public List<Post> allPostsMatching (User user, int threshold) {
         String bloodType = user.getBloodType();
         List<Post> matchingBloodType = getAllPostsMatchingBloodType(bloodType);
         List<Post> compatiblePosts = new ArrayList<>();
