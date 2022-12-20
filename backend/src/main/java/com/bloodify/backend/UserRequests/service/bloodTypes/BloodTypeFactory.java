@@ -1,6 +1,7 @@
 package com.bloodify.backend.UserRequests.service.bloodTypes;
 
 
+import com.bloodify.backend.UserRequests.exceptions.InvalidBLoodTypeException;
 import com.bloodify.backend.UserRequests.service.bloodTypes.bloodGroups.*;
 import com.bloodify.backend.UserRequests.service.bloodTypes.bloodRHD.RHD_negative;
 import com.bloodify.backend.UserRequests.service.bloodTypes.bloodRHD.RHD_positive;
@@ -9,7 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class BloodTypeFactory {
-    private Map<String, BloodGroup> bloodGroupMap;
+    private final Map<String, BloodGroup> bloodGroupMap;
     private static BloodTypeFactory factory;
     private BloodTypeFactory(){
         bloodGroupMap = new HashMap<>();
@@ -34,6 +35,9 @@ public class BloodTypeFactory {
 
     public BloodType generateFromString(String type){
         BloodGroup group = this.bloodGroupMap.get(type.substring(0, type.length() - 1));
+        if(group == null || (type.charAt(type.length() - 1) != '+' && type.charAt(type.length() - 1) != '-')
+        || type.length() > 3)
+            throw new InvalidBLoodTypeException();
         return (type.charAt(type.length() - 1) == '+')? new RHD_positive(group) : new RHD_negative(group);
     }
 }

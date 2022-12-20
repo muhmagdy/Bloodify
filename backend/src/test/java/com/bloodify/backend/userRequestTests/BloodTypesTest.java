@@ -1,5 +1,6 @@
 package com.bloodify.backend.userRequestTests;
 
+import com.bloodify.backend.UserRequests.exceptions.InvalidBLoodTypeException;
 import com.bloodify.backend.UserRequests.service.bloodTypes.BloodType;
 import com.bloodify.backend.UserRequests.service.bloodTypes.BloodTypeFactory;
 import org.junit.jupiter.api.Test;
@@ -8,8 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 public class BloodTypesTest {
@@ -89,5 +89,11 @@ public class BloodTypesTest {
         for (BloodType type: compatibleTypes) compatibleStrings.add(type.toString());
         assertEquals(compatibleStrings.size() ,1);
         assertTrue(compatibleStrings.contains("O-"));
+    }
+
+    @Test
+    void getCompatibleForInvalid(){
+        String type = "ABO+_";
+        assertThrows(InvalidBLoodTypeException.class, () -> factory.generateFromString(type).getCompatibleTypes());
     }
 }

@@ -40,8 +40,14 @@ public class SearchServiceImp implements SearchService {
     @Override
     public List<SearchResult> SearchInInstitutions(String bloodType) {
         bloodType = bloodType.replace('p', '+').replace('n', '-');
-        System.out.println(bloodType + "------------------------------");
-        List<String> compatibleTypes = getCompatibleTypes(BloodTypeFactory.getFactory().generateFromString(bloodType));
+        List<String> compatibleTypes;
+        try {
+            compatibleTypes = getCompatibleTypes(BloodTypeFactory.getFactory().generateFromString(bloodType));
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+            return null;
+        }
         List<String> compatibleTypesForInstit = new ArrayList<>();
         for (String type: compatibleTypes) compatibleTypesForInstit.add(type_fieldMap.get(type));
 
@@ -60,12 +66,7 @@ public class SearchServiceImp implements SearchService {
     private List<String> getCompatibleTypes(BloodType bloodType){
         List<BloodType> compatibleTypes = bloodType.getCompatibleTypes();
         List<String> compatibleTypesStr = new ArrayList<>();
-        System.out.println("-----------------");
-        for (BloodType type : compatibleTypes) {
-            System.out.println(type.toString() + "00000000000");
-            compatibleTypesStr.add(type.toString());
-        }
-        System.out.println("-----------------");
+        for (BloodType type : compatibleTypes) compatibleTypesStr.add(type.toString());
         return compatibleTypesStr;
     }
 
@@ -76,25 +77,17 @@ public class SearchServiceImp implements SearchService {
     }
 
     private int getCount(String type, Institution i){
-        switch (type){
-            case "A+":
-                return i.getPositiveA_bagsCount();
-            case "B+":
-                return i.getPositiveB_bagsCount();
-            case "O+":
-                return i.getPositiveO_bagsCount();
-            case "AB+":
-                return i.getPositiveAB_bagsCount();
-            case "A-":
-                return i.getNegativeA_bagsCount();
-            case "B-":
-                return i.getNegativeB_bagsCount();
-            case "O-":
-                return i.getNegativeO_bagsCount();
-            case "AB-":
-                return i.getNegativeAB_bagsCount();
-        }
-        return 0;
+        return switch (type) {
+            case "A+" -> i.getPositiveA_bagsCount();
+            case "B+" -> i.getPositiveB_bagsCount();
+            case "O+" -> i.getPositiveO_bagsCount();
+            case "AB+" -> i.getPositiveAB_bagsCount();
+            case "A-" -> i.getNegativeA_bagsCount();
+            case "B-" -> i.getNegativeB_bagsCount();
+            case "O-" -> i.getNegativeO_bagsCount();
+            case "AB-" -> i.getNegativeAB_bagsCount();
+            default -> 0;
+        };
     }
 
 }

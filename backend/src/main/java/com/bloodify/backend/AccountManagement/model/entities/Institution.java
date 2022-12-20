@@ -173,6 +173,25 @@ public class Institution {
         this.positiveO_bagsCount = 0;
     }
 
+    public Institution(int institutionID, String email, String name, String location, Double latitude, Double longitude, Integer workingHours, String password, Integer positiveA_bagsCount, Integer positiveB_bagsCount, Integer positiveAB_bagsCount, Integer positiveO_bagsCount, Integer negativeA_bagsCount, Integer negativeB_bagsCount, Integer negativeAB_bagsCount, Integer negativeO_bagsCount) {
+        this.institutionID = institutionID;
+        this.email = email;
+        this.name = name;
+        this.location = location;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.workingHours = workingHours;
+        this.password = password;
+        this.positiveA_bagsCount = positiveA_bagsCount;
+        this.positiveB_bagsCount = positiveB_bagsCount;
+        this.positiveAB_bagsCount = positiveAB_bagsCount;
+        this.positiveO_bagsCount = positiveO_bagsCount;
+        this.negativeA_bagsCount = negativeA_bagsCount;
+        this.negativeB_bagsCount = negativeB_bagsCount;
+        this.negativeAB_bagsCount = negativeAB_bagsCount;
+        this.negativeO_bagsCount = negativeO_bagsCount;
+    }
+
     public Institution (String name, String email, String locationEnglish, float locationLatitude, float locationLongitude, String password)
     {
         this.name = name;

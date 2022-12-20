@@ -17,7 +17,7 @@ public class SpecificationBuilder {
         Specification<Institution> specification = new SearchPredicate(compatibleTypes.get(0));
         for (int i = 1; i < compatibleTypes.size(); i++) {
             String anotherType = compatibleTypes.get(i);
-            specification = Specification.where(specification).and(new SearchPredicate(anotherType));
+            specification = Specification.where(specification).or(new SearchPredicate(anotherType));
         }
         return specification;
     }

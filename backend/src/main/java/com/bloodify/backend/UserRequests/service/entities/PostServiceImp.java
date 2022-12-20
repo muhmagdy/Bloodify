@@ -7,6 +7,7 @@ import com.bloodify.backend.UserRequests.controller.request.entity.PostRequest;
 import com.bloodify.backend.UserRequests.controller.request.mappers.Post_PostRequestMapper;
 import com.bloodify.backend.UserRequests.dto.entities.PostDto;
 import com.bloodify.backend.UserRequests.exceptions.IllegalPostAccessException;
+import com.bloodify.backend.UserRequests.exceptions.PostNotFoundException;
 import com.bloodify.backend.UserRequests.model.entities.Post;
 import com.bloodify.backend.UserRequests.model.mapper.Post_DTO_Mapper;
 import com.bloodify.backend.UserRequests.service.bloodTypes.BloodType;
@@ -40,6 +41,7 @@ public class PostServiceImp implements PostService {
 
     @Override
     public boolean savePost(PostDto dto) {
+        System.out.println("adding some post");
         Post postToSave;
         try {
             postToSave = this.postDtoMapper.map_to_Post(dto);
@@ -61,6 +63,9 @@ public class PostServiceImp implements PostService {
         Post postToEdit;
         try{
             postToEdit = this.postDtoMapper.map_to_Post(dto);
+            Post supposed = this.postDao.getPostByID(dto.getPostID());
+            if(supposed == null) throw new PostNotFoundException();
+            if(!supposed.getUser().getEmail().equals(dto.getUserEmail())) throw new IllegalPostAccessException();
             postToEdit.setPostID(dto.getPostID());
             return this.postDao.updatePost(postToEdit);
         }catch (Exception e){
@@ -74,7 +79,7 @@ public class PostServiceImp implements PostService {
         Post postToDelete;
         try {
            postToDelete = this.postDao.getPostByID(postID);
-           if (!postToDelete.getUser().getEmail().equals(userEmail))
+           if (postToDelete != null && !postToDelete.getUser().getEmail().equals(userEmail))
                throw new IllegalPostAccessException();
         } catch (Exception e){
             System.out.println(e.getMessage());

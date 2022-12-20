@@ -24,11 +24,11 @@ public class RepositoryTest {
     PostRepository postRepository;
 
     @Resource(name = "userDAOImp")
-    @Mock
+//    @Mock
     UserDAO userDAO;
 
     @Resource(name = "institutionDAOImp")
-    @Mock
+//    @Mock
     private InstitutionDAO instDao;
 
     private final Randomizer randomizer = new Randomizer();
