@@ -9,4 +9,6 @@ public class UserToInstDonDTO {
     private String institutionEmail;
 
     private String donorNationalID;
+
+    private String bloodType;
 }

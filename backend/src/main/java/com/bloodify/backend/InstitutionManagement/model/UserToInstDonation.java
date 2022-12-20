@@ -24,6 +24,10 @@ public class UserToInstDonation {
     private String donorNationalID;
 
     @Column(nullable = false)
-    private LocalDate transactionDate;
+    @Size(max = 3, message = "Blood type is too long")
+    private String bloodType;
+
+    @Column(nullable = false)
+    private LocalDate donationDate;
 
 }

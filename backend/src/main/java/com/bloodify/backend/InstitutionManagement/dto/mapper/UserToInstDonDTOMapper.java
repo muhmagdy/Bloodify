@@ -13,6 +13,10 @@ public class UserToInstDonDTOMapper {
                 userToInstDonRequest.getDonorNationalID()
         );
 
+        userToInstDonDTO.setBloodType(
+                userToInstDonRequest.getBloodType()
+        );
+
         return userToInstDonDTO;
     }
 }

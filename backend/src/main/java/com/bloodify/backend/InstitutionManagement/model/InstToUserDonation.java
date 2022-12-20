@@ -2,6 +2,7 @@ package com.bloodify.backend.InstitutionManagement.model;
 
 import com.bloodify.backend.AccountManagement.model.entities.Institution;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,6 +23,7 @@ public class InstToUserDonation {
     private String acceptorNationalID;
 
     @Column(nullable = false)
+    @Size(max = 3, message = "Blood type is too long")
     private String bloodType;
 
     @Column(nullable = false)

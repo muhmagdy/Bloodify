@@ -7,4 +7,6 @@ import lombok.Setter;
 @Setter
 public class UserToInstDonRequest {
     private String donorNationalID;
+
+    private String bloodType;
 }
