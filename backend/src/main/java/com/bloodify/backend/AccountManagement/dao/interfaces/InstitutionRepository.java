@@ -2,14 +2,12 @@ package com.bloodify.backend.AccountManagement.dao.interfaces;
 
 import com.bloodify.backend.AccountManagement.model.entities.Institution;
 //import com.bloodify.backend.model.entities.User;
-import com.bloodify.backend.UserRequests.dto.entities.SearchResult;
-import jakarta.persistence.NamedNativeQuery;
-import jakarta.persistence.Query;
-import org.hibernate.Session;
-import org.hibernate.SessionBuilder;
+import com.bloodify.backend.AccountManagement.model.entities.User;
+import com.bloodify.backend.UserRequests.controller.request.entity.InstitutionBrief;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -19,6 +17,8 @@ public interface InstitutionRepository extends JpaRepository<Institution, Intege
         JpaSpecificationExecutor<Institution> {
     List<Institution> findByEmail(String email);
 
+
+    List<Institution> findAll();
     List<Institution> findAll(Specification<Institution> spec);
     List<Institution> findByInstitutionID(int institutionID);
     List<Institution> haveBloodPacketsPositiveA(int quantity);

@@ -1,5 +1,8 @@
 package com.bloodify.backend.UserRequests.controller.api;
 
+import com.bloodify.backend.UserRequests.controller.request.entity.InstitutionBrief;
+import com.bloodify.backend.UserRequests.controller.request.entity.PostRequest;
+import com.bloodify.backend.UserRequests.controller.request.entity.PostResponse;
 import com.bloodify.backend.UserRequests.dto.entities.SearchResult;
 import com.bloodify.backend.UserRequests.service.entities.SearchServiceImp;
 import lombok.extern.slf4j.Slf4j;
@@ -24,5 +27,10 @@ public class API_Search_Controller {
         List<SearchResult> results = searchService.SearchInInstitutions(type);
         if (results == null) return ResponseEntity.status(422).body(null);
         return ResponseEntity.status(HttpStatus.OK).body(searchService.SearchInInstitutions(type));
+    }
+
+    @GetMapping("/allInstitutions")
+    public ResponseEntity<List<InstitutionBrief>> getAllInstitutions(Authentication auth){
+        return ResponseEntity.status(HttpStatus.OK).body(searchService.getALlInstitutions());
     }
 }

@@ -2,6 +2,7 @@ package com.bloodify.backend.UserRequests.service.entities;
 
 import com.bloodify.backend.AccountManagement.dao.interfaces.InstitutionRepository;
 import com.bloodify.backend.AccountManagement.model.entities.Institution;
+import com.bloodify.backend.UserRequests.controller.request.entity.InstitutionBrief;
 import com.bloodify.backend.UserRequests.dto.entities.SearchResult;
 import com.bloodify.backend.UserRequests.service.bloodTypes.BloodType;
 import com.bloodify.backend.UserRequests.service.bloodTypes.BloodTypeFactory;
@@ -63,6 +64,12 @@ public class SearchServiceImp implements SearchService {
         return results;
     }
 
+    @Override
+    public List<InstitutionBrief> getALlInstitutions() {
+        return this.institutionRepository.findAll().stream()
+                .map(institution -> new InstitutionBrief(institution.getInstitutionID(), institution.getName(), institution.getLocation()))
+                .toList();
+    }
     private List<String> getCompatibleTypes(BloodType bloodType){
         List<BloodType> compatibleTypes = bloodType.getCompatibleTypes();
         List<String> compatibleTypesStr = new ArrayList<>();

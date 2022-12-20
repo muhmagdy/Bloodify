@@ -21,6 +21,7 @@ import java.util.List;
 public class API_Controller {
     @Autowired
     private PostService postService;
+
     @Autowired
     private Dto_PostRequest_Mapper mapper;
 
@@ -56,6 +57,8 @@ public class API_Controller {
             return ResponseEntity.status(HttpStatus.OK).body(new PostResponse<>(true, userPosts));
         return ResponseEntity.status(422).body(new PostResponse<>(false, null));
     }
+
+
 //    @GetMapping("/post/id")
 //    public PostResponse<Integer> getPostID(@RequestBody PostRequest request, Authentication auth){
 //        PostDto postDto = this.mapper.mapToPostDto(request, auth.getName());
