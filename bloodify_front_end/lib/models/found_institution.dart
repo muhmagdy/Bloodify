@@ -33,11 +33,28 @@ class FoundInstitution extends Equatable {
 }
 
 class FoundInstitutionWithDistance extends Equatable {
-  FoundInstitution institution;
-  double distance;
-  FoundInstitutionWithDistance(
+  final FoundInstitution institution;
+  final double distance;
+  const FoundInstitutionWithDistance(
       {required this.institution, required this.distance});
 
   @override
   List<Object?> get props => [institution, distance];
+}
+
+class InstitutionBrief extends Equatable {
+  final int institutionID;
+  final String name, location;
+  const InstitutionBrief(
+      {required this.institutionID,
+      required this.name,
+      required this.location});
+
+  @override
+  String toString() {
+    return '$name, $location';
+  }
+
+  @override
+  List<Object?> get props => [institutionID, name, location];
 }

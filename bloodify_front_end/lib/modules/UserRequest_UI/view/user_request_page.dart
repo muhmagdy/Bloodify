@@ -1,3 +1,4 @@
+import 'package:bloodify_front_end/models/found_institution.dart';
 import 'package:bloodify_front_end/modules/UserRequest_UI/bloc/user_request_cubit.dart';
 import 'package:bloodify_front_end/modules/signUP_UI/sign_up_pages/Languages.dart';
 import 'package:bloodify_front_end/shared/Constatnt/colors.dart';
@@ -82,7 +83,7 @@ class _BloodTypeDropDown extends StatelessWidget {
     final List<String> types =
         context.select((UserRequestFormCubit cubit) => cubit.state.bloodTypes);
 
-    bloodTypeChanged(String value) {
+    bloodTypeChanged(dynamic value) {
       print(value);
       UserRequestFormCubit.get(context).changeBloodType(value);
     }
@@ -139,9 +140,9 @@ class _InstitutionPicker extends StatelessWidget {
   Widget build(BuildContext context) {
     UserRequestFormCubit.get(context).loadInstitutions();
 
-    List<String> institutions = context
+    List<InstitutionBrief> institutions = context
         .select((UserRequestFormCubit cubit) => cubit.state.institutions);
-    institutionChanged(String value) {
+    institutionChanged(dynamic value) {
       UserRequestFormCubit.get(context).changeInstitution(value);
     }
 
@@ -176,10 +177,10 @@ class _SubmitButton extends StatelessWidget {
 }
 
 Padding makeDropDown(
-    String title, List<String> list, Function(String value) changed) {
+    String title, List<dynamic> list, Function(dynamic value) changed) {
   return Padding(
       padding: const EdgeInsets.all(10.0),
-      child: DropdownSearch<String>(
+      child: DropdownSearch<dynamic>(
         popupProps: PopupProps.menu(
             showSelectedItems: true,
             showSearchBox: true,
@@ -188,6 +189,8 @@ Padding makeDropDown(
                     enabledBorder: UnderlineInputBorder(
                         borderSide: BorderSide(color: defaultColor))))),
         items: list,
+        itemAsString: (item) => item.toString(),
+        compareFn: (item1, item2) => item1 == item2,
         dropdownDecoratorProps: DropDownDecoratorProps(
             dropdownSearchDecoration: InputDecoration(
               labelText: title,

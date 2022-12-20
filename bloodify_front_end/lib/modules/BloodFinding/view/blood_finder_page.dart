@@ -1,5 +1,5 @@
 import 'package:bloodify_front_end/models/found_institution.dart';
-import 'package:bloodify_front_end/modules/InstitutionSearch/bloc/blood_finder_cubit.dart';
+import 'package:bloodify_front_end/modules/BloodFinding/bloc/blood_finder_cubit.dart';
 import 'package:bloodify_front_end/modules/UserRequest_UI/view/user_request_page.dart';
 import 'package:bloodify_front_end/shared/Constatnt/colors.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +31,7 @@ class BloodFinder extends StatelessWidget {
                 children: [
                   _CreatePostButton(width: width),
                   _SearchBar(width: width),
-                  const _SearchResults()
+                  _SearchResults()
                 ],
               ),
             ),
@@ -84,7 +84,7 @@ class _SearchBar extends StatelessWidget {
       }
     }
 
-    void bloodTypeChanged(String value) {
+    void bloodTypeChanged(dynamic value) {
       BloodFinderCubit.get(context).changedBloodType(value);
     }
 

@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:bloodify_front_end/models/found_institution.dart';
+import 'package:bloodify_front_end/modules/BloodFinding/blood_finding.dart';
 import 'package:bloodify_front_end/modules/UserRequest_UI/user_request.dart';
 import 'package:bloodify_front_end/modules/signUP_UI/sign_up_State_management/sign_up_cubit.dart';
 import 'package:equatable/equatable.dart';
@@ -50,53 +52,29 @@ class UserRequestFormCubit extends Cubit<UserRequestFormState> {
     }
   }
 
-  Future<List<String>> getInstitutions() async {
+  Future<List<InstitutionBrief>> getInstitutions() async {
     return await Future.delayed(
         Duration(seconds: 2),
         (() => [
-              "one",
-              "two",
-              "three",
-              "one",
-              "two",
-              "three",
-              "one",
-              "two",
-              "three",
-              "one",
-              "two",
-              "three",
-              "one",
-              "two",
-              "three",
-              "one",
-              "two",
-              "three",
-              "one",
-              "two",
-              "three",
-              "one",
-              "two",
-              "three",
-              "one",
-              "two",
-              "three",
-              "one",
-              "two",
-              "three",
-              "one",
-              "two",
-              "three",
-              "one",
-              "two",
-              "three",
-              "one",
-              "two",
-              "three"
+              InstitutionBrief(institutionID: 1, name: "one", location: "alex"),
+              InstitutionBrief(institutionID: 2, name: "two", location: "alex"),
+              InstitutionBrief(
+                  institutionID: 3, name: "three", location: "alex"),
+              InstitutionBrief(
+                  institutionID: 4, name: "four", location: "alex"),
+              InstitutionBrief(
+                  institutionID: 5, name: "five", location: "alex"),
+              InstitutionBrief(institutionID: 6, name: "six", location: "alex"),
+              InstitutionBrief(
+                  institutionID: 7, name: "seven", location: "alex"),
+              InstitutionBrief(
+                  institutionID: 8, name: "eight", location: "alex"),
+              InstitutionBrief(
+                  institutionID: 9, name: "nine", location: "alex"),
             ]));
   }
 
-  void changeInstitution(String institution) {
+  void changeInstitution(InstitutionBrief institution) {
     emit(state.copyWith(pickedInstitution: institution));
   }
 

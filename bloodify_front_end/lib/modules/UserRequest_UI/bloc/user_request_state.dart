@@ -5,15 +5,15 @@ class UserRequestFormState extends Equatable {
   final String? pickedBloodType;
   final double bloodBagsCount;
   final DateTime? expiryDate;
-  late List<String> institutions;
-  final String? pickedInstitution;
+  late List<InstitutionBrief> institutions;
+  final InstitutionBrief? pickedInstitution;
 
   UserRequestFormState._({
     this.bloodTypes = const ['A+', 'B+', 'O+', 'AB+', 'A-', 'B-', 'O-', 'AB-'],
     this.pickedBloodType,
     this.bloodBagsCount = 1,
     this.expiryDate,
-    this.institutions = const <String>[],
+    this.institutions = const <InstitutionBrief>[],
     this.pickedInstitution,
   });
 
@@ -22,7 +22,7 @@ class UserRequestFormState extends Equatable {
   UserRequestFormState.institutionsLoadInProgress() : this._();
 
   UserRequestFormState.institutionsLoadSuccess(
-      {required List<String> institutions})
+      {required List<InstitutionBrief> institutions})
       : this._(institutions: institutions);
 
   UserRequestFormState copyWith(
@@ -30,8 +30,8 @@ class UserRequestFormState extends Equatable {
       String? pickedBloodType,
       double? bloodBagsCount,
       DateTime? expiryDate,
-      List<String>? institutions,
-      String? pickedInstitution}) {
+      List<InstitutionBrief>? institutions,
+      InstitutionBrief? pickedInstitution}) {
     return UserRequestFormState._(
         bloodTypes: bloodTypes ?? this.bloodTypes,
         pickedBloodType: pickedBloodType ?? this.pickedBloodType,
