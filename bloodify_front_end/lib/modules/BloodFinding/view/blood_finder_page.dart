@@ -15,31 +15,43 @@ class BloodFinder extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
 
-    return BlocConsumer<BloodFinderCubit, BloodFinderState>(
-      builder: (context, state) {
-        var pageTitle = "Blood Finder";
-        return Scaffold(
-          resizeToAvoidBottomInset: false,
-          appBar: AppBar(
-            title: Text(pageTitle, style: TextStyle(color: Colors.white)),
-            backgroundColor: defaultColor,
+    return BlocProvider(
+      create: (context) => BloodFinderCubit(),
+      child: _MainBloodFindingScreen(width: width),
+    );
+  }
+}
+
+class _MainBloodFindingScreen extends StatelessWidget {
+  const _MainBloodFindingScreen({
+    Key? key,
+    required this.width,
+  }) : super(key: key);
+
+  final String pageTitle = "Blood Finder";
+  final double width;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      appBar: AppBar(
+        title: Text(pageTitle, style: TextStyle(color: Colors.white)),
+        backgroundColor: defaultColor,
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.all(12.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              _CreatePostButton(width: width),
+              _SearchBar(width: width),
+              _SearchResults()
+            ],
           ),
-          body: SingleChildScrollView(
-            child: Padding(
-              padding: EdgeInsets.all(12.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  _CreatePostButton(width: width),
-                  _SearchBar(width: width),
-                  _SearchResults()
-                ],
-              ),
-            ),
-          ),
-        );
-      },
-      listener: (context, state) {},
+        ),
+      ),
     );
   }
 }
@@ -76,17 +88,19 @@ class _SearchBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cubit = context.watch<BloodFinderCubit>();
+
     void find() {
-      if (BloodFinderCubit.get(context).state.pickedBloodType == null) {
+      if (cubit.state.pickedBloodType == null) {
         var errMsg = "No Blood Type was Picked!";
         showError(context, errMsg);
       } else {
-        BloodFinderCubit.get(context).findInstitutions();
+        cubit.findInstitutions();
       }
     }
 
     void bloodTypeChanged(dynamic value) {
-      BloodFinderCubit.get(context).changedBloodType(value);
+      cubit.changedBloodType(value);
     }
 
     var bloodTypelabel = "Blood type";
@@ -95,10 +109,10 @@ class _SearchBar extends StatelessWidget {
       children: [
         SizedBox(
           width: (width - 50) / 2,
-          child: makeDropDown(bloodTypelabel,
-              BloodFinderCubit.get(context).state.bloodTypes, bloodTypeChanged),
+          child: makeDropDown(
+              bloodTypelabel, cubit.state.bloodTypes, bloodTypeChanged),
         ),
-        BloodFinderCubit.get(context).state.isLoading
+        cubit.state.isLoading
             ? CircularProgressIndicator()
             : IconButton(onPressed: find, icon: Icon(Icons.search_rounded))
       ],
@@ -148,6 +162,8 @@ class _SearchResults extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cubit = context.watch<BloodFinderCubit>();
+
     return Container(
       height: MediaQuery.of(context).size.height * 0.7,
       child: ListView.builder(
@@ -156,11 +172,10 @@ class _SearchResults extends StatelessWidget {
         itemBuilder: (context, i) {
           return Padding(
             padding: const EdgeInsets.all(8.0),
-            child: makeInstitutionCard(
-                BloodFinderCubit.get(context).state.foundInstitutions[i]),
+            child: makeInstitutionCard(cubit.state.foundInstitutions[i]),
           );
         },
-        itemCount: BloodFinderCubit.get(context).state.foundInstitutions.length,
+        itemCount: cubit.state.foundInstitutions.length,
       ),
     );
   }
