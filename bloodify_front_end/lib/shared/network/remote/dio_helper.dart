@@ -42,12 +42,19 @@ class DioHelper {
     String lang = 'en',
     String? token,
   }) async {
-    dio!.options.headers = {
-      'Content-Type': 'application/json',
-      'lang': lang,
-      'Authorization': token,
-    };
-
+    String? auth;
+    if (token == null) {
+      dio!.options.headers = {
+        'Content-Type': 'application/json',
+        'lang': lang,
+      };
+    } else {
+      dio!.options.headers = {
+        'Content-Type': 'application/json',
+        'lang': lang,
+        'Authorization': "Bearer $token",
+      };
+    }
     return dio!.post(
       url,
       queryParameters: query,

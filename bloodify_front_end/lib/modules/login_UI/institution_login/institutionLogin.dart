@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../shared/Constatnt/Component.dart';
 import '../../../shared/Constatnt/sharedFunctions.dart';
+import '../../../shared/Constatnt/userInfo.dart';
 import '../../../shared/network/local/cach_helper.dart';
 import '../shareable_login.dart';
 import 'cubit/institution_login_cubit.dart';
@@ -27,6 +28,8 @@ class InstitutionLogin extends StatelessWidget {
             print(state.loginModel.data!.token);
             CachHelper.saveData(key: "isUser", value: false)
                 .then((value) => print("is Institution saved to Cache $value"));
+            token = state.loginModel.data!.token;
+            isUser = false;
             CachHelper.saveData(
               key: 'token',
               value: state.loginModel.data!.token,
