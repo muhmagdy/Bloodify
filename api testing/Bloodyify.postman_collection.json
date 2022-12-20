@@ -1465,7 +1465,11 @@
 											"\r",
 											"pm.test(\"state is true\", function () {\r",
 											"    pm.expect(pm.response.json().status).to.eql(true)\r",
-											"})"
+											"})\r",
+											"\r",
+											"let institution_token = pm.response.json().data.token;\r",
+											"\r",
+											"pm.collectionVariables.set(\"institution_token\", institution_token);"
 										],
 										"type": "text/javascript"
 									}
@@ -1678,7 +1682,7 @@
 											"bearer": [
 												{
 													"key": "token",
-													"value": "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJzZWxmIiwic3ViIjoib2tAZW1haWwuY29tIiwiaWF0IjoxNjcxMzI0MTc3fQ.xis8DegPCm6MfS5GQB1onBNCfusSBgORpGK_s-7WVoc9xacesHGnnYyDm3N9QxJPJnVZlI0mfO2x0_BD5uFuO7yCR_S6bReFPXl0wlg68yAIJ-kQ_OUIQli5wu57q40ZWrFhpYBMl97Gb0_rH_7w4r-92qwbhNQa8QpASJTYKwmyEYch9GSgBwHls8hnjqe6LceV_YqrKuA3CBe2fDtuYK6cAJaMVXzAJpbvSemW8fNshSWSfyNnRWffSMCSdReRp9dJUHU3JplwUD-jbcjNX5H6YKhNrBHF105sM4uDqDcEAHVfgZqNoCRYmdJC8C4SbPIPAxrtHagVbGb_Omu0JQ",
+													"value": "{{institution_token}}",
 													"type": "string"
 												}
 											]
@@ -1736,7 +1740,7 @@
 											"bearer": [
 												{
 													"key": "token",
-													"value": "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJzZWxmIiwic3ViIjoib2tAZW1haWwuY29tIiwiaWF0IjoxNjcxMzI0MTc3fQ.xis8DegPCm6MfS5GQB1onBNCfusSBgORpGK_s-7WVoc9xacesHGnnYyDm3N9QxJPJnVZlI0mfO2x0_BD5uFuO7yCR_S6bReFPXl0wlg68yAIJ-kQ_OUIQli5wu57q40ZWrFhpYBMl97Gb0_rH_7w4r-92qwbhNQa8QpASJTYKwmyEYch9GSgBwHls8hnjqe6LceV_YqrKuA3CBe2fDtuYK6cAJaMVXzAJpbvSemW8fNshSWSfyNnRWffSMCSdReRp9dJUHU3JplwUD-jbcjNX5H6YKhNrBHF105sM4uDqDcEAHVfgZqNoCRYmdJC8C4SbPIPAxrtHagVbGb_Omu0JQ",
+													"value": "{{institution_token}}",
 													"type": "string"
 												}
 											]
@@ -1770,7 +1774,7 @@
 									"response": []
 								},
 								{
-									"name": "Correct instToUser transaction",
+									"name": "Valid institution to user transaction",
 									"event": [
 										{
 											"listen": "test",
@@ -1794,7 +1798,7 @@
 											"bearer": [
 												{
 													"key": "token",
-													"value": "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJzZWxmIiwic3ViIjoib2tAZW1haWwuY29tIiwiaWF0IjoxNjcxMzI0MTc3fQ.xis8DegPCm6MfS5GQB1onBNCfusSBgORpGK_s-7WVoc9xacesHGnnYyDm3N9QxJPJnVZlI0mfO2x0_BD5uFuO7yCR_S6bReFPXl0wlg68yAIJ-kQ_OUIQli5wu57q40ZWrFhpYBMl97Gb0_rH_7w4r-92qwbhNQa8QpASJTYKwmyEYch9GSgBwHls8hnjqe6LceV_YqrKuA3CBe2fDtuYK6cAJaMVXzAJpbvSemW8fNshSWSfyNnRWffSMCSdReRp9dJUHU3JplwUD-jbcjNX5H6YKhNrBHF105sM4uDqDcEAHVfgZqNoCRYmdJC8C4SbPIPAxrtHagVbGb_Omu0JQ",
+													"value": "{{institution_token}}",
 													"type": "string"
 												}
 											]
@@ -1852,7 +1856,7 @@
 											"bearer": [
 												{
 													"key": "token",
-													"value": "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJzZWxmIiwic3ViIjoib2tAZW1haWwuY29tIiwiaWF0IjoxNjcxMzI0MTc3fQ.xis8DegPCm6MfS5GQB1onBNCfusSBgORpGK_s-7WVoc9xacesHGnnYyDm3N9QxJPJnVZlI0mfO2x0_BD5uFuO7yCR_S6bReFPXl0wlg68yAIJ-kQ_OUIQli5wu57q40ZWrFhpYBMl97Gb0_rH_7w4r-92qwbhNQa8QpASJTYKwmyEYch9GSgBwHls8hnjqe6LceV_YqrKuA3CBe2fDtuYK6cAJaMVXzAJpbvSemW8fNshSWSfyNnRWffSMCSdReRp9dJUHU3JplwUD-jbcjNX5H6YKhNrBHF105sM4uDqDcEAHVfgZqNoCRYmdJC8C4SbPIPAxrtHagVbGb_Omu0JQ",
+													"value": "{{institution_token}}",
 													"type": "string"
 												}
 											]
@@ -1886,10 +1890,141 @@
 									"response": []
 								}
 							]
+						},
+						{
+							"name": "User To Institution",
+							"item": [
+								{
+									"name": "Null donor National ID",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 406\", function () {\r",
+													"  pm.response.to.have.status(406);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"message is Invalid Acceptor National ID!\", function () {\r",
+													"    pm.expect(pm.response.json().message).to.eql(\"Invalid Donor National ID!\")\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{institution_token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"donorNationalID\": null,\r\n    \"bloodType\": \"A+\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "localhost:8080/api/v1/institution/transaction/userToInst",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"v1",
+												"institution",
+												"transaction",
+												"userToInst"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Valid user to institution transaction",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 202\", function () {\r",
+													"  pm.response.to.have.status(202);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"message is Transaction Successful!\", function () {\r",
+													"    pm.expect(pm.response.json().message).to.eql(\"Transaction Successful!\")\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{institution_token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"donorNationalID\": \"27901010102345\",\r\n    \"bloodType\": \"O-\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "localhost:8080/api/v1/institution/transaction/userToInst",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"v1",
+												"institution",
+												"transaction",
+												"userToInst"
+											]
+										}
+									},
+									"response": []
+								}
+							]
 						}
 					]
 				}
 			]
+		}
+	],
+	"variable": [
+		{
+			"key": "token",
+			"value": ""
+		},
+		{
+			"key": "institution_token",
+			"value": ""
 		}
 	]
 }

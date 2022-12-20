@@ -22,7 +22,7 @@ class TransactionControllerTest {
 
     /**
      * Checks if the controller listens to instToUser donation http request
-     * return Bad Request -> 400
+     * returns Bad Request -> 400 (it must not return not found 404)
      */
     @Test
     void instToUserDonEndpointExist() throws Exception {
@@ -33,11 +33,22 @@ class TransactionControllerTest {
 
     /**
      * Checks if the controller listens to userToUser donation http request
-     * return Bad Request -> 400
+     * returns Bad Request -> 400 (it must not return not found 404)
      */
     @Test
     void userToUserDonEndpointExist() throws Exception {
         mockMvc.perform(post("/api/v1/institution/transaction/userToUser").
+                        contentType("application/json")).
+                andExpect(status().isBadRequest());
+    }
+
+    /**
+     * Checks if the controller listens to userToInst donation http request
+     * returns Bad Request -> 400 (it must not return not found 404)
+     */
+    @Test
+    void userToInstDonEndpointExist() throws Exception {
+        mockMvc.perform(post("/api/v1/institution/transaction/userToInst").
                         contentType("application/json")).
                 andExpect(status().isBadRequest());
     }

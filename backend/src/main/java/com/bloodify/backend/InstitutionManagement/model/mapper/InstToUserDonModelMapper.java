@@ -7,11 +7,11 @@ import com.bloodify.backend.InstitutionManagement.exceptions.transactionexceptio
 import com.bloodify.backend.InstitutionManagement.exceptions.transactionexceptions.InvalidInstitution;
 import com.bloodify.backend.InstitutionManagement.model.InstToUserDonation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 
-@Component
+@Service
 public class InstToUserDonModelMapper {
     @Autowired
     InstitutionDAO institutionDAO;
@@ -27,7 +27,7 @@ public class InstToUserDonModelMapper {
         if (instToUserDonation.getInstitution() == null)
             throw new InvalidInstitution();
 
-        if(instToUserDonDTO.getAcceptorNationalID() == null ||
+        if (instToUserDonDTO.getAcceptorNationalID() == null ||
                 instToUserDonDTO.getAcceptorNationalID().length() != 14)
             throw new InvalidAcceptorNID();
 
@@ -39,7 +39,7 @@ public class InstToUserDonModelMapper {
                 instToUserDonDTO.getBloodType()
         );
 
-        if(instToUserDonDTO.getBagsCount() == null ||
+        if (instToUserDonDTO.getBagsCount() == null ||
                 instToUserDonDTO.getBagsCount() < 1)
             throw new InvalidBloodBagsCount();
 

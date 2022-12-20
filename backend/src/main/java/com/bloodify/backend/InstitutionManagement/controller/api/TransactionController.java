@@ -2,8 +2,10 @@ package com.bloodify.backend.InstitutionManagement.controller.api;
 
 import com.bloodify.backend.InstitutionManagement.controller.reponse.TransactionResponse;
 import com.bloodify.backend.InstitutionManagement.controller.request.InstToUserDonRequest;
+import com.bloodify.backend.InstitutionManagement.controller.request.UserToInstDonRequest;
 import com.bloodify.backend.InstitutionManagement.controller.request.UserToUserDonRequest;
 import com.bloodify.backend.InstitutionManagement.dto.mapper.InstToUserDonDTOMapper;
+import com.bloodify.backend.InstitutionManagement.dto.mapper.UserToInstDonDTOMapper;
 import com.bloodify.backend.InstitutionManagement.dto.mapper.UserToUserDonDTOMapper;
 import com.bloodify.backend.InstitutionManagement.exceptions.transactionexceptions.TransactionException;
 import com.bloodify.backend.InstitutionManagement.service.interfaces.TransactionService;
@@ -40,6 +42,18 @@ public class TransactionController {
 
         transactionService.applyUserToUserDonation(
                 new UserToUserDonDTOMapper().mapToDTO(donationRequest, auth.getName())
+        );
+
+        return ResponseEntity.status(HttpStatus.ACCEPTED)
+                .body(new TransactionResponse(true, "Transaction Successful!"));
+
+    }
+
+    @PostMapping("/institution/transaction/userToInst")
+    public ResponseEntity<TransactionResponse> createUserToInstDon(@RequestBody UserToInstDonRequest donationRequest,
+                                                                   Authentication auth) {
+        transactionService.applyUserToInstDonation(
+                new UserToInstDonDTOMapper().mapToDTO(donationRequest, auth.getName())
         );
 
         return ResponseEntity.status(HttpStatus.ACCEPTED)

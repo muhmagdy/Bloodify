@@ -8,11 +8,11 @@ import com.bloodify.backend.InstitutionManagement.exceptions.transactionexceptio
 import com.bloodify.backend.InstitutionManagement.model.UserToUserDonation;
 import com.bloodify.backend.UserRequests.service.interfaces.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 
-@Component
+@Service
 public class UserToUserDonModelMapper {
     @Autowired
     PostService postService;

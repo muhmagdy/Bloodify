@@ -33,6 +33,10 @@ public class UserToInstDonModelMapper {
                 userToInstDonDTO.getDonorNationalID()
         );
 
+        userToInstDonation.setBloodType(
+                userToInstDonDTO.getBloodType()
+        );
+
         userToInstDonation.setDonationDate(LocalDate.now());
 
         return userToInstDonation;

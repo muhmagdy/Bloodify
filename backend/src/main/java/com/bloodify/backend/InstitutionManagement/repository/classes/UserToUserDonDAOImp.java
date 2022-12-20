@@ -12,12 +12,12 @@ import java.util.List;
 @Service
 public class UserToUserDonDAOImp implements UserToUserDonDAO {
     @Autowired
-    private UserToUserDonRepository userDonationRepo;
+    private UserToUserDonRepository userToUserDonRepository;
 
     @Override
     public boolean save(UserToUserDonation userToUserDonation) {
         try {
-            userDonationRepo.save(userToUserDonation);
+            userToUserDonRepository.save(userToUserDonation);
             return true;
         } catch (Exception e) {
             return false;
@@ -26,22 +26,22 @@ public class UserToUserDonDAOImp implements UserToUserDonDAO {
 
     @Override
     public List<UserToUserDonation> findByInstitutionEmail(String email) {
-        return userDonationRepo.findByInstitution_Email(email);
+        return userToUserDonRepository.findByInstitution_Email(email);
     }
 
     @Override
     public List<UserToUserDonation> findByInstitutionEmailAndDate(String email, LocalDate donationDate) {
-        return userDonationRepo.findByInstitution_EmailAndDonationDate(email, donationDate);
+        return userToUserDonRepository.findByInstitution_EmailAndDonationDate(email, donationDate);
     }
 
     @Override
     public List<UserToUserDonation> findByDonorNID(String nationalID) {
-        return userDonationRepo.findByDonorNationalID(nationalID);
+        return userToUserDonRepository.findByDonorNationalID(nationalID);
     }
 
     @Override
     public List<UserToUserDonation> findByAcceptorNID(String nationalID) {
-        return userDonationRepo.findByAcceptor_NationalID(nationalID);
+        return userToUserDonRepository.findByAcceptor_NationalID(nationalID);
     }
 
 }

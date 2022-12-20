@@ -4,7 +4,6 @@ import com.bloodify.backend.InstitutionManagement.model.InstToUserDonation;
 import com.bloodify.backend.InstitutionManagement.repository.interfaces.InstToUserDonDAO;
 import com.bloodify.backend.InstitutionManagement.repository.interfaces.InstToUserDonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -14,12 +13,12 @@ import java.util.List;
 public class InstToUserDonDAOImp implements InstToUserDonDAO {
 
     @Autowired
-    InstToUserDonRepository institutionDonationRepo;
+    InstToUserDonRepository instToUserDonRepository;
 
     @Override
     public boolean save(InstToUserDonation instToUserDonation) {
         try {
-            institutionDonationRepo.save(instToUserDonation);
+            instToUserDonRepository.save(instToUserDonation);
             return true;
         } catch (Exception e) {
             return false;
@@ -28,12 +27,12 @@ public class InstToUserDonDAOImp implements InstToUserDonDAO {
 
     @Override
     public List<InstToUserDonation> findByInstitutionEmail(String email) {
-        return institutionDonationRepo.findByInstitution_Email(email);
+        return instToUserDonRepository.findByInstitution_Email(email);
     }
 
     @Override
     public List<InstToUserDonation> findByInstitutionEmailAndDate(String email, LocalDate transactionDate) {
-        return institutionDonationRepo.findByInstitution_EmailAndTransactionDate(
+        return instToUserDonRepository.findByInstitution_EmailAndTransactionDate(
                 email,
                 transactionDate
         );
