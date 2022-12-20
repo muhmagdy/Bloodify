@@ -5,8 +5,6 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class UserToUserDonRequest {
-    private Integer postID;
-
+public class UserToInstDonRequest {
     private String donorNationalID;
 }
