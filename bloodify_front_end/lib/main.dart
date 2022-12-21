@@ -1,5 +1,10 @@
-import 'package:bloc/bloc.dart';
 import 'package:bloodify_front_end/layout/start_layout.dart';
+
+import 'package:bloodify_front_end/modules/transactions_modules/event_transaction/cubit/eventTransaction_cubit.dart';
+import 'package:bloodify_front_end/modules/transactions_modules/post_transaction/cubit/post_transaction_cubit.dart';
+import 'package:bloodify_front_end/shared/Constatnt/login.dart';
+import 'package:bloodify_front_end/shared/Constatnt/userInfo.dart';
+
 import 'package:bloodify_front_end/modules/create_event/create_event_cubit/create_event_cubit.dart';
 import 'package:bloodify_front_end/modules/login_UI/User_login/userLogin.dart';
 import 'package:bloodify_front_end/modules/login_UI/institution_login/institutionLogin.dart';
@@ -11,10 +16,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'layout/home_layout.dart';
+import 'models/institution.dart';
 import 'modules/login_UI/User_login/cubit/user_login_cubit.dart';
 import 'modules/login_UI/institution_login/cubit/institution_login_cubit.dart';
 import 'modules/signUP_UI/sign_up_State_management/sign_up_cubit.dart';
+import 'modules/transactions_modules/institution_tranaction/cubic/institution_transaction_cubit.dart';
 import 'shared/Constatnt/userInfo.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,26 +44,35 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   final Widget startWidget;
-  MyApp({
+  const MyApp({
+    super.key,
     required this.startWidget,
   });
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    logedInInstitution =
+        InstitutionData("Alexandria Hospital", "a.g@c", "dasdas");
     return MultiBlocProvider(
         providers: [
           BlocProvider(create: (context) => SignUpCubit()),
           BlocProvider(create: (context) => UserLoginCubit()),
           BlocProvider(create: (context) => InstitutionLoginCubit()),
+          BlocProvider(create: (context) => PostTransactionCubit()),
+          BlocProvider(create: (context) => EventTransactionCubit()),
+          BlocProvider(create: (context) => InstituteTransactionCubit())
           BlocProvider(create: (context) => CreateEventCubit()),
+
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: lightTheme,
           darkTheme: darkTheme,
-          themeMode: false ? ThemeMode.dark : ThemeMode.light,
-          home: HomeLayout(),
+          // themeMode: false ? ThemeMode.dark : ThemeMode.light,
+          themeMode: ThemeMode.light,
+          // home: startWidget,
+          home: startWidget,
         ));
   }
 }

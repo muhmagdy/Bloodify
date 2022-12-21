@@ -69,7 +69,7 @@ class DioHelper {
     required email,
     required password,
   }) async {
-    var auth = 'Basic ' + base64Encode(utf8.encode('$email:$password'));
+    var auth = 'Basic ${base64Encode(utf8.encode('$email:$password'))}';
     print(auth);
     dio!.options.headers = {
       'authorization': auth,

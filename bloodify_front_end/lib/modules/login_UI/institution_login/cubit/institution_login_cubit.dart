@@ -1,4 +1,5 @@
-import 'package:bloc/bloc.dart';
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -32,11 +33,11 @@ class InstitutionLoginCubit extends Cubit<InstitutionLoginStates> {
       if (error.response == null) {
         emit(InstitutionLoginErrorState(error.toString()));
       } else if (error.response.statusCode == 401) {
-        var loginResp = new InstitutionLoginModel(false);
+        var loginResp = InstitutionLoginModel(false);
         print("0000000");
         emit(InstitutionLoginSuccessState(loginResp));
       } else {
-        print("api " + error.toString());
+        print("api $error");
         emit(InstitutionLoginErrorState(error.toString()));
       }
     });

@@ -1,8 +1,5 @@
-import 'package:bloc/bloc.dart';
 import 'package:bloodify_front_end/shared/Constatnt/nationalIDValidator.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
-import 'package:meta/meta.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -127,12 +124,13 @@ class SignUpCubit extends Cubit<SignUpStates> {
 
   void userSignUp() {
     emit(SignUpLoading());
-    var last_time_donated = user.last_donated_time != null
+    var lastTimeDonated = user.last_donated_time != null
         ? new DateFormat("dd-MM-yyyy").format(user.last_donated_time!)
         : null;
     var dof = new DateFormat("dd-MM-yyyy").format(user.dOB);
-    print("${last_time_donated} date ${dof}");
-    DioHelper.postData(url: 'user',
+    print("${lastTimeDonated} date ${dof}");
+    DioHelper.postData(
+        url: 'user',
         // data: {
         //   'name': name,
         //   'email': email,
@@ -146,7 +144,7 @@ class SignUpCubit extends Cubit<SignUpStates> {
           'email': user.email,
           'password': user.password,
           // 'location': user.location,
-          'lastTimeDonated': last_time_donated,
+          'lastTimeDonated': lastTimeDonated,
           'hasDiseases': user.isPatient,
           'bloodType': user.bloodType,
         }).then((value) {

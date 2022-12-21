@@ -1699,7 +1699,8 @@
 											}
 										},
 										"url": {
-											"raw": "localhost:8080/api/v1/institution/transaction/instToUser",
+											"raw": "localhost:8080/api/v1/institution/transaction/inst-to-user",
+
 											"host": [
 												"localhost"
 											],
@@ -1709,7 +1710,8 @@
 												"v1",
 												"institution",
 												"transaction",
-												"instToUser"
+												"inst-to-user"
+
 											]
 										}
 									},
@@ -1757,7 +1759,8 @@
 											}
 										},
 										"url": {
-											"raw": "localhost:8080/api/v1/institution/transaction/instToUser",
+											"raw": "localhost:8080/api/v1/institution/transaction/inst-to-user",
+
 											"host": [
 												"localhost"
 											],
@@ -1767,7 +1770,8 @@
 												"v1",
 												"institution",
 												"transaction",
-												"instToUser"
+												"inst-to-user"
+
 											]
 										}
 									},
@@ -1815,7 +1819,8 @@
 											}
 										},
 										"url": {
-											"raw": "localhost:8080/api/v1/institution/transaction/instToUser",
+											"raw": "localhost:8080/api/v1/institution/transaction/inst-to-user",
+
 											"host": [
 												"localhost"
 											],
@@ -1825,7 +1830,7 @@
 												"v1",
 												"institution",
 												"transaction",
-												"instToUser"
+												"inst-to-user"
 											]
 										}
 									},
@@ -1873,7 +1878,8 @@
 											}
 										},
 										"url": {
-											"raw": "localhost:8080/api/v1/institution/transaction/instToUser",
+											"raw": "localhost:8080/api/v1/institution/transaction/inst-to-user",
+
 											"host": [
 												"localhost"
 											],
@@ -1883,7 +1889,7 @@
 												"v1",
 												"institution",
 												"transaction",
-												"instToUser"
+												"inst-to-user"
 											]
 										}
 									},
@@ -1931,7 +1937,8 @@
 											}
 										},
 										"url": {
-											"raw": "localhost:8080/api/v1/institution/transaction/instToUser",
+											"raw": "localhost:8080/api/v1/institution/transaction/inst-to-user",
+
 											"host": [
 												"localhost"
 											],
@@ -1941,6 +1948,7 @@
 												"v1",
 												"institution",
 												"transaction",
+												"inst-to-user"
 												"instToUser"
 											]
 										}
@@ -1994,7 +2002,8 @@
 											}
 										},
 										"url": {
-											"raw": "localhost:8080/api/v1/institution/transaction/userToInst",
+											"raw": "localhost:8080/api/v1/institution/transaction/user-to-inst",
+
 											"host": [
 												"localhost"
 											],
@@ -2004,7 +2013,7 @@
 												"v1",
 												"institution",
 												"transaction",
-												"userToInst"
+												"user-to-inst"
 											]
 										}
 									},
@@ -2052,7 +2061,8 @@
 											}
 										},
 										"url": {
-											"raw": "localhost:8080/api/v1/institution/transaction/userToInst",
+											"raw": "localhost:8080/api/v1/institution/transaction/user-to-inst",
+
 											"host": [
 												"localhost"
 											],
@@ -2062,7 +2072,7 @@
 												"v1",
 												"institution",
 												"transaction",
-												"userToInst"
+												"user-to-inst"
 											]
 										}
 									},
@@ -2110,7 +2120,7 @@
 											}
 										},
 										"url": {
-											"raw": "localhost:8080/api/v1/institution/transaction/userToInst",
+											"raw": "localhost:8080/api/v1/institution/transaction/user-to-inst",
 											"host": [
 												"localhost"
 											],
@@ -2120,7 +2130,7 @@
 												"v1",
 												"institution",
 												"transaction",
-												"userToInst"
+											"user-to-inst"
 											]
 										}
 									},

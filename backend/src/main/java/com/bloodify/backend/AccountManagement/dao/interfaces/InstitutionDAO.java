@@ -14,6 +14,10 @@ public interface InstitutionDAO extends UserDetailsService{
 
     public List<Institution> haveBloodPackets(String bloodType, int quantity);
 
-//    public void setChangedPacketCount(List<String> changes, Institution institution);
-//    public void setBloodPacketChanges(String bloodType, int newCount, String email);
+    int getBagsCount(String email, String bloodType);
+
+    int updateBagsCount(String email, String bloodType, Integer newBagsCount);
+
+    int incrementBagsCountBy(String email, String bloodType, Integer addedBagsCount);
+
 }
