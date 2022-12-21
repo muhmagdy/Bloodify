@@ -67,7 +67,19 @@ public class UserHomePageService {
         Post post = postDao.getPostByID(postId);
         if(!post.getUser().getEmail().equals(email))
             throw new Exception("This post doesn't belong to the account!");
-        return acceptedPostListToUserBrief(acceptRepository.findByPost(post));
+        List<AcceptedPost> acceptedPosts = acceptRepository.findByPost(post);
+        List<UserBrief> userBriefs = new ArrayList<>();
+        for(AcceptedPost acceptedPost: acceptedPosts){
+            post = acceptedPost.getPost();
+            Institution inst = post.getInstitution();
+            Double distance = compatiblePosts.distance(acceptedPost.getLatitude(), acceptedPost.getLongitude(), inst.getLatitude(), inst.getLongitude());
+            User user = acceptedPost.getUser();
+            userBriefs.add(
+                    new UserBrief(user.getUserID(), user.getFirstName()+" "+user.getLastName()
+                            , user.getBloodType(), distance)
+            );
+        }
+        return userBriefs;
     }
 
     public UserBrief getPostRequester(int postId, Double longitude, Double latitude, Double threshold){
@@ -90,6 +102,18 @@ public class UserHomePageService {
             postBriefs.add(postToPostBrief(post, requester, distance));
         }
         return postBriefs;
+    }
+
+    public boolean acceptRequest(String email, int postID, Double longitude, Double latitude, Double threshold){
+        try {
+            Post post = postDao.getPostByID(postID);
+            User user = userDAO.findUserByEmail(email);
+            AcceptedPost acceptedPost = new AcceptedPost(post, user, longitude, latitude, threshold);
+            acceptRepository.save(acceptedPost);
+        } catch(Exception e){
+            return false;
+        }
+        return true;
     }
 
     List<PostBrief> postListToPostBrief(List<Post> posts){
@@ -123,7 +147,7 @@ public class UserHomePageService {
 
     UserBrief userToUserBrief(User user, Double distance){
         return new UserBrief(user.getUserID(), user.getFirstName()+" "+user.getLastName()
-                , user.getBloodType(), distance);
+                                , user.getBloodType(), distance);
     }
 
     PostBrief postToPostBrief(Post post, User user, Double distance){
