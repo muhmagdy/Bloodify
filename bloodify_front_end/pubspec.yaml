@@ -47,6 +47,7 @@ dependencies:
   intl: ^0.17.0
   geolocator: ^9.0.2
   http: ^0.13.5
+  open_street_map_search_and_pick: ^0.0.15
 dev_dependencies:
   flutter_test:
     sdk: flutter
