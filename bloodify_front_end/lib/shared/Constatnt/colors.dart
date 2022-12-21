@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 final dateFormat = DateFormat("dd-MM-yyyy");
+final timeFormate = DateFormat('hh:mm:ss');
+
 var defaultColor = Colors.red;
 
 const red = Color.fromARGB(255, 210, 0, 50);

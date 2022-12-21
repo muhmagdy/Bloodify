@@ -53,9 +53,9 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    if (kDebugMode) {
-      return MaterialApp(debugShowCheckedModeBanner: false, home: InstNavBar());
-    }
+    // if (kDebugMode) {
+    //   return MaterialApp(debugShowCheckedModeBanner: false, home: InstNavBar());
+    // }
     return MultiBlocProvider(
         providers: [
           BlocProvider(create: (context) => SignUpCubit()),
@@ -73,7 +73,7 @@ class MyApp extends StatelessWidget {
           // themeMode: false ? ThemeMode.dark : ThemeMode.light,
           themeMode: ThemeMode.light,
           // home: startWidget,
-          home: startWidget,
+          home: InstNavBar(),
         ));
   }
 }

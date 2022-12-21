@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "aad8c38a-9666-4cc1-b387-4e1d2e33edf0",
+		"_postman_id": "5652d136-eb88-4986-be0e-cacadd828791",
 		"name": "Bloodyify",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "18289071"
+		"_exporter_id": "18722631"
 	},
 	"item": [
 		{
@@ -1700,7 +1700,6 @@
 										},
 										"url": {
 											"raw": "localhost:8080/api/v1/institution/transaction/inst-to-user",
-
 											"host": [
 												"localhost"
 											],
@@ -1711,7 +1710,6 @@
 												"institution",
 												"transaction",
 												"inst-to-user"
-
 											]
 										}
 									},
@@ -1760,7 +1758,6 @@
 										},
 										"url": {
 											"raw": "localhost:8080/api/v1/institution/transaction/inst-to-user",
-
 											"host": [
 												"localhost"
 											],
@@ -1771,7 +1768,6 @@
 												"institution",
 												"transaction",
 												"inst-to-user"
-
 											]
 										}
 									},
@@ -1820,7 +1816,6 @@
 										},
 										"url": {
 											"raw": "localhost:8080/api/v1/institution/transaction/inst-to-user",
-
 											"host": [
 												"localhost"
 											],
@@ -1879,7 +1874,6 @@
 										},
 										"url": {
 											"raw": "localhost:8080/api/v1/institution/transaction/inst-to-user",
-
 											"host": [
 												"localhost"
 											],
@@ -1938,7 +1932,6 @@
 										},
 										"url": {
 											"raw": "localhost:8080/api/v1/institution/transaction/inst-to-user",
-
 											"host": [
 												"localhost"
 											],
@@ -1949,7 +1942,6 @@
 												"institution",
 												"transaction",
 												"inst-to-user"
-												"instToUser"
 											]
 										}
 									},
@@ -2003,7 +1995,6 @@
 										},
 										"url": {
 											"raw": "localhost:8080/api/v1/institution/transaction/user-to-inst",
-
 											"host": [
 												"localhost"
 											],
@@ -2062,7 +2053,6 @@
 										},
 										"url": {
 											"raw": "localhost:8080/api/v1/institution/transaction/user-to-inst",
-
 											"host": [
 												"localhost"
 											],
@@ -2130,7 +2120,7 @@
 												"v1",
 												"institution",
 												"transaction",
-											"user-to-inst"
+												"user-to-inst"
 											]
 										}
 									},

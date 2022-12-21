@@ -1,4 +1,5 @@
 import 'package:bloodify_front_end/models/event.dart';
+import 'package:bloodify_front_end/models/event_model.dart';
 import 'package:bloodify_front_end/shared/Constatnt/colors.dart';
 import 'package:bloodify_front_end/shared/Constatnt/fonts.dart';
 import 'package:bloodify_front_end/shared/styles/container.dart';
@@ -6,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class EventTile extends StatefulWidget {
-  final Event event;
+  final Event_model event;
   const EventTile(this.event, {super.key});
 
   @override
@@ -26,7 +27,7 @@ class _EventTile extends State<EventTile> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "#${widget.event.id}",
+              "#${widget.event.event_ID}",
               style: VerySmallStyle(width, Colors.black),
             ),
             SizedBox(
@@ -35,7 +36,7 @@ class _EventTile extends State<EventTile> {
                     alignment: Alignment.centerLeft,
                     fit: BoxFit.scaleDown,
                     child: Text(
-                      widget.event.name,
+                      widget.event.title,
                       textAlign: TextAlign.start,
                       style: NormalStyle(height, Colors.black),
                     ))),
@@ -49,7 +50,7 @@ class _EventTile extends State<EventTile> {
                     size: 0.05 * width,
                     color: blue,
                   )),
-              Text(widget.event.location,
+              Text(widget.event.location!,
                   style: SmallStyle(width, Colors.black)),
             ]),
             Row(
@@ -59,7 +60,7 @@ class _EventTile extends State<EventTile> {
                   style: SmallBoldStyle(width, Colors.black),
                 ),
                 Text(
-                  DateFormat("d MMM y 'at' h:m a").format(widget.event.end),
+                  DateFormat("d MMM y 'at' h:m a").format(widget.event.endDate),
                   style: SmallStyle(width, Colors.black),
                 ),
               ],
@@ -87,7 +88,7 @@ class _EventTile extends State<EventTile> {
 }
 
 class InstitutionEventDetailsWindow extends StatelessWidget {
-  final Event event;
+  final Event_model event;
   const InstitutionEventDetailsWindow(this.event, {super.key});
 
   @override
@@ -107,7 +108,7 @@ class InstitutionEventDetailsWindow extends StatelessWidget {
       body: Container(
         alignment: Alignment.center,
         child: Text(
-          "Event #${event.id}",
+          "Event #${event.title}",
           textAlign: TextAlign.center,
           style: NormalStyle(height, Colors.black),
         ),

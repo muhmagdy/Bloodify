@@ -23,12 +23,19 @@ class DioHelper {
     required String url,
     required Map<String, dynamic> query,
     String lang = 'en',
-    String? token,
   }) async {
-    dio!.options.headers = {
-      'lang': lang,
-      'Authorization': token,
-    };
+    if (token == null) {
+      dio!.options.headers = {
+        'Content-Type': 'application/json',
+        'lang': lang,
+      };
+    } else {
+      dio!.options.headers = {
+        'Content-Type': 'application/json',
+        'lang': lang,
+        'Authorization': "Bearer $token",
+      };
+    }
 
     return await dio!.get(
       url,
