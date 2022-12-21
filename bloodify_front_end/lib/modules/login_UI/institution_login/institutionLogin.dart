@@ -1,6 +1,7 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:bloodify_front_end/layout/home_layout.dart';
+import 'package:bloodify_front_end/modules/navbar/institution_navbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -38,7 +39,7 @@ class InstitutionLogin extends StatelessWidget {
             ).then((value) {
               navigateAndFinish(
                 context,
-                HomeLayout(),
+                InstNavBar(),
               );
             });
           } else {
