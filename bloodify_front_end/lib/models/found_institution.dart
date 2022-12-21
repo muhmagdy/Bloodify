@@ -6,7 +6,7 @@ class FoundInstitution extends Equatable {
   late String institutionLocation;
   late double longitude;
   late double latitude;
-  late Map<String, int> types_bags;
+  late Map<String, dynamic> types_bags;
   late int working_hours;
 
   FoundInstitution(
@@ -17,6 +17,17 @@ class FoundInstitution extends Equatable {
       required this.latitude,
       required this.types_bags,
       required this.working_hours});
+
+  static FoundInstitution fromJson(Map<String, dynamic> json) {
+    return FoundInstitution(
+        institutionId: json["institutionId"],
+        institutionName: json["institutionName"],
+        institutionLocation: json["institutionLocation"],
+        longitude: json["longitude"],
+        latitude: json["latitude"],
+        types_bags: json["types_bags"],
+        working_hours: json["working_hours"]);
+  }
 
   @override
   List<Object?> get props => [
@@ -48,7 +59,7 @@ class FoundInstitutionWithDistance extends Equatable {
     return institution.institutionLocation;
   }
 
-  Map<String, int> getBloodBags() {
+  Map<String, dynamic> getBloodBags() {
     return institution.types_bags;
   }
 

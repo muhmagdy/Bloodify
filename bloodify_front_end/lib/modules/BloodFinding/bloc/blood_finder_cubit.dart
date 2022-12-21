@@ -38,6 +38,8 @@ class BloodFinderCubit extends Cubit<BloodFinderState> {
               institutions: foundInstitutions)
           .copyWith(pickedBloodType: currState.pickedBloodType));
     } catch (e) {
+      print("yaaaaaaaaaaaaaaaw");
+      print(e);
       emit(BloodFinderState.errorOccured()
           .copyWith(pickedBloodType: currState.pickedBloodType));
 

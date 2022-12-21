@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:bloodify_front_end/models/found_institution.dart';
 import 'package:dio/dio.dart';
 import 'package:geolocator/geolocator.dart';
@@ -15,10 +17,9 @@ Future<List<FoundInstitution>> searchInstitutions(String? bloodType) async {
   Response response = await DioHelper.getData(
       url: url, query: Map<String, dynamic>.of({"bloodType": bloodType}));
 
-  print(response.data);
-
   if (response.statusCode == 200) {
-    return response.data;
+    List<dynamic> body = jsonDecode(response.data);
+    return List.from(body.map((e) => FoundInstitution.fromJson(e)));
   } else {
     throw Exception("Error Occured");
   }
