@@ -15,14 +15,13 @@ class BloodFinderCubit extends Cubit<BloodFinderState> {
   }
 
   Future<void> findInstitutions() async {
-    var currState = state.copyWith();
-
-    if (currState.pickedBloodType == null) {
+    if (state.pickedBloodType == null) {
       emit(BloodFinderState.noBloodTypePicked());
 
       emit(BloodFinderState.initial());
       return;
     }
+    var currState = state.copyWith();
 
     emit(BloodFinderState.findingInstitutions());
     emit(state.copyWith(pickedBloodType: currState.pickedBloodType));

@@ -33,7 +33,7 @@ Future<List<FoundInstitution>> searchInstitutions(String? bloodType) async {
         institutionLocation: "loc",
         longitude: -40,
         latitude: 104,
-        types_bags: Map.of({"A+": 1, "B+": 2}),
+        types_bags: Map.of({"A+": 0, "B+": 2}),
         working_hours: 24),
     FoundInstitution(
         institutionId: 4,
@@ -44,12 +44,12 @@ Future<List<FoundInstitution>> searchInstitutions(String? bloodType) async {
         types_bags: Map.of({
           "A+": 1,
           "B+": 2,
-          "Z+": 1,
-          "X+": 2,
-          "Q+": 1,
-          "F+": 2,
-          "C+": 1,
-          "D+": 2,
+          "Z+": -1,
+          "X+": -2,
+          "Q+": -1,
+          "F+": -2,
+          "C+": -1,
+          "D+": -2,
         }),
         working_hours: 24),
     FoundInstitution(
@@ -58,7 +58,7 @@ Future<List<FoundInstitution>> searchInstitutions(String? bloodType) async {
         institutionLocation: "loc",
         longitude: -13,
         latitude: 104,
-        types_bags: Map.of({"A+": 1, "B+": 2}),
+        types_bags: Map.of({"A+": 1, "B+": 0}),
         working_hours: 24),
   ];
 }
@@ -72,12 +72,15 @@ Future<List<FoundInstitutionWithDistance>> processFindings(
     print(e);
   }
 
-  List<FoundInstitutionWithDistance> processedFindings = institutions
-      .map((e) => FoundInstitutionWithDistance(
-          institution: e,
-          distance: getDistance(position, e.latitude, e.longitude)))
-      .toList();
+  List<FoundInstitutionWithDistance> processedFindings = institutions.map((e) {
+    e.types_bags.removeWhere((key, value) => value <= 0);
+    return FoundInstitutionWithDistance(
+        institution: e,
+        distance: getDistance(position, e.latitude, e.longitude));
+  }).toList();
+
   processedFindings.sort(((a, b) => a.distance.compareTo(b.distance)));
+
   return processedFindings;
 }
 

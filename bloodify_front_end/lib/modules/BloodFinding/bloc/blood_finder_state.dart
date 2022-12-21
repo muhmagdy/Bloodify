@@ -5,7 +5,7 @@ class BloodFinderState extends Equatable {
   final List<String> bloodTypes;
   late String? pickedBloodType;
   late Position? location;
-  bool isLoading, isvalidForm;
+  bool isLoading, invalidForm;
 
   BloodFinderState._(
       {this.bloodTypes = const [
@@ -22,11 +22,11 @@ class BloodFinderState extends Equatable {
       this.pickedBloodType,
       this.location,
       this.isLoading = false,
-      this.isvalidForm = false});
+      this.invalidForm = false});
 
   BloodFinderState.initial() : this._();
 
-  BloodFinderState.noBloodTypePicked() : this._(isvalidForm: false);
+  BloodFinderState.noBloodTypePicked() : this._(invalidForm: true);
 
   BloodFinderState.findingInstitutions() : this._(isLoading: true);
 
@@ -40,14 +40,14 @@ class BloodFinderState extends Equatable {
       String? pickedBloodType,
       Position? location,
       bool? isLoading,
-      bool? isvalidForm}) {
+      bool? invalidForm}) {
     return BloodFinderState._(
         bloodTypes: bloodTypes ?? this.bloodTypes,
         foundInstitutions: foundInstitutions ?? this.foundInstitutions,
         pickedBloodType: pickedBloodType ?? this.pickedBloodType,
         location: location ?? this.location,
         isLoading: isLoading ?? this.isLoading,
-        isvalidForm: isvalidForm ?? this.isvalidForm);
+        invalidForm: invalidForm ?? this.invalidForm);
   }
 
   @override
@@ -57,6 +57,6 @@ class BloodFinderState extends Equatable {
         pickedBloodType,
         location,
         isLoading,
-        isvalidForm
+        invalidForm
       ];
 }

@@ -20,7 +20,7 @@ class BloodFinder extends StatelessWidget {
         create: (context) => BloodFinderCubit(),
         child: BlocListener<BloodFinderCubit, BloodFinderState>(
           listener: ((context, state) {
-            if (!state.isvalidForm) {
+            if (state.invalidForm) {
               showToast(
                   text: "No Blood Type was Picked!",
                   color: Colors.black,
