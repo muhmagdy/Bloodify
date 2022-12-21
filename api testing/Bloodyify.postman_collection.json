@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "146e0f21-60e7-41e8-a26f-4213bb3623f5",
+		"_postman_id": "aad8c38a-9666-4cc1-b387-4e1d2e33edf0",
 		"name": "Bloodyify",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "18245343"
+		"_exporter_id": "18289071"
 	},
 	"item": [
 		{
@@ -1007,7 +1007,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"email\": \"ok@email.com\",\r\n    \"name\": \"Hospital1\",\r\n    \"password\": \"OKOKokok123_\",\r\n    \"location\": \"Alex\",\r\n    \"latitude\": 123.456,\r\n    \"longitude\": 456.789\r\n}",
+									"raw": "{\r\n    \"email\": \"ok@email.com\",\r\n    \"name\": \"Hospital1\",\r\n    \"password\": \"OKOKokok123_\",\r\n    \"location\": \"Alex\",\r\n    \"latitude\": 123.456,\r\n    \"longitude\": 456.789,\r\n    \"positiveA_bagsCount\": 1000,\r\n    \"positiveB_bagsCount\": 1000,\r\n    \"positiveAB_bagsCount\": 1000,\r\n    \"positiveO_bagsCount\": 1000,\r\n    \"negativeA_bagsCount\": 1000,\r\n    \"negativeB_bagsCount\": 1000,\r\n    \"negativeAB_bagsCount\": 1000,\r\n    \"negativeO_bagsCount\": 1\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1465,7 +1465,11 @@
 											"\r",
 											"pm.test(\"state is true\", function () {\r",
 											"    pm.expect(pm.response.json().status).to.eql(true)\r",
-											"})"
+											"})\r",
+											"\r",
+											"let institution_token = pm.response.json().data.token;\r",
+											"\r",
+											"pm.collectionVariables.set(\"institution_token\", institution_token);"
 										],
 										"type": "text/javascript"
 									}
@@ -1642,8 +1646,668 @@
 							"response": []
 						}
 					]
+				},
+				{
+					"name": "Transaction",
+					"item": [
+						{
+							"name": "User To User",
+							"item": []
+						},
+						{
+							"name": "Institution To User",
+							"item": [
+								{
+									"name": "Null acceptor National ID",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 406\", function () {\r",
+													"  pm.response.to.have.status(406);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"message is Invalid Acceptor National ID!\", function () {\r",
+													"    pm.expect(pm.response.json().message).to.eql(\"Invalid Acceptor National ID!\")\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{institution_token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"acceptorNationalID\": null,\r\n    \"bloodType\": \"AB-\",\r\n    \"bagsCount\": 4\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "localhost:8080/api/v1/institution/transaction/instToUser",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"v1",
+												"institution",
+												"transaction",
+												"instToUser"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Invalid blood bags count",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 406\", function () {\r",
+													"  pm.response.to.have.status(406);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"message is Invalid Blood Bags Count!\", function () {\r",
+													"    pm.expect(pm.response.json().message).to.eql(\"Invalid Blood Bags Count!\")\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{institution_token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"acceptorNationalID\": \"20103050100123\",\r\n    \"bloodType\": \"AB-\",\r\n    \"bagsCount\": -1\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "localhost:8080/api/v1/institution/transaction/instToUser",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"v1",
+												"institution",
+												"transaction",
+												"instToUser"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Valid institution to user transaction",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 202\", function () {\r",
+													"  pm.response.to.have.status(202);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"message is Transactional Succesful\", function () {\r",
+													"    pm.expect(pm.response.json().message).to.eql(\"Transaction Successful!\")\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{institution_token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"acceptorNationalID\": \"20103050100123\",\r\n    \"bloodType\": \"A-\",\r\n    \"bagsCount\": 5\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "localhost:8080/api/v1/institution/transaction/instToUser",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"v1",
+												"institution",
+												"transaction",
+												"instToUser"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Insufficient Blood Bags",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 406\", function () {\r",
+													"  pm.response.to.have.status(406);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"message has Insufficient Bags\", function() {\r",
+													"    pm.expect(pm.response.json().message).to.eql(\"Insufficient Blood Bags!\")\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{institution_token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"acceptorNationalID\": \"20103050100123\",\r\n    \"bloodType\": \"O-\",\r\n    \"bagsCount\": 3\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "localhost:8080/api/v1/institution/transaction/instToUser",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"v1",
+												"institution",
+												"transaction",
+												"instToUser"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Invalid blood type",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 406\", function () {\r",
+													"  pm.response.to.have.status(406);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"message has Invalid Blood Type\", function() {\r",
+													"    pm.expect(pm.response.json().message).to.eql(\"Invalid Blood Type!\")\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{institution_token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"acceptorNationalID\": \"20103050100123\",\r\n    \"bloodType\": \"F-\",\r\n    \"bagsCount\": 3\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "localhost:8080/api/v1/institution/transaction/instToUser",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"v1",
+												"institution",
+												"transaction",
+												"instToUser"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "User To Institution",
+							"item": [
+								{
+									"name": "Null donor National ID",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 406\", function () {\r",
+													"  pm.response.to.have.status(406);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"message is Invalid Acceptor National ID!\", function () {\r",
+													"    pm.expect(pm.response.json().message).to.eql(\"Invalid Donor National ID!\")\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{institution_token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"donorNationalID\": null,\r\n    \"bloodType\": \"A+\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "localhost:8080/api/v1/institution/transaction/userToInst",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"v1",
+												"institution",
+												"transaction",
+												"userToInst"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Valid user to institution transaction",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 202\", function () {\r",
+													"  pm.response.to.have.status(202);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"message is Transaction Successful!\", function () {\r",
+													"    pm.expect(pm.response.json().message).to.eql(\"Transaction Successful!\")\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{institution_token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"donorNationalID\": \"27901010102345\",\r\n    \"bloodType\": \"O-\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "localhost:8080/api/v1/institution/transaction/userToInst",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"v1",
+												"institution",
+												"transaction",
+												"userToInst"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Invalid blood type",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 406\", function () {\r",
+													"  pm.response.to.have.status(406);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"message has Invalid Blood Type\", function() {\r",
+													"    pm.expect(pm.response.json().message).to.eql(\"Invalid Blood Type!\")\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{institution_token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"donorNationalID\": \"27901010102345\",\r\n    \"bloodType\": \"F-\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "localhost:8080/api/v1/institution/transaction/userToInst",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"v1",
+												"institution",
+												"transaction",
+												"userToInst"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Event",
+					"item": [
+						{
+							"name": "New event 1",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 202\", function () {\r",
+											"  pm.response.to.have.status(202);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Event Created Successfuly!\", function () {\r",
+											"    pm.expect(pm.response.json().message).to.eql(\"Event Created Successfuly!\")\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{institution_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"title\": \"Blood donation 21th event\",\r\n    \"startDate\": \"05-01-2025\",\r\n    \"endDate\": \"07-01-2025\",\r\n    \"startWorkingHour\": \"02:33 AM\",\r\n    \"endWorkingHour\": \"02:35 AM\",\r\n    \"location\": \"Smouha, Alexandria, Egypt\",\r\n    \"longitude\": -17.333333,\r\n    \"latitude\": 30.1232\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/api/v1/institution/event",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"institution",
+										"event"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "New event 2",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 202\", function () {\r",
+											"  pm.response.to.have.status(202);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Event Created Successfuly!\", function () {\r",
+											"    pm.expect(pm.response.json().message).to.eql(\"Event Created Successfuly!\")\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{institution_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"title\": \"Blood donation 22th event\",\r\n    \"startDate\": \"08-01-2025\",\r\n    \"endDate\": \"10-01-2025\",\r\n    \"startWorkingHour\": \"09:30 AM\",\r\n    \"endWorkingHour\": \"10:00 PM\",\r\n    \"location\": \"El Hadara, Alexandria, Egypt\",\r\n    \"longitude\": -15.111,\r\n    \"latitude\": 14.1232\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/api/v1/institution/event",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"institution",
+										"event"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get instituion events",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 202\", function () {\r",
+											"  pm.response.to.have.status(202);\r",
+											"});\r",
+											"\r",
+											"let length = JSON.parse(responseBody).length;\r",
+											"\r",
+											"tests[\"list size is 2\"] = length === 2;"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{institution_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/api/v1/institution/events",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"institution",
+										"events"
+									]
+								}
+							},
+							"response": []
+						}
+					]
 				}
 			]
+		}
+	],
+	"variable": [
+		{
+			"key": "token",
+			"value": ""
+		},
+		{
+			"key": "institution_token",
+			"value": ""
 		}
 	]
 }
