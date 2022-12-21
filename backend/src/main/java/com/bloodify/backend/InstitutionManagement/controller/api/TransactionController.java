@@ -17,13 +17,13 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin()
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/institution/transaction")
 public class TransactionController {
 
     @Autowired
     private TransactionService transactionService;
 
-    @PostMapping("/institution/transaction/instToUser")
+    @PostMapping("/inst-to-user")
     public ResponseEntity<TransactionResponse> createInstToUserDon(@RequestBody InstToUserDonRequest donationRequest,
                                                                    Authentication auth) {
 
@@ -36,7 +36,7 @@ public class TransactionController {
 
     }
 
-    @PostMapping("/institution/transaction/userToUser")
+    @PostMapping("/user-to-user")
     public ResponseEntity<TransactionResponse> createUserToUserDon(@RequestBody UserToUserDonRequest donationRequest,
                                                                    Authentication auth) {
 
@@ -49,7 +49,7 @@ public class TransactionController {
 
     }
 
-    @PostMapping("/institution/transaction/userToInst")
+    @PostMapping("/user-to-inst")
     public ResponseEntity<TransactionResponse> createUserToInstDon(@RequestBody UserToInstDonRequest donationRequest,
                                                                    Authentication auth) {
         transactionService.applyUserToInstDonation(

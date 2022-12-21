@@ -26,7 +26,7 @@ class TransactionControllerTest {
      */
     @Test
     void instToUserDonEndpointExist() throws Exception {
-        mockMvc.perform(post("/api/v1/institution/transaction/instToUser").
+        mockMvc.perform(post("/api/v1/institution/transaction/inst-to-user").
                         contentType("application/json")).
                 andExpect(status().isBadRequest());
     }
@@ -37,7 +37,7 @@ class TransactionControllerTest {
      */
     @Test
     void userToUserDonEndpointExist() throws Exception {
-        mockMvc.perform(post("/api/v1/institution/transaction/userToUser").
+        mockMvc.perform(post("/api/v1/institution/transaction/user-to-user").
                         contentType("application/json")).
                 andExpect(status().isBadRequest());
     }
@@ -48,7 +48,7 @@ class TransactionControllerTest {
      */
     @Test
     void userToInstDonEndpointExist() throws Exception {
-        mockMvc.perform(post("/api/v1/institution/transaction/userToInst").
+        mockMvc.perform(post("/api/v1/institution/transaction/user-to-inst").
                         contentType("application/json")).
                 andExpect(status().isBadRequest());
     }
