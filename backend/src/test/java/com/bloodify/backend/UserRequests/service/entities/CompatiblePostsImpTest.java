@@ -55,7 +55,7 @@ class CompatiblePostsImpTest {
     static Double[] userLatitudes  = {31.210453, 31.213481, 31.199945, 31.217912};
     static Double[] instLong = {29.892540, 29.925540};
     static Double[] instLat = {31.197730, 31.207730};    // represents Andalusia Al Shalalat Hospital
-    static String[] bloodTypes = {"A+", "B-", "AB-", "B+"};
+    static String[] bloodTypes = {"A-", "B-", "AB-", "B+"};
     static User[] users = new User[4];
     static User universalDonor = new User();
     static Institution[] institution = new Institution[2];
@@ -77,7 +77,7 @@ class CompatiblePostsImpTest {
         }
 
 //        Inserting users for posts
-        String[] requestedBloodTypes = {"A+", "B-", "A+", "AB-", "A+", "O+", "B-", "AB-"};
+        String[] requestedBloodTypes = {"A-", "B-", "A-", "AB-", "A-", "O+", "B-", "AB-"};
         for(int i=0; i<8; i++) {
             usersForPosts[i] = new User();
             usersForPosts[i] = randomUser.generateRandomUser();
@@ -253,7 +253,7 @@ class CompatiblePostsImpTest {
     @Test
     @Order(4)
     void allPostsMatching1() {
-        User user = users[0];
+        User user = userDAO.findUserByEmailJoin(users[0].getEmail());
         int threshold = 3;
         List<Post> allPostsMatching = compatible.allPostsMatching(user, threshold);
         List<Post> expected = new ArrayList<>();

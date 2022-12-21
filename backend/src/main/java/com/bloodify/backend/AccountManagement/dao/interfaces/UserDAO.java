@@ -13,6 +13,8 @@ public interface UserDAO extends UserDetailsService{
 
     public User findUserByEmail(String email);
 
+    public User findUserByEmailJoin(String email);
+
     public User findUserByNationalID(String nationalID);
 
     public boolean isUsernameAndPasswordMatching(String email, String password);

@@ -6,6 +6,7 @@ import com.bloodify.backend.AccountManagement.model.authentication.UserAuthentic
 import com.bloodify.backend.AccountManagement.model.entities.User;
 
 import com.bloodify.backend.UserRequests.model.entities.Post;
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +44,16 @@ public class UserDAOImp implements UserDAO {
 
     public User findUserByEmail(String email) {
         List<User> foundUsers = userRepo.findByEmail(email);
+
+        if (foundUsers.isEmpty())
+            return null;
+        else
+            return foundUsers.get(0);
+    }
+
+    @Override
+    public User findUserByEmailJoin(String email) {
+        List<User> foundUsers = userRepo.findByEmailJoin(email);
 
         if (foundUsers.isEmpty())
             return null;

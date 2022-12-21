@@ -6,6 +6,7 @@ import com.bloodify.backend.UserRequests.model.entities.Post;
 import com.bloodify.backend.UserRequests.repository.interfaces.PostRepository;
 import com.bloodify.backend.UserRequests.service.interfaces.CompatiblePosts;
 import com.bloodify.backend.UserRequests.service.interfaces.PostDao;
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -19,8 +20,8 @@ import java.util.List;
 
 public class CompatiblePostsImp implements CompatiblePosts {
     @Autowired
-//    private PostDao postDAO;
-    PostRepository postRepository;
+    private PostDao postDAO;
+//    PostRepository postRepository;
 
 
     int distance(double lat1, double long1, double lat2, double long2) {
@@ -41,8 +42,8 @@ public class CompatiblePostsImp implements CompatiblePosts {
 
 //    @Bean
     List<Post> getAllPostsMatchingBloodType(String bloodType) {
-//        return this.postDAO.getAllBloodTypePosts(bloodType);
-        return this.postRepository.findAllByBloodType(bloodType);
+        return this.postDAO.getAllBloodTypePosts(bloodType);
+//        return this.postRepository.findAllByBloodType(bloodType);
     }
 
     boolean isPostMatchingUserDistance(User user, Post post, int threshold) {

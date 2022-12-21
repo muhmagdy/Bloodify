@@ -39,7 +39,7 @@ import java.util.List;
 @ToString
 public class User {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int userID;
 
     @NonNull
@@ -95,9 +95,10 @@ public class User {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
+    @ToString.Exclude
     private List<Post> posts;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Post acceptedPost;
 
 

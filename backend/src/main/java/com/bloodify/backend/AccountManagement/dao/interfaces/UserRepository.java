@@ -14,7 +14,12 @@ import java.util.List;
 
 @Repository("UserRepository")
 public interface UserRepository extends JpaRepository<User, Integer> {
+//    @Transactional
+//    @Query("SELECT u FROM user u WHERE email = :email")
     List<User> findByEmail(String email);
+
+    @Query("SELECT DISTINCT u FROM User u LEFT JOIN FETCH u.posts WHERE email = :email")
+    List<User> findByEmailJoin(@Param("email") String email);
 
     List<User> findByNationalID(String nationalID);
 
