@@ -28,7 +28,7 @@ class EventControllerTest {
      */
     @Test
     void createEventEndPointExist() throws Exception {
-        mockMvc.perform(post("/api/v1/institution/event/createEvent").
+        mockMvc.perform(post("/api/v1/institution/event").
                         contentType("application/json")).
                 andExpect(status().isBadRequest());
     }
