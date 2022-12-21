@@ -22,11 +22,11 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await CachHelper.init();
   String? token = CachHelper.getData(key: 'token');
-  var widget = BloodFinder();
-  // if (token != null)
-  //   widget = HomeLayout();
-  // else
-  //   widget = StartWidget();
+  var widget;
+  if (token != null)
+    widget = HomeLayout();
+  else
+    widget = StartWidget();
   Bloc.observer = MyBlocObserver();
   DioHelper.init();
   runApp(MyApp(
@@ -48,8 +48,6 @@ class MyApp extends StatelessWidget {
           BlocProvider(create: (context) => SignUpCubit()),
           BlocProvider(create: (context) => UserLoginCubit()),
           BlocProvider(create: (context) => InstitutionLoginCubit()),
-          // BlocProvider(create: (context) => BloodFinderCubit()),
-          // BlocProvider(create: (context) => UserRequestFormCubit()),
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
@@ -58,8 +56,5 @@ class MyApp extends StatelessWidget {
           themeMode: false ? ThemeMode.dark : ThemeMode.light,
           home: startWidget,
         ));
-    // return MaterialApp(
-    //   home: startWidget,
-    // );
   }
 }

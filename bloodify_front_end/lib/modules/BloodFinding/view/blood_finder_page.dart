@@ -1,6 +1,7 @@
 import 'package:bloodify_front_end/models/found_institution.dart';
 import 'package:bloodify_front_end/modules/BloodFinding/bloc/blood_finder_cubit.dart';
 import 'package:bloodify_front_end/modules/UserRequest_UI/view/user_request_page.dart';
+import 'package:bloodify_front_end/shared/Constatnt/Component.dart';
 import 'package:bloodify_front_end/shared/Constatnt/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -15,10 +16,19 @@ class BloodFinder extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
 
-    return BlocProvider(
-      create: (context) => BloodFinderCubit(),
-      child: _MainBloodFindingScreen(width: width),
-    );
+    return BlocProvider<BloodFinderCubit>(
+        create: (context) => BloodFinderCubit(),
+        child: BlocListener<BloodFinderCubit, BloodFinderState>(
+          listener: ((context, state) {
+            if (!state.isvalidForm) {
+              showToast(
+                  text: "No Blood Type was Picked!",
+                  color: Colors.black,
+                  time: 2);
+            }
+          }),
+          child: _MainBloodFindingScreen(width: width),
+        ));
   }
 }
 
@@ -91,12 +101,12 @@ class _SearchBar extends StatelessWidget {
     final cubit = context.watch<BloodFinderCubit>();
 
     void find() {
-      if (cubit.state.pickedBloodType == null) {
-        var errMsg = "No Blood Type was Picked!";
-        showError(context, errMsg);
-      } else {
-        cubit.findInstitutions();
-      }
+      // if (cubit.state.pickedBloodType == null) {
+      //   var errMsg = "No Blood Type was Picked!";
+      //   showError(context, errMsg);
+      // } else {
+      cubit.findInstitutions();
+      // }
     }
 
     void bloodTypeChanged(dynamic value) {

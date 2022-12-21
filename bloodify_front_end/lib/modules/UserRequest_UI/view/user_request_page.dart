@@ -1,6 +1,7 @@
 import 'package:bloodify_front_end/models/found_institution.dart';
 import 'package:bloodify_front_end/modules/UserRequest_UI/bloc/user_request_cubit.dart';
 import 'package:bloodify_front_end/modules/signUP_UI/sign_up_pages/Languages.dart';
+import 'package:bloodify_front_end/shared/Constatnt/Component.dart';
 import 'package:bloodify_front_end/shared/Constatnt/colors.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
@@ -19,9 +20,20 @@ class UserRequestForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
+    return BlocProvider<UserRequestFormCubit>(
       create: (context) => UserRequestFormCubit(),
-      child: _MainFormScreen(title: title),
+      child: BlocListener<UserRequestFormCubit, UserRequestFormState>(
+        listener: ((context, state) {
+          if (state.isCreatedSuccessfully) {
+            showToast(
+                text: "Post was created successfully",
+                color: Colors.black,
+                time: 2);
+            Navigator.pop(context);
+          }
+        }),
+        child: _MainFormScreen(title: title),
+      ),
     );
   }
 }
@@ -36,6 +48,8 @@ class _MainFormScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cubit = context.watch<UserRequestFormCubit>();
+
     return Scaffold(
         backgroundColor: Colors.white,
         resizeToAvoidBottomInset: false,
@@ -47,7 +61,9 @@ class _MainFormScreen extends StatelessWidget {
             style: TextStyle(color: Colors.white),
           ),
         ),
-        body: _UserRequestForm());
+        body: cubit.state.isLoading
+            ? AbsorbPointer(child: _UserRequestForm())
+            : _UserRequestForm());
   }
 }
 

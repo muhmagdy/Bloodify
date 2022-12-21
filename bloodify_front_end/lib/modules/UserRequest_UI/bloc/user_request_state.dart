@@ -7,7 +7,7 @@ class UserRequestFormState extends Equatable {
   final DateTime? expiryDate;
   late List<InstitutionBrief> institutions;
   final InstitutionBrief? pickedInstitution;
-  bool isLoading;
+  bool isLoading, isCreatedSuccessfully;
 
   UserRequestFormState._(
       {this.bloodTypes = const [
@@ -25,15 +25,19 @@ class UserRequestFormState extends Equatable {
       this.expiryDate,
       this.institutions = const <InstitutionBrief>[],
       this.pickedInstitution,
-      this.isLoading = false});
+      this.isLoading = false,
+      this.isCreatedSuccessfully = false});
 
   UserRequestFormState.initial() : this._();
 
-  UserRequestFormState.institutionsLoadInProgress() : this._(isLoading: true);
+  UserRequestFormState.loading() : this._(isLoading: true);
 
   UserRequestFormState.institutionsLoadSuccess(
       {required List<InstitutionBrief> institutions})
       : this._(institutions: institutions);
+
+  UserRequestFormState.createdSuccessfully()
+      : this._(isCreatedSuccessfully: true);
 
   UserRequestFormState copyWith(
       {List<String>? bloodTypes,
@@ -42,7 +46,8 @@ class UserRequestFormState extends Equatable {
       DateTime? expiryDate,
       List<InstitutionBrief>? institutions,
       InstitutionBrief? pickedInstitution,
-      bool? isLoading}) {
+      bool? isLoading,
+      bool? isCreatedSuccessfully}) {
     return UserRequestFormState._(
         bloodTypes: bloodTypes ?? this.bloodTypes,
         pickedBloodType: pickedBloodType ?? this.pickedBloodType,
@@ -50,7 +55,9 @@ class UserRequestFormState extends Equatable {
         expiryDate: expiryDate ?? this.expiryDate,
         institutions: institutions ?? this.institutions,
         pickedInstitution: pickedInstitution ?? this.pickedInstitution,
-        isLoading: isLoading ?? this.isLoading);
+        isLoading: isLoading ?? this.isLoading,
+        isCreatedSuccessfully:
+            isCreatedSuccessfully ?? this.isCreatedSuccessfully);
   }
 
   @override
@@ -61,6 +68,7 @@ class UserRequestFormState extends Equatable {
         expiryDate,
         institutions,
         pickedInstitution,
-        isLoading
+        isLoading,
+        isCreatedSuccessfully
       ];
 }

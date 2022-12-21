@@ -1,6 +1,9 @@
+import 'dart:ffi';
 import 'dart:io';
 
+import 'package:bloodify_front_end/models/BloodRequest.dart';
 import 'package:bloodify_front_end/models/found_institution.dart';
+import 'package:bloodify_front_end/modules/UserRequest_UI/user_request.dart';
 import 'package:bloodify_front_end/shared/Constatnt/Component.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
@@ -21,11 +24,6 @@ class UserRequestFormCubit extends Cubit<UserRequestFormState> {
 
   static UserRequestFormCubit get(context) => BlocProvider.of(context);
 
-  // void onUserRequestFormLoaded(
-  //   UserRequestFormLoaded event,
-  //   Emitter<UserRequestFormState> emit,
-  // ) {}
-
   void changeBloodType(String bloodType) {
     emit(state.copyWith(pickedBloodType: bloodType));
   }
@@ -42,7 +40,7 @@ class UserRequestFormCubit extends Cubit<UserRequestFormState> {
     if (state.institutions.isEmpty) {
       try {
         var currState = state.copyWith();
-        emit(UserRequestFormState.institutionsLoadInProgress().copyWith(
+        emit(UserRequestFormState.loading().copyWith(
             pickedBloodType: currState.pickedBloodType,
             expiryDate: currState.expiryDate,
             bloodBagsCount: currState.bloodBagsCount));
@@ -62,6 +60,7 @@ class UserRequestFormCubit extends Cubit<UserRequestFormState> {
     }
   }
 
+  //TODO api call
   Future<List<InstitutionBrief>> getInstitutions() async {
     return await Future.delayed(
         Duration(seconds: 5),
@@ -95,9 +94,40 @@ class UserRequestFormCubit extends Cubit<UserRequestFormState> {
         state.pickedInstitution != null;
   }
 
-  void submit() {
+  Future<void> submit() async {
     print("sending post...");
     print(state);
-    //TODO get user location
+
+    BloodRequest bloodRequest = BloodRequest(
+        institutionID: state.pickedInstitution!.institutionID,
+        LastUpdateTime: DateTime.now(),
+        expiryTime: state.expiryDate,
+        requiredBags: state.bloodBagsCount.toInt(),
+        bloodType: state.pickedBloodType);
+
+    var currState = state.copyWith();
+    emit(UserRequestFormState.loading().copyWith(
+        pickedBloodType: currState.pickedBloodType,
+        pickedInstitution: currState.pickedInstitution,
+        bloodBagsCount: currState.bloodBagsCount,
+        expiryDate: currState.expiryDate!.isAfter(DateTime.now())
+            ? currState.expiryDate
+            : null));
+
+    bool success = await createRequest(bloodRequest);
+
+    if (success) {
+      print("good");
+      emit(UserRequestFormState.createdSuccessfully());
+    } else {
+      showToast(
+          text: "Error while createing the post", color: Colors.black, time: 2);
+      emit(currState.copyWith());
+    }
   }
+}
+
+//TODO api call
+createRequest(BloodRequest bloodRequest) {
+  return true;
 }
