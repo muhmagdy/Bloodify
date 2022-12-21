@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -83,7 +84,7 @@ public class User {
     private String password = "";
 
     @Column(name= "status")
-    private int status;
+    private Integer status;
 
     @Column()
     Double latitude;

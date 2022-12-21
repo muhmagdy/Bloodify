@@ -34,7 +34,7 @@ public class UserHomePageService {
     // Check if has current post -> 1
     // Check if has accepted requests -> 2
     // Otherwise -> 0
-    public int getUserStatus(String email, Double longitude, Double latitude, Double threshold){
+    public Integer getUserStatus(String email, Double longitude, Double latitude, Double threshold){
         User user = userDAO.findUserByEmail(email);
         if(postDao.getUserAllPosts(email).size() > 0)
             return 1;
@@ -54,7 +54,7 @@ public class UserHomePageService {
             Double distance = compatiblePosts.distance(latitude, longitude, inst.getLatitude(), inst.getLongitude());
             if(distance > threshold)
                 continue;
-            postBriefs.add(postToPostBrief(post, requester, distance));
+            postBriefs.add(postToPostBrief(post, requester, inst, distance));
         }
         return postBriefs;
     }
@@ -99,7 +99,7 @@ public class UserHomePageService {
             User requester = post.getUser();
             Institution inst = post.getInstitution();
             Double distance = compatiblePosts.distance(latitude, longitude, inst.getLatitude(), inst.getLongitude());
-            postBriefs.add(postToPostBrief(post, requester, distance));
+            postBriefs.add(postToPostBrief(post, requester, inst, distance));
         }
         return postBriefs;
     }
@@ -120,7 +120,8 @@ public class UserHomePageService {
         List<PostBrief> postBriefs = new ArrayList<>();
         for(Post post: posts){
             User user = post.getUser();
-            postBriefs.add(postToPostBrief(post, user, 0.0));
+            Institution institution = post.getInstitution();
+            postBriefs.add(postToPostBrief(post, user, institution ,0.0));
         }
         return postBriefs;
     }
@@ -150,8 +151,8 @@ public class UserHomePageService {
                                 , user.getBloodType(), distance);
     }
 
-    PostBrief postToPostBrief(Post post, User user, Double distance){
+    PostBrief postToPostBrief(Post post, User user, Institution inst, Double distance){
         return new PostBrief(post.getPostID(), user.getNationalID(), user.getFirstName()+" "+user.getLastName(),
-                post.getStartTime(), post.getBagsNum(), post.getBloodType(), distance);
+                post.getStartTime(), post.getBagsNum(), post.getBloodType(), distance, inst.getName());
     }
 }

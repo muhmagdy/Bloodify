@@ -15,4 +15,5 @@ public class PostBrief {
     int count;
     String bloodType;
     Double distance;
+    String hospitalName;
 }

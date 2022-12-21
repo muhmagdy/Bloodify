@@ -35,37 +35,45 @@ public class UserHomepage_Controller {
     UserHomePageService homePageService;
 
     @GetMapping("/status")
-    public int getUserStatus(Authentication auth){
+    public Integer getUserStatus(Authentication auth){
         return homePageService.getUserStatus(auth.getName(), 0.0, 0.0, 1000.0);
     }
 
     //  Status = 0
     @GetMapping("/posts/compatible")
-    public List<PostBrief> getCompatiblePosts(Authentication auth, @RequestBody AcceptPostRequest acceptPostRequest){
+    public List<PostBrief> getCompatiblePosts(Authentication auth,
+                                              @RequestParam Double longitude,
+                                              @RequestParam Double latitude,
+                                              @RequestParam Double threshold){
         return homePageService.getCompatiblePosts(
-                auth.getName(), acceptPostRequest.getLongitude(),
-                acceptPostRequest.getLatitude(), acceptPostRequest.getThreshold());
+                auth.getName(), longitude,
+                latitude, threshold);
     }
 
     //  Status = 1
     @GetMapping("/posts/requester")
-    public List<PostBrief> getRequesterPosts(Authentication auth, @RequestBody AcceptPostRequest acceptPostRequest) {
+    public List<PostBrief> getRequesterPosts(Authentication auth, @RequestParam Double longitude,
+                                             @RequestParam Double latitude,
+                                             @RequestParam Double threshold) {
         return homePageService.getPostsCreatedByUser(auth.getName());
     }
 
     //  Status = 1
     // return from new repo
     @GetMapping("/post/donors")
-    public List<UserBrief> getAcceptedDonors(@RequestBody int id, Authentication auth) throws Exception {
+    public List<UserBrief> getAcceptedDonors(@RequestParam int id, Authentication auth) throws Exception {
         return homePageService.getDonorsOfPost(auth.getName(), id);
     }
 
     //  Status = 2
     // inside post
     @GetMapping("/post/requester")
-    public UserBrief getRequestingUserInfo(Authentication auth, @RequestBody AcceptPostRequest acceptPostRequest) {
-        return homePageService.getPostRequester(acceptPostRequest.getId(), acceptPostRequest.getLongitude(),
-                acceptPostRequest.getLatitude(), acceptPostRequest.getThreshold());
+    public UserBrief getRequestingUserInfo(Authentication auth, @RequestParam int id,
+                                           @RequestParam Double longitude,
+                                           @RequestParam Double latitude,
+                                           @RequestParam Double threshold) {
+        return homePageService.getPostRequester(id, longitude,
+                latitude, threshold);
     }
 
     @PostMapping("/post/accept")
@@ -82,11 +90,13 @@ public class UserHomepage_Controller {
     }
 
 //      Status = 2
-    @GetMapping("/post/current")
-    public List<PostBrief> getRequestInfo(Authentication auth, @RequestBody AcceptPostRequest acceptPostRequest) {
+    @GetMapping("/posts/current")
+    public List<PostBrief> getRequestInfo(Authentication auth, @RequestParam Double longitude,
+                                          @RequestParam Double latitude,
+                                          @RequestParam Double threshold) {
         return homePageService.getPostsAcceptedByUser(
-                auth.getName(), acceptPostRequest.getLongitude(),
-                acceptPostRequest.getLatitude(), acceptPostRequest.getThreshold());
+                auth.getName(), longitude,
+                latitude, threshold);
     }
 
 

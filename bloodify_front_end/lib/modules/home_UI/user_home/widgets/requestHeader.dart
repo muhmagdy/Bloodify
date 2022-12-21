@@ -1,3 +1,4 @@
+import 'package:bloodify_front_end/models/postBrief.dart';
 import 'package:bloodify_front_end/models/request.dart';
 import 'package:bloodify_front_end/shared/Constatnt/colors.dart';
 import 'package:flutter/cupertino.dart';
@@ -6,16 +7,23 @@ import 'package:flutter/material.dart';
 import '../../../../shared/Constatnt/fonts.dart';
 
 class RequestHeader extends StatelessWidget {
-  final BloodRequest request;
+  final PostBrief request;
   const RequestHeader(this.request, {super.key});
 
   @override
   Widget build(BuildContext context) {
+    final String title;
+    if (request.state == 0)
+      title = "";
+    else if (request.state == 1)
+      title = "You have a current request";
+    else
+      title = "You have accepted a request";
     final String bloodBag;
-    if (request.nBags > 1) {
-      bloodBag = "${request.nBags} Blood Bags";
+    if (request.count > 1) {
+      bloodBag = "${request.count} Blood Bags";
     } else {
-      bloodBag = "${request.nBags} Blood Bag";
+      bloodBag = "${request.count} Blood Bag";
     }
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
@@ -35,9 +43,7 @@ class RequestHeader extends StatelessWidget {
             alignment: Alignment.centerLeft,
             margin: EdgeInsets.only(bottom: .005 * height),
             child: Text(
-              request.isDonor
-                  ? 'You have accepted a request'
-                  : 'You have a current request',
+              title,
               style: SafeGoogleFont(
                 'Poppins',
                 fontSize: 0.02 * height,
@@ -54,7 +60,7 @@ class RequestHeader extends StatelessWidget {
               // crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  request.location,
+                  request.hospitalName,
                   textScaleFactor: MediaQuery.textScaleFactorOf(context),
                   style: SafeGoogleFont(
                     'Poppins',
@@ -99,7 +105,8 @@ class RequestHeader extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    request.dateTime.toLocal().toString(),
+                    "",
+                    // request.dateTime.toLocal().toString(),
                     style: SafeGoogleFont(
                       'Poppins',
                       fontSize: 0.025 * height,
