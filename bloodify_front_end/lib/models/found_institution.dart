@@ -83,6 +83,13 @@ class InstitutionBrief extends Equatable {
       required this.name,
       required this.location});
 
+  static InstitutionBrief fromJson(Map<String, dynamic> json) {
+    return InstitutionBrief(
+        institutionID: json["id"],
+        name: json["name"],
+        location: json["location"]);
+  }
+
   @override
   String toString() {
     return '$name, $location';

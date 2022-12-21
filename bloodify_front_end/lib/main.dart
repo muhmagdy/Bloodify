@@ -22,7 +22,7 @@ import 'modules/signUP_UI/sign_up_State_management/sign_up_cubit.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await CachHelper.init();
-  token = CachHelper.getData(key: 'token');
+  // UserInfo.token = CachHelper.getData(key: 'token');
   var widget = BloodFinder();
   // if (token != null)
   //   widget = HomeLayout();

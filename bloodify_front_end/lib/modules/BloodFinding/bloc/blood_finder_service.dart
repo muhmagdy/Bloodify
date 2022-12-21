@@ -13,13 +13,11 @@ Future<List<FoundInstitutionWithDistance>> find_Institutions(
 }
 
 Future<List<FoundInstitution>> searchInstitutions(String? bloodType) async {
-  String url = "user/blood/search";
-  Response response = await DioHelper.getData(
-      url: url, query: Map<String, dynamic>.of({"bloodType": bloodType}));
+  String url = "user/blood/search/$bloodType";
+  Response response = await DioHelper.getData(url: url, query: {});
 
   if (response.statusCode == 200) {
-    List<dynamic> body = jsonDecode(response.data);
-    return List.from(body.map((e) => FoundInstitution.fromJson(e)));
+    return List.from(response.data.map((e) => FoundInstitution.fromJson(e)));
   } else {
     throw Exception("Error Occured");
   }

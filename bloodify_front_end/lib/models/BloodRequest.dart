@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 class BloodRequest {
   final postID;
   final int? institutionID;
@@ -13,4 +15,17 @@ class BloodRequest {
       this.expiryTime,
       this.requiredBags,
       this.bloodType});
+
+  var dateFormat = new DateFormat("yyyy-MM-ddThh:mm:ss");
+
+  Map<String, dynamic> toJson() {
+    return Map.of({
+      "postID": postID,
+      "institutionID": institutionID,
+      "LastUpdateTime": dateFormat.format(LastUpdateTime!),
+      "expiryTime": dateFormat.format(expiryTime!),
+      "requiredBags": requiredBags,
+      "bloodType": bloodType
+    });
+  }
 }
