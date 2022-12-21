@@ -49,7 +49,7 @@ class EventModelMapperTest {
         when(institutionDAO.findInstitutionByEmail(dto.getInstitutionEmail()))
                 .thenReturn(new Institution());
 
-        String shortString = randomizer.generateName(0, 4);
+        String shortString = randomizer.generateName(0, 1);
 
         when(dto.getTitle())
                 .thenReturn(shortString);
@@ -65,7 +65,7 @@ class EventModelMapperTest {
         when(institutionDAO.findInstitutionByEmail(dto.getInstitutionEmail()))
                 .thenReturn(new Institution());
 
-        String longString = randomizer.generateName(31, 50);
+        String longString = randomizer.generateName(101, 120);
 
         when(dto.getTitle())
                 .thenReturn(longString);
@@ -82,7 +82,7 @@ class EventModelMapperTest {
         when(institutionDAO.findInstitutionByEmail(dto.getInstitutionEmail()))
                 .thenReturn(new Institution());
 
-        String correctTitle = randomizer.generateName(5, 30);
+        String correctTitle = randomizer.generateName(2, 100);
 
         when(dto.getTitle())
                 .thenReturn(correctTitle);
@@ -104,7 +104,7 @@ class EventModelMapperTest {
         when(institutionDAO.findInstitutionByEmail(dto.getInstitutionEmail()))
                 .thenReturn(new Institution());
 
-        String correctTitle = randomizer.generateName(5, 30);
+        String correctTitle = randomizer.generateName(2, 100);
 
         when(dto.getTitle())
                 .thenReturn(correctTitle);
@@ -130,7 +130,7 @@ class EventModelMapperTest {
         when(institutionDAO.findInstitutionByEmail(dto.getInstitutionEmail()))
                 .thenReturn(new Institution());
 
-        String correctTitle = randomizer.generateName(5, 30);
+        String correctTitle = randomizer.generateName(2, 100);
 
         when(dto.getTitle())
                 .thenReturn(correctTitle);
@@ -159,7 +159,7 @@ class EventModelMapperTest {
         when(institutionDAO.findInstitutionByEmail(dto.getInstitutionEmail()))
                 .thenReturn(new Institution());
 
-        String correctTitle = randomizer.generateName(5, 30);
+        String correctTitle = randomizer.generateName(2, 100);
 
         when(dto.getTitle())
                 .thenReturn(correctTitle);
@@ -192,7 +192,7 @@ class EventModelMapperTest {
         when(institutionDAO.findInstitutionByEmail(dto.getInstitutionEmail()))
                 .thenReturn(new Institution());
 
-        String correctTitle = randomizer.generateName(5, 30);
+        String correctTitle = randomizer.generateName(2, 100);
 
         when(dto.getTitle())
                 .thenReturn(correctTitle);
@@ -231,7 +231,7 @@ class EventModelMapperTest {
         when(institutionDAO.findInstitutionByEmail(dto.getInstitutionEmail()))
                 .thenReturn(new Institution());
 
-        String correctTitle = randomizer.generateName(5, 30);
+        String correctTitle = randomizer.generateName(2, 100);
 
         when(dto.getTitle())
                 .thenReturn(correctTitle);
@@ -248,7 +248,7 @@ class EventModelMapperTest {
         when(dto.getEndWorkingHour())
                 .thenReturn(LocalTime.now());
 
-        String longLocation = randomizer.generateName(51, 80);
+        String longLocation = randomizer.generateName(201, 220);
 
         when(dto.getLocation())
                 .thenReturn(longLocation);
@@ -269,7 +269,7 @@ class EventModelMapperTest {
         when(institutionDAO.findInstitutionByEmail(dto.getInstitutionEmail()))
                 .thenReturn(new Institution());
 
-        String correctTitle = randomizer.generateName(5, 30);
+        String correctTitle = randomizer.generateName(2, 100);
 
         when(dto.getTitle())
                 .thenReturn(correctTitle);
@@ -286,7 +286,7 @@ class EventModelMapperTest {
         when(dto.getEndWorkingHour())
                 .thenReturn(LocalTime.now());
 
-        String correctLocation = randomizer.generateName(5, 50);
+        String correctLocation = randomizer.generateName(5, 200);
 
         when(dto.getLocation())
                 .thenReturn(correctLocation);
@@ -311,7 +311,7 @@ class EventModelMapperTest {
         when(institutionDAO.findInstitutionByEmail(dto.getInstitutionEmail()))
                 .thenReturn(new Institution());
 
-        String correctTitle = randomizer.generateName(5, 30);
+        String correctTitle = randomizer.generateName(2, 100);
 
         when(dto.getTitle())
                 .thenReturn(correctTitle);
@@ -328,7 +328,7 @@ class EventModelMapperTest {
         when(dto.getEndWorkingHour())
                 .thenReturn(LocalTime.now());
 
-        String correctLocation = randomizer.generateName(5, 50);
+        String correctLocation = randomizer.generateName(5, 200);
 
         when(dto.getLocation())
                 .thenReturn(correctLocation);
@@ -350,7 +350,7 @@ class EventModelMapperTest {
         when(institutionDAO.findInstitutionByEmail(dto.getInstitutionEmail()))
                 .thenReturn(new Institution());
 
-        String correctTitle = randomizer.generateName(5, 30);
+        String correctTitle = randomizer.generateName(2, 100);
 
         when(dto.getTitle())
                 .thenReturn(correctTitle);
@@ -367,7 +367,7 @@ class EventModelMapperTest {
         when(dto.getEndWorkingHour())
                 .thenReturn(LocalTime.now());
 
-        String correctLocation = randomizer.generateName(5, 50);
+        String correctLocation = randomizer.generateName(5, 200);
 
         when(dto.getLocation())
                 .thenReturn(correctLocation);

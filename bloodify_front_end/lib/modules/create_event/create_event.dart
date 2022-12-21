@@ -4,6 +4,8 @@ import 'package:bloodify_front_end/modules/create_event/create_event_cubit/creat
 import 'package:bloodify_front_end/modules/create_event/create_event_cubit/create_event_states.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
+
 import 'package:open_street_map_search_and_pick/open_street_map_search_and_pick.dart';
 
 import '../../shared/Constatnt/Component.dart';
@@ -36,7 +38,21 @@ class CreateEvent extends StatelessWidget {
     CreateEventCubit cubit = CreateEventCubit.get(context);
 
     return BlocConsumer<CreateEventCubit, CreateEventStates>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        if (state is CreateEventSuccessState) {
+          if (state.eventCreationReponse.state!) {
+            showToast(
+                text: state.eventCreationReponse.message!,
+                color: Colors.green,
+                time: 1000);
+          } else {
+            showToast(
+                text: state.eventCreationReponse.message!,
+                color: Colors.red,
+                time: 1000);
+          }
+        }
+      },
       builder: (context, state) {
         return SingleChildScrollView(
           child: Form(
@@ -59,7 +75,12 @@ class CreateEvent extends StatelessWidget {
                     ),
                     DefaultInputText(
                         controller: titleController,
-                        validate: (val) {},
+                        validate: (String val) {
+                          if (val.isEmpty) {
+                            return "cann't be empty";
+                          }
+                          return null;
+                        },
                         labelText: "Event title"),
                     const SizedBox(
                       height: 20,
@@ -174,6 +195,7 @@ class CreateEvent extends StatelessWidget {
                               },
                               onTap: () {
                                 DateTime now = DateTime.now();
+                                var time;
                                 showTimePicker(
                                   context: context,
                                   initialTime: TimeOfDay(
@@ -181,8 +203,15 @@ class CreateEvent extends StatelessWidget {
                                 ).then((value) => {
                                       if (value != null)
                                         {
+                                          time = DateTime(
+                                              now.year,
+                                              now.month,
+                                              now.day,
+                                              value.hour,
+                                              value.minute),
                                           startWorking.text =
-                                              value.format(context)
+                                              DateFormat('hh:mm aa')
+                                                  .format(time),
                                         }
                                     });
                               },
@@ -225,6 +254,8 @@ class CreateEvent extends StatelessWidget {
                               },
                               onTap: () {
                                 DateTime now = DateTime.now();
+                                var time;
+
                                 showTimePicker(
                                   context: context,
                                   initialTime: TimeOfDay(
@@ -232,8 +263,15 @@ class CreateEvent extends StatelessWidget {
                                 ).then((value) => {
                                       if (value != null)
                                         {
+                                          time = DateTime(
+                                              now.year,
+                                              now.month,
+                                              now.day,
+                                              value.hour,
+                                              value.minute),
                                           endWorking.text =
-                                              value.format(context)
+                                              DateFormat('hh:mm aa')
+                                                  .format(time),
                                         }
                                     });
                               },
@@ -306,7 +344,15 @@ class CreateEvent extends StatelessWidget {
                     ),
                     DefaultButton(
                         onClick: () {
-                          if (formKey.currentState!.validate()) {}
+                          if (formKey.currentState!.validate()) {
+                            cubit.createEvent(
+                              title: titleController.text,
+                              fromDate: fromDate.text,
+                              toDate: toDate.text,
+                              startWorking: startWorking.text,
+                              endWorking: endWorking.text,
+                            );
+                          }
                         },
                         text: "Create Event",
                         merginLeft: 0.0,

@@ -25,8 +25,8 @@ public class EventModelMapper {
         event.setTitle(eventDTO.getTitle());
 
         if (event.getTitle() == null
-                || event.getTitle().length() < 5
-                || event.getTitle().length() > 30)
+                || event.getTitle().length() < 2
+                || event.getTitle().length() > 100)
             throw new InvalidTitle();
 
         event.setStartDate(eventDTO.getStartDate());
@@ -53,7 +53,7 @@ public class EventModelMapper {
 
         if(event.getLocation() == null
                 || event.getLocation().length() < 5
-                || event.getLocation().length() > 50)
+                || event.getLocation().length() > 200)
             throw new InvalidLocation();
 
         event.setLongitude(eventDTO.getLongitude());

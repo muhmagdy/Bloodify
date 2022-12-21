@@ -26,7 +26,7 @@ public class Event {
     private Institution institution;
 
     @Column(nullable = false)
-    @Size(min = 5, max = 30)
+    @Size(min = 2, max = 100)
     private String title;
 
     @Column(nullable = false)
@@ -42,13 +42,13 @@ public class Event {
     private LocalTime endWorkingHour;
 
     @Column(nullable = false)
-    @Size(min = 5, max = 50)
+    @Size(min = 5, max = 200)
     private String location;
 
-    @Column(nullable = false, precision = 8, scale = 6)
+    @Column(nullable = false, precision = 20, scale = 12)
     private BigDecimal longitude;
 
-    @Column(nullable = false, precision = 8, scale = 6)
+    @Column(nullable = false, precision = 20, scale = 12)
     private BigDecimal latitude;
 
 }
