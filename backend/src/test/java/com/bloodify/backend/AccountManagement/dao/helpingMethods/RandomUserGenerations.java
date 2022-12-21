@@ -1,5 +1,6 @@
 package com.bloodify.backend.AccountManagement.dao.helpingMethods;
 
+import com.bloodify.backend.AccountManagement.model.entities.Institution;
 import com.bloodify.backend.AccountManagement.model.entities.User;
 
 import java.time.LocalDate;
@@ -108,6 +109,13 @@ public class RandomUserGenerations {
         return new User(generateName(5, 10), generateName(5, 10), generateNationalID(),
                 generateEmail(10, 30), "A+", generateDiseases(),
                 generateDate(1980, 2022), generatePassword(15));
+    }
+
+    public Institution generateRandomInstitution() {
+        return new Institution(
+                generateEmail(10,30), generateName(5, 10), generatePassword(20),
+                generateName(5,20), (int)(Math.random()*10)
+        );
     }
 
 

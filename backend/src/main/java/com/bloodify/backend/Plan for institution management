@@ -1,0 +1,29 @@
+Institution requests (each one is separate):
+1- Current requests for the institution
+2- Previous requests for the institution
+3- Current events made by institution
+-------------------------------------------
+1- Current requests for the institution:
+how to? Query on the post entity, return all posts by institution = this institution
+called function: List<Post> result =
+                 postDao.getInstitutionAllPosts(institutionDAO.findInstitutionByID(institutionID))
+status: ready.
+
+2- Previous requests for the institution
+how to? Create multi-valued attribute in Institution entity, called: previousPosts, type: List<Post>
+        Query to get all posts related to one institution, where institutionID = this id.
+called function:
+
+
+
+
+Tests we want to make:
+
+CompatiblePosts interface --> allPostsMatching , test the overall of the 3 criteria (or just from the impl class)
+
+
+
+
+
+
+

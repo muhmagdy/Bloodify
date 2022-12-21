@@ -5,6 +5,8 @@ import com.bloodify.backend.AccountManagement.dao.interfaces.UserRepository;
 import com.bloodify.backend.AccountManagement.model.authentication.UserAuthentication;
 import com.bloodify.backend.AccountManagement.model.entities.User;
 
+import com.bloodify.backend.UserRequests.model.entities.Post;
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +51,17 @@ public class UserDAOImp implements UserDAO {
             return foundUsers.get(0);
     }
 
+    @Override
+    public User findUserByEmailJoin(String email) {
+//        List<User> foundUsers = userRepo.findByEmailJoin(email);
+//
+//        if (foundUsers.isEmpty())
+//            return null;
+//        else
+//            return foundUsers.get(0);
+        return null;
+    }
+
     public User findUserByNationalID(String nationalID) {
         List<User> foundUsers = userRepo.findByNationalID(nationalID);
 
@@ -72,6 +85,37 @@ public class UserDAOImp implements UserDAO {
     }
 
     @Override
+    public List<User> getUsersByStatus(int status) {
+        return userRepo.findByStatus(status);
+    }
+
+    @Override
+    public List<User> getUsersByStatusAndDiseases(int status, boolean hasDisease) {
+        return userRepo.findByStatusAndHasDiseases(status, hasDisease);
+    }
+
+    @Override
+    public List<User> getDonorsByPostId(int postID) {
+//        return userRepo.findDonorsByPostId(postID);
+        return null;
+    }
+
+    @Override
+    public List<User> findByBloodTypeIn(List<String> bloodTypes) {
+        return this.userRepo.findByBloodTypeIn(bloodTypes);
+    }
+
+    @Override
+    public void updateStatus(int userID, int userStatus) {
+        this.userRepo.updateUserStatus(userID, userStatus);
+    }
+
+    @Override
+    public void updateLongitudeAndLatitude(int userID, Double longitude, Double latitude) {
+        this.userRepo.updateLongitudeAndLatitude(userID, longitude, latitude);
+    }
+
+    @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         log.info(username + " user");
         User user = this.findUserByEmail(username);
@@ -81,6 +125,13 @@ public class UserDAOImp implements UserDAO {
         UserAuthentication userAuth = new UserAuthentication(user);
         return userAuth;
         // return new User("foo", "foo", List.of());
+    }
+
+    @Override
+    public Post findAcceptedPostByAcceptor (User user) {
+        String acceptorEmail = user.getEmail();
+//        return userRepo.findAcceptedPostByAcceptorEmail(acceptorEmail);
+        return null;
     }
 
 
