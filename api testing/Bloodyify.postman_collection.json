@@ -1700,6 +1700,7 @@
 										},
 										"url": {
 											"raw": "localhost:8080/api/v1/institution/transaction/inst-to-user",
+
 											"host": [
 												"localhost"
 											],
@@ -1710,6 +1711,7 @@
 												"institution",
 												"transaction",
 												"inst-to-user"
+
 											]
 										}
 									},
@@ -1758,6 +1760,7 @@
 										},
 										"url": {
 											"raw": "localhost:8080/api/v1/institution/transaction/inst-to-user",
+
 											"host": [
 												"localhost"
 											],
@@ -1768,6 +1771,7 @@
 												"institution",
 												"transaction",
 												"inst-to-user"
+
 											]
 										}
 									},
@@ -1816,6 +1820,7 @@
 										},
 										"url": {
 											"raw": "localhost:8080/api/v1/institution/transaction/inst-to-user",
+
 											"host": [
 												"localhost"
 											],
@@ -1874,6 +1879,7 @@
 										},
 										"url": {
 											"raw": "localhost:8080/api/v1/institution/transaction/inst-to-user",
+
 											"host": [
 												"localhost"
 											],
@@ -1932,6 +1938,7 @@
 										},
 										"url": {
 											"raw": "localhost:8080/api/v1/institution/transaction/inst-to-user",
+
 											"host": [
 												"localhost"
 											],
@@ -1942,6 +1949,7 @@
 												"institution",
 												"transaction",
 												"inst-to-user"
+												"instToUser"
 											]
 										}
 									},
@@ -1995,6 +2003,7 @@
 										},
 										"url": {
 											"raw": "localhost:8080/api/v1/institution/transaction/user-to-inst",
+
 											"host": [
 												"localhost"
 											],
@@ -2053,6 +2062,7 @@
 										},
 										"url": {
 											"raw": "localhost:8080/api/v1/institution/transaction/user-to-inst",
+
 											"host": [
 												"localhost"
 											],
@@ -2120,7 +2130,7 @@
 												"v1",
 												"institution",
 												"transaction",
-												"user-to-inst"
+											"user-to-inst"
 											]
 										}
 									},
