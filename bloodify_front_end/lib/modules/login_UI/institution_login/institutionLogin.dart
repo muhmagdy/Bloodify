@@ -8,7 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../shared/Constatnt/Component.dart';
 import '../../../shared/Constatnt/sharedFunctions.dart';
-import '../../../shared/Constatnt/user_info.dart';
+import '../../../shared/Constatnt/userInfo.dart';
 import '../../../shared/network/local/cach_helper.dart';
 import '../shareable_login.dart';
 import 'cubit/institution_login_cubit.dart';

@@ -14,7 +14,7 @@ import 'layout/home_layout.dart';
 import 'modules/login_UI/User_login/cubit/user_login_cubit.dart';
 import 'modules/login_UI/institution_login/cubit/institution_login_cubit.dart';
 import 'modules/signUP_UI/sign_up_State_management/sign_up_cubit.dart';
-import 'shared/Constatnt/user_info.dart';
+import 'shared/Constatnt/userInfo.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
