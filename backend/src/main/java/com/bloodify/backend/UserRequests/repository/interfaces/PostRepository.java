@@ -52,6 +52,6 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
             "req_bags_number = :req_bags, expiry_at = :expiry_at, created_at = :created_at WHERE postID = :id", nativeQuery = true)
     void updatePostSet(@Param("institutionID") int institutionID, @Param("req_bags") int req_bags,
                        @Param("bloodType") String bloodType, @Param("id") int postID,
-                       @Param("expiry_at") LocalDateTime lastUpdateTime, @Param("created_at") LocalDateTime expiryTime);
+                       @Param("created_at") LocalDateTime lastUpdateTime, @Param("expiry_at") LocalDateTime expiryTime);
 
 }

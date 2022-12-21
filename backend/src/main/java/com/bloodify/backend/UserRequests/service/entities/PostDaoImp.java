@@ -55,7 +55,7 @@ public class PostDaoImp implements PostDao {
     @Override
     public boolean updatePost(Post post){
         this.postRepository.updatePostSet(post.getInstitution().getInstitutionID(), post.getBagsNum(),
-                post.getBloodType(), post.getPostID(), post.getLastTime(), post.getStartTime());
+                post.getBloodType(), post.getPostID(), post.getStartTime(), post.getLastTime());
         return true;
     }
 

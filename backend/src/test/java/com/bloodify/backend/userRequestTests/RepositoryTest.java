@@ -168,7 +168,7 @@ public class RepositoryTest {
         this.instDao.saveInstitution(institution1); this.instDao.saveInstitution(institution2);
         this.postRepository.save(post1); this.postRepository.save(post2);
         this.postRepository.updatePostSet(institution2.getInstitutionID(), 5, "O-", post1.getPostID(),
-                LocalDateTime.now(), LocalDateTime.now());
+                LocalDateTime.now(), LocalDateTime.now().plusDays(3));
         post1 = this.postRepository.findPostByUserAndInstitutionAndBloodType(user1, institution2, "O-");
         assertNotNull(post1);
         assertEquals(post1.getBloodType(), "O-");
