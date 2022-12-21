@@ -54,6 +54,14 @@ public class InstitutionDAOImp implements InstitutionDAO {
             return foundInstitutions.get(0);
     }
 
+    public Institution findInstitutionByID(int ID){
+        List<Institution> foundInstitutions = instRepo.findByInstitutionID(ID);
+        if (foundInstitutions.isEmpty())
+            return null;
+        else
+            return foundInstitutions.get(0);
+    }
+
     public List<Institution> haveBloodPackets(String bloodType, int quantity) {
         return switch (bloodType) {
             case "A+" -> instRepo.haveBloodPacketsPositiveA(quantity);

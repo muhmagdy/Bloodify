@@ -12,6 +12,7 @@ public interface InstitutionDAO extends UserDetailsService{
 
     public Institution findInstitutionByEmail(String email);
 
+    public Institution findInstitutionByID(int ID);
     public List<Institution> haveBloodPackets(String bloodType, int quantity);
 
     int getBagsCount(String email, String bloodType);
