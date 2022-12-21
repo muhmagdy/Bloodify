@@ -16,12 +16,12 @@ import java.util.List;
 
 @RestController
 @CrossOrigin()
-@RequestMapping("/api/v1/institution/event")
+@RequestMapping("/api/v1/institution")
 public class EventController {
     @Autowired
     EventService eventService;
 
-    @PostMapping("/createEvent")
+    @PostMapping("/event")
     public ResponseEntity<EventResponse> createEvent(@RequestBody EventRequest eventRequest, Authentication auth) {
         int eventId = eventService.createEvent(new EventDTOMapper().mapToDTO(eventRequest,
                 auth.getName()));
@@ -30,7 +30,7 @@ public class EventController {
                 .body(new EventResponse(true, "Event Created Successfuly!", eventId));
     }
 
-    @GetMapping("/getEvents")
+    @GetMapping("/events")
     public ResponseEntity<List<Event>> getEvents(Authentication auth) {
         List<Event> events = eventService.getAllInstEvents(auth.getName());
 

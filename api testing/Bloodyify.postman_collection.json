@@ -2167,7 +2167,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"title\": \"Blood donation 21th event\",\r\n    \"startDate\": \"05-01-2023\",\r\n    \"endDate\": \"07-01-2022\",\r\n    \"startWorkingHour\": \"02:33 AM\",\r\n    \"endWorkingHour\": \"02:35 AM\",\r\n    \"location\": \"Smouha, Alexandria, Egypt\",\r\n    \"longitude\": -17.333333,\r\n    \"latitude\": 30.1232\r\n}",
+									"raw": "{\r\n    \"title\": \"Blood donation 21th event\",\r\n    \"startDate\": \"05-01-2025\",\r\n    \"endDate\": \"07-01-2025\",\r\n    \"startWorkingHour\": \"02:33 AM\",\r\n    \"endWorkingHour\": \"02:35 AM\",\r\n    \"location\": \"Smouha, Alexandria, Egypt\",\r\n    \"longitude\": -17.333333,\r\n    \"latitude\": 30.1232\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -2175,7 +2175,7 @@
 									}
 								},
 								"url": {
-									"raw": "localhost:8080/api/v1/institution/event/createEvent",
+									"raw": "localhost:8080/api/v1/institution/event",
 									"host": [
 										"localhost"
 									],
@@ -2184,8 +2184,7 @@
 										"api",
 										"v1",
 										"institution",
-										"event",
-										"createEvent"
+										"event"
 									]
 								}
 							},
@@ -2225,7 +2224,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"title\": \"Blood donation 21th event\",\r\n    \"startDate\": \"08-01-2023\",\r\n    \"endDate\": \"10-01-2023\",\r\n    \"startWorkingHour\": \"09:30 AM\",\r\n    \"endWorkingHour\": \"10:00 PM\",\r\n    \"location\": \"El Hadara, Alexandria, Egypt\",\r\n    \"longitude\": -15.111,\r\n    \"latitude\": 14.1232\r\n}",
+									"raw": "{\r\n    \"title\": \"Blood donation 22th event\",\r\n    \"startDate\": \"08-01-2025\",\r\n    \"endDate\": \"10-01-2025\",\r\n    \"startWorkingHour\": \"09:30 AM\",\r\n    \"endWorkingHour\": \"10:00 PM\",\r\n    \"location\": \"El Hadara, Alexandria, Egypt\",\r\n    \"longitude\": -15.111,\r\n    \"latitude\": 14.1232\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -2233,7 +2232,7 @@
 									}
 								},
 								"url": {
-									"raw": "localhost:8080/api/v1/institution/event/createEvent",
+									"raw": "localhost:8080/api/v1/institution/event",
 									"host": [
 										"localhost"
 									],
@@ -2242,8 +2241,7 @@
 										"api",
 										"v1",
 										"institution",
-										"event",
-										"createEvent"
+										"event"
 									]
 								}
 							},
@@ -2282,7 +2280,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "localhost:8080/api/v1/institution/event/getEvents",
+									"raw": "localhost:8080/api/v1/institution/events",
 									"host": [
 										"localhost"
 									],
@@ -2291,8 +2289,7 @@
 										"api",
 										"v1",
 										"institution",
-										"event",
-										"getEvents"
+										"events"
 									]
 								}
 							},
