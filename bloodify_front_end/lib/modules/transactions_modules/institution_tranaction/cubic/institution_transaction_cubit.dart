@@ -54,16 +54,17 @@ class InstituteTransactionCubit extends Cubit<InstituteTransactionStates> {
               emit(InstituteTransactionInstituteToUserSuccess(response!))
             })
         .catchError((error) {
-      print(error.response);
-      print(error.response.statusCode);
+      // print(error.response);
+      // print(error.response.statusCode);
       if (error.response.statusCode == 406) {
-        print(error.response);
+        // print(error.response);
         response = TransactionResponse.fromJson(error.response.data);
 
         emit(InstituteTransactionInstituteToUserSuccess(response!));
+      } else {
+        // print(onError.toString());
+        emit(InstituteTransactionInstituteToUserError(onError.toString()));
       }
-      print(onError.toString());
-      emit(InstituteTransactionInstituteToUserError(onError.toString()));
     });
   }
 
@@ -85,7 +86,9 @@ class InstituteTransactionCubit extends Cubit<InstituteTransactionStates> {
         emit(InstituteTransactionInstituteToUserSuccess(response!));
       }
       // print(error.toString());
-      InstituteTransactionUserToInstituteError(error.toString());
+      else {
+        emit(InstituteTransactionUserToInstituteError(error.toString()));
+      }
     });
   }
 }
