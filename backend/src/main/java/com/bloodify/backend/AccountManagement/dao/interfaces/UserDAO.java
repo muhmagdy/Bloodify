@@ -17,4 +17,12 @@ public interface UserDAO extends UserDetailsService{
     public boolean isUsernameAndPasswordMatching(String email, String password);
 
     public List<User> getUsersByBloodType(String bloodType);
+
+    public List<User> getUsersByStatus(int status);
+
+    public List<User> findByBloodTypeIn(List<String> bloodTypes);
+
+    public void updateStatus(int userID, int userStatus);
+
+    public void updateLongitudeAndLatitude(int userID, Double longitude, Double latitude);
 }
