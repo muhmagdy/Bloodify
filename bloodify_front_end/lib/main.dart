@@ -22,12 +22,12 @@ import 'modules/signUP_UI/sign_up_State_management/sign_up_cubit.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await CachHelper.init();
-  // UserInfo.token = CachHelper.getData(key: 'token');
-  var widget = BloodFinder();
-  // if (token != null)
-  //   widget = HomeLayout();
-  // else
-  //   widget = StartWidget();
+  token = CachHelper.getData(key: 'token');
+  var widget;
+  if (token != null)
+    widget = HomeLayout();
+  else
+    widget = StartWidget();
   Bloc.observer = MyBlocObserver();
   DioHelper.init();
   runApp(MyApp(
