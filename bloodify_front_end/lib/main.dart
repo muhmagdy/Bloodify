@@ -23,7 +23,6 @@ import 'modules/signUP_UI/sign_up_State_management/sign_up_cubit.dart';
 import 'modules/transactions_modules/institution_tranaction/cubic/institution_transaction_cubit.dart';
 import 'shared/Constatnt/userInfo.dart';
 
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await CachHelper.init();
@@ -31,7 +30,7 @@ void main() async {
   var widget;
   if (token != null) {
     isUser = CachHelper.getData(key: 'isUser');
-    widget = const HomeLayout();
+    widget = HomeLayout();
   } else {
     widget = const StartWidget();
   }
@@ -61,9 +60,8 @@ class MyApp extends StatelessWidget {
           BlocProvider(create: (context) => InstitutionLoginCubit()),
           BlocProvider(create: (context) => PostTransactionCubit()),
           BlocProvider(create: (context) => EventTransactionCubit()),
-          BlocProvider(create: (context) => InstituteTransactionCubit())
+          BlocProvider(create: (context) => InstituteTransactionCubit()),
           BlocProvider(create: (context) => CreateEventCubit()),
-
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,

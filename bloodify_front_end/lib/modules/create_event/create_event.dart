@@ -73,7 +73,7 @@ class CreateEvent extends StatelessWidget {
                     const SizedBox(
                       height: 20,
                     ),
-                    DefaultInputText(
+                    defaultInputText(
                         controller: titleController,
                         validate: (String val) {
                           if (val.isEmpty) {
@@ -342,7 +342,7 @@ class CreateEvent extends StatelessWidget {
                     const SizedBox(
                       height: 20,
                     ),
-                    DefaultButton(
+                    defaultButton(
                         onClick: () {
                           if (formKey.currentState!.validate()) {
                             cubit.createEvent(
