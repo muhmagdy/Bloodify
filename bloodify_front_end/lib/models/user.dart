@@ -1,4 +1,4 @@
-import 'dart:convert';
+// ignore_for_file: non_constant_identifier_names
 
 class UserData {
   late String fName;
@@ -8,7 +8,7 @@ class UserData {
   late String password;
   DateTime dOB = DateTime(
       DateTime.now().year - 20, DateTime.now().month, DateTime.now().day);
-  DateTime? last_donated_time = null;
+  DateTime? last_donated_time;
   bool isPatient = false;
   String bloodType = 'A+';
   late String token;
@@ -27,10 +27,10 @@ class UserData {
     token = json['token'];
   }
   UserData() {
-    DateTime dOB = DateTime(
+    dOB = DateTime(
         DateTime.now().year - 20, DateTime.now().month, DateTime.now().day);
-    bool isPatient = false;
-    String bloodType = 'A+';
+    isPatient = false;
+    bloodType = 'A+';
   }
 }
 // data: {

@@ -1,3 +1,4 @@
+// ignore: file_names
 abstract class Language {
   String showInvalidPassword();
   String showInvalidPasswordConfirm();
@@ -31,13 +32,21 @@ class EnglishLanguage extends Language {
     'back': "Back",
     'submit': "Submit"
   };
+  @override
   String showInvalidPassword() =>
       "Password MUST include uppercase letters,\nlowercase letters, digits, and _";
+  @override
   String showInvalidPasswordConfirm() => "Non Matching Passwords";
+  @override
   String showInvalidValue(value) => "Invalid ${dictionary[value]}";
+  @override
   String enterPassword() => "Password should be of > 7 characters";
-  String enterValue(value) => "Enter Your  ${dictionary[value]}";
+  @override
+  String enterValue(value) => "${dictionary[value]} musn't be embty  ";
+  @override
   String getLabel(abbrev) => '${dictionary[abbrev]}';
+  @override
   String showIncorrectDOB() => 'Not Correct Date of Birth';
+  @override
   String showIncorrectLDT() => 'Not Correct Last Donated Time';
 }
