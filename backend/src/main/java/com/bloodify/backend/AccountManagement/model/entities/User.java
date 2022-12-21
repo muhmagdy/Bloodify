@@ -2,6 +2,8 @@ package com.bloodify.backend.AccountManagement.model.entities;
 
 import com.bloodify.backend.UserRequests.model.entities.Post;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
@@ -90,16 +92,17 @@ public class User {
     Double longitude;
 
 
-    @OneToMany(
-            mappedBy = "user",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
-    )
-    @ToString.Exclude
-    private List<Post> posts;
+//    @OneToMany(
+//            mappedBy = "user",
+//            cascade = CascadeType.ALL,
+//            orphanRemoval = true
+//    )
+//    @ToString.Exclude
+//    private List<Post> posts;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    private Post acceptedPost;
+//    @ManyToOne(fetch = FetchType.EAGER)
+//
+//    private Post acceptedPost;
 
 
     public User(String firstName, String lastName, String nationalID, String email, String bloodType,
@@ -112,7 +115,7 @@ public class User {
         this.hasDiseases = hasDiseases;
         this.lastTimeDonated = lastTimeDonated;
         this.password = password;
-        this.posts = new ArrayList<>();
+//        this.posts = new ArrayList<>();
     }
 
 }

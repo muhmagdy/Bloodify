@@ -6,6 +6,10 @@ import com.bloodify.backend.AccountManagement.model.entities.User;
 import com.bloodify.backend.UserRequests.controller.request.entity.PostRequest;
 import com.bloodify.backend.UserRequests.controller.request.entity.PostResponse;
 import com.bloodify.backend.UserRequests.model.entities.Post;
+import com.bloodify.backend.UserRequests.model.response.PostBrief;
+import com.bloodify.backend.UserRequests.model.response.UserBrief;
+import com.bloodify.backend.UserRequests.repository.interfaces.AcceptRepository;
+import com.bloodify.backend.UserRequests.service.UserHomePageService;
 import com.bloodify.backend.UserRequests.service.entities.CompatiblePostsImp;
 import com.bloodify.backend.UserRequests.service.interfaces.CompatiblePosts;
 import com.bloodify.backend.UserRequests.service.interfaces.PostDao;
@@ -16,6 +20,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -24,57 +29,46 @@ import java.util.List;
 @RequestMapping("/api/v1/user")
 
 public class UserHomepage_Controller {
-//    @Autowired
-    @Resource(name = "userDAOImp")
-    UserDAO userDAO;
-    @Resource(name = "postDaoImp")
-    PostDao postDao;
     @Autowired
-    CompatiblePostsImp compatiblePosts;
+    UserHomePageService homePageService;
 
     @GetMapping("/status")
     public int getUserStatus(Authentication auth){
-        User user = userDAO.findUserByEmail(auth.getName());
-        return user.getStatus();
+        return homePageService.getUserStatus(auth.getName(), 0.0, 0.0, 1000.0);
     }
 
     //  Status = 0
     @GetMapping("/posts/compatible")
-    public List<Post> getCompatiblePosts(Authentication auth){
-        System.out.println(auth.getName());
-        User user = userDAO.findUserByEmail(auth.getName());
-        List<Post> result = compatiblePosts.allPostsMatching(user, 3);
-        for(Post p: result)
-            System.out.println(p.toString());
-        return result;
+    public List<PostBrief> getCompatiblePosts(Authentication auth){
+        return homePageService.getCompatiblePosts(auth.getName(), 0.0, 0.0, 1000.0);
     }
 
     //  Status = 1
     @GetMapping("/posts/requester")
-    public List<Post> getRequesterPosts(Authentication auth) {
-        return postDao.getUserAllPosts(auth.getName());
+    public List<PostBrief> getRequesterPosts(Authentication auth) {
+        return homePageService.getCompatiblePosts(auth.getName(), 0.0, 0.0, 1000.0);
     }
 
     //  Status = 1
+    // return from new repo
     @GetMapping("/donors")
-    public List<User> getPossibleDonors(Authentication auth) {
-        User user = userDAO.findUserByEmail(auth.getName());
-        return postDao.findAcceptingUsersByRequester(user);
+    public List<UserBrief> getAcceptedDonors(@RequestBody int id, Authentication auth) throws Exception {
+        return homePageService.getDonorsOfPost(auth.getName(), id);
     }
 
     //  Status = 2
+    // inside post
     @GetMapping("/requester")
-    public User getRequestingUserInfo(Authentication auth) {
-        User user = userDAO.findUserByEmail(auth.getName());
-        return userDAO.findAcceptedPostByAcceptor(user).getUser();
+    public UserBrief getRequestingUserInfo(Authentication auth, @RequestBody int id) {
+        return homePageService.getPostRequester(id, 0.0, 0.0, 1000.0);
     }
 
     //  Status = 2
-    @GetMapping("/post/current")
-    public Post getRequestInfo(Authentication auth) {
-        User user = userDAO.findUserByEmail(auth.getName());
-        return userDAO.findAcceptedPostByAcceptor(user);
-    }
+    // return posts from new repo
+//    @GetMapping("/post/current")
+//    public List<PostBrief> getRequestInfo(Authentication auth) {
+//        return homePageService.
+//    }
 
 
 }

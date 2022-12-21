@@ -25,6 +25,8 @@ public interface UserDAO extends UserDetailsService{
 
     public List<User> getUsersByStatusAndDiseases(int status, boolean hasDisease);
 
+    public List<User> getDonorsByPostId(int postID);
+
     public List<User> findByBloodTypeIn(List<String> bloodTypes);
 
     public void updateStatus(int userID, int userStatus);

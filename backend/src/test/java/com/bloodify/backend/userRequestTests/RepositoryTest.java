@@ -107,7 +107,7 @@ public class RepositoryTest {
         this.instDao.saveInstitution(institution1); this.instDao.saveInstitution(institution2);
         this.postRepository.save(post1); this.postRepository.save(post2);
 
-        Post got = this.postRepository.findAllByBloodType("A+").get(0);
+        Post got = this.postRepository.findByBloodType("A+").get(0);
 
         assertNotNull(got);
         assertEquals(got.getInstitution().getInstitutionID(), post1.getInstitution().getInstitutionID());

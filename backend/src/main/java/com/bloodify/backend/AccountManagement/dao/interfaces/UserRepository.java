@@ -18,8 +18,8 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 //    @Query("SELECT u FROM user u WHERE email = :email")
     List<User> findByEmail(String email);
 
-    @Query("SELECT DISTINCT u FROM User u LEFT JOIN FETCH u.posts WHERE email = :email")
-    List<User> findByEmailJoin(@Param("email") String email);
+//    @Query("SELECT DISTINCT u FROM User u LEFT JOIN FETCH u.posts WHERE email = :email")
+//    List<User> findByEmailJoin(@Param("email") String email);
 
     List<User> findByNationalID(String nationalID);
 
@@ -31,9 +31,11 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     List<User> findByStatusAndHasDiseases(int status, boolean hasDisease);
 
-    @Query("SELECT u.id FROM User u where u.email = :email")
-    Post findAcceptedPostByAcceptorEmail(@Param("email") String acceptorEmail);
-
+//    @Query("SELECT u.acceptedPost FROM User u where u.email = :email")
+//    Post findAcceptedPostByAcceptorEmail(@Param("email") String acceptorEmail);
+//
+//    @Query("SELECT u FROM User u WHERE u.acceptedPost.postID = :post_id")
+//    List<User> findDonorsByPostId(@Param("post_id") int post_id);
 
     @Transactional
     @Modifying

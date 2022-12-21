@@ -18,13 +18,13 @@ import java.util.List;
 @Service
 @Slf4j
 
-public class CompatiblePostsImp implements CompatiblePosts {
-    @Autowired
-    private PostDao postDAO;
+public class CompatiblePostsImp implements CompatiblePosts{
+//    @Autowired
+//    private PostDao postDAO;
 //    PostRepository postRepository;
 
 
-    int distance(double lat1, double long1, double lat2, double long2) {
+    public Double distance(Double lat1, Double long1, Double lat2, Double long2) {
 //      Radius of the earth
         final int R = 6371;
 
@@ -37,16 +37,16 @@ public class CompatiblePostsImp implements CompatiblePosts {
 
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
-        return (int)Math.round(R * c);
+        return R * c/1000;
     }
 
-//    @Bean
-    List<Post> getAllPostsMatchingBloodType(String bloodType) {
-        return this.postDAO.getAllBloodTypePosts(bloodType);
-//        return this.postRepository.findAllByBloodType(bloodType);
-    }
+////    @Bean
+//    List<Post> getAllPostsMatchingBloodType(String bloodType) {
+//        return this.postDAO.getAllBloodTypePosts(bloodType);
+////        return this.postRepository.findAllByBloodType(bloodType);
+//    }
 
-    boolean isPostMatchingUserDistance(User user, Post post, int threshold) {
+    public boolean isPostMatchingUserDistance(User user, Post post, int threshold) {
         double longUser = user.getLongitude();
         double latUser = user.getLatitude();
 
@@ -57,15 +57,15 @@ public class CompatiblePostsImp implements CompatiblePosts {
         return distance(latUser, longUser, latInst, longInst) <= threshold;
     }
 
-    public List<Post> allPostsMatching (User user, int threshold) {
-        String bloodType = user.getBloodType();
-        List<Post> matchingBloodType = getAllPostsMatchingBloodType(bloodType);
-        List<Post> compatiblePosts = new ArrayList<>();
-        for(Post p: matchingBloodType) {
-            if(isPostMatchingUserDistance(user, p, threshold))
-                compatiblePosts.add(p);
-        }
-        return compatiblePosts;
-    }
+//    public List<Post> allPostsMatching (User user, int threshold) {
+//        String bloodType = user.getBloodType();
+//        List<Post> matchingBloodType = getAllPostsMatchingBloodType(bloodType);
+//        List<Post> compatiblePosts = new ArrayList<>();
+//        for(Post p: matchingBloodType) {
+//            if(isPostMatchingUserDistance(user, p, threshold))
+//                compatiblePosts.add(p);
+//        }
+//        return compatiblePosts;
+//    }
 
 }

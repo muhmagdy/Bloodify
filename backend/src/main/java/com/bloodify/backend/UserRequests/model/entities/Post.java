@@ -3,12 +3,14 @@ package com.bloodify.backend.UserRequests.model.entities;
 
 import com.bloodify.backend.AccountManagement.model.entities.Institution;
 import com.bloodify.backend.AccountManagement.model.entities.User;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
+import lombok.ToString;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -33,10 +35,14 @@ public class Post {
 
     @NonNull
     @ManyToOne(fetch = FetchType.EAGER)
+//    @JsonBackReference
+    @ToString.Exclude
     User user;
 
     @NonNull
     @ManyToOne(fetch = FetchType.EAGER)
+    @ToString.Exclude
+//            @JsonBackReference
     Institution institution;
 
 //    @NonNull
@@ -59,12 +65,12 @@ public class Post {
     String bloodType;
 
 
-    @OneToMany(
-            mappedBy = "acceptedPost",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
-    )
-    private List<User> acceptingUsers;
+//    @OneToMany(
+//            mappedBy = "acceptedPost",
+//            cascade = CascadeType.ALL,
+//            orphanRemoval = true
+//    )
+//    private List<User> acceptingUsers;
 
     public Post(@NonNull User user, @NonNull Institution institution,
                 @NonNull int bagsNum, @NonNull LocalDateTime startTime, @NonNull String bloodType) {
@@ -73,7 +79,7 @@ public class Post {
         this.bagsNum = bagsNum;
         this.startTime = startTime;
         this.bloodType = bloodType;
-        acceptingUsers = new ArrayList<>();
+//        acceptingUsers = new ArrayList<>();
     }
 
     public Post(int postID, @NonNull User user, @NonNull Institution institution, @NonNull int bagsNum,
@@ -84,13 +90,13 @@ public class Post {
         this.bagsNum = bagsNum;
         this.startTime = startTime;
         this.bloodType = bloodType;
-        acceptingUsers = new ArrayList<>();
+//        acceptingUsers = new ArrayList<>();
     }
 
     public Post(@NonNull User user, @NonNull Institution institution, @NonNull String bloodType) {
         this.user = user;
         this.institution = institution;
         this.bloodType = bloodType;
-        acceptingUsers = new ArrayList<>();
+//        acceptingUsers = new ArrayList<>();
     }
 }

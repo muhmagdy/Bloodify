@@ -53,12 +53,13 @@ public class UserDAOImp implements UserDAO {
 
     @Override
     public User findUserByEmailJoin(String email) {
-        List<User> foundUsers = userRepo.findByEmailJoin(email);
-
-        if (foundUsers.isEmpty())
-            return null;
-        else
-            return foundUsers.get(0);
+//        List<User> foundUsers = userRepo.findByEmailJoin(email);
+//
+//        if (foundUsers.isEmpty())
+//            return null;
+//        else
+//            return foundUsers.get(0);
+        return null;
     }
 
     public User findUserByNationalID(String nationalID) {
@@ -94,6 +95,12 @@ public class UserDAOImp implements UserDAO {
     }
 
     @Override
+    public List<User> getDonorsByPostId(int postID) {
+//        return userRepo.findDonorsByPostId(postID);
+        return null;
+    }
+
+    @Override
     public List<User> findByBloodTypeIn(List<String> bloodTypes) {
         return this.userRepo.findByBloodTypeIn(bloodTypes);
     }
@@ -123,7 +130,8 @@ public class UserDAOImp implements UserDAO {
     @Override
     public Post findAcceptedPostByAcceptor (User user) {
         String acceptorEmail = user.getEmail();
-        return userRepo.findAcceptedPostByAcceptorEmail(acceptorEmail);
+//        return userRepo.findAcceptedPostByAcceptorEmail(acceptorEmail);
+        return null;
     }
 
 

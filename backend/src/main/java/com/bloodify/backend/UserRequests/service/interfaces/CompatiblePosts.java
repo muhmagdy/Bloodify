@@ -6,5 +6,6 @@ import com.bloodify.backend.UserRequests.model.entities.Post;
 import java.util.List;
 
 public interface CompatiblePosts {
-    public List<Post> allPostsMatching (User user, int threshold);
+    public Double distance(Double lat1, Double long1, Double lat2, Double long2);
+    public boolean isPostMatchingUserDistance(User user, Post post, int threshold);
 }

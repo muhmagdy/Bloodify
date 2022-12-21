@@ -1,9 +1,11 @@
 package com.bloodify.backend.AccountManagement.model.entities;
 
 import com.bloodify.backend.UserRequests.model.entities.Post;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -136,17 +138,21 @@ public class Institution {
     @Column(name = "count_On")
     Integer negativeO_bagsCount;
 
-    @OneToMany(
-            mappedBy = "institution",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true)
-    List<Post> posts;
-
-    @OneToMany(
-            mappedBy = "institution",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true)
-    List<Post> history;
+//    @OneToMany(
+//            mappedBy = "institution",
+//            cascade = CascadeType.ALL,
+//            orphanRemoval = true)
+//    @ToString.Exclude
+////            @JsonManagedReference
+//    List<Post> posts;
+//
+//    @OneToMany(
+//            mappedBy = "institution",
+//            cascade = CascadeType.ALL,
+//            orphanRemoval = true)
+//    @ToString.Exclude
+////    @JsonManagedReference
+//    List<Post> history;
 
     public Institution (String email, String name, String password, String location, int workingHours) {
         this.email = email;
@@ -162,8 +168,8 @@ public class Institution {
         this.positiveB_bagsCount = 0;
         this.positiveAB_bagsCount = 0;
         this.positiveO_bagsCount = 0;
-        this.posts = new ArrayList<>();
-        this.history = new ArrayList<>();
+//        this.posts = new ArrayList<>();
+//        this.history = new ArrayList<>();
     }
 
     public Institution(String email, String password, String location, int workingHours) {
@@ -179,7 +185,7 @@ public class Institution {
         this.positiveB_bagsCount = 0;
         this.positiveAB_bagsCount = 0;
         this.positiveO_bagsCount = 0;
-        this.history = new ArrayList<>();
+//        this.history = new ArrayList<>();
     }
 
     public Institution (String name, String email, String locationEnglish, float locationLatitude, float locationLongitude, String password)
@@ -188,7 +194,7 @@ public class Institution {
         this.email = email;
         this.location = locationEnglish;
         this.password = password;
-        this.history = new ArrayList<>();
+//        this.history = new ArrayList<>();
     }
 
 }
