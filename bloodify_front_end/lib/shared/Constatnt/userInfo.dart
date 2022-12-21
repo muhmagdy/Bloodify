@@ -1,3 +1,2 @@
 String? token;
-
 bool? isUser;

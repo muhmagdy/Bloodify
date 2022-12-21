@@ -4,15 +4,17 @@ import 'package:bloodify_front_end/shared/Constatnt/userInfo.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 
+import '../../Constatnt/userInfo.dart';
+
 class DioHelper {
   static Dio? dio;
 
   static init() {
     dio = Dio(
       BaseOptions(
-        baseUrl: 'http://192.168.1.7:8080/api/v1/',
         // baseUrl:
         // "https://7722b390-519c-4d05-810f-90091b05282c.mock.pstmn.io/api/v1/",
+        baseUrl: 'http://192.168.1.5:8080/api/v1/',
         receiveDataWhenStatusError: true,
         headers: {
           'Content-Type': 'application/json',
@@ -62,7 +64,7 @@ class DioHelper {
       dio!.options.headers = {
         'Content-Type': 'application/json',
         'lang': lang,
-        'Authorization': "Bearer ${token}",
+        'Authorization': "Bearer $token",
       };
     }
     print(dio!.options.headers);
@@ -78,7 +80,7 @@ class DioHelper {
     required email,
     required password,
   }) async {
-    var auth = 'Basic ' + base64Encode(utf8.encode('$email:$password'));
+    var auth = 'Basic ${base64Encode(utf8.encode('$email:$password'))}';
     print(auth);
     dio!.options.headers = {
       'authorization': auth,

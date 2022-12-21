@@ -2,6 +2,7 @@ package com.bloodify.backend.AccountManagement.model.entities;
 
 import com.bloodify.backend.UserRequests.model.entities.Post;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,7 +13,6 @@ import java.util.List;
 @Table
 @Data
 @NoArgsConstructor
-
 @NamedNativeQuery(
         name = "Institution.findByEmail",
         query = "SELECT * FROM institution WHERE email = ?",
@@ -147,15 +147,6 @@ public class Institution {
         this.password = password;
         this.location = location;
         this.workingHours = workingHours;
-        this.negativeA_bagsCount = 0;
-        this.negativeB_bagsCount = 0;
-        this.negativeAB_bagsCount = 0;
-        this.negativeO_bagsCount = 0;
-        this.positiveA_bagsCount = 0;
-        this.positiveB_bagsCount = 0;
-        this.positiveAB_bagsCount = 0;
-        this.positiveO_bagsCount = 0;
-        this.posts = new ArrayList<>();
     }
 
     public Institution(String email, String password, String location, int workingHours) {
@@ -163,14 +154,6 @@ public class Institution {
         this.password = password;
         this.location = location;
         this.workingHours = workingHours;
-        this.negativeA_bagsCount = 0;
-        this.negativeB_bagsCount = 0;
-        this.negativeAB_bagsCount = 0;
-        this.negativeO_bagsCount = 0;
-        this.positiveA_bagsCount = 0;
-        this.positiveB_bagsCount = 0;
-        this.positiveAB_bagsCount = 0;
-        this.positiveO_bagsCount = 0;
     }
 
     public Institution(int institutionID, String email, String name, String location, Double latitude, Double longitude, Integer workingHours, String password, Integer positiveA_bagsCount, Integer positiveB_bagsCount, Integer positiveAB_bagsCount, Integer positiveO_bagsCount, Integer negativeA_bagsCount, Integer negativeB_bagsCount, Integer negativeAB_bagsCount, Integer negativeO_bagsCount) {
@@ -200,4 +183,26 @@ public class Institution {
         this.password = password;
     }
 
+
+    public Institution(String email, String name, String location, Double latitude, Double longitude,
+                       Integer workingHours, String password, Integer positiveA_bagsCount,
+                       Integer positiveB_bagsCount, Integer positiveAB_bagsCount, Integer positiveO_bagsCount,
+                       Integer negativeA_bagsCount, Integer negativeB_bagsCount, Integer negativeAB_bagsCount,
+                       Integer negativeO_bagsCount) {
+        this.email = email;
+        this.name = name;
+        this.location = location;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.workingHours = workingHours;
+        this.password = password;
+        this.positiveA_bagsCount = positiveA_bagsCount;
+        this.positiveB_bagsCount = positiveB_bagsCount;
+        this.positiveAB_bagsCount = positiveAB_bagsCount;
+        this.positiveO_bagsCount = positiveO_bagsCount;
+        this.negativeA_bagsCount = negativeA_bagsCount;
+        this.negativeB_bagsCount = negativeB_bagsCount;
+        this.negativeAB_bagsCount = negativeAB_bagsCount;
+        this.negativeO_bagsCount = negativeO_bagsCount;
+    }
 }

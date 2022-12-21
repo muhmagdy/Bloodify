@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 part of 'sign_up_cubit.dart';
 
 @immutable
@@ -63,4 +65,5 @@ class SiqnUpApiError extends SignUpStates {
   SiqnUpApiError(this.error);
 }
 
+// ignore: camel_case_types
 class lastDonated extends SignUpStates {}

@@ -4,15 +4,15 @@ import com.bloodify.backend.AccountManagement.dao.interfaces.UserDAO;
 import com.bloodify.backend.AccountManagement.dao.interfaces.UserRepository;
 import com.bloodify.backend.AccountManagement.model.authentication.UserAuthentication;
 import com.bloodify.backend.AccountManagement.model.entities.User;
-
 import lombok.extern.slf4j.Slf4j;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.lang.NonNull;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -67,6 +67,18 @@ public class UserDAOImp implements UserDAO {
         return false;
     }
 
+    public int updateLastTimeDonatedByNationalID(@NonNull LocalDate lastTimeDonated, String nationalID) {
+        return this.userRepo.updateLastTimeDonatedByNationalID(lastTimeDonated, nationalID);
+    }
+
+    @Override
+    public int updateLastTimeDonatedAndBloodTypeByNationalID(LocalDate lastTimeDonated,
+                                                             String bloodType,
+                                                             String nationalID) {
+        return this.userRepo.updateLastTimeDonatedAndBloodTypeByNationalID(lastTimeDonated,
+                        bloodType, nationalID);
+    }
+
     public List<User> getUsersByBloodType(String bloodType) {
         return userRepo.findByBloodType(bloodType);
     }
@@ -95,13 +107,12 @@ public class UserDAOImp implements UserDAO {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         log.info(username + " user");
         User user = this.findUserByEmail(username);
-        if(user == null)    throw new UsernameNotFoundException(username + " not found");
+        if (user == null) throw new UsernameNotFoundException(username + " not found");
         log.info(user.getEmail());
         // if(!username.equals("foo")) throw new UsernameNotFoundException(username + " not found");
         UserAuthentication userAuth = new UserAuthentication(user);
         return userAuth;
         // return new User("foo", "foo", List.of());
     }
-
 
 }
