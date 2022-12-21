@@ -84,6 +84,26 @@ public class UserDAOImp implements UserDAO {
     }
 
     @Override
+    public List<User> getUsersByStatus(int status) {
+        return userRepo.findByStatus(status);
+    }
+
+    @Override
+    public List<User> findByBloodTypeIn(List<String> bloodTypes) {
+        return this.userRepo.findByBloodTypeIn(bloodTypes);
+    }
+
+    @Override
+    public void updateStatus(int userID, int userStatus) {
+        this.userRepo.updateUserStatus(userID, userStatus);
+    }
+
+    @Override
+    public void updateLongitudeAndLatitude(int userID, Double longitude, Double latitude) {
+        this.userRepo.updateLongitudeAndLatitude(userID, longitude, latitude);
+    }
+
+    @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         log.info(username + " user");
         User user = this.findUserByEmail(username);

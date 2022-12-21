@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:bloodify_front_end/shared/Constatnt/userInfo.dart';
 import 'package:dio/dio.dart';
 
 import '../../Constatnt/userInfo.dart';
@@ -10,6 +11,8 @@ class DioHelper {
   static init() {
     dio = Dio(
       BaseOptions(
+        // baseUrl:
+        // "https://7722b390-519c-4d05-810f-90091b05282c.mock.pstmn.io/api/v1/",
         baseUrl: 'http://192.168.1.5:8080/api/v1/',
         receiveDataWhenStatusError: true,
         headers: {
@@ -36,7 +39,6 @@ class DioHelper {
         'Authorization': "Bearer $token",
       };
     }
-
     return await dio!.get(
       url,
       queryParameters: query,
