@@ -10,7 +10,7 @@ import com.bloodify.backend.UserRequests.repository.interfaces.PostRepository;
 import jakarta.annotation.Resource;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
+//import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -21,6 +21,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 public class RepositoryTest {
     @Autowired
+//    @Resource(name = "PostRepository")
     PostRepository postRepository;
 
     @Resource(name = "userDAOImp")
@@ -160,8 +161,8 @@ public class RepositoryTest {
         Institution institution1 = randomizer.generateRandomInstitution();
         User user2 = userGenerations.generateRandomUser();
         Institution institution2 = randomizer.generateRandomInstitution();
-        Post post1 = new Post(user1, institution1, 1, LocalDateTime.now().minusDays(10), "A+");
-        Post post2 = new Post(user2, institution2, 2, LocalDateTime.now(), "A-");
+        Post post1 = new Post(user1, institution1, 1, LocalDateTime.now().minusDays(10), LocalDateTime.now().plusDays(2), "A+");
+        Post post2 = new Post(user2, institution2, 2, LocalDateTime.now(), LocalDateTime.now().plusDays(2), "A-");
 
         this.userDAO.saveUser(user1); this.userDAO.saveUser(user2);
         this.instDao.saveInstitution(institution1); this.instDao.saveInstitution(institution2);
