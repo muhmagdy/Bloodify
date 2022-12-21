@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:bloodify_front_end/shared/Constatnt/userInfo.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 
 import '../../Constatnt/userInfo.dart';
 
@@ -29,17 +28,15 @@ class DioHelper {
     String lang = 'en',
   }) async {
     if (token == null) {
-      print("sadge");
       dio!.options.headers = {
         'Content-Type': 'application/json',
         'lang': lang,
       };
     } else {
-      print(token);
       dio!.options.headers = {
         'Content-Type': 'application/json',
         'lang': lang,
-        'Authorization': "Bearer ${token}",
+        'Authorization': "Bearer $token",
       };
     }
     return await dio!.get(

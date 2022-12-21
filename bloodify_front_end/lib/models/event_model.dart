@@ -48,8 +48,8 @@ class Event_model {
     title = json['title'];
     startDate = dateFormat.parse(json['startDate']);
     endDate = dateFormat.parse(json['endDate']);
-    startWorkingHour = dateFormat.parse(json['startWorkingHour']);
-    endWorkingHour = dateFormat.parse(json['endWorkingHour']);
+    startWorkingHour = timeFormate.parse(json['startWorkingHour']);
+    endWorkingHour = timeFormate.parse(json['endWorkingHour']);
     longitude = json['longitude'];
     latitude = json['latitude'];
     location = json['location'];
