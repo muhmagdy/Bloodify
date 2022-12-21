@@ -152,21 +152,4 @@ public class RepositoryTest {
         assertNotNull(this.postRepository.findPostsByUser(user2).get(0));
     }
 
-    @Test
-    void modifySomePost(){
-        User user1 = userGenerations.generateRandomUser();
-        Institution institution1 = randomizer.generateRandomInstitution();
-        User user2 = userGenerations.generateRandomUser();
-        Institution institution2 = randomizer.generateRandomInstitution();
-        Post post1 = new Post(user1, institution1, 1, LocalDateTime.now().minusDays(10), "A+");
-        Post post2 = new Post(user2, institution2, 2, LocalDateTime.now(), "A-");
-
-        this.userDAO.saveUser(user1); this.userDAO.saveUser(user2);
-        this.instDao.saveInstitution(institution1); this.instDao.saveInstitution(institution2);
-        this.postRepository.save(post1); this.postRepository.save(post2);
-        this.postRepository.updatePostSet(institution2.getInstitutionID(), 5, "O-", post1.getPostID());
-        post1 = this.postRepository.findPostByUserAndInstitutionAndBloodType(user1, institution2, "O-");
-        assertNotNull(post1);
-        assertEquals(post1.getBloodType(), "O-");
-    }
 }
