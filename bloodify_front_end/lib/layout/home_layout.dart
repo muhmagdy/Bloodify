@@ -15,11 +15,7 @@ import '../shared/Constatnt/sharedFunctions.dart';
 class HomeLayout extends StatelessWidget {
   HomeLayout({super.key});
   var post = Post(1, "3010010152045", 4, "A.con");
-  var event = Event_model(
-      title: "tbor3",
-      to_date: DateTime.now(),
-      from_date: DateTime.now(),
-      event_ID: 1);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,7 +71,7 @@ class HomeLayout extends StatelessWidget {
         backgroundColor: Colors.red,
         child: const Icon(Icons.logout_rounded),
       ),
-      body: CreateEvent(),
+      // body: CreateEvent(),
     );
   }
 }
