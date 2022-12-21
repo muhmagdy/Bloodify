@@ -3,7 +3,7 @@ package com.bloodify.backend.InstitutionManagement.exceptions.transactionexcepti
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ResponseStatus(value = HttpStatus.CONFLICT)
+@ResponseStatus(value = HttpStatus.NOT_ACCEPTABLE)
 public class TransactionException extends RuntimeException {
     public TransactionException(String msg) {
         super(msg);

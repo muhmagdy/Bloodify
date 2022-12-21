@@ -1699,7 +1699,7 @@
 											}
 										},
 										"url": {
-											"raw": "localhost:8080/api/v1/institution/transaction/instToUser",
+											"raw": "localhost:8080/api/v1/institution/transaction/inst-to-user",
 											"host": [
 												"localhost"
 											],
@@ -1709,7 +1709,7 @@
 												"v1",
 												"institution",
 												"transaction",
-												"instToUser"
+												"inst-to-user"
 											]
 										}
 									},
@@ -1757,7 +1757,7 @@
 											}
 										},
 										"url": {
-											"raw": "localhost:8080/api/v1/institution/transaction/instToUser",
+											"raw": "localhost:8080/api/v1/institution/transaction/inst-to-user",
 											"host": [
 												"localhost"
 											],
@@ -1767,7 +1767,7 @@
 												"v1",
 												"institution",
 												"transaction",
-												"instToUser"
+												"inst-to-user"
 											]
 										}
 									},
@@ -1815,7 +1815,7 @@
 											}
 										},
 										"url": {
-											"raw": "localhost:8080/api/v1/institution/transaction/instToUser",
+											"raw": "localhost:8080/api/v1/institution/transaction/inst-to-user",
 											"host": [
 												"localhost"
 											],
@@ -1825,7 +1825,7 @@
 												"v1",
 												"institution",
 												"transaction",
-												"instToUser"
+												"inst-to-user"
 											]
 										}
 									},
@@ -1873,7 +1873,7 @@
 											}
 										},
 										"url": {
-											"raw": "localhost:8080/api/v1/institution/transaction/instToUser",
+											"raw": "localhost:8080/api/v1/institution/transaction/inst-to-user",
 											"host": [
 												"localhost"
 											],
@@ -1883,7 +1883,7 @@
 												"v1",
 												"institution",
 												"transaction",
-												"instToUser"
+												"inst-to-user"
 											]
 										}
 									},
@@ -1931,7 +1931,7 @@
 											}
 										},
 										"url": {
-											"raw": "localhost:8080/api/v1/institution/transaction/instToUser",
+											"raw": "localhost:8080/api/v1/institution/transaction/inst-to-user",
 											"host": [
 												"localhost"
 											],
@@ -1941,7 +1941,7 @@
 												"v1",
 												"institution",
 												"transaction",
-												"instToUser"
+												"inst-to-user"
 											]
 										}
 									},
@@ -1994,7 +1994,7 @@
 											}
 										},
 										"url": {
-											"raw": "localhost:8080/api/v1/institution/transaction/userToInst",
+											"raw": "localhost:8080/api/v1/institution/transaction/user-to-inst",
 											"host": [
 												"localhost"
 											],
@@ -2004,7 +2004,7 @@
 												"v1",
 												"institution",
 												"transaction",
-												"userToInst"
+												"user-to-inst"
 											]
 										}
 									},
@@ -2052,7 +2052,7 @@
 											}
 										},
 										"url": {
-											"raw": "localhost:8080/api/v1/institution/transaction/userToInst",
+											"raw": "localhost:8080/api/v1/institution/transaction/user-to-inst",
 											"host": [
 												"localhost"
 											],
@@ -2062,7 +2062,7 @@
 												"v1",
 												"institution",
 												"transaction",
-												"userToInst"
+												"user-to-inst"
 											]
 										}
 									},
@@ -2110,7 +2110,7 @@
 											}
 										},
 										"url": {
-											"raw": "localhost:8080/api/v1/institution/transaction/userToInst",
+											"raw": "localhost:8080/api/v1/institution/transaction/user-to-inst",
 											"host": [
 												"localhost"
 											],
@@ -2120,13 +2120,180 @@
 												"v1",
 												"institution",
 												"transaction",
-												"userToInst"
+												"user-to-inst"
 											]
 										}
 									},
 									"response": []
 								}
 							]
+						}
+					]
+				},
+				{
+					"name": "Event",
+					"item": [
+						{
+							"name": "New event 1",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 202\", function () {\r",
+											"  pm.response.to.have.status(202);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Event Created Successfuly!\", function () {\r",
+											"    pm.expect(pm.response.json().message).to.eql(\"Event Created Successfuly!\")\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{institution_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"title\": \"Blood donation 21th event\",\r\n    \"startDate\": \"05-01-2025\",\r\n    \"endDate\": \"07-01-2025\",\r\n    \"startWorkingHour\": \"02:33 AM\",\r\n    \"endWorkingHour\": \"02:35 AM\",\r\n    \"location\": \"Smouha, Alexandria, Egypt\",\r\n    \"longitude\": -17.333333,\r\n    \"latitude\": 30.1232\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/api/v1/institution/event",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"institution",
+										"event"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "New event 2",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 202\", function () {\r",
+											"  pm.response.to.have.status(202);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Event Created Successfuly!\", function () {\r",
+											"    pm.expect(pm.response.json().message).to.eql(\"Event Created Successfuly!\")\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{institution_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"title\": \"Blood donation 22th event\",\r\n    \"startDate\": \"08-01-2025\",\r\n    \"endDate\": \"10-01-2025\",\r\n    \"startWorkingHour\": \"09:30 AM\",\r\n    \"endWorkingHour\": \"10:00 PM\",\r\n    \"location\": \"El Hadara, Alexandria, Egypt\",\r\n    \"longitude\": -15.111,\r\n    \"latitude\": 14.1232\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/api/v1/institution/event",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"institution",
+										"event"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get instituion events",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 202\", function () {\r",
+											"  pm.response.to.have.status(202);\r",
+											"});\r",
+											"\r",
+											"let length = JSON.parse(responseBody).length;\r",
+											"\r",
+											"tests[\"list size is 2\"] = length === 2;"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{institution_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/api/v1/institution/events",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"institution",
+										"events"
+									]
+								}
+							},
+							"response": []
 						}
 					]
 				}
