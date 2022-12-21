@@ -1,70 +1,83 @@
 import 'package:bloodify_front_end/models/found_institution.dart';
+import 'package:dio/dio.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:bloodify_front_end/shared/network/remote/dio_helper.dart';
 
 Future<List<FoundInstitutionWithDistance>> find_Institutions(
     String? bloodType) async {
-  List<FoundInstitution> foundInstitutions =
-      await searchInstitutions(bloodType);
+  List<FoundInstitution>? foundInstitutions = await searchInstitutions(
+      bloodType?.replaceAll("+", "p").replaceAll("-", "n"));
   return await processFindings(foundInstitutions);
 }
 
-//TODO api call
 Future<List<FoundInstitution>> searchInstitutions(String? bloodType) async {
-  return [
-    FoundInstitution(
-        institutionId: 1,
-        institutionName: "one",
-        institutionLocation: "loc",
-        longitude: 250,
-        latitude: 14,
-        types_bags: Map.of({"A+": 1, "B+": 2}),
-        working_hours: 24),
-    FoundInstitution(
-        institutionId: 2,
-        institutionName: "two",
-        institutionLocation: "loc",
-        longitude: 13,
-        latitude: 120,
-        types_bags: Map.of({"A+": 1, "B+": 2}),
-        working_hours: 24),
-    FoundInstitution(
-        institutionId: 3,
-        institutionName: "three",
-        institutionLocation: "loc",
-        longitude: -40,
-        latitude: 104,
-        types_bags: Map.of({"A+": 0, "B+": 2}),
-        working_hours: 24),
-    FoundInstitution(
-        institutionId: 4,
-        institutionName: "four",
-        institutionLocation: "loc",
-        longitude: 13,
-        latitude: 14,
-        types_bags: Map.of({
-          "A+": 1,
-          "B+": 2,
-          "Z+": -1,
-          "X+": -2,
-          "Q+": -1,
-          "F+": -2,
-          "C+": -1,
-          "D+": -2,
-        }),
-        working_hours: 24),
-    FoundInstitution(
-        institutionId: 4,
-        institutionName: "five",
-        institutionLocation: "loc",
-        longitude: -13,
-        latitude: 104,
-        types_bags: Map.of({"A+": 1, "B+": 0}),
-        working_hours: 24),
-  ];
+  String url = "user/blood/search";
+  Response response = await DioHelper.getData(
+      url: url, query: Map<String, dynamic>.of({"bloodType": bloodType}));
+
+  print(response.data);
+
+  if (response.statusCode == 200) {
+    return response.data;
+  } else {
+    throw Exception("Error Occured");
+  }
+  // return [
+  //   FoundInstitution(
+  //       institutionId: 1,
+  //       institutionName: "one",
+  //       institutionLocation: "loc",
+  //       longitude: 250,
+  //       latitude: 14,
+  //       types_bags: Map.of({"A+": 1, "B+": 2}),
+  //       working_hours: 24),
+  //   FoundInstitution(
+  //       institutionId: 2,
+  //       institutionName: "two",
+  //       institutionLocation: "loc",
+  //       longitude: 13,
+  //       latitude: 120,
+  //       types_bags: Map.of({"A+": 1, "B+": 2}),
+  //       working_hours: 24),
+  //   FoundInstitution(
+  //       institutionId: 3,
+  //       institutionName: "three",
+  //       institutionLocation: "loc",
+  //       longitude: -40,
+  //       latitude: 104,
+  //       types_bags: Map.of({"A+": 0, "B+": 2}),
+  //       working_hours: 24),
+  //   FoundInstitution(
+  //       institutionId: 4,
+  //       institutionName: "four",
+  //       institutionLocation: "loc",
+  //       longitude: 13,
+  //       latitude: 14,
+  //       types_bags: Map.of({
+  //         "A+": 1,
+  //         "B+": 2,
+  //         "Z+": -1,
+  //         "X+": -2,
+  //         "Q+": -1,
+  //         "F+": -2,
+  //         "C+": -1,
+  //         "D+": -2,
+  //       }),
+  //       working_hours: 24),
+  //   FoundInstitution(
+  //       institutionId: 4,
+  //       institutionName: "five",
+  //       institutionLocation: "loc",
+  //       longitude: -13,
+  //       latitude: 104,
+  //       types_bags: Map.of({"A+": 1, "B+": 0}),
+  //       working_hours: 24),
+  // ];
 }
 
 Future<List<FoundInstitutionWithDistance>> processFindings(
-    List<FoundInstitution> institutions) async {
+    List<FoundInstitution>? institutions) async {
+  if (institutions == null) throw Exception();
   Position? position;
   try {
     position = await getLocation();
