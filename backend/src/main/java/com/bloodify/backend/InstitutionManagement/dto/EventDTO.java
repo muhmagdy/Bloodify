@@ -2,6 +2,7 @@ package com.bloodify.backend.InstitutionManagement.dto;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -9,6 +10,7 @@ import java.time.LocalTime;
 
 @Getter
 @Setter
+@ToString
 public class EventDTO {
     private String title;
 
@@ -27,6 +29,4 @@ public class EventDTO {
     private BigDecimal longitude;
 
     private BigDecimal latitude;
-
-    private String description;
 }

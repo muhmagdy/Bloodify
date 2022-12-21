@@ -6,7 +6,9 @@ import com.bloodify.backend.InstitutionManagement.model.Event;
 import java.util.List;
 
 public interface EventService {
-    boolean createEvent(EventDTO eventDTO);
+    int createEvent(EventDTO eventDTO);
 
     List<Event> getAllInstEvents(String email);
+
+    void delete();
 }

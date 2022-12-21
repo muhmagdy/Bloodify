@@ -14,18 +14,18 @@ public class EventDAOImp implements EventDAO {
     EventRepository eventRepository;
 
     @Override
-    public boolean save(Event event) {
-        try {
-            eventRepository.save(event);
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
+    public int save(Event event) {
+        return eventRepository.save(event).getEventID();
     }
 
     @Override
     public List<Event> findAllInstEvents(String email) {
         return eventRepository.findByInstitution_Email(email);
+    }
+
+    @Override
+    public void deleteEvent() {
+        eventRepository.abortEvent();
     }
 
 }

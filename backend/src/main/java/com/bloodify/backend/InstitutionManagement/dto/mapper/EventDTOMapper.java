@@ -25,8 +25,6 @@ public class EventDTOMapper {
 
         eventDTO.setLatitude(eventRequest.getLatitude());
 
-        eventDTO.setDescription(eventDTO.getDescription());
-
         return eventDTO;
     }
 }

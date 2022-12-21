@@ -5,7 +5,12 @@ import com.bloodify.backend.InstitutionManagement.model.Event;
 import java.util.List;
 
 public interface EventDAO {
-    boolean save(Event event);
+    // saves the event
+    int save(Event event);
 
+    // find all the currently active events of a specified institution (by email)
     List<Event> findAllInstEvents(String email);
+
+    // deletes all the expired events
+    void deleteEvent();
 }

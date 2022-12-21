@@ -53,7 +53,7 @@ public class EventModelMapper {
 
         if(event.getLocation() == null
                 || event.getLocation().length() < 5
-                || event.getLocation().length() > 30)
+                || event.getLocation().length() > 50)
             throw new InvalidLocation();
 
         event.setLongitude(eventDTO.getLongitude());
@@ -65,12 +65,6 @@ public class EventModelMapper {
 
         if(event.getLatitude() == null)
             throw new InvalidLatitude();
-
-        event.setDescription(eventDTO.getDescription());
-
-        if(event.getDescription() != null
-                && event.getDescription().length() > 200)
-            throw new InvalidDescription();
 
         return event;
     }
