@@ -25,6 +25,8 @@ class BloodFinder extends StatelessWidget {
                   text: "No Blood Type was Picked!",
                   color: Colors.black,
                   time: 2);
+            } else if (state.error) {
+              showToast(text: "Error Occured", color: Colors.black, time: 2);
             }
           }),
           child: _MainBloodFindingScreen(width: width),

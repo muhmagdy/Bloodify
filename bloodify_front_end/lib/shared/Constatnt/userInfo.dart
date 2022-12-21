@@ -1,0 +1,3 @@
+String? token;
+
+bool? isUser;
