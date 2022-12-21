@@ -1,3 +1,4 @@
+import 'package:bloodify_front_end/models/userBrief.dart';
 import 'package:bloodify_front_end/shared/Constatnt/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +7,7 @@ import '../../../../models/person.dart';
 import '../../../../shared/Constatnt/fonts.dart';
 
 class PersonTile extends StatefulWidget {
-  final Person person;
+  final UserBrief person;
   const PersonTile(this.person, {super.key});
   @override
   State<StatefulWidget> createState() => _PersonTile();
@@ -65,7 +66,7 @@ class _PersonTile extends State<PersonTile> {
                           color: blue,
                         )),
                     Text(
-                      "${widget.person.dist.toStringAsFixed(2)} Kilometers",
+                      "${widget.person.distance.toStringAsFixed(2)} Kilometers",
                       style: SafeGoogleFont(
                         'Poppins',
                         fontSize: 0.0359 * width,

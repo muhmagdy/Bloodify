@@ -3,6 +3,7 @@ import 'package:bloodify_front_end/models/request.dart';
 import 'package:bloodify_front_end/shared/Constatnt/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../../../../shared/Constatnt/fonts.dart';
 
@@ -12,13 +13,6 @@ class RequestHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String title;
-    if (request.state == 0)
-      title = "";
-    else if (request.state == 1)
-      title = "You have a current request";
-    else
-      title = "You have accepted a request";
     final String bloodBag;
     if (request.count > 1) {
       bloodBag = "${request.count} Blood Bags";
@@ -39,44 +33,62 @@ class RequestHeader extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Container(
-            alignment: Alignment.centerLeft,
-            margin: EdgeInsets.only(bottom: .005 * height),
-            child: Text(
-              title,
-              style: SafeGoogleFont(
-                'Poppins',
-                fontSize: 0.02 * height,
-                fontWeight: FontWeight.w400,
-                color: lightBlue,
+          // if (request.state != 0)
+          //   Container(
+          //     alignment: Alignment.centerLeft,
+          //     margin: EdgeInsets.only(bottom: .005 * height),
+          //     child: Text(
+          //       title,
+          //       style: SafeGoogleFont(
+          //         'Poppins',
+          //         fontSize: 0.02 * height,
+          //         fontWeight: FontWeight.w400,
+          //         color: lightBlue,
+          //       ),
+          //     ),
+          //   ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            // crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                  width: 0.75 * width,
+                  child: FittedBox(
+                      alignment: Alignment.centerLeft,
+                      fit: BoxFit.scaleDown,
+                      child: Text(
+                        request.hospitalName,
+                        textScaleFactor: MediaQuery.textScaleFactorOf(context),
+                        style: SafeGoogleFont(
+                          'Poppins',
+                          fontSize: 0.027 * height,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.white,
+                        ),
+                      ))),
+              Icon(
+                CupertinoIcons.location_solid,
+                size: 0.0385 * height,
+                color: red,
               ),
-            ),
+            ],
           ),
           Container(
-            margin: EdgeInsets.only(bottom: 0.0128 * height),
-            width: double.infinity,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              // crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  request.hospitalName,
-                  textScaleFactor: MediaQuery.textScaleFactorOf(context),
-                  style: SafeGoogleFont(
-                    'Poppins',
-                    fontSize: 0.027 * height,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.white,
-                  ),
-                ),
-                Icon(
-                  CupertinoIcons.location_solid,
-                  size: 0.0385 * height,
-                  color: red,
-                ),
-              ],
-            ),
-          ),
+              margin: EdgeInsets.only(bottom: 0.0128 * height),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "${request.distance.toStringAsFixed(2)} KM away",
+                    style: SafeGoogleFont(
+                      'Poppins',
+                      fontSize: 0.025 * height,
+                      fontWeight: FontWeight.w500,
+                      color: lightBlue,
+                    ),
+                  )
+                ],
+              )),
           Container(
             margin: EdgeInsets.only(bottom: 0.01 * height),
             width: 0.8 * width,
@@ -105,8 +117,7 @@ class RequestHeader extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    "",
-                    // request.dateTime.toLocal().toString(),
+                    DateFormat("d MMM y 'at' h:m a").format(request.dateTime),
                     style: SafeGoogleFont(
                       'Poppins',
                       fontSize: 0.025 * height,

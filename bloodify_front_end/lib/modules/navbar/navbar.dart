@@ -20,7 +20,7 @@ class NavBar extends StatelessWidget {
   List<PersistentBottomNavBarItem> _navBarsItems() {
     return [
       PersistentBottomNavBarItem(
-        icon: const Icon(CupertinoIcons.home),
+        icon: const Icon(CupertinoIcons.house_fill),
         title: ("Home"),
         activeColorPrimary: blue,
         inactiveColorPrimary: grey,
@@ -33,7 +33,7 @@ class NavBar extends StatelessWidget {
       ),
       PersistentBottomNavBarItem(
         icon: const Icon(
-          CupertinoIcons.waveform_path,
+          Icons.water_drop_sharp,
           color: Colors.white,
         ),
         title: ("Request"),
@@ -41,7 +41,7 @@ class NavBar extends StatelessWidget {
         inactiveColorPrimary: grey,
       ),
       PersistentBottomNavBarItem(
-        icon: const Icon(CupertinoIcons.building_2_fill),
+        icon: const Icon(Icons.event),
         title: ("Events"),
         activeColorPrimary: blue,
         inactiveColorPrimary: grey,

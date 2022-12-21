@@ -72,3 +72,64 @@ TextStyle SafeGoogleFont(
     );
   }
 }
+
+TextStyle HeadingStyle(double height, Color color) {
+  return SafeGoogleFont('Poppins',
+      fontSize: 0.025 * height,
+      fontWeight: FontWeight.w500,
+      height: 1.5,
+      color: color);
+}
+
+TextStyle AppHeaderStyle(double height, Color color) {
+  return SafeGoogleFont('Poppins',
+      fontSize: 0.034 * height,
+      fontWeight: FontWeight.w500,
+      height: 1.5,
+      color: color);
+}
+
+TextStyle SmallStyle(double width, Color color) {
+  return SafeGoogleFont(
+    'Poppins',
+    fontSize: 0.0359 * width,
+    fontWeight: FontWeight.w400,
+    color: color,
+  );
+}
+
+TextStyle SmallBoldStyle(double width, Color color) {
+  return SafeGoogleFont(
+    'Poppins',
+    fontSize: 0.0359 * width,
+    fontWeight: FontWeight.w700,
+    color: color,
+  );
+}
+
+TextStyle VerySmallStyle(double width, Color color) {
+  return SafeGoogleFont(
+    'Poppins',
+    fontSize: 0.031 * width,
+    fontWeight: FontWeight.w400,
+    color: color,
+  );
+}
+
+TextStyle VerySmallBoldStyle(double width, Color color) {
+  return SafeGoogleFont(
+    'Poppins',
+    fontSize: 0.031 * width,
+    fontWeight: FontWeight.w700,
+    color: color,
+  );
+}
+
+TextStyle NormalStyle(double height, Color color) {
+  return SafeGoogleFont(
+    'Poppins',
+    fontSize: 0.025 * height,
+    fontWeight: FontWeight.w700,
+    color: color,
+  );
+}

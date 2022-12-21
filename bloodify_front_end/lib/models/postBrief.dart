@@ -2,7 +2,7 @@ class PostBrief {
   late int id;
   late String nationalID;
   late String name;
-  late DateTime? dateTime;
+  late DateTime dateTime;
   late int count;
   late String bloodType;
   late double distance;
@@ -19,4 +19,6 @@ class PostBrief {
     hospitalName = json['hospitalName'];
     this.state = state;
   }
+  PostBrief(this.id, this.nationalID, this.name, this.dateTime, this.count,
+      this.bloodType, this.distance, this.hospitalName, this.state);
 }
