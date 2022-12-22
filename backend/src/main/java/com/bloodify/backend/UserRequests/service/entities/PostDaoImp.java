@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -106,7 +107,7 @@ public class PostDaoImp implements PostDao {
     }
     @Override
     public List<Post> getAllBloodTypePosts(String bloodType){
-        return this.postRepository.findAllByBloodType(bloodType);
+        return this.postRepository.findByBloodType(bloodType);
     }
 
     @Override
@@ -125,6 +126,13 @@ public class PostDaoImp implements PostDao {
             e.printStackTrace();
             return false;
         }
+    }
+
+    @Override
+    public List<User> findAcceptingUsersByRequester(User user) {
+//        return this.postRepository.findAcceptingUsersByRequester(user);
+        // return null;
+        return new ArrayList<>();
     }
 
 }

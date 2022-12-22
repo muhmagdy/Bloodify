@@ -2,6 +2,7 @@ package com.bloodify.backend.AccountManagement.dao.interfaces;
 
 import com.bloodify.backend.AccountManagement.model.entities.Institution;
 //import com.bloodify.backend.model.entities.User;
+import com.bloodify.backend.UserRequests.model.entities.Post;
 import com.bloodify.backend.AccountManagement.model.entities.User;
 import com.bloodify.backend.UserRequests.controller.request.entity.InstitutionBrief;
 import org.springframework.data.jpa.domain.Specification;

@@ -137,7 +137,7 @@ class _SearchResults extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
-  Card makeInstitutionCard(FoundInstitutionWithDistance inst) {
+  Card makeInstitutionCard(FoundInstitutionWithDistance inst, double width) {
     Function formatter = (double x) => '${x.ceil()} m';
     if (inst.getDistance() >= 1000) {
       formatter = (double x) => '${(x / 1000).toStringAsFixed(2)} Km';
@@ -150,16 +150,19 @@ class _SearchResults extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  InstitutionName(institutionName: inst.getName()),
-                  DistanceWidget(
-                      formatter: formatter, distance: inst.getDistance())
-                ],
-              ),
+              child: InstitutionName(institutionName: inst.getName()),
             ),
-            InstitutionAddress(institutionLocation: inst.getLocation()),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                SizedBox(
+                    width: width * 0.5,
+                    child: InstitutionAddress(
+                        institutionLocation: inst.getLocation())),
+                DistanceWidget(
+                    formatter: formatter, distance: inst.getDistance())
+              ],
+            ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: AvailableBloodTypesWidget(
@@ -184,7 +187,8 @@ class _SearchResults extends StatelessWidget {
         itemBuilder: (context, i) {
           return Padding(
             padding: const EdgeInsets.all(8.0),
-            child: makeInstitutionCard(cubit.state.foundInstitutions[i]),
+            child: makeInstitutionCard(cubit.state.foundInstitutions[i],
+                MediaQuery.of(context).size.width),
           );
         },
         itemCount: cubit.state.foundInstitutions.length,

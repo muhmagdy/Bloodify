@@ -13,6 +13,8 @@ import 'cubit/institution_login_cubit.dart';
 import 'cubit/institution_states_login.dart';
 
 class InstitutionLogin extends StatelessWidget {
+  String token = UserInfo.token ?? "";
+  bool isUser = UserInfo.isUser ?? true;
   var loginKey = GlobalKey<FormState>();
   var emailController = TextEditingController();
   var passwordController = TextEditingController();

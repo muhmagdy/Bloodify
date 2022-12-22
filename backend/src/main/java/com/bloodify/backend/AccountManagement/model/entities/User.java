@@ -2,7 +2,10 @@ package com.bloodify.backend.AccountManagement.model.entities;
 
 import com.bloodify.backend.UserRequests.model.entities.Post;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -39,7 +42,7 @@ import java.util.List;
 @ToString
 public class User {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int userID;
 
     @NonNull
@@ -81,7 +84,7 @@ public class User {
     private String password = "";
 
     @Column(name= "status")
-    private int status;
+    private Integer status;
 
     @Column()
     Double latitude;
@@ -90,12 +93,19 @@ public class User {
     Double longitude;
 
 
-    @OneToMany(
-            mappedBy = "user",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
-    )
-    private List<Post> posts;
+//    @OneToMany(
+//            mappedBy = "user",
+//            cascade = CascadeType.ALL,
+//            orphanRemoval = true
+//    )
+//    @ToString.Exclude
+//    private List<Post> posts;
+
+//    @ManyToOne(fetch = FetchType.EAGER)
+//
+//    private Post acceptedPost;
+
+
     public User(String firstName, String lastName, String nationalID, String email, String bloodType,
                 boolean hasDiseases, LocalDate lastTimeDonated, String password) {
         this.firstName = firstName;
@@ -106,7 +116,7 @@ public class User {
         this.hasDiseases = hasDiseases;
         this.lastTimeDonated = lastTimeDonated;
         this.password = password;
-        this.posts = new ArrayList<>();
+//        this.posts = new ArrayList<>();
     }
 
 }

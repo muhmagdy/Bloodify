@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 @Repository
 public interface PostRepository extends JpaRepository<Post, Integer> {
@@ -25,14 +26,18 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
     // get specific Post
     Post findPostByUserAndInstitutionAndBloodType(User user, Institution institution, String bloodType);
 
-    // get all posts related to some user
+    // get all posts related to some user as a requester
     List<Post> findPostsByUser(User user);
 
     // get all posts related to some institution
     List<Post> findPostsByInstitution(Institution institution);
 
     // get posts by blood type
-    List<Post> findAllByBloodType(String bloodType);
+    @Query()
+    List<Post> findByBloodType(String bloodType);
+
+//    @Query("SELECT p.acceptingUsers FROM Post as p WHERE p.user = :user")
+//    List<User> findAcceptingUsersByRequester(@Param("user") User user);
 
 
     // delete after certain period or those satisfying required bagsNum

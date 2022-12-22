@@ -1,5 +1,6 @@
 package com.bloodify.backend.UserRequests.service.interfaces;
 
+import com.bloodify.backend.AccountManagement.model.entities.User;
 import com.bloodify.backend.UserRequests.model.entities.Post;
 
 import java.util.List;
@@ -25,4 +26,6 @@ public interface PostDao {
     String getPostEmail(int iD);
 
     Post getPostByID(int id);
+
+    List<User> findAcceptingUsersByRequester(User user);
 }

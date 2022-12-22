@@ -12,6 +12,8 @@ import 'cubit/user_states_login.dart';
 
 // ignore: must_be_immutable
 class UserLogin extends StatelessWidget {
+  String token = UserInfo.token ?? "";
+  bool isUser = UserInfo.isUser ?? true;
   var loginKey = GlobalKey<FormState>();
   var emailController = TextEditingController();
   var passwordController = TextEditingController();

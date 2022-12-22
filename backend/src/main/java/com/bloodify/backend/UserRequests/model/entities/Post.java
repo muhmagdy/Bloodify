@@ -3,6 +3,7 @@ package com.bloodify.backend.UserRequests.model.entities;
 
 import com.bloodify.backend.AccountManagement.model.entities.Institution;
 import com.bloodify.backend.AccountManagement.model.entities.User;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
@@ -10,24 +11,46 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
+import lombok.ToString;
+import org.springframework.stereotype.Component;
+
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Entity
 @Table
 @NoArgsConstructor
+
+//@NamedNativeQuery(
+//        name = "Post.findAcceptingUsersByRequester",
+//        query = "SELECT accepting_users FROM Post as p WHERE p.user = ?",
+//        resultClass = User.class
+//)
+
 public class Post {
     @Id
     @GeneratedValue
     Integer postID;
 
     @NonNull
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
+//    @JsonBackReference
+    @ToString.Exclude
     User user;
 
     @NonNull
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @ToString.Exclude
+//            @JsonBackReference
     Institution institution;
+
+//    @NonNull
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    Institution institutionHistory;
+
+
     @NonNull
     @Column(name = "req_bags_number", nullable = false)
     Integer bagsNum;
@@ -56,6 +79,7 @@ public class Post {
         this.startTime = startTime;
         this.lastTime = lastTime;
         this.bloodType = bloodType;
+//        acceptingUsers = new ArrayList<>();
     }
 
     public Post(Integer postID, @NonNull User user, @NonNull Institution institution, @NonNull Integer bagsNum,
@@ -67,6 +91,7 @@ public class Post {
         this.startTime = startTime;
         this.lastTime = lastTime;
         this.bloodType = bloodType;
+//        acceptingUsers = new ArrayList<>();
     }
 
     public Post(@NonNull User user, @NonNull Institution institution, @NonNull Integer bagsNum,
@@ -76,5 +101,6 @@ public class Post {
         this.bagsNum = bagsNum;
         this.lastTime = lastTime;
         this.bloodType = bloodType;
+//        acceptingUsers = new ArrayList<>();
     }
 }
