@@ -76,6 +76,52 @@ public class InstitutionDAOImp implements InstitutionDAO {
         };
     }
 
+    @Override
+    public int getBagsCount(String email, String bloodType) {
+        Institution institution = findInstitutionByEmail(email);
+        return switch (bloodType) {
+            case "A+" -> institution.getPositiveA_bagsCount();
+            case "B+" -> institution.getPositiveB_bagsCount();
+            case "AB+" -> institution.getPositiveAB_bagsCount();
+            case "O+" -> institution.getPositiveO_bagsCount();
+            case "A-" -> institution.getNegativeA_bagsCount();
+            case "B-" -> institution.getNegativeB_bagsCount();
+            case "AB-" -> institution.getNegativeAB_bagsCount();
+            case "O-" -> institution.getNegativeO_bagsCount();
+            default -> -1;
+        };
+    }
+
+    @Override
+    public int updateBagsCount(String email, String bloodType, Integer newBagsCount) {
+        return switch (bloodType) {
+            case "A+" -> instRepo.updatePositiveA_bagsCountByEmail(newBagsCount, email);
+            case "B+" -> instRepo.updatePositiveB_bagsCountByEmail(newBagsCount, email);
+            case "AB+" -> instRepo.updatePositiveAB_bagsCountByEmail(newBagsCount, email);
+            case "O+" -> instRepo.updatePositiveO_bagsCountByEmail(newBagsCount, email);
+            case "A-" -> instRepo.updateNegativeA_bagsCountByEmail(newBagsCount, email);
+            case "B-" -> instRepo.updateNegativeB_bagsCountByEmail(newBagsCount, email);
+            case "AB-" -> instRepo.updateNegativeAB_bagsCountByEmail(newBagsCount, email);
+            case "O-" -> instRepo.updateNegativeO_bagsCountByEmail(newBagsCount, email);
+            default -> -1;
+        };
+    }
+
+    @Override
+    public int incrementBagsCountBy(String email, String bloodType, Integer addedBagsCount) {
+        return switch (bloodType) {
+            case "A+" -> instRepo.incrementAPosBagsCountBy(addedBagsCount, email);
+            case "B+" -> instRepo.incrementBPosBagsCountBy(addedBagsCount, email);
+            case "AB+" -> instRepo.incrementABPosBagsCountBy(addedBagsCount, email);
+            case "O+" -> instRepo.incrementOPosBagsCountBy(addedBagsCount, email);
+            case "A-" -> instRepo.incrementANegBagsCountBy(addedBagsCount, email);
+            case "B-" -> instRepo.incrementBNegBagsCountBy(addedBagsCount, email);
+            case "AB-" -> instRepo.incrementABNegBagsCountBy(addedBagsCount, email);
+            case "O-" -> instRepo.incrementONegBagsCountBy(addedBagsCount, email);
+            default -> -1;
+        };
+    }
+
 //    public void setChangedPacketCount(List<String> changes, Institution institution) {
 //        for(String change: changes) {
 //            switch (change) {
@@ -124,4 +170,5 @@ public class InstitutionDAOImp implements InstitutionDAO {
         return userAuth;
         // return new User("foo", "foo", List.of(new SimpleGrantedAuthority("Institution")));
     }
+
 }

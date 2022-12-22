@@ -1,9 +1,8 @@
+// ignore_for_file: sized_box_for_whitespace
+
 import 'package:bloodify_front_end/modules/login_UI/User_login/userLogin.dart';
 import 'package:bloodify_front_end/modules/login_UI/institution_login/institutionLogin.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-
 import '../shared/Constatnt/Component.dart';
 import '../shared/Constatnt/sharedFunctions.dart';
 import '../modules/signUP_UI/sign_up_pages/sign_up_1.dart';
@@ -33,12 +32,12 @@ class StartWidget extends StatelessWidget {
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
-              side: BorderSide(color: Colors.white),
+              side: const BorderSide(color: Colors.white),
             )),
           ),
           label: Text(
             text,
-            style: TextStyle(color: Colors.white, fontSize: 20),
+            style: const TextStyle(color: Colors.white, fontSize: 20),
           ),
         ),
       );
@@ -51,11 +50,11 @@ class StartWidget extends StatelessWidget {
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
-          margin: EdgeInsets.only(left: 20, right: 20),
+          margin: const EdgeInsets.only(left: 20, right: 20),
           child: Column(
             children: [
-              DefaultProgramPhoto(height: height, width: width),
-              SizedBox(
+              defaultProgramPhoto(height: height, width: width),
+              const SizedBox(
                 height: 40,
               ),
               // DefaultButton(
@@ -79,7 +78,7 @@ class StartWidget extends StatelessWidget {
               //       // navigateTo(context, SignUp());
               //     },
               //     text: "Signup"),
-              SizedBox(
+              const SizedBox(
                 height: 40,
               ),
               txb(
@@ -89,7 +88,7 @@ class StartWidget extends StatelessWidget {
                   navigateTo(context, InstitutionLogin());
                 },
               ),
-              SizedBox(
+              const SizedBox(
                 height: 40,
               ),
               txb(
@@ -99,7 +98,7 @@ class StartWidget extends StatelessWidget {
                   navigateTo(context, UserLogin());
                 },
               ),
-              SizedBox(
+              const SizedBox(
                 height: 40,
               ),
               txb(

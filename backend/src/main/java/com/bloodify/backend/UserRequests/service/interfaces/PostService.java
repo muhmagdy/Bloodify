@@ -10,19 +10,14 @@ import java.util.List;
 
 public interface PostService {
     boolean savePost(PostDto dto);
-    boolean updatePost(PostDto dto, int postID);
-    boolean deletePost(PostDto dto);
+    boolean updatePost(PostDto dto);
+    boolean deletePost(int postID, String userEmail);
     List<PostRequest> getUserPosts(String userEmail);
     Post getSpecificPost(String userEmail, int institutionID, String BloodType);
-    void deleteRedundantPosts();
     List<User> getUsersToBeNotified(Post AcceptedPost);
     public List<User> getUsersToBeNotified(Post acceptedPost, Double instLongitude, Double instLatitude, int threshold);
     int getPostID(PostDto dto);
-
     User getReceiverFromPost(int postID);
-
     boolean decrementBags(int postID);
-
     Institution getInstitutionFromPost(int postID);
-
 }

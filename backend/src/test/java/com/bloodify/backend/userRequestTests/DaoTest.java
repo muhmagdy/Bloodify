@@ -47,7 +47,6 @@ class DaoTest {
         assertTrue(this.postDaoToTest.addPost(post3));
     }
 
-
     @Test
     void addDuplicatePost(){
         List<Post> savedPosts = randomizer.generateInValidPost();
@@ -155,4 +154,5 @@ class DaoTest {
         System.out.println();
         assertNull(posts1);
     }
+
 }

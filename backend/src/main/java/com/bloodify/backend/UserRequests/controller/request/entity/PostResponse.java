@@ -6,7 +6,6 @@ import lombok.Data;
 public class PostResponse<T> {
     private boolean status;
     private T responseBody;
-
     public PostResponse(boolean status) {
         this.status = status;
     }

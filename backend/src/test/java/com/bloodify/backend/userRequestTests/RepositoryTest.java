@@ -10,7 +10,7 @@ import com.bloodify.backend.UserRequests.repository.interfaces.PostRepository;
 import jakarta.annotation.Resource;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
+//import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -21,14 +21,15 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 public class RepositoryTest {
     @Autowired
+//    @Resource(name = "PostRepository")
     PostRepository postRepository;
 
     @Resource(name = "userDAOImp")
-    @Mock
+//    @Mock
     UserDAO userDAO;
 
     @Resource(name = "institutionDAOImp")
-    @Mock
+//    @Mock
     private InstitutionDAO instDao;
 
     private final Randomizer randomizer = new Randomizer();
@@ -120,21 +121,23 @@ public class RepositoryTest {
         Institution institution1 = randomizer.generateRandomInstitution();
         User user2 = userGenerations.generateRandomUser();
         Institution institution2 = randomizer.generateRandomInstitution();
-        Post post1 = new Post(user1, institution1, 1, LocalDateTime.now().minusDays(10), "A+");
-        Post post2 = new Post(user2, institution2, 2, LocalDateTime.now(), "A-");
+
+        Post post1 = new Post(user1, institution1, 1, LocalDateTime.now().minusDays(10),
+                LocalDateTime.now().minusDays(2), "A+");
+        Post post2 = new Post(user2, institution2, 2, LocalDateTime.now(), LocalDateTime.now().plusDays(30), "A-");
 
         this.userDAO.saveUser(user1); this.userDAO.saveUser(user2);
         this.instDao.saveInstitution(institution1); this.instDao.saveInstitution(institution2);
         this.postRepository.save(post1); this.postRepository.save(post2);
 
-        this.postRepository.deletePostsByStartTimeBeforeOrBagsNum(LocalDateTime.now().minusDays(7), 0);
+        this.postRepository.deletePostsByLastTimeBeforeOrBagsNum(LocalDateTime.now(), 0);
 
         assertEquals(this.postRepository.findPostsByUser(user1).size(), 0);
         assertNotNull(this.postRepository.findPostsByUser(user2).get(0));
     }
 
     @Test
-    void deleteSpecificPosts(){
+    void deleteSpecificPosts() {
         User user1 = userGenerations.generateRandomUser();
         Institution institution1 = randomizer.generateRandomInstitution();
         User user2 = userGenerations.generateRandomUser();
@@ -142,14 +145,16 @@ public class RepositoryTest {
         Post post1 = new Post(user1, institution1, 1, LocalDateTime.now().minusDays(10), "A+");
         Post post2 = new Post(user2, institution2, 2, LocalDateTime.now(), "A-");
 
-        this.userDAO.saveUser(user1); this.userDAO.saveUser(user2);
-        this.instDao.saveInstitution(institution1); this.instDao.saveInstitution(institution2);
-        this.postRepository.save(post1); this.postRepository.save(post2);
+        this.userDAO.saveUser(user1);
+        this.userDAO.saveUser(user2);
+        this.instDao.saveInstitution(institution1);
+        this.instDao.saveInstitution(institution2);
+        this.postRepository.save(post1);
+        this.postRepository.save(post2);
 
         this.postRepository.deletePostByUserAndInstitutionAndBloodType(user1, institution1, "A+");
 
         assertEquals(this.postRepository.findPostsByUser(user1).size(), 0);
         assertNotNull(this.postRepository.findPostsByUser(user2).get(0));
     }
-
 }

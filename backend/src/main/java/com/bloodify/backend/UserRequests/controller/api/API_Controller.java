@@ -4,10 +4,12 @@ import com.bloodify.backend.UserRequests.controller.request.entity.PostRequest;
 import com.bloodify.backend.UserRequests.controller.request.entity.PostResponse;
 import com.bloodify.backend.UserRequests.dto.entities.PostDto;
 import com.bloodify.backend.UserRequests.dto.mapper.Dto_PostRequest_Mapper;
-import com.bloodify.backend.UserRequests.model.entities.Post;
 import com.bloodify.backend.UserRequests.service.interfaces.PostService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,44 +17,52 @@ import java.util.List;
 @Slf4j
 @RestController
 @CrossOrigin()
-@RequestMapping("/api/posting")
+@RequestMapping("/api/v1/user/posting")
 public class API_Controller {
     @Autowired
     private PostService postService;
+
     @Autowired
     private Dto_PostRequest_Mapper mapper;
 
-    @PostMapping("/add_post")
-    public PostResponse<String> addPost(@RequestBody PostRequest request){
-        PostDto postDto = this.mapper.mapToPostDto(request);
+    @PostMapping("/add")
+    public ResponseEntity<PostResponse<String>> addPost(@RequestBody PostRequest request, Authentication auth){
+        PostDto postDto = this.mapper.mapToPostDto(request, auth.getName());
         boolean status = this.postService.savePost(postDto);
-        return new PostResponse<>(status, status? "Your Request Posted Successfully" : "Failed to Post Your Request");
+        if(status)
+            return ResponseEntity.status(HttpStatus.CREATED).body(new PostResponse<>(true, "Your Request Posted Successfully"));
+        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(new PostResponse<>(false, "Failed to Post Your Request"));
     }
 
-    @PutMapping("/edit_post/{id}")
-    public PostResponse<String> editPost(@RequestBody PostRequest request, @PathVariable("id") int postID){
-        PostDto postDto = this.mapper.mapToPostDto(request);
-        boolean status = this.postService.updatePost(postDto, postID);
-        return new PostResponse<>(status, status? "Your Request Edited Successfully" : "Failed to Edit Your Request");
+    @PutMapping("/edit")
+    public ResponseEntity<PostResponse<String>> editPost(@RequestBody PostRequest request, Authentication auth){
+        PostDto postDto = this.mapper.mapToPostDto(request, auth.getName());
+        boolean status = this.postService.updatePost(postDto);
+        if (status)
+            return ResponseEntity.status(HttpStatus.OK).body(new PostResponse<>(true, "Your Request Edited Successfully"));
+        return ResponseEntity.status(422).body(new PostResponse<>(false, "Failed to Edit Your Request"));
     }
-    @PutMapping("/delete_post")
-    public PostResponse<String> deletePost(@RequestBody PostRequest request){
-        PostDto postDto = this.mapper.mapToPostDto(request);
-        boolean status = this.postService.deletePost(postDto);
-        return new PostResponse<>(status, status? "Your Request Deleted Successfully" : "Failed to Delete Your Request");
+    @DeleteMapping("/delete/{postId}")
+    public ResponseEntity<PostResponse<String>> deletePost(@PathVariable("postId") int id, Authentication auth){
+        boolean status = this.postService.deletePost(id, auth.getName());
+        if (status)
+            return ResponseEntity.status(HttpStatus.OK).body(new PostResponse<>(true, "Your Request Deleted Successfully"));
+        return ResponseEntity.status(422).body(new PostResponse<>(false, "Failed to Delete Your Request"));
     }
-
-    @GetMapping("get_posts/{email}")
-    public PostResponse<List<PostRequest>> getLatestUserRequest(@PathVariable("email") String userEmail){
-        List<PostRequest> userPosts = this.postService.getUserPosts(userEmail);
+    @GetMapping("/userPosts")
+    public ResponseEntity<PostResponse<List<PostRequest>>> getLatestUserRequest(Authentication auth){
+        List<PostRequest> userPosts = this.postService.getUserPosts(auth.getName());
         boolean status = userPosts.size() != 0;
-        return new PostResponse<>(status, status? userPosts : null);
+        if (status)
+            return ResponseEntity.status(HttpStatus.OK).body(new PostResponse<>(true, userPosts));
+        return ResponseEntity.status(422).body(new PostResponse<>(false, null));
     }
 
-    @GetMapping("/get_post_id")
-    public PostResponse<Integer> getPostID(@RequestBody PostRequest request){
-        PostDto postDto = this.mapper.mapToPostDto(request);
-        int postID = this.postService.getPostID(postDto);
-        return new PostResponse<>(postID != -1, postID);
-    }
+
+//    @GetMapping("/post/id")
+//    public PostResponse<Integer> getPostID(@RequestBody PostRequest request, Authentication auth){
+//        PostDto postDto = this.mapper.mapToPostDto(request, auth.getName());
+//        int postID = this.postService.getPostID(postDto);
+//        return new PostResponse<>(postID != -1, postID);
+//    }
 }

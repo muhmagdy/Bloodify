@@ -1,4 +1,3 @@
-import 'package:intl/intl.dart';
 
 class UserData {
   late String fName;

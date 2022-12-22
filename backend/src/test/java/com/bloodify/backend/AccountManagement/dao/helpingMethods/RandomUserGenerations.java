@@ -4,6 +4,7 @@ import com.bloodify.backend.AccountManagement.model.entities.Institution;
 import com.bloodify.backend.AccountManagement.model.entities.User;
 
 import java.time.LocalDate;
+import java.util.Random;
 
 public class RandomUserGenerations {
     String capitals = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -105,6 +106,10 @@ public class RandomUserGenerations {
         return (float) (Float.MIN_VALUE + Math.random()*(Float.MAX_VALUE-Float.MIN_VALUE));
     }
 
+    public double generateDoubleWithRange(double lower, double upper) {
+        return Math.random() * (upper - lower) + lower;
+    }
+
     public User generateRandomUser() {
         return new User(generateName(5, 10), generateName(5, 10), generateNationalID(),
                 generateEmail(10, 30), "A+", generateDiseases(),
@@ -113,8 +118,11 @@ public class RandomUserGenerations {
 
     public Institution generateRandomInstitution() {
         return new Institution(
-                generateEmail(10,30), generateName(5, 10), generatePassword(20),
-                generateName(5,20), (int)(Math.random()*10)
+                generateEmail(10, 30), generateName(5, 10), generateName(5, 50),
+                generateDoubleWithRange(-90, 90), generateDoubleWithRange(-180, 180),
+                generateCount(0, 10), generatePassword(60),
+                generateCount(0, 1000), generateCount(0, 1000), generateCount(0, 1000), generateCount(0, 1000),
+                generateCount(0, 1000), generateCount(0, 1000),  generateCount(0, 1000),  generateCount(0, 1000)
         );
     }
 

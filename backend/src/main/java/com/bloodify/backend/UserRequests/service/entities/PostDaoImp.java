@@ -43,9 +43,20 @@ public class PostDaoImp implements PostDao {
     }
 
     @Override
+    public Post getSpecificUserPost(String userEmail, int institutionId, String bloodType) {
+        try {
+            User user = this.userDAO.findUserByEmail(userEmail);
+            Institution institution = this.institutionDAO.findInstitutionByID(institutionId);
+            return this.postRepository.findPostByUserAndInstitutionAndBloodType(user, institution, bloodType);
+        }catch (Exception e){
+            return null;
+        }
+    }
+
+    @Override
     public boolean updatePost(Post post){
         this.postRepository.updatePostSet(post.getInstitution().getInstitutionID(), post.getBagsNum(),
-                post.getBloodType(), post.getPostID());
+                post.getBloodType(), post.getPostID(), post.getStartTime(), post.getLastTime());
         return true;
     }
 
@@ -101,7 +112,7 @@ public class PostDaoImp implements PostDao {
 
     @Override
     public void deleteUnnecessaryPosts(){
-        this.postRepository.deletePostsByStartTimeBeforeOrBagsNum(LocalDateTime.now().minusDays(7), 0);
+        this.postRepository.deletePostsByLastTimeBeforeOrBagsNum(LocalDateTime.now(), 0);
     }
 
     @Override

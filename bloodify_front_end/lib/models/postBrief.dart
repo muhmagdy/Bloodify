@@ -12,7 +12,8 @@ class PostBrief {
     id = json['id'];
     nationalID = json['nationalID'];
     name = json['name'];
-    dateTime = json['dateTime'] ?? DateTime.now();
+    print(json['dateTime']);
+    dateTime = DateTime.parse(json['dateTime']) ?? DateTime.now();
     count = json['count'];
     bloodType = json['bloodType'];
     distance = json['distance'];
