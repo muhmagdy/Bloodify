@@ -29,12 +29,10 @@ class InstitutionLogin extends StatelessWidget {
           if (state.loginModel.status) {
             print(state.loginModel.message);
             print(state.loginModel.data!.token);
-            token = state.loginModel.data!.token;
-            isUser = false;
+            UserInfo.token = state.loginModel.data!.token;
+            UserInfo.isUser = false;
             CachHelper.saveData(key: "isUser", value: false)
                 .then((value) => print("is Institution saved to Cache $value"));
-            token = state.loginModel.data!.token;
-            isUser = false;
             CachHelper.saveData(
               key: 'token',
               value: state.loginModel.data!.token,

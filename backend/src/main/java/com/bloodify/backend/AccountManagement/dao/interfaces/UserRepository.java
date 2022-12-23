@@ -40,7 +40,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 //    List<User> findDonorsByPostId(@Param("post_id") int post_id);
 
     @Transactional
-    @Modifying
+    @Modifying(clearAutomatically = true,flushAutomatically = true)
     @Query(value =
             "UPDATE User " +
             "SET status = :newStatus " +
@@ -49,7 +49,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     void updateUserStatus(@Param("userID") int userID, @Param("newStatus") int newStatus);
 
     @Transactional
-    @Modifying
+    @Modifying(clearAutomatically = true,flushAutomatically = true)
     @Query(value =
             "UPDATE User " +
                     "SET longitude = :currentLongitude, latitude = :currentLatitude " +
@@ -61,13 +61,13 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
 
     @Transactional
-    @Modifying
+    @Modifying(clearAutomatically = true,flushAutomatically = true)
     @Query("update User u set u.lastTimeDonated = ?1 where u.nationalID = ?2")
     int updateLastTimeDonatedByNationalID(@NonNull LocalDate lastTimeDonated,
                                           @NonNull String nationalID);
 
     @Transactional
-    @Modifying
+    @Modifying(clearAutomatically = true,flushAutomatically = true)
     @Query("update User u set u.lastTimeDonated = ?1, u.bloodType = ?2 where u.nationalID = ?3")
     int updateLastTimeDonatedAndBloodTypeByNationalID(@NonNull LocalDate lastTimeDonated,
                                                       @NonNull String bloodType,

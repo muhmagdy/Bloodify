@@ -56,8 +56,7 @@ class _EventTile extends State<EventTile> {
                         size: 0.05 * width,
                         color: blue,
                       )),
-                  SizedBox(
-                    width: width / 39,
+                  Expanded(
                     child: Text(widget.event.location!,
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
