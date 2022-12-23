@@ -3,11 +3,9 @@ import 'dart:convert';
 import 'package:bloodify_front_end/shared/Constatnt/userInfo.dart';
 import 'package:dio/dio.dart';
 
-import '../../Constatnt/userInfo.dart';
-
 class DioHelper {
-  static String token = UserInfo.token;
-  static bool isUser = UserInfo.isUser;
+  static String? token = UserInfo.token;
+  static bool? isUser = UserInfo.isUser;
   static Dio? dio;
 
   static init() {
@@ -15,7 +13,7 @@ class DioHelper {
       BaseOptions(
         // baseUrl:
         // "https://7722b390-519c-4d05-810f-90091b05282c.mock.pstmn.io/api/v1/",
-        baseUrl: 'http://192.168.1.113:8080/api/v1/',
+        baseUrl: 'http://192.168.1.5:8080/api/v1/',
         receiveDataWhenStatusError: true,
         headers: {
           'Content-Type': 'application/json',

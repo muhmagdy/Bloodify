@@ -39,14 +39,30 @@ class _InstitutionHome extends State<InstitutionHome> {
         child: SafeArea(
             child: Scaffold(
           appBar: AppBar(
-            toolbarHeight: 0.07 * height,
-            backgroundColor: blue,
-            centerTitle: true,
-            title: Text(
-              "Home",
-              style: AppHeaderStyle(height, Colors.white),
-            ),
-          ),
+              title: Row(
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(70),
+                child: Container(
+                  width: 40,
+                  height: 40,
+                  decoration: const BoxDecoration(
+                      color: Colors.white,
+                      image: DecorationImage(
+                          image: AssetImage(
+                              'assets/icons/blood-removebg-preview.ico'),
+                          fit: BoxFit.contain)),
+                ),
+              ),
+              SizedBox(
+                width: width * .25,
+              ),
+              const Text(
+                "Home",
+                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+              ),
+            ],
+          )),
           body: Container(
             padding: EdgeInsets.only(left: 0.02 * width, right: 0.02 * width),
             child: RefreshIndicator(

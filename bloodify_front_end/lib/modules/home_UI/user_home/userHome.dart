@@ -21,10 +21,11 @@ class UserHome extends StatefulWidget {
 
 class _UserHome extends State<UserHome> {
   var status = 0;
-  var posts = <PostBrief>[
-    PostBrief(4, "nationalID", "name", DateTime.now(), 2, "A+", 5,
-        "International Hospital For Kidssss", 0)
-  ];
+  var posts = [];
+  //  <PostBrief>[
+  //   PostBrief(4, "nationalID", "name", DateTime.now(), 2, "A+", 5,
+  //       "International Hospital For Kidssss", 0)
+  // ];
 
   var people = <List<UserBrief>>[
     [

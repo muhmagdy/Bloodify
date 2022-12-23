@@ -1,5 +1,7 @@
 // ignore_for_file: non_constant_identifier_names
 
+import 'package:intl/intl.dart';
+
 import '../shared/Constatnt/colors.dart';
 
 /*
@@ -44,10 +46,13 @@ class Event_model {
     "latitude": 30.1232
 */
 
-    event_ID = json['event_ID'];
+    event_ID = json['eventID'];
     title = json['title'];
-    startDate = dateFormat.parse(json['startDate']);
-    endDate = dateFormat.parse(json['endDate']);
+
+    startDate = DateFormat("yyyy-MM-dd").parse(json['startDate']);
+
+    endDate = DateFormat("yyyy-MM-dd").parse(json['endDate']);
+
     startWorkingHour = timeFormate.parse(json['startWorkingHour']);
     endWorkingHour = timeFormate.parse(json['endWorkingHour']);
     longitude = json['longitude'];

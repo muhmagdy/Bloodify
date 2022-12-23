@@ -1,5 +1,4 @@
 class UserInfo {
-  static String token =
-      "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJzZWxmIiwic3ViIjoiam9obkBsZWdlbmQubWUiLCJpYXQiOjE2NzE2NjU1NjJ9.WBzSO73qLE4Te7dj0V0Ngqy_XDs-t4C0wQo_4IvrD_IEuMgl9ShAy0wQGkfCA7viJjaFnLLbToPgOoWQ57QmaV0jCXG4jPaalfUGN7flGEuPqgyAjFIXdMIfsOM7887i9nlrUpmR60M75W7oI8RkKMtCjSMUITCwjivpzjiT0uVajCw1vg38QmVPHSiQUXiVU_sJWfe0WHolBwkjByTF1yKvZQvyJaQU8A4X6a9f9ENs9Niv3CgbTdPrIw1o-kyrkLPm2GqM2R7nv_s05npifYZBNi-Kg2RrwSKpb6l4AzLYjNO87KCJK7kGj6AWZxZGWgyplD5z2McvgziRfKFNLQ";
-  static bool isUser = true;
+  static String? token;
+  static bool? isUser;
 }

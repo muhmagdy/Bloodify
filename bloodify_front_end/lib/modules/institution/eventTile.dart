@@ -19,54 +19,66 @@ class _EventTile extends State<EventTile> {
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
-    return TileContainer(
-        onTap: () => _onTap(context),
-        height: height,
-        width: width,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "#${widget.event.event_ID}",
-              style: VerySmallStyle(width, Colors.black),
-            ),
-            SizedBox(
-                width: 0.95 * width,
-                child: FittedBox(
-                    alignment: Alignment.centerLeft,
-                    fit: BoxFit.scaleDown,
-                    child: Text(
-                      widget.event.title,
-                      textAlign: TextAlign.start,
-                      style: NormalStyle(height, Colors.black),
-                    ))),
-            Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Container(
-                  margin: EdgeInsets.only(right: 0.0282 * width),
-                  width: width / 39,
-                  height: height / 52,
-                  child: Icon(
-                    Icons.location_pin,
-                    size: 0.05 * width,
-                    color: blue,
-                  )),
-              Text(widget.event.location!,
-                  style: SmallStyle(width, Colors.black)),
-            ]),
-            Row(
+
+    return Container(
+      margin: const EdgeInsets.only(left: 20, right: 20),
+      child: TileContainer(
+          onTap: () => _onTap(context),
+          height: height,
+          width: width,
+          child: SizedBox(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Ends:  ",
-                  style: SmallBoldStyle(width, Colors.black),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  "#${widget.event.event_ID}",
+                  style: VerySmallStyle(width, Colors.black),
                 ),
-                Text(
-                  DateFormat("d MMM y 'at' h:m a").format(widget.event.endDate),
-                  style: SmallStyle(width, Colors.black),
+                SizedBox(
+                    width: 0.95 * width,
+                    child: FittedBox(
+                        alignment: Alignment.centerLeft,
+                        fit: BoxFit.scaleDown,
+                        child: Text(
+                          widget.event.title,
+                          textAlign: TextAlign.start,
+                          style: NormalStyle(height, Colors.black),
+                        ))),
+                Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                  Container(
+                      margin: EdgeInsets.only(right: 0.0282 * width),
+                      width: width / 39,
+                      height: height / 52,
+                      child: Icon(
+                        Icons.location_pin,
+                        size: 0.05 * width,
+                        color: blue,
+                      )),
+                  Expanded(
+                    child: Text(widget.event.location!,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: SmallStyle(width, Colors.black)),
+                  ),
+                ]),
+                Row(
+                  children: [
+                    Text(
+                      "Ends:  ",
+                      style: SmallBoldStyle(width, Colors.black),
+                    ),
+                    Text(
+                      dateFormat.format(widget.event.endDate),
+                      style: SmallStyle(width, Colors.black),
+                    ),
+                  ],
                 ),
               ],
             ),
-          ],
-        ));
+          )),
+    );
   }
 
   void _onTap(BuildContext context) {

@@ -52,7 +52,7 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
     void deletePostByUserAndInstitutionAndBloodType(User user, Institution institution, String bloodType);
 
     @Transactional
-    @Modifying
+    @Modifying(clearAutomatically = true,flushAutomatically = true)
     @Query(value = "UPDATE Post SET institution_institutionid = :institutionID, blood_type = :bloodType, " +
             "req_bags_number = :req_bags, expiry_at = :expiry_at, created_at = :created_at WHERE postID = :id", nativeQuery = true)
     void updatePostSet(@Param("institutionID") int institutionID, @Param("req_bags") int req_bags,

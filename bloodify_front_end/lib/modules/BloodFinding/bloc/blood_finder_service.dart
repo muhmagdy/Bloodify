@@ -98,7 +98,10 @@ Future<List<FoundInstitutionWithDistance>> processFindings(
 
 getDistance(Position? pos, double lat, double long) {
   if (pos == null) return -1.0;
-  return Geolocator.distanceBetween(pos.latitude, pos.latitude, lat, long);
+  var distanceBetween =
+      Geolocator.distanceBetween(pos.latitude, pos.latitude, lat, long);
+  print(distanceBetween);
+  return distanceBetween;
 }
 
 Future<Position> getLocation() async {
@@ -132,5 +135,8 @@ Future<Position> getLocation() async {
     return Future.error(
         'Location permissions are permanently denied, we cannot request permissions.');
   }
-  return await Geolocator.getCurrentPosition();
+  Position location = await Geolocator.getCurrentPosition();
+  print(location.longitude);
+  print(location.latitude);
+  return location;
 }

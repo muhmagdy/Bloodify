@@ -29,8 +29,8 @@ class UserLogin extends StatelessWidget {
             print(state.loginModel.data!.token);
             CachHelper.saveData(key: "isUser", value: true)
                 .then((value) => print("is User saved to Cache $value"));
-            token = state.loginModel.data!.token;
-            isUser = true;
+            UserInfo.token = state.loginModel.data!.token;
+            UserInfo.isUser = true;
             CachHelper.saveData(
               key: 'token',
               value: state.loginModel.data!.token,
