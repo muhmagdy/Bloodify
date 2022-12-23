@@ -1,10 +1,12 @@
 package com.bloodify.backend.AccountManagement.model.entities;
 
 import com.bloodify.backend.UserRequests.model.entities.Post;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -136,17 +138,39 @@ public class Institution {
     @Column(name = "count_On")
     Integer negativeO_bagsCount = 0;
 
-    @OneToMany(
-            mappedBy = "institution",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true)
-    List<Post> posts;
+//    @OneToMany(
+//            mappedBy = "institution",
+//            cascade = CascadeType.ALL,
+//            orphanRemoval = true)
+//    @ToString.Exclude
+////            @JsonManagedReference
+//    List<Post> posts;
+//
+//    @OneToMany(
+//            mappedBy = "institution",
+//            cascade = CascadeType.ALL,
+//            orphanRemoval = true)
+//    @ToString.Exclude
+////    @JsonManagedReference
+//    List<Post> history;
+
     public Institution (String email, String name, String password, String location, int workingHours) {
         this.email = email;
         this.name = name;
         this.password = password;
         this.location = location;
         this.workingHours = workingHours;
+
+        this.negativeA_bagsCount = 0;
+        this.negativeB_bagsCount = 0;
+        this.negativeAB_bagsCount = 0;
+        this.negativeO_bagsCount = 0;
+        this.positiveA_bagsCount = 0;
+        this.positiveB_bagsCount = 0;
+        this.positiveAB_bagsCount = 0;
+        this.positiveO_bagsCount = 0;
+//        this.posts = new ArrayList<>();
+//        this.history = new ArrayList<>();
     }
 
     public Institution(String email, String password, String location, int workingHours) {
@@ -154,6 +178,16 @@ public class Institution {
         this.password = password;
         this.location = location;
         this.workingHours = workingHours;
+        this.negativeA_bagsCount = 0;
+        this.negativeB_bagsCount = 0;
+        this.negativeAB_bagsCount = 0;
+        this.negativeO_bagsCount = 0;
+        this.positiveA_bagsCount = 0;
+        this.positiveB_bagsCount = 0;
+        this.positiveAB_bagsCount = 0;
+        this.positiveO_bagsCount = 0;
+//        this.history = new ArrayList<>();
+
     }
 
     public Institution(int institutionID, String email, String name, String location, Double latitude, Double longitude, Integer workingHours, String password, Integer positiveA_bagsCount, Integer positiveB_bagsCount, Integer positiveAB_bagsCount, Integer positiveO_bagsCount, Integer negativeA_bagsCount, Integer negativeB_bagsCount, Integer negativeAB_bagsCount, Integer negativeO_bagsCount) {
@@ -181,6 +215,7 @@ public class Institution {
         this.email = email;
         this.location = locationEnglish;
         this.password = password;
+//        this.history = new ArrayList<>();
     }
 
 
