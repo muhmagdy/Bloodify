@@ -12,8 +12,12 @@ import com.bloodify.backend.Chat.repository.interfaces.ChatMessageRepository;
 @Service
 public class ChatMessageDaoImp implements ChatMessageDao{
 
-    @Autowired
     ChatMessageRepository repository;
+
+    @Autowired
+    public ChatMessageDaoImp(ChatMessageRepository repository) {
+        this.repository = repository;
+    }
 
     @Override
     public boolean saveMessage(ChatMessage message) {

@@ -1,7 +1,5 @@
 package com.bloodify.backend.Chat.dto.mapper;
 
-import static org.mockito.ArgumentMatchers.charThat;
-import static org.mockito.ArgumentMatchers.nullable;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,19 +15,24 @@ import com.bloodify.backend.UserRequests.model.entities.Post;
 import com.bloodify.backend.UserRequests.service.interfaces.PostDao;
 
 @Service
-public class ChatDownTransformer {
+public class ChatTransformer {
 
-    @Autowired
+
     PostDao postDao;
-    @Autowired
+
     UserDAO userDAO;
     
+    @Autowired
+    public ChatTransformer(PostDao postDao, UserDAO userDAO) {
+        this.postDao = postDao;
+        this.userDAO = userDAO;
+    }
 
-    public ChatDto transform(ChatRequest chatRequest){
+    public ChatDto transformDown(ChatRequest chatRequest){
         return new ChatDto(chatRequest.getChatID(), chatRequest.getPostID(), chatRequest.getDonorID());
     }
 
-    public Chat transform(ChatDto chatDto) throws PostNotFoundException{
+    public Chat transformDown(ChatDto chatDto) throws PostNotFoundException, UserNotFoundException{
         Post post = postDao.getPostByID(chatDto.getPostID());
         if(post == null)    throw new PostNotFoundException();
 
@@ -39,4 +42,15 @@ public class ChatDownTransformer {
 
         return new Chat(chatDto.getChatID(), post, donor);
     }
+    
+    
+    public ChatRequest transformUp(ChatDto chatDto){
+        return new ChatRequest(chatDto.getChatID(), chatDto.getPostID(), chatDto.getDonorID());
+    }
+
+    public ChatDto transformUp(Chat chat){
+
+        return new ChatDto(chat.getChatID(), chat.getPost().getPostID(), chat.getDonor().getUserID());
+    }
+
 }
