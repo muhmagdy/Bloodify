@@ -2,7 +2,6 @@ package com.bloodify.backend.Chat.service.classes;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bloodify.backend.Chat.controller.requests.entities.ChatMessageRequest;
@@ -23,24 +22,24 @@ public class ChatServiceImp implements ChatService {
 
     ChatMessageDao chatMessageDao;
 
-    Mapper<ChatRequest, ChatDto, Chat> chatTransformer;
+    Mapper<ChatRequest, ChatDto, Chat> chatMapper;
 
-    Mapper<ChatMessageRequest, ChatMessageDto, ChatMessage> chatMessageTransformer;
+    Mapper<ChatMessageRequest, ChatMessageDto, ChatMessage> chatMessageMapper;
 
-    @Autowired
+
     public ChatServiceImp(ChatDao chatDao,
             ChatMessageDao chatMessageDao,
-            Mapper<ChatRequest, ChatDto, Chat> chatTransformer,
-            Mapper<ChatMessageRequest, ChatMessageDto, ChatMessage> chatMessageTransformer) {
+            Mapper<ChatRequest, ChatDto, Chat> chatMapper,
+            Mapper<ChatMessageRequest, ChatMessageDto, ChatMessage> chatMessageMapper) {
         this.chatDao = chatDao;
         this.chatMessageDao = chatMessageDao;
-        this.chatTransformer = chatTransformer;
-        this.chatMessageTransformer = chatMessageTransformer;
+        this.chatMapper = chatMapper;
+        this.chatMessageMapper = chatMessageMapper;
     }
 
     @Override
     public boolean saveChat(ChatDto chatDto) throws Exception {
-        Chat chat = chatTransformer.dtoToEntity(chatDto);
+        Chat chat = chatMapper.dtoToEntity(chatDto);
         return this.chatDao.saveChat(chat);
     }
 
@@ -50,7 +49,7 @@ public class ChatServiceImp implements ChatService {
 
         return chats
                 .stream()
-                .map((chat) -> this.chatTransformer.entityToDto(chat))
+                .map((chat) -> this.chatMapper.entityToDto(chat))
                 .toList();
     }
 
@@ -60,14 +59,14 @@ public class ChatServiceImp implements ChatService {
 
         return chats
                 .stream()
-                .map((chat) -> this.chatTransformer.entityToDto(chat))
+                .map((chat) -> this.chatMapper.entityToDto(chat))
                 .toList();
     }
 
     // TODO: for chat creation call save chat first from the UI.
     @Override
     public boolean saveMessage(ChatMessageDto message) throws Exception {
-        ChatMessage chatMessage = this.chatMessageTransformer.dtoToEntity(message);
+        ChatMessage chatMessage = this.chatMessageMapper.dtoToEntity(message);
 
         return this.chatMessageDao.saveMessage(chatMessage);
     }
@@ -77,7 +76,7 @@ public class ChatServiceImp implements ChatService {
         List<ChatMessage> chatMessages = this.chatMessageDao.findChatMessages(chatID);
         return chatMessages
                 .stream()
-                .map((chatMessage) -> this.chatMessageTransformer.entityToDto(chatMessage))
+                .map((chatMessage) -> this.chatMessageMapper.entityToDto(chatMessage))
                 .toList();
     }
 

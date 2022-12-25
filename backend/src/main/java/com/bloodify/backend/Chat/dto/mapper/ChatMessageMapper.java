@@ -1,7 +1,6 @@
 package com.bloodify.backend.Chat.dto.mapper;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import com.bloodify.backend.AccountManagement.dao.interfaces.UserDAO;
 import com.bloodify.backend.AccountManagement.model.entities.User;
@@ -15,14 +14,14 @@ import com.bloodify.backend.Chat.model.entities.Chat;
 import com.bloodify.backend.Chat.model.entities.ChatMessage;
 import com.bloodify.backend.Chat.repository.interfaces.ChatDao;
 
-@Service
+@Component
 public class ChatMessageMapper implements Mapper<ChatMessageRequest, ChatMessageDto, ChatMessage> {
 
     ChatDao chatDao;
 
     UserDAO userDAO;
 
-    @Autowired
+
     public ChatMessageMapper(ChatDao chatDao, UserDAO userDAO) {
         this.chatDao = chatDao;
         this.userDAO = userDAO;
