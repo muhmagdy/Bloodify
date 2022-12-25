@@ -39,25 +39,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 //    @Query("SELECT u FROM User u WHERE u.acceptedPost.postID = :post_id")
 //    List<User> findDonorsByPostId(@Param("post_id") int post_id);
 
-    @Transactional
-    @Modifying(clearAutomatically = true,flushAutomatically = true)
-    @Query(value =
-            "UPDATE User " +
-            "SET status = :newStatus " +
-            "WHERE userID = :userID",
-            nativeQuery = true)
-    void updateUserStatus(@Param("userID") int userID, @Param("newStatus") int newStatus);
 
-    @Transactional
-    @Modifying(clearAutomatically = true,flushAutomatically = true)
-    @Query(value =
-            "UPDATE User " +
-                    "SET longitude = :currentLongitude, latitude = :currentLatitude " +
-                    "WHERE userID = :userID",
-            nativeQuery = true)
-    void updateLongitudeAndLatitude(@Param("userID") int userID,
-                                    @Param("currentLongitude") Double currentLongitude,
-                                    @Param("currentLatitude") Double currentLatitude);
 
 
     @Transactional

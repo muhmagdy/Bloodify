@@ -21,10 +21,10 @@ public class UserToUserDonation {
     @Size(min = 14, max = 14, message = "National ID is not 14 characters long")
     private String donorNationalID;
 
-    @ManyToOne(cascade = CascadeType.ALL, optional = false)
+    @ManyToOne(cascade = CascadeType.MERGE, optional = false)
     private User acceptor;
 
-    @ManyToOne(cascade = CascadeType.ALL, optional = false)
+    @ManyToOne(cascade = CascadeType.MERGE, optional = false)
     private Institution institution;
 
     @Column(nullable = false)

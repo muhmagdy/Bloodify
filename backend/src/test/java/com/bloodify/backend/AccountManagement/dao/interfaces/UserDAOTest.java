@@ -246,35 +246,6 @@ class UserDAOTest {
     }
 
 
-    /****************   Updating Tests   **************/
-//  updating donation status
-    @Test
-//    @Order(6)
-    void updateUserStatus() {
-        reset();
-        userDao.updateStatus(userDao.findUserByEmail(emails[1]).getUserID(), 1);
-        assertEquals(1, userDao.findUserByEmail(emails[1]).getStatus());
-    }
-//  testing default donation status
-//    @Test
-//    @Order(6)
-//    void originalUserStatus() {
-//        reset();
-//        assertEquals(0, userDao.findUserByEmail(emails[2]).getStatus());
-//    }
-
-//  updating longitude and latitude
-    @Test
-//    @Order(6)
-    void updateLongAndLang1() {
-        reset();
-        Double long1 = 29.882137;
-        Double lat1 = 31.210453;
-        userDao.updateLongitudeAndLatitude(userDao.findUserByEmail(emails[0]).getUserID(), long1, lat1);
-
-        assertEquals(long1, userDao.findUserByEmail(emails[0]).getLongitude());
-        assertEquals(lat1, userDao.findUserByEmail(emails[0]).getLatitude());
-    }
 //  default value for longitude and latitude
     @Test
 //    @Order(6)

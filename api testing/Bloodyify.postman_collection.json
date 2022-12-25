@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "5652d136-eb88-4986-be0e-cacadd828791",
+		"_postman_id": "2ef62343-cdc0-4e45-840a-97274496e1dd",
 		"name": "Bloodyify",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "18722631"
+		"_exporter_id": "18289071"
 	},
 	"item": [
 		{
@@ -751,7 +751,9 @@
 											"\r",
 											"pm.test(\"state is true\", function () {\r",
 											"    pm.expect(pm.response.json().status).to.eql(true)\r",
-											"})"
+											"})\r",
+											"let institution_token = pm.response.json().data.token;\r",
+											"pm.collectionVariables.set(\"user_token\", institution_token);"
 										],
 										"type": "text/javascript"
 									}
@@ -1652,7 +1654,107 @@
 					"item": [
 						{
 							"name": "User To User",
-							"item": []
+							"item": [
+								{
+									"name": "dummy post creation",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{user_token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"postID\": -1,\r\n    \"institutionID\": 1,\r\n    \"LastUpdateTime\": \"2022-12-18T07:29:00\",\r\n    \"expiryTime\": \"2022-12-18T08:51:00\",\r\n    \"requiredBags\": 9, \r\n    \"bloodType\": \"AB-\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "localhost:8080/api/v1/user/posting/add",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"v1",
+												"user",
+												"posting",
+												"add"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Valid institution to user transaction",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 202\", function () {\r",
+													"  pm.response.to.have.status(202);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"message is Transactional Succesful\", function () {\r",
+													"    pm.expect(pm.response.json().message).to.eql(\"Transaction Successful!\")\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{institution_token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"postID\": 1,\r\n    \"donorNationalID\": \"27901010102345\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "localhost:8080/api/v1/institution/transaction/user-to-user",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"v1",
+												"institution",
+												"transaction",
+												"user-to-user"
+											]
+										}
+									},
+									"response": []
+								}
+							]
 						},
 						{
 							"name": "Institution To User",
@@ -3181,7 +3283,7 @@
 									"\r",
 									"pm.test(\"valid post body\", () => {\r",
 									"    let length = pm.response.json().responseBody.length\r",
-									"    pm.expect(length).to.eql(1)\r",
+									"    pm.expect(length).to.eql(2)\r",
 									"})"
 								],
 								"type": "text/javascript"
@@ -3325,38 +3427,38 @@
 								"exec": [
 									"pm.test(\"get A+\", () => {\r",
 									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[0].types_bags['A+']).to.eql(0)\r",
+									"    pm.expect(lista[0].types_bags['A+']).to.eql(1000)\r",
 									"})\r",
 									"pm.test(\"get A+\", () => {\r",
 									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[0].types_bags['A-']).to.eql(0)\r",
+									"    pm.expect(lista[0].types_bags['A-']).to.eql(995)\r",
 									"})\r",
 									"pm.test(\"get A+\", () => {\r",
 									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[0].types_bags['O+']).to.eql(1)\r",
+									"    pm.expect(lista[0].types_bags['O+']).to.eql(1000)\r",
 									"})\r",
 									"pm.test(\"get A+\", () => {\r",
 									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[0].types_bags['O-']).to.eql(1)\r",
-									"})\r",
-									"\r",
-									"pm.test(\"get A+\", () => {\r",
-									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[1].types_bags['A+']).to.eql(2)\r",
+									"    pm.expect(lista[0].types_bags['O-']).to.eql(2)\r",
 									"})\r",
 									"\r",
 									"pm.test(\"get A+\", () => {\r",
 									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[1].types_bags['A-']).to.eql(2)\r",
+									"    pm.expect(lista[1].types_bags['A+']).to.eql(0)\r",
 									"})\r",
 									"\r",
 									"pm.test(\"get A+\", () => {\r",
 									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[1].types_bags['O+']).to.eql(3)\r",
+									"    pm.expect(lista[1].types_bags['A-']).to.eql(0)\r",
+									"})\r",
+									"\r",
+									"pm.test(\"get A+\", () => {\r",
+									"    let lista = pm.response.json(); \r",
+									"    pm.expect(lista[1].types_bags['O+']).to.eql(1)\r",
 									"})\r",
 									"pm.test(\"get A+\", () => {\r",
 									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[1].types_bags['O-']).to.eql(3)\r",
+									"    pm.expect(lista[1].types_bags['O-']).to.eql(1)\r",
 									"})"
 								],
 								"type": "text/javascript"
@@ -3401,40 +3503,40 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"get A+\", () => {\r",
+									"pm.test(\"get B+\", () => {\r",
 									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[0].types_bags['B+']).to.eql(1)\r",
+									"    pm.expect(lista[0].types_bags['B+']).to.eql(1000)\r",
 									"})\r",
-									"pm.test(\"get A+\", () => {\r",
+									"pm.test(\"get B+\", () => {\r",
 									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[0].types_bags['B-']).to.eql(1)\r",
+									"    pm.expect(lista[0].types_bags['B-']).to.eql(1000)\r",
 									"})\r",
-									"pm.test(\"get A+\", () => {\r",
+									"pm.test(\"get B+\", () => {\r",
 									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[0].types_bags['O+']).to.eql(1)\r",
+									"    pm.expect(lista[0].types_bags['O+']).to.eql(1000)\r",
 									"})\r",
-									"pm.test(\"get A+\", () => {\r",
+									"pm.test(\"get B+\", () => {\r",
 									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[0].types_bags['O-']).to.eql(1)\r",
+									"    pm.expect(lista[0].types_bags['O-']).to.eql(2)\r",
 									"})\r",
 									"\r",
-									"pm.test(\"get A+\", () => {\r",
+									"pm.test(\"get B+\", () => {\r",
 									"    let lista = pm.response.json(); \r",
 									"    pm.expect(lista[1].types_bags['B+']).to.eql(1)\r",
 									"})\r",
 									"\r",
-									"pm.test(\"get A+\", () => {\r",
+									"pm.test(\"get B+\", () => {\r",
 									"    let lista = pm.response.json(); \r",
 									"    pm.expect(lista[1].types_bags['B-']).to.eql(1)\r",
 									"})\r",
 									"\r",
-									"pm.test(\"get A+\", () => {\r",
+									"pm.test(\"get B+\", () => {\r",
 									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[1].types_bags['O+']).to.eql(3)\r",
+									"    pm.expect(lista[1].types_bags['O+']).to.eql(1)\r",
 									"})\r",
-									"pm.test(\"get A+\", () => {\r",
+									"pm.test(\"get B+\", () => {\r",
 									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[1].types_bags['O-']).to.eql(3)\r",
+									"    pm.expect(lista[1].types_bags['O-']).to.eql(1)\r",
 									"})"
 								],
 								"type": "text/javascript"
@@ -3479,78 +3581,78 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"get A+\", () => {\r",
+									"pm.test(\"get AB+\", () => {\r",
 									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[0].types_bags['B+']).to.eql(1)\r",
+									"    pm.expect(lista[0].types_bags['B+']).to.eql(1000)\r",
 									"})\r",
-									"pm.test(\"get A+\", () => {\r",
+									"pm.test(\"get AB+\", () => {\r",
 									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[0].types_bags['A+']).to.eql(0)\r",
+									"    pm.expect(lista[0].types_bags['A+']).to.eql(1000)\r",
 									"})\r",
-									"pm.test(\"get A+\", () => {\r",
+									"pm.test(\"get AB+\", () => {\r",
 									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[0].types_bags['AB+']).to.eql(0)\r",
+									"    pm.expect(lista[0].types_bags['AB+']).to.eql(1000)\r",
 									"})\r",
-									"pm.test(\"get A+\", () => {\r",
+									"pm.test(\"get AB+\", () => {\r",
 									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[0].types_bags['A-']).to.eql(0)\r",
-									"})\r",
-									"\r",
-									"pm.test(\"get A+\", () => {\r",
-									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[0].types_bags['B-']).to.eql(1)\r",
+									"    pm.expect(lista[0].types_bags['A-']).to.eql(995)\r",
 									"})\r",
 									"\r",
-									"pm.test(\"get A+\", () => {\r",
+									"pm.test(\"get AB+\", () => {\r",
 									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[0].types_bags['AB-']).to.eql(0)\r",
+									"    pm.expect(lista[0].types_bags['B-']).to.eql(1000)\r",
 									"})\r",
 									"\r",
-									"pm.test(\"get A+\", () => {\r",
+									"pm.test(\"get AB+\", () => {\r",
 									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[0].types_bags['O+']).to.eql(1)\r",
-									"})\r",
-									"pm.test(\"get A+\", () => {\r",
-									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[0].types_bags['O-']).to.eql(1)\r",
+									"    pm.expect(lista[0].types_bags['AB-']).to.eql(1000)\r",
 									"})\r",
 									"\r",
+									"pm.test(\"get AB+\", () => {\r",
+									"    let lista = pm.response.json(); \r",
+									"    pm.expect(lista[0].types_bags['O+']).to.eql(1000)\r",
+									"})\r",
+									"pm.test(\"get AB+\", () => {\r",
+									"    let lista = pm.response.json(); \r",
+									"    pm.expect(lista[0].types_bags['O-']).to.eql(2)\r",
+									"})\r",
 									"\r",
 									"\r",
-									"pm.test(\"get A+\", () => {\r",
+									"\r",
+									"pm.test(\"get AB+\", () => {\r",
 									"    let lista = pm.response.json(); \r",
 									"    pm.expect(lista[1].types_bags['B+']).to.eql(1)\r",
 									"})\r",
-									"pm.test(\"get A+\", () => {\r",
+									"pm.test(\"get AB+\", () => {\r",
 									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[1].types_bags['A+']).to.eql(2)\r",
+									"    pm.expect(lista[1].types_bags['A+']).to.eql(0)\r",
 									"})\r",
-									"pm.test(\"get A+\", () => {\r",
+									"pm.test(\"get AB+\", () => {\r",
 									"    let lista = pm.response.json(); \r",
 									"    pm.expect(lista[1].types_bags['AB+']).to.eql(0)\r",
 									"})\r",
-									"pm.test(\"get A+\", () => {\r",
+									"pm.test(\"get AB+\", () => {\r",
 									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[1].types_bags['A-']).to.eql(2)\r",
+									"    pm.expect(lista[1].types_bags['A-']).to.eql(0)\r",
 									"})\r",
 									"\r",
-									"pm.test(\"get A+\", () => {\r",
+									"pm.test(\"get AB+\", () => {\r",
 									"    let lista = pm.response.json(); \r",
 									"    pm.expect(lista[1].types_bags['B-']).to.eql(1)\r",
 									"})\r",
 									"\r",
-									"pm.test(\"get A+\", () => {\r",
+									"pm.test(\"get AB+\", () => {\r",
 									"    let lista = pm.response.json(); \r",
 									"    pm.expect(lista[1].types_bags['AB-']).to.eql(0)\r",
 									"})\r",
 									"\r",
-									"pm.test(\"get A+\", () => {\r",
+									"pm.test(\"get AB+\", () => {\r",
 									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[1].types_bags['O+']).to.eql(3)\r",
+									"    pm.expect(lista[1].types_bags['O+']).to.eql(1)\r",
 									"})\r",
-									"pm.test(\"get A+\", () => {\r",
+									"pm.test(\"get AB+\", () => {\r",
 									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[1].types_bags['O-']).to.eql(3)\r",
+									"    pm.expect(lista[1].types_bags['O-']).to.eql(1)\r",
 									"})"
 								],
 								"type": "text/javascript"
@@ -3595,21 +3697,21 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"get A+\", () => {\r",
+									"pm.test(\"get O+\", () => {\r",
 									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[0].types_bags['O+']).to.eql(1)\r",
+									"    pm.expect(lista[0].types_bags['O+']).to.eql(1000)\r",
 									"})\r",
-									"pm.test(\"get A+\", () => {\r",
+									"pm.test(\"get O+\", () => {\r",
 									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[0].types_bags['O-']).to.eql(1)\r",
+									"    pm.expect(lista[0].types_bags['O-']).to.eql(2)\r",
 									"})\r",
-									"pm.test(\"get A+\", () => {\r",
+									"pm.test(\"get O+\", () => {\r",
 									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[1].types_bags['O+']).to.eql(3)\r",
+									"    pm.expect(lista[1].types_bags['O+']).to.eql(1)\r",
 									"})\r",
-									"pm.test(\"get A+\", () => {\r",
+									"pm.test(\"get O+\", () => {\r",
 									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[1].types_bags['O-']).to.eql(3)\r",
+									"    pm.expect(lista[1].types_bags['O-']).to.eql(1)\r",
 									"})\r",
 									""
 								],
@@ -3655,24 +3757,24 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"get A+\", () => {\r",
+									"pm.test(\"get A-\", () => {\r",
 									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[0].types_bags['A-']).to.eql(0)\r",
+									"    pm.expect(lista[0].types_bags['A-']).to.eql(995)\r",
 									"})\r",
-									"pm.test(\"get A+\", () => {\r",
+									"pm.test(\"get A-\", () => {\r",
 									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[0].types_bags['O-']).to.eql(1)\r",
-									"})\r",
-									"\r",
-									"\r",
-									"pm.test(\"get A+\", () => {\r",
-									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[1].types_bags['A-']).to.eql(2)\r",
+									"    pm.expect(lista[0].types_bags['O-']).to.eql(2)\r",
 									"})\r",
 									"\r",
-									"pm.test(\"get A+\", () => {\r",
+									"\r",
+									"pm.test(\"get A-\", () => {\r",
 									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[1].types_bags['O-']).to.eql(3)\r",
+									"    pm.expect(lista[1].types_bags['A-']).to.eql(0)\r",
+									"})\r",
+									"\r",
+									"pm.test(\"get A-\", () => {\r",
+									"    let lista = pm.response.json(); \r",
+									"    pm.expect(lista[1].types_bags['O-']).to.eql(1)\r",
 									"})"
 								],
 								"type": "text/javascript"
@@ -3717,22 +3819,22 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"get A+\", () => {\r",
+									"pm.test(\"get B-\", () => {\r",
 									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[0].types_bags['B-']).to.eql(1)\r",
+									"    pm.expect(lista[0].types_bags['B-']).to.eql(1000)\r",
 									"})\r",
-									"pm.test(\"get A+\", () => {\r",
+									"pm.test(\"get B-\", () => {\r",
 									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[0].types_bags['O-']).to.eql(1)\r",
+									"    pm.expect(lista[0].types_bags['O-']).to.eql(2)\r",
 									"})\r",
 									"\r",
-									"pm.test(\"get A+\", () => {\r",
+									"pm.test(\"get B-\", () => {\r",
 									"    let lista = pm.response.json(); \r",
 									"    pm.expect(lista[1].types_bags['B-']).to.eql(1)\r",
 									"})\r",
-									"pm.test(\"get A+\", () => {\r",
+									"pm.test(\"get B-\", () => {\r",
 									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[1].types_bags['O-']).to.eql(3)\r",
+									"    pm.expect(lista[1].types_bags['O-']).to.eql(1)\r",
 									"})"
 								],
 								"type": "text/javascript"
@@ -3777,46 +3879,46 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"get A+\", () => {\r",
+									"pm.test(\"get AB-\", () => {\r",
 									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[0].types_bags['A-']).to.eql(0)\r",
+									"    pm.expect(lista[1].types_bags['A-']).to.eql(0)\r",
 									"})\r",
 									"\r",
-									"pm.test(\"get A+\", () => {\r",
-									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[0].types_bags['B-']).to.eql(1)\r",
-									"})\r",
-									"\r",
-									"pm.test(\"get A+\", () => {\r",
-									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[0].types_bags['AB-']).to.eql(0)\r",
-									"})\r",
-									"pm.test(\"get A+\", () => {\r",
-									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[0].types_bags['O-']).to.eql(1)\r",
-									"})\r",
-									"\r",
-									"\r",
-									"\r",
-									"pm.test(\"get A+\", () => {\r",
-									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[1].types_bags['A-']).to.eql(2)\r",
-									"})\r",
-									"\r",
-									"pm.test(\"get A+\", () => {\r",
+									"pm.test(\"get AB-\", () => {\r",
 									"    let lista = pm.response.json(); \r",
 									"    pm.expect(lista[1].types_bags['B-']).to.eql(1)\r",
 									"})\r",
 									"\r",
-									"pm.test(\"get A+\", () => {\r",
+									"pm.test(\"get AB-\", () => {\r",
 									"    let lista = pm.response.json(); \r",
 									"    pm.expect(lista[1].types_bags['AB-']).to.eql(0)\r",
 									"})\r",
-									"\r",
-									"\r",
-									"pm.test(\"get A+\", () => {\r",
+									"pm.test(\"get AB-\", () => {\r",
 									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[1].types_bags['O-']).to.eql(3)\r",
+									"    pm.expect(lista[1].types_bags['O-']).to.eql(1)\r",
+									"})\r",
+									"\r",
+									"\r",
+									"\r",
+									"pm.test(\"get AB-\", () => {\r",
+									"    let lista = pm.response.json(); \r",
+									"    pm.expect(lista[2].types_bags['A-']).to.eql(2)\r",
+									"})\r",
+									"\r",
+									"pm.test(\"get AB-\", () => {\r",
+									"    let lista = pm.response.json(); \r",
+									"    pm.expect(lista[2].types_bags['B-']).to.eql(1)\r",
+									"})\r",
+									"\r",
+									"pm.test(\"get AB-\", () => {\r",
+									"    let lista = pm.response.json(); \r",
+									"    pm.expect(lista[2].types_bags['AB-']).to.eql(0)\r",
+									"})\r",
+									"\r",
+									"\r",
+									"pm.test(\"get AB-\", () => {\r",
+									"    let lista = pm.response.json(); \r",
+									"    pm.expect(lista[2].types_bags['O-']).to.eql(3)\r",
 									"})"
 								],
 								"type": "text/javascript"
@@ -3861,13 +3963,13 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"get A+\", () => {\r",
+									"pm.test(\"get O-\", () => {\r",
 									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[0].types_bags['O-']).to.eql(1)\r",
+									"    pm.expect(lista[0].types_bags['O-']).to.eql(2)\r",
 									"})\r",
-									"pm.test(\"get A+\", () => {\r",
+									"pm.test(\"get O-\", () => {\r",
 									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[1].types_bags['O-']).to.eql(3)\r",
+									"    pm.expect(lista[1].types_bags['O-']).to.eql(1)\r",
 									"})\r",
 									""
 								],
@@ -4003,17 +4105,15 @@
 	],
 	"variable": [
 		{
-			"key": "user_token",
-			"value": ""
-		}
-	],
-	"variable": [
-		{
 			"key": "token",
 			"value": ""
 		},
 		{
 			"key": "institution_token",
+			"value": ""
+		},
+		{
+			"key": "user_token",
 			"value": ""
 		}
 	]
