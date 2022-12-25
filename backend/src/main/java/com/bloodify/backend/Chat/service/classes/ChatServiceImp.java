@@ -5,20 +5,16 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.bloodify.backend.Chat.controller.requests.entities.ChatMessageRequest;
+import com.bloodify.backend.Chat.controller.requests.entities.ChatRequest;
 import com.bloodify.backend.Chat.dto.entities.ChatDto;
 import com.bloodify.backend.Chat.dto.entities.ChatMessageDto;
-import com.bloodify.backend.Chat.dto.mapper.ChatMessageTransformer;
-import com.bloodify.backend.Chat.dto.mapper.ChatTransformer;
-import com.bloodify.backend.Chat.exceptions.ChatNotFoundException;
-import com.bloodify.backend.Chat.exceptions.RecipientNotFoundException;
-import com.bloodify.backend.Chat.exceptions.SenderNotFoundException;
+import com.bloodify.backend.Chat.dto.mapper.Mapper;
 import com.bloodify.backend.Chat.model.entities.Chat;
 import com.bloodify.backend.Chat.model.entities.ChatMessage;
 import com.bloodify.backend.Chat.repository.interfaces.ChatDao;
 import com.bloodify.backend.Chat.repository.interfaces.ChatMessageDao;
 import com.bloodify.backend.Chat.service.interfaces.ChatService;
-import com.bloodify.backend.UserRequests.exceptions.PostNotFoundException;
-import com.bloodify.backend.UserRequests.exceptions.UserNotFoundException;
 
 @Service
 public class ChatServiceImp implements ChatService {
@@ -27,13 +23,15 @@ public class ChatServiceImp implements ChatService {
 
     ChatMessageDao chatMessageDao;
 
-    ChatTransformer chatTransformer;
+    Mapper<ChatRequest, ChatDto, Chat> chatTransformer;
 
-    ChatMessageTransformer chatMessageTransformer;
+    Mapper<ChatMessageRequest, ChatMessageDto, ChatMessage> chatMessageTransformer;
 
     @Autowired
-    public ChatServiceImp(ChatDao chatDao, ChatMessageDao chatMessageDao,
-            ChatTransformer chatTransformer, ChatMessageTransformer chatMessageTransformer) {
+    public ChatServiceImp(ChatDao chatDao,
+            ChatMessageDao chatMessageDao,
+            Mapper<ChatRequest, ChatDto, Chat> chatTransformer,
+            Mapper<ChatMessageRequest, ChatMessageDto, ChatMessage> chatMessageTransformer) {
         this.chatDao = chatDao;
         this.chatMessageDao = chatMessageDao;
         this.chatTransformer = chatTransformer;
@@ -41,8 +39,8 @@ public class ChatServiceImp implements ChatService {
     }
 
     @Override
-    public boolean saveChat(ChatDto chatDto) throws PostNotFoundException, UserNotFoundException {
-        Chat chat = chatTransformer.transformDown(chatDto);
+    public boolean saveChat(ChatDto chatDto) throws Exception {
+        Chat chat = chatTransformer.dtoToEntity(chatDto);
         return this.chatDao.saveChat(chat);
     }
 
@@ -52,14 +50,24 @@ public class ChatServiceImp implements ChatService {
 
         return chats
                 .stream()
-                .map((chat) -> this.chatTransformer.transformUp(chat))
+                .map((chat) -> this.chatTransformer.entityToDto(chat))
                 .toList();
     }
 
     @Override
-    public boolean saveMessage(ChatMessageDto message)
-            throws ChatNotFoundException, SenderNotFoundException, RecipientNotFoundException {
-        ChatMessage chatMessage = this.chatMessageTransformer.transformDown(message);
+    public List<ChatDto> loadChats(Integer donorID) {
+        List<Chat> chats = this.chatDao.findByDonorID(donorID);
+
+        return chats
+                .stream()
+                .map((chat) -> this.chatTransformer.entityToDto(chat))
+                .toList();
+    }
+
+    // TODO: for chat creation call save chat first from the UI.
+    @Override
+    public boolean saveMessage(ChatMessageDto message) throws Exception {
+        ChatMessage chatMessage = this.chatMessageTransformer.dtoToEntity(message);
 
         return this.chatMessageDao.saveMessage(chatMessage);
     }
@@ -69,7 +77,8 @@ public class ChatServiceImp implements ChatService {
         List<ChatMessage> chatMessages = this.chatMessageDao.findChatMessages(chatID);
         return chatMessages
                 .stream()
-                .map((chatMessage) -> this.chatMessageTransformer.transformUp(chatMessage))
+                .map((chatMessage) -> this.chatMessageTransformer.entityToDto(chatMessage))
                 .toList();
     }
+
 }

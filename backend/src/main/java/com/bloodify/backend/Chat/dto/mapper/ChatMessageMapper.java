@@ -10,24 +10,25 @@ import com.bloodify.backend.Chat.dto.entities.ChatMessageDto;
 import com.bloodify.backend.Chat.exceptions.ChatNotFoundException;
 import com.bloodify.backend.Chat.exceptions.RecipientNotFoundException;
 import com.bloodify.backend.Chat.exceptions.SenderNotFoundException;
+import com.bloodify.backend.Chat.model.MessageStatus;
 import com.bloodify.backend.Chat.model.entities.Chat;
 import com.bloodify.backend.Chat.model.entities.ChatMessage;
 import com.bloodify.backend.Chat.repository.interfaces.ChatDao;
 
 @Service
-public class ChatMessageTransformer {
+public class ChatMessageMapper implements Mapper<ChatMessageRequest, ChatMessageDto, ChatMessage> {
 
     ChatDao chatDao;
 
     UserDAO userDAO;
 
     @Autowired
-    public ChatMessageTransformer(ChatDao chatDao, UserDAO userDAO) {
+    public ChatMessageMapper(ChatDao chatDao, UserDAO userDAO) {
         this.chatDao = chatDao;
         this.userDAO = userDAO;
     }
 
-    public ChatMessageDto transformDown(ChatMessageRequest chatMessageRequest) {
+    public ChatMessageDto requestToDto(ChatMessageRequest chatMessageRequest) {
         return new ChatMessageDto(
                 chatMessageRequest.getMessageID(),
                 chatMessageRequest.getChatID(),
@@ -37,7 +38,7 @@ public class ChatMessageTransformer {
                 chatMessageRequest.getTimestamp());
     }
 
-    public ChatMessage transformDown(ChatMessageDto chatMessageDto)
+    public ChatMessage dtoToEntity(ChatMessageDto chatMessageDto)
             throws ChatNotFoundException, SenderNotFoundException, RecipientNotFoundException {
 
         Chat chat = chatDao.findByID(chatMessageDto.getChatID());
@@ -58,20 +59,21 @@ public class ChatMessageTransformer {
                 sender,
                 recipient,
                 chatMessageDto.getContent(),
+                chatMessageDto.getTimestamp(),
+                MessageStatus.DELIVERED);
+    }
+
+    public ChatMessageRequest dtoToRequest(ChatMessageDto chatMessageDto) {
+        return new ChatMessageRequest(
+                chatMessageDto.getMessageID(),
+                chatMessageDto.getChatID(),
+                chatMessageDto.getSenderID(),
+                chatMessageDto.getRecipientID(),
+                chatMessageDto.getContent(),
                 chatMessageDto.getTimestamp());
     }
 
-    public ChatMessageRequest transformUp(ChatMessageDto chatMessageRequest) {
-        return new ChatMessageRequest(
-                chatMessageRequest.getMessageID(),
-                chatMessageRequest.getChatID(),
-                chatMessageRequest.getSenderID(),
-                chatMessageRequest.getRecipientID(),
-                chatMessageRequest.getContent(),
-                chatMessageRequest.getTimestamp());
-    }
-
-    public ChatMessageDto transformUp(ChatMessage chatMessage) {
+    public ChatMessageDto entityToDto(ChatMessage chatMessage) {
 
         return new ChatMessageDto(
                 chatMessage.getMessageID(),
@@ -81,7 +83,5 @@ public class ChatMessageTransformer {
                 chatMessage.getContent(),
                 chatMessage.getTimestamp());
     }
-
-    
 
 }

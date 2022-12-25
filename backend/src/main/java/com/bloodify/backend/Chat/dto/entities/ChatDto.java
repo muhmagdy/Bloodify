@@ -7,11 +7,7 @@ import lombok.Setter;
 @Getter
 public class ChatDto {
 
-    private int chatID;
-
-    private int postID;
-
-    private int donorID;
+    private Integer chatID, postID, donorID;
 
     public ChatDto(int chatID, int postID, int donorID) {
         this.chatID = chatID;

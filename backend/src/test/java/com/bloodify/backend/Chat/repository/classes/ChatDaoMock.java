@@ -27,6 +27,11 @@ public class ChatDaoMock implements ChatDao{
         // TODO Auto-generated method stub
         return null;
     }
+    @Override
+    public List<Chat> findByDonorID(Integer donorID) {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
 
     

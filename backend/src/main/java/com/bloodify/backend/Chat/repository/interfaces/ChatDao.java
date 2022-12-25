@@ -9,7 +9,7 @@ public interface ChatDao {
 
     List<Chat> findByPostID(int postID);
 
+    List<Chat> findByDonorID(Integer donorID);
+
     Chat findByID(Integer chatID);
-
-
 }

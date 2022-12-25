@@ -29,23 +29,22 @@ import lombok.Setter;
 @IdClass(ChatMessagePk.class)
 public class ChatMessage {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private int messageID;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "message_id")
+    private Integer messageID;
 
     @Id
     @ManyToOne(cascade = CascadeType.REMOVE)
-    @PrimaryKeyJoinColumn(name = "chatID")
+    @PrimaryKeyJoinColumn(name = "chat_id", referencedColumnName = "chat_id")
     private Chat chat;
 
 
     @ManyToOne(cascade = CascadeType.REMOVE)
-    @Column(nullable = false)
-    @JoinColumn(name = "userID")
+    @JoinColumn(name = "sender_ID", referencedColumnName = "userID", nullable = false)
     private User sender;
     
     @ManyToOne(cascade = CascadeType.REMOVE)
-    @Column(nullable = false)
-    @JoinColumn(name = "userID")
+    @JoinColumn(name = "recipient_ID", referencedColumnName = "userID", nullable = false)
     private User recipient;
 
     //TODO: test for message length
@@ -55,9 +54,9 @@ public class ChatMessage {
     @Column(nullable = false)
     private LocalDateTime timestamp;
 
-    // @Enumerated(EnumType.STRING)
-    // @Column(nullable = false)
-    // private MessageStatus status;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private MessageStatus status;
 
 
     public ChatMessage(){}

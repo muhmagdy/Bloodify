@@ -15,7 +15,7 @@ import com.bloodify.backend.UserRequests.model.entities.Post;
 import com.bloodify.backend.UserRequests.service.interfaces.PostDao;
 
 @Service
-public class ChatTransformer {
+public class ChatMapper implements Mapper<ChatRequest, ChatDto, Chat> {
 
 
     PostDao postDao;
@@ -23,16 +23,16 @@ public class ChatTransformer {
     UserDAO userDAO;
     
     @Autowired
-    public ChatTransformer(PostDao postDao, UserDAO userDAO) {
+    public ChatMapper(PostDao postDao, UserDAO userDAO) {
         this.postDao = postDao;
         this.userDAO = userDAO;
     }
 
-    public ChatDto transformDown(ChatRequest chatRequest){
+    public ChatDto requestToDto(ChatRequest chatRequest){
         return new ChatDto(chatRequest.getChatID(), chatRequest.getPostID(), chatRequest.getDonorID());
     }
 
-    public Chat transformDown(ChatDto chatDto) throws PostNotFoundException, UserNotFoundException{
+    public Chat dtoToEntity(ChatDto chatDto) throws PostNotFoundException, UserNotFoundException{
         Post post = postDao.getPostByID(chatDto.getPostID());
         if(post == null)    throw new PostNotFoundException();
 
@@ -42,13 +42,13 @@ public class ChatTransformer {
 
         return new Chat(chatDto.getChatID(), post, donor);
     }
+
     
-    
-    public ChatRequest transformUp(ChatDto chatDto){
+    public ChatRequest dtoToRequest(ChatDto chatDto){
         return new ChatRequest(chatDto.getChatID(), chatDto.getPostID(), chatDto.getDonorID());
     }
 
-    public ChatDto transformUp(Chat chat){
+    public ChatDto entityToDto(Chat chat){
 
         return new ChatDto(chat.getChatID(), chat.getPost().getPostID(), chat.getDonor().getUserID());
     }

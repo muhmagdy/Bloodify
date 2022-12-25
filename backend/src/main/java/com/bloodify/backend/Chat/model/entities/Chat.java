@@ -6,6 +6,7 @@ import com.bloodify.backend.AccountManagement.model.entities.User;
 import com.bloodify.backend.UserRequests.model.entities.Post;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -24,14 +25,15 @@ public class Chat implements Serializable {
     
     @Id
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
+    @Column(name = "chat_id")
     private Integer chatID;
 
     @ManyToOne(cascade = CascadeType.REMOVE)
-    @PrimaryKeyJoinColumn(name = "postID")
+    @PrimaryKeyJoinColumn(name = "post_id", referencedColumnName = "post_id")
     private Post post;
 
     @ManyToOne(cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "userID")
+    @JoinColumn(name = "donor_id", referencedColumnName = "userid", nullable = false)
     private User donor;
 
     public Chat(int chatID, Post post, User donor) {

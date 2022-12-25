@@ -8,8 +8,10 @@ import com.bloodify.backend.Chat.model.entities.Chat;
 
 public interface ChatRepository extends JpaRepository<Chat, Integer> {
 
-    boolean saveChat(Chat chat);
+    //Save is already implemented
 
-    List<Chat> findByPostID(Integer postID);
+    List<Chat> findByPostPostID(Integer postID);
+
+    List<Chat> findByDonorUserID(Integer donorID);
     
 }
