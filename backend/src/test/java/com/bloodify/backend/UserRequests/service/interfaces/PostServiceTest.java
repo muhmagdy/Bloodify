@@ -54,16 +54,7 @@ class PostServiceTest {
             userDao.saveUser(new User(
                 fNames[n], lNames[n], IDs[n], emails[n], "AB-", isDisease[n], dates[n], passwords[n])) ;
 
-        Double long1 = 29.882137;   Double lat1 = 31.210453;    // represents Kayet Bay carrefour with elgeich road
-        Double long2 = 29.885613;   Double lat2 = 31.213481;    // represents Kayet Bay castle itself
-        Double long3 = 29.894327;   Double lat3 = 31.199945;    // represents France Consulate
-        Double long4 = 29.933361;   Double lat4 = 31.217912;    // represents Sporting Club Sporting gate
-        Double instLong = 29.892540;    Double instLat = 31.197730;    // represents Andalusia Al Shalalat Hospital
 
-        userDao.updateLongitudeAndLatitude(userDao.findUserByEmail(emails[0]).getUserID(), long1, lat1);
-        userDao.updateLongitudeAndLatitude(userDao.findUserByEmail(emails[1]).getUserID(), long2, lat2);
-        userDao.updateLongitudeAndLatitude(userDao.findUserByEmail(emails[2]).getUserID(), long3, lat3);
-        userDao.updateLongitudeAndLatitude(userDao.findUserByEmail(emails[3]).getUserID(), long4, lat4);
     }
 
     RandomUserGenerations random = new RandomUserGenerations();
