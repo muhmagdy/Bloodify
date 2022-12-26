@@ -17,6 +17,10 @@ class _InstitutionHome extends State<InstitutionHome> {
   var isCurrent = true;
   var posts = <PostBrief>[];
 
+  _InstitutionHome() {
+    _pullRefresh();
+  }
+
   @override
   Widget build(BuildContext context) {
     final double width = MediaQuery.of(context).size.width;
@@ -60,14 +64,21 @@ class _InstitutionHome extends State<InstitutionHome> {
                   physics: const ClampingScrollPhysics(
                       parent: AlwaysScrollableScrollPhysics()),
                   children: [
-                    Text(
-                      isCurrent
-                          ? "Current Transactions"
-                          : "Previous Transactions",
-                      style: HeadingStyle(height, grey),
-                    ),
+                    if (posts.isEmpty)
+                      Text(
+                        "There's no current transactions",
+                        style: HeadingStyle(height, grey),
+                      ),
+                    if (posts.isNotEmpty)
+                      Text(
+                        isCurrent
+                            ? "Current Transactions"
+                            : "Previous Transactions",
+                        style: HeadingStyle(height, grey),
+                      ),
                     // TransactionTile(transaction)
                     ListView.builder(
+                        key: UniqueKey(),
                         physics: const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
                         itemCount: posts.length,
@@ -88,6 +99,8 @@ class _InstitutionHome extends State<InstitutionHome> {
         // print(value.data[i]);
         posts.add(PostBrief.fromInstJson(value.data[i]));
       }
+      posts.sort((a, b) => a.dateTime.compareTo(b.dateTime));
+      print(posts);
       setState(() {});
     });
   }
