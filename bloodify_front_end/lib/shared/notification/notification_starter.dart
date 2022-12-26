@@ -1,21 +1,53 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:notification_permissions/notification_permissions.dart';
+
+import '../../models/notification.dart';
+import '../../modules/BloodFinding/bloc/blood_finder_service.dart';
+import 'dart:math' show cos, sqrt, asin;
 
 enum PermissionStatus { provisional, granted, unknown, denied }
 
-class NotificationIntalizor {
-  @pragma('vm:entry-point')
-  Future<void> _firebaseMessagingBackgroundHandler(
-      RemoteMessage message) async {
-    // If you're going to use other Firebase services in the background, such as Firestore,
-    // make sure you call `initializeApp` before using other Firebase services.
-    await Firebase.initializeApp();
+// double calculateDistance(lat1, lon1, lat2, lon2) {
+//   var p = 0.017453292519943295;
+//   var c = cos;
+//   var a = 0.5 -
+//       c((lat2 - lat1) * p) / 2 +
+//       c(lat1 * p) * c(lat2 * p) * (1 - c((lon2 - lon1) * p)) / 2;
+//   return 12742 * asin(sqrt(a));
+// }
 
-    print("Handling a background message: ${message.messageId}");
+Future<bool> isInRange(Notification notification) async {
+  var location = await getLocation();
+  return (Geolocator.distanceBetween(location.latitude, location.latitude,
+              notification.latitude, notification.longtitude) /
+          1000 <
+      500);
+}
+
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  print(message.data);
+  Notification notification = Notification.fromJson(message.data);
+  bool inRange = await isInRange(notification);
+  if (inRange) {
+    LocalNotificationService ls = LocalNotificationService();
+
+    print("sending.....");
+    await ls.intialize();
+    await ls.showNotification(
+        id: 1,
+        title: "call of duty",
+        body:
+            "Some one need your help in hosbital ${notification.instituteName}");
+  } else {
+    print("No");
   }
+  print(message.data);
+}
 
+class NotificationIntalizor {
   static NotificationIntalizor? _object;
   static NotificationIntalizor? getObject() {
     if (_object == null) {
@@ -49,15 +81,26 @@ class NotificationIntalizor {
     } else {
       print('User declined or has not accepted permission');
     }
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      print('Got a message whilst in the foreground!');
-      print('Message data: ${message.data}');
 
-      if (message.notification != null) {
-        print('Message also contained a notification: ${message.notification}');
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
+      print(message.data);
+      Notification notification = Notification.fromJson(message.data);
+      bool inRange = await isInRange(notification);
+      if (inRange) {
+        print("sending.....");
+        LocalNotificationService ls = LocalNotificationService();
+        await ls.intialize();
+        await ls.showNotification(
+            id: 0,
+            title: "call of duty",
+            body:
+                "Some one need your help in hosbital ${notification.instituteName}");
+      } else {
+        print("No");
       }
     });
     print('User granted permission: ${settings.authorizationStatus}');
+    FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   }
 }
 

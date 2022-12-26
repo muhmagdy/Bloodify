@@ -13,9 +13,9 @@ import 'package:bloodify_front_end/shared/network/local/cach_helper.dart';
 import 'package:bloodify_front_end/shared/network/remote/dio_helper.dart';
 import 'package:bloodify_front_end/shared/notification/notification_starter.dart';
 import 'package:bloodify_front_end/shared/styles/themes.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'layout/home_layout.dart';
@@ -28,6 +28,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   NotificationIntalizor? notificationSystem = NotificationIntalizor.getObject();
   await notificationSystem?.start();
+
   UserInfo.deviceToken = await FirebaseMessaging.instance.getToken();
   print(UserInfo.deviceToken);
   await CachHelper.init();
@@ -45,9 +46,7 @@ void main() async {
     widget = const StartWidget();
   }
   Bloc.observer = MyBlocObserver();
-  LocalNotificationService ls = LocalNotificationService();
-  await ls.intialize();
-  await ls.showNotification(id: 0, title: "title", body: "body");
+
   DioHelper.init();
   runApp(MyApp(
     startWidget: widget,
