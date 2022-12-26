@@ -1,5 +1,6 @@
 // ignore_for_file: must_be_immutable
 
+import 'package:bloodify_front_end/models/postBrief.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -19,8 +20,8 @@ class UserToUser extends StatelessWidget {
     return BlocConsumer<PostTransactionCubit, PostTransactionStates>(
         listener: (context, state) {},
         builder: (context, state) {
-          Post post = PostTransactionCubit.get(context).post;
-          toController.text = post.user_ID;
+          PostBrief post = PostTransactionCubit.get(context).post;
+          toController.text = post.nationalID;
           return Form(
             key: formKey,
             child: Column(
@@ -51,7 +52,7 @@ class UserToUser extends StatelessWidget {
                         onClick: () {
                           if (formKey.currentState!.validate()) {
                             PostTransactionCubit.get(context)
-                                .postTransaction(id: fromController.text);
+                                .postTransaction(fromController.text);
                           } else {}
                         },
                         text: "Submit",

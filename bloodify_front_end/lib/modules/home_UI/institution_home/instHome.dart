@@ -76,7 +76,6 @@ class _InstitutionHome extends State<InstitutionHome> {
                             : "Previous Transactions",
                         style: HeadingStyle(height, grey),
                       ),
-                    // TransactionTile(transaction)
                     ListView.builder(
                         key: UniqueKey(),
                         physics: const NeverScrollableScrollPhysics(),
@@ -100,7 +99,7 @@ class _InstitutionHome extends State<InstitutionHome> {
         posts.add(PostBrief.fromInstJson(value.data[i]));
       }
       posts.sort((a, b) => a.dateTime.compareTo(b.dateTime));
-      print(posts);
+      if (kDebugMode) print("posts.length = ${posts.length}");
       setState(() {});
     });
   }

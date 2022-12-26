@@ -28,12 +28,7 @@ void main() async {
   Widget widget;
   if (UserInfo.token != null) {
     UserInfo.isUser = CachHelper.getData(key: 'isUser');
-
-    if (UserInfo.isUser!) {
-      widget = HomeLayout();
-    } else {
-      widget = const InstNavBar();
-    }
+    widget = HomeLayout();
   } else {
     widget = const StartWidget();
   }

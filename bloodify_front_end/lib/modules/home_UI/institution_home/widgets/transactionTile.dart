@@ -1,6 +1,7 @@
 import 'package:bloodify_front_end/models/postBrief.dart';
 import 'package:bloodify_front_end/models/transaction.dart';
 import 'package:bloodify_front_end/modules/institution/postTransaction.dart';
+import 'package:bloodify_front_end/modules/transactions_modules/post_transaction/postTransaction.dart';
 import 'package:bloodify_front_end/shared/Constatnt/colors.dart';
 import 'package:bloodify_front_end/shared/Constatnt/fonts.dart';
 import 'package:bloodify_front_end/shared/styles/container.dart';
@@ -125,19 +126,19 @@ class _TransactionTile extends State<TransactionTile>
   }
 
   void _onTap(BuildContext context) {
-    // Navigator.of(context).push(PageRouteBuilder(
-    //     pageBuilder: (context, animation, secondaryAnimation) =>
-    //         PostTransactionWidget(post),
-    //     transitionsBuilder: ((context, animation, secondaryAnimation, child) {
-    //       const begin = Offset(0.0, 1.0);
-    //       const end = Offset.zero;
-    //       const curve = Curves.ease;
-    //       var tween =
-    //           Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-    //       return SlideTransition(
-    //         position: animation.drive(tween),
-    //         child: child,
-    //       );
-    //     })));
+    Navigator.of(context).push(PageRouteBuilder(
+        pageBuilder: (context, animation, secondaryAnimation) =>
+            PostTransaction(post),
+        transitionsBuilder: ((context, animation, secondaryAnimation, child) {
+          const begin = Offset(0.0, 1.0);
+          const end = Offset.zero;
+          const curve = Curves.ease;
+          var tween =
+              Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+          return SlideTransition(
+            position: animation.drive(tween),
+            child: child,
+          );
+        })));
   }
 }

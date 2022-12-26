@@ -49,6 +49,8 @@ dependencies:
   http: ^0.13.5
   google_fonts: ^3.0.1
   persistent_bottom_nav_bar: any
+  dependencies:
+  restart_app: ^1.1.1
   
   equatable: ^2.0.5
   omni_datetime_picker: ^0.1.3
