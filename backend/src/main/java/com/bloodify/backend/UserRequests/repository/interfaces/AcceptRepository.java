@@ -22,4 +22,6 @@ public interface AcceptRepository extends JpaRepository<AcceptedPost, Integer> {
     void updateLocationInfo(Double longitude, Double latitude, Double threshold, @NonNull User user);
 
     List<AcceptedPost> findByUser(User user);
+
+    AcceptedPost findByPostPostIDAndUserUserID(Integer postID, Integer donorID);
 }

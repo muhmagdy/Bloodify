@@ -72,8 +72,8 @@ public class ChatServiceImp implements ChatService {
     }
 
     @Override
-    public List<ChatMessageDto> loadChatMessages(int chatID) {
-        List<ChatMessage> chatMessages = this.chatMessageDao.findChatMessages(chatID);
+    public List<ChatMessageDto> loadChatMessages(Integer postID, Integer donorID) {
+        List<ChatMessage> chatMessages = this.chatMessageDao.findChatMessages(postID, donorID);
         return chatMessages
                 .stream()
                 .map((chatMessage) -> this.chatMessageMapper.entityToDto(chatMessage))

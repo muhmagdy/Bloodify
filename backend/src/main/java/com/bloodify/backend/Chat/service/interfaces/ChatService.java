@@ -14,7 +14,7 @@ public interface ChatService {
 
     boolean saveMessage(ChatMessageDto message) throws Exception;
 
-    List<ChatMessageDto> loadChatMessages(int chatID);
+    List<ChatMessageDto> loadChatMessages(Integer postID, Integer donorID);
 
 
 

@@ -10,8 +10,8 @@ import com.bloodify.backend.Chat.model.entities.ChatMessagePk;
 
 public interface ChatMessageRepository extends JpaRepository<ChatMessage, ChatMessagePk> {
 
-    // boolean saveMessage(ChatMessage message);
+
     // save is ls already implemented
 
-    List<ChatMessage> findByChatChatID(Integer chatID);
+    List<ChatMessage> findByAcceptedPostPostPostIDAndAcceptedPostUserUserID(Integer postID, Integer donorID);
 }

@@ -12,7 +12,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ChatMessageRequest {
-    int chatID, messageID, senderID, recipientID;
+    Integer messageID, postID, donorID, senderID, recipientID;
     String content;
     LocalDateTime timestamp;
 }

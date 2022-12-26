@@ -2,6 +2,8 @@ package com.bloodify.backend.Chat.model.entities;
 
 import java.io.Serializable;
 
+import com.bloodify.backend.UserRequests.model.entities.AcceptedPost;
+
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -14,7 +16,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ChatMessagePk implements Serializable {
-    private Chat chat;
     private Integer messageID;
-    
+    private AcceptedPost acceptedPost;
 }

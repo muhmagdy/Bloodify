@@ -14,7 +14,9 @@ import lombok.Setter;
 public class ChatMessageDto {
     private Integer messageID;
 
-    private Integer chatID;
+    private Integer postID;
+
+    private Integer donorID;
 
     private Integer senderID;
     

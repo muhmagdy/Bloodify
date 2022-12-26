@@ -8,6 +8,7 @@ public interface ChatMessageDao {
     
     boolean saveMessage(ChatMessage message);
 
-    List<ChatMessage> findChatMessages(int chatID);
+    List<ChatMessage> findChatMessages(Integer postID,  Integer donorID);
+
 
 }

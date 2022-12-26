@@ -26,8 +26,10 @@ public class ChatMessageDaoImp implements ChatMessageDao{
     }
 
     @Override
-    public List<ChatMessage> findChatMessages(int chatID) {
-        return repository.findByChatChatID(chatID);
+    public List<ChatMessage> findChatMessages(Integer postID,  Integer donorID) {
+        // TODO Auto-generated method stub
+        return null;
     }
+
     
 }
