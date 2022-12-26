@@ -18,8 +18,7 @@ public interface UserToInstDonRepository extends JpaRepository<UserToInstDonatio
 
     int countByBloodTypeLike(String bloodType);
 
-    @Query("select count(u) from UserToInstDonation u where u.bloodType like ?1 and u.donationDate between ?1 and ?2")
-    int countByTypeAndDonationDateBetween(String bloodType, LocalDate donationDateStart, LocalDate donationDateEnd);
+    int countByBloodTypeLikeAndDonationDateBetween(String bloodType, LocalDate donationDateStart, LocalDate donationDateEnd);
 
 
 

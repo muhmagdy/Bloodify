@@ -59,4 +59,11 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
                        @Param("bloodType") String bloodType, @Param("id") int postID,
                        @Param("created_at") LocalDateTime lastUpdateTime, @Param("expiry_at") LocalDateTime expiryTime);
 
+    @Query("select count(p) from Post p where p.bloodType = ?1")
+    int countByBloodType(String bloodType);
+
+    @Query("select sum(p.bagsNum) from Post p where p.bloodType = ?1")
+    int sumBagsByBloodType(String BloodType);
+
+
 }

@@ -37,7 +37,7 @@ public class UserToInstitution {
 
     private void getCounts(LocalDate start, LocalDate end, String[] bloodTypes, int[] bagsCounts) {
         for(int i = 0; i< bagsCounts.length; i++) {
-            bagsCounts[i] = repository.countByTypeAndDonationDateBetween(bloodTypes[i], start, end);
+            bagsCounts[i] = repository.countByBloodTypeLikeAndDonationDateBetween(bloodTypes[i], start, end);
         }
     }
 
