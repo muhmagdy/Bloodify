@@ -6,12 +6,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
-import org.springframework.messaging.handler.annotation.SendTo;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
@@ -19,11 +16,7 @@ import com.bloodify.backend.Chat.controller.requests.entities.ChatMessageRequest
 import com.bloodify.backend.Chat.dto.mapper.ChatMessageMapper;
 import com.bloodify.backend.Chat.service.interfaces.ChatService;
 import com.bloodify.backend.UserRequests.exceptions.AcceptedPostNotFoundException;
-import com.bloodify.backend.UserRequests.exceptions.PostNotFoundException;
 
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 @Controller
 // @RequestMapping("/chat")
 // @MessageMapping("/chat")
@@ -32,7 +25,7 @@ public class ChatController {
     private ChatService chatService;
     private ChatMessageMapper mapper;
 
-    private SimpMessagingTemplate messageingTemplate;
+    // private SimpMessagingTemplate messagingTemplate;
 
     ChatController(ChatService chatService){
         this.chatService = chatService;

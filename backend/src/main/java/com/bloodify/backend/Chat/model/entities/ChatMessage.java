@@ -3,16 +3,10 @@ package com.bloodify.backend.Chat.model.entities;
 import java.time.LocalDateTime;
 
 import com.bloodify.backend.AccountManagement.model.entities.User;
-import com.bloodify.backend.Chat.model.MessageStatus;
-import com.bloodify.backend.UserRequests.model.entities.AcceptPKId;
 import com.bloodify.backend.UserRequests.model.entities.AcceptedPost;
-import com.bloodify.backend.UserRequests.model.entities.Post;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -67,10 +61,6 @@ public class ChatMessage {
 
     @Column(nullable = false)
     private LocalDateTime timestamp;
-
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private MessageStatus status;
 
     public ChatMessage() {
     }

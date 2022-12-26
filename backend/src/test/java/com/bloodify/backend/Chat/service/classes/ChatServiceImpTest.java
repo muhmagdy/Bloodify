@@ -2,8 +2,6 @@ package com.bloodify.backend.Chat.service.classes;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.util.Iterator;
@@ -14,27 +12,16 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import com.bloodify.backend.AccountManagement.model.entities.User;
-import com.bloodify.backend.Chat.controller.requests.entities.ChatMessageRequest;
-import com.bloodify.backend.Chat.controller.requests.entities.ChatRequest;
-import com.bloodify.backend.Chat.dto.entities.ChatDto;
 import com.bloodify.backend.Chat.dto.entities.ChatMessageDto;
-import com.bloodify.backend.Chat.dto.mapper.ChatMapper;
 import com.bloodify.backend.Chat.dto.mapper.ChatMessageMapper;
-import com.bloodify.backend.Chat.dto.mapper.Mapper;
-import com.bloodify.backend.Chat.model.entities.Chat;
 import com.bloodify.backend.Chat.model.entities.ChatMessage;
-import com.bloodify.backend.Chat.repository.interfaces.ChatDao;
 import com.bloodify.backend.Chat.repository.interfaces.ChatMessageDao;
 import com.bloodify.backend.Chat.service.interfaces.ChatService;
-import com.bloodify.backend.UserRequests.exceptions.PostNotFoundException;
 
 public class ChatServiceImpTest {
 
     ChatMessageDao msgDao;
-    ChatDao chatDao;
-    Mapper<ChatRequest, ChatDto, Chat> chatMapper;
-    Mapper<ChatMessageRequest, ChatMessageDto, ChatMessage> msgMapper;
+    ChatMessageMapper msgMapper;
 
     ChatService service;
 
@@ -59,8 +46,6 @@ public class ChatServiceImpTest {
     @BeforeEach
     void init(){
         msgDao = Mockito.mock(ChatMessageDao.class);
-        chatDao = Mockito.mock(ChatDao.class);
-        chatMapper = Mockito.mock(ChatMapper.class);
         msgMapper = Mockito.mock(ChatMessageMapper.class);
         msgs = new LinkedList<>();
         msgsDto = new LinkedList<>();
@@ -71,7 +56,7 @@ public class ChatServiceImpTest {
             msgsDto.add(mockMsgDto(i));
         }
         chatMessageDto =  Mockito.mock(ChatMessageDto.class);
-        service = new ChatServiceImp(chatDao, msgDao, chatMapper, msgMapper);
+        service = new ChatServiceImp(msgDao, msgMapper);
     }
     
     @Test
