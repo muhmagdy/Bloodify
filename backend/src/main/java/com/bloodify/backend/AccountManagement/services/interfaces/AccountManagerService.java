@@ -9,7 +9,7 @@ import com.bloodify.backend.AccountManagement.model.entities.User;
 // import com.bloodify.backend.model.requests.UserLogInRequest;
 
 public interface AccountManagerService {
-    LoginResponseBody userLogIn(Authentication auth);
+    LoginResponseBody userLogIn(Authentication auth,String mobileToken);
     LoginResponseBody instLogIn(Authentication auth);
 
     boolean userSignUp(User user);

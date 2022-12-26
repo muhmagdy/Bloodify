@@ -6,9 +6,11 @@ import com.bloodify.backend.AccountManagement.services.exceptions.NationalIdExis
 import com.bloodify.backend.AccountManagement.services.interfaces.AccountManagerService;
 import com.bloodify.backend.AccountManagement.Utils.TokenUtil;
 import com.bloodify.backend.AccountManagement.dao.interfaces.InstitutionDAO;
+import com.bloodify.backend.AccountManagement.dao.interfaces.LoginSessionDAO;
 import com.bloodify.backend.AccountManagement.dao.interfaces.UserDAO;
 import com.bloodify.backend.AccountManagement.model.responses.LoginResponseBody;
 import com.bloodify.backend.AccountManagement.model.entities.Institution;
+import com.bloodify.backend.AccountManagement.model.entities.LoginSession;
 import com.bloodify.backend.AccountManagement.model.entities.User;
 import com.bloodify.backend.AccountManagement.services.exceptions.EmailExistsException;
 
@@ -32,12 +34,23 @@ public class AccountManagerServiceImp implements AccountManagerService {
 
     @Autowired
     EncoderService encoderService;
+    @Autowired
+    LoginSessionDAO loginSessionDAO;
 
     @Override
-    public LoginResponseBody userLogIn(Authentication auth) {
+    public LoginResponseBody userLogIn(Authentication auth,String mobileToken) {
         try{
             String token = tokenUtil.generateToken(auth);
             User user = userDAO.findUserByEmail(auth.getName());
+            String loginToken = loginSessionDAO.getToken(user.getEmail());
+            System.out.println(loginToken);
+            if(loginToken!=null){
+                loginSessionDAO.updateToken(user.getEmail(), mobileToken);
+            }
+          else { 
+                LoginSession loginSession= new LoginSession(user.getEmail(),mobileToken);
+                loginSessionDAO.save(loginSession);
+            }
             return new LoginResponseBody(user, token);
         }catch (Exception e){
             log.info(e.getMessage());
@@ -64,7 +77,6 @@ public class AccountManagerServiceImp implements AccountManagerService {
         System.out.println(user.getPassword());
         boolean nationalIdExists = userDAO.findUserByNationalID(user.getNationalID()) != null;
         boolean emailExists = userDAO.findUserByEmail(user.getEmail()) != null;
-
         if (nationalIdExists) {
             if (emailExists)
                 throw new BothEmailAndNationalIdExists();

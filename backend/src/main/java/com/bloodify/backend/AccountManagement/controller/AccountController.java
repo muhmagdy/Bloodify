@@ -10,6 +10,8 @@ import com.bloodify.backend.AccountManagement.services.interfaces.AccountManager
 
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,11 +48,15 @@ public class AccountController {
     // Returns Status Code 200 OK                   if signed in successfully
     // Returns Status Code 422 UNPROCESSABLE ENTITY if email/password incorrect
     @PostMapping(test + "/user/auth")
-    public ResponseEntity<LogInResponse> signInUser(Authentication credentials){
-        LoginResponseBody body = accountManagerService.userLogIn(credentials);
+    public ResponseEntity<LogInResponse> signInUser(Authentication credentials,@RequestBody Map<String, Object> httpBody){
+        String token = (String)  httpBody.get("token");
+        System.out.println(token);
+        LoginResponseBody body = accountManagerService.userLogIn(credentials,token);
         if(body == null){
+            
             return ResponseEntity.status(422).body(new LogInResponse(false, "wrong credentials", body));
         }
+
         return ResponseEntity.ok(new LogInResponse(true, "login successful", body));
     }
 

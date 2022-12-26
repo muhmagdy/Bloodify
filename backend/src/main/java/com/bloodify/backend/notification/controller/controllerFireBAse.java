@@ -15,7 +15,7 @@ import ch.qos.logback.core.subst.Token;
 
 @RestController
 @RequestMapping("/try")
-public class controllerTry {
+public class controllerFireBAse {
     @Autowired
     FirebaseMessagingService firebaseMessagingService;
     @GetMapping("/{token}")
