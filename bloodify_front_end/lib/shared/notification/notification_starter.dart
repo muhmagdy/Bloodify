@@ -10,6 +10,7 @@ import 'dart:math' show cos, sqrt, asin;
 
 enum PermissionStatus { provisional, granted, unknown, denied }
 
+int i = 0;
 // double calculateDistance(lat1, lon1, lat2, lon2) {
 //   var p = 0.017453292519943295;
 //   var c = cos;
@@ -24,7 +25,7 @@ Future<bool> isInRange(Notification notification) async {
   return (Geolocator.distanceBetween(location.latitude, location.latitude,
               notification.latitude, notification.longtitude) /
           1000 <
-      500);
+      50);
 }
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
@@ -37,10 +38,11 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
     print("sending.....");
     await ls.intialize();
     await ls.showNotification(
-        id: 1,
+        id: i,
         title: "call of duty",
         body:
             "Some one need your help in hosbital ${notification.instituteName}");
+    i++;
   } else {
     print("No");
   }
@@ -91,10 +93,11 @@ class NotificationIntalizor {
         LocalNotificationService ls = LocalNotificationService();
         await ls.intialize();
         await ls.showNotification(
-            id: 0,
+            id: i,
             title: "call of duty",
             body:
                 "Some one need your help in hosbital ${notification.instituteName}");
+        i++;
       } else {
         print("No");
       }
