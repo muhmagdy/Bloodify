@@ -28,6 +28,7 @@ public class ChatMessageMapper implements Mapper<ChatMessageRequest, ChatMessage
     }
 
     public ChatMessageDto requestToDto(ChatMessageRequest chatMessageRequest) {
+        if(chatMessageRequest == null)  return null;
         return new ChatMessageDto(
                 chatMessageRequest.getMessageID(),
                 chatMessageRequest.getChatID(),
@@ -40,6 +41,8 @@ public class ChatMessageMapper implements Mapper<ChatMessageRequest, ChatMessage
     public ChatMessage dtoToEntity(ChatMessageDto chatMessageDto)
             throws ChatNotFoundException, SenderNotFoundException, RecipientNotFoundException {
 
+        if(chatMessageDto == null) return null;
+
         Chat chat = chatDao.findByID(chatMessageDto.getChatID());
         if (chat == null)
             throw new ChatNotFoundException();
@@ -48,12 +51,12 @@ public class ChatMessageMapper implements Mapper<ChatMessageRequest, ChatMessage
         if (sender == null)
             throw new SenderNotFoundException();
 
-        User recipient = userDAO.findByID(chatMessageDto.getSenderID());
+        User recipient = userDAO.findByID(chatMessageDto.getRecipientID());     //thanks mockito
         if (recipient == null)
             throw new RecipientNotFoundException();
 
         return new ChatMessage(
-                chatMessageDto.getChatID(),
+                chatMessageDto.getMessageID(),      //thanks mockit
                 chat,
                 sender,
                 recipient,
@@ -63,9 +66,10 @@ public class ChatMessageMapper implements Mapper<ChatMessageRequest, ChatMessage
     }
 
     public ChatMessageRequest dtoToRequest(ChatMessageDto chatMessageDto) {
+        if(chatMessageDto == null)  return null;
         return new ChatMessageRequest(
+                chatMessageDto.getChatID(),     //thanks mockito
                 chatMessageDto.getMessageID(),
-                chatMessageDto.getChatID(),
                 chatMessageDto.getSenderID(),
                 chatMessageDto.getRecipientID(),
                 chatMessageDto.getContent(),
@@ -73,6 +77,7 @@ public class ChatMessageMapper implements Mapper<ChatMessageRequest, ChatMessage
     }
 
     public ChatMessageDto entityToDto(ChatMessage chatMessage) {
+        if(chatMessage == null)  return null;
 
         return new ChatMessageDto(
                 chatMessage.getMessageID(),

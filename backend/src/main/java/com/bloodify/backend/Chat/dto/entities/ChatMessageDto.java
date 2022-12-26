@@ -12,13 +12,13 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ChatMessageDto {
-    private int messageID;
+    private Integer messageID;
 
-    private int chatID;
+    private Integer chatID;
 
-    private int senderID;
+    private Integer senderID;
     
-    private int recipientID;
+    private Integer recipientID;
 
     private String content;
 
