@@ -29,6 +29,11 @@ public class EventServiceImp implements EventService {
         return eventDAO.findAllInstEvents(email);
     }
 
+    @Override
+    public List<Event> getAllEvents() {
+        return eventDAO.findAllEvents();
+    }
+
     // this function is scheduled to be called every 120,000 ms -> 2 minutes
     // and deletes all the expired event
     // TODO Events might need to stay in the db so a flag can be added to each record
