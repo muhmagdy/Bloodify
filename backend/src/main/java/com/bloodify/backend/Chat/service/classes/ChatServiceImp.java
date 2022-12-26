@@ -63,11 +63,11 @@ public class ChatServiceImp implements ChatService {
                 .toList();
     }
 
-    // TODO: for chat creation call save chat first from the UI.
     @Override
     public boolean saveMessage(ChatMessageDto message) throws Exception {
         ChatMessage chatMessage = this.chatMessageMapper.dtoToEntity(message);
-
+        Integer recipientID = chatMessage.getRecipient().getUserID();
+        chatMessage.getAcceptedPost().setNewMsgFor(recipientID);
         return this.chatMessageDao.saveMessage(chatMessage);
     }
 

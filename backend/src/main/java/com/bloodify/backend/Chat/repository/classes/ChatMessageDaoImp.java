@@ -21,14 +21,12 @@ public class ChatMessageDaoImp implements ChatMessageDao{
 
     @Override
     public boolean saveMessage(ChatMessage message) {
-        repository.save(message);
-        return true;
+        return repository.save(message) != null;
     }
 
     @Override
     public List<ChatMessage> findChatMessages(Integer postID,  Integer donorID) {
-        // TODO Auto-generated method stub
-        return null;
+        return repository.findByAcceptedPostPostPostIDAndAcceptedPostUserUserID(postID, donorID);
     }
 
     
