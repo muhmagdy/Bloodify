@@ -1,4 +1,4 @@
-package com.bloodify.backend.Statistics.Service.Institution;
+package com.bloodify.backend.Statistics.Service.Common;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
