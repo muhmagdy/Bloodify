@@ -155,7 +155,7 @@ class _UserHome extends State<UserHome> {
               }).then((value) {
                 print(value.data);
                 for (int i = 0; i < value.data.length; i++) {
-                  var event = PostBrief.fromJson(value.data[i], status);
+                  var event = PostBrief.fromUserJson(value.data[i], status);
                   posts.add(event);
                   people.add([]);
                 }
@@ -170,7 +170,7 @@ class _UserHome extends State<UserHome> {
               }).then((value) {
                 print(value.data);
                 for (int i = 0; i < value.data.length; i++) {
-                  var event = PostBrief.fromJson(value.data[i], status);
+                  var event = PostBrief.fromUserJson(value.data[i], status);
                   posts.add(event);
                   people.add(<UserBrief>[]);
                 }
@@ -198,7 +198,7 @@ class _UserHome extends State<UserHome> {
               }).then((value) {
                 print(value.data);
                 for (int i = 0; i < value.data.length; i++) {
-                  var event = PostBrief.fromJson(value.data[i], status);
+                  var event = PostBrief.fromUserJson(value.data[i], status);
                   posts.add(event);
                   people.add([]);
                 }

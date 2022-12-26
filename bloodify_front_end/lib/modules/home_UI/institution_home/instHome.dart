@@ -1,6 +1,9 @@
+import 'package:bloodify_front_end/models/postBrief.dart';
 import 'package:bloodify_front_end/models/transaction.dart';
 import 'package:bloodify_front_end/modules/home_UI/institution_home/widgets/transactionTile.dart';
 import 'package:bloodify_front_end/shared/Constatnt/fonts.dart';
+import 'package:bloodify_front_end/shared/network/remote/dio_helper.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../../shared/Constatnt/colors.dart';
@@ -11,27 +14,11 @@ class InstitutionHome extends StatefulWidget {
 }
 
 class _InstitutionHome extends State<InstitutionHome> {
+  var isCurrent = true;
+  var posts = <PostBrief>[];
+
   @override
   Widget build(BuildContext context) {
-    final isCurrent = true;
-    final transactions = [
-      Transaction(36672, "Karim Alaa", "30101010109876",
-          DateTime(2022, 12, 20, 13, 30), 1, "AB+", "Pending"),
-      Transaction(56453, "Loai Magdy", "30101010109876",
-          DateTime(2022, 12, 20, 13, 30), 1, "A-", "Pending"),
-      Transaction(78742, "Mohamed Magdy", "30101015555555",
-          DateTime(2022, 12, 20, 13, 30), 2, "O+", "Pending"),
-      Transaction(12546, "Youhanna Yousi", "30101010109876",
-          DateTime(2022, 12, 20, 13, 30), 1, "B-", "Pending"),
-      Transaction(89545, "Youssef Saber", "30101010109876",
-          DateTime(2022, 12, 20, 13, 30), 5, "AB-", "Pending"),
-      Transaction(12584, "Youssef Magdy", "30101010109876",
-          DateTime(2022, 12, 20, 13, 30), 2, "B+", "Pending"),
-      Transaction(79846, "Someone Else", "30101010109876",
-          DateTime(2022, 12, 20, 13, 30), 3, "O-", "Pending"),
-    ];
-    final transaction = Transaction(36672, "Karim Alaa", "30101010109876",
-        DateTime(2022, 12, 20, 13, 30), 2, "AB+", "Pending");
     final double width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
     return Container(
@@ -83,9 +70,9 @@ class _InstitutionHome extends State<InstitutionHome> {
                     ListView.builder(
                         physics: const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
-                        itemCount: transactions.length,
+                        itemCount: posts.length,
                         itemBuilder: (context, index) =>
-                            TransactionTile(transactions[index])),
+                            TransactionTile(posts[index])),
                     Container(height: 0.03 * height)
                   ],
                 )),
@@ -94,6 +81,14 @@ class _InstitutionHome extends State<InstitutionHome> {
   }
 
   Future<void> _pullRefresh() async {
-    setState(() {});
+    DioHelper.getData(url: "institution/posts", query: {}).then((value) {
+      posts = [];
+      if (kDebugMode) print(value.data);
+      for (int i = 0; i < value.data.length; i++) {
+        // print(value.data[i]);
+        posts.add(PostBrief.fromInstJson(value.data[i]));
+      }
+      setState(() {});
+    });
   }
 }

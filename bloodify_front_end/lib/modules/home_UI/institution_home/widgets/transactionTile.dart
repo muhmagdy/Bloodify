@@ -1,3 +1,4 @@
+import 'package:bloodify_front_end/models/postBrief.dart';
 import 'package:bloodify_front_end/models/transaction.dart';
 import 'package:bloodify_front_end/modules/institution/postTransaction.dart';
 import 'package:bloodify_front_end/shared/Constatnt/colors.dart';
@@ -7,11 +8,11 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class TransactionTile extends StatefulWidget {
-  final Transaction transaction;
-  const TransactionTile(this.transaction, {super.key});
+  final PostBrief post;
+  const TransactionTile(this.post, {super.key});
 
   @override
-  createState() => _TransactionTile(transaction);
+  createState() => _TransactionTile(post);
 }
 
 class _TransactionTile extends State<TransactionTile>
@@ -31,13 +32,13 @@ class _TransactionTile extends State<TransactionTile>
     super.dispose();
   }
 
-  _TransactionTile(this.transaction);
+  _TransactionTile(this.post);
 
-  final Transaction transaction;
+  final PostBrief post;
   late String dateTime;
 
   void init() {
-    dateTime = DateFormat("d MMM y 'at' h:m a").format(transaction.dateTime);
+    dateTime = DateFormat("d MMM y 'at' h:m a").format(post.dateTime);
   }
 
   @override
@@ -56,11 +57,11 @@ class _TransactionTile extends State<TransactionTile>
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "#${transaction.id}",
+                  "#${post.id}",
                   style: VerySmallStyle(width, Colors.black),
                 ),
                 Text(
-                  transaction.status,
+                  "Pending",
                   style: VerySmallBoldStyle(width, Colors.black),
                 )
               ],
@@ -71,7 +72,7 @@ class _TransactionTile extends State<TransactionTile>
                     alignment: Alignment.centerLeft,
                     fit: BoxFit.scaleDown,
                     child: Text(
-                      transaction.name,
+                      post.name,
                       textAlign: TextAlign.start,
                       style: NormalStyle(height, Colors.black),
                     ))),
@@ -87,7 +88,7 @@ class _TransactionTile extends State<TransactionTile>
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              transaction.nationalID,
+                              post.nationalID,
                               style: SmallStyle(width, Colors.black),
                             ),
                             Text(
@@ -100,7 +101,7 @@ class _TransactionTile extends State<TransactionTile>
                   children: [
                     Text("Count", style: SmallStyle(width, red)),
                     Text(
-                      transaction.count.toString(),
+                      post.count.toString(),
                       style: NormalStyle(height, red),
                     )
                   ],
@@ -112,7 +113,7 @@ class _TransactionTile extends State<TransactionTile>
                       style: SmallStyle(width, red),
                     ),
                     Text(
-                      transaction.bloodType,
+                      post.bloodType,
                       style: NormalStyle(height, red),
                     )
                   ],
@@ -124,19 +125,19 @@ class _TransactionTile extends State<TransactionTile>
   }
 
   void _onTap(BuildContext context) {
-    Navigator.of(context).push(PageRouteBuilder(
-        pageBuilder: (context, animation, secondaryAnimation) =>
-            PostTransactionWidget(transaction),
-        transitionsBuilder: ((context, animation, secondaryAnimation, child) {
-          const begin = Offset(0.0, 1.0);
-          const end = Offset.zero;
-          const curve = Curves.ease;
-          var tween =
-              Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-          return SlideTransition(
-            position: animation.drive(tween),
-            child: child,
-          );
-        })));
+    // Navigator.of(context).push(PageRouteBuilder(
+    //     pageBuilder: (context, animation, secondaryAnimation) =>
+    //         PostTransactionWidget(post),
+    //     transitionsBuilder: ((context, animation, secondaryAnimation, child) {
+    //       const begin = Offset(0.0, 1.0);
+    //       const end = Offset.zero;
+    //       const curve = Curves.ease;
+    //       var tween =
+    //           Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+    //       return SlideTransition(
+    //         position: animation.drive(tween),
+    //         child: child,
+    //       );
+    //     })));
   }
 }
