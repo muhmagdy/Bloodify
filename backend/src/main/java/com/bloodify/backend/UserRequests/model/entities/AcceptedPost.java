@@ -24,4 +24,6 @@ public class AcceptedPost {
     Double longitude;
     Double latitude;
     Double threshold;
+
+    Integer newMsgFor;
 }
