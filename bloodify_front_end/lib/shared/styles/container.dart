@@ -17,3 +17,24 @@ Widget TileContainer({height, width, child, onTap}) {
           ),
           child: child));
 }
+
+void StyledBottomSheet({context, children}) {
+  showModalBottomSheet(
+      backgroundColor: Colors.transparent,
+      context: context,
+      builder: (context) {
+        final width = MediaQuery.of(context).size.width;
+        return Container(
+            clipBehavior: Clip.hardEdge,
+            decoration: BoxDecoration(
+                color: lightGrey,
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(width / 15),
+                    topRight: Radius.circular(width / 15))),
+            padding: EdgeInsets.all(0.05 * width),
+            child: Column(
+                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: children));
+      });
+}

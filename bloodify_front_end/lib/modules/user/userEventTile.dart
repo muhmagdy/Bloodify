@@ -97,162 +97,127 @@ class _EventTile extends State<UserEventTile> {
   }
 
   void _onTap(BuildContext context) {
-    // Navigator.of(context).push(PageRouteBuilder(
-    //     pageBuilder: (context, animation, secondaryAnimation) =>
-    //         InstitutionEventDetailsWindow(widget.event),
-    //     transitionsBuilder: ((context, animation, secondaryAnimation, child) {
-    //       const begin = Offset(0.0, 1.0);
-    //       const end = Offset.zero;
-    //       const curve = Curves.ease;
-    //       var tween =
-    //           Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-    //       return SlideTransition(
-    //         position: animation.drive(tween),
-    //         child: child,
-    //       );
-    //     })));
-    showModalBottomSheet(
-        // isScrollControlled: true,
-        backgroundColor: Colors.transparent,
-        context: context,
-        builder: (context) {
-          final width = MediaQuery.of(context).size.width;
-          final height = MediaQuery.of(context).size.height;
-          return Container(
-            clipBehavior: Clip.hardEdge,
-            decoration: BoxDecoration(
-                color: lightGrey,
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(width / 15),
-                    topRight: Radius.circular(width / 15))),
-            padding: EdgeInsets.all(0.05 * width),
-            child: Column(
-              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "#${widget.event.event_ID}",
-                  style: SmallStyle(width, blue),
-                ),
-                Text(
-                  widget.event.title,
-                  style: BigStyle(height, Colors.black),
-                ),
-                if (widget.event.location != null &&
-                    widget.event.location!.isNotEmpty)
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
+    StyledBottomSheet(
+      context: context,
+      children: [
+        Text(
+          "#${widget.event.event_ID}",
+          style: SmallStyle(width, blue),
+        ),
+        Text(
+          widget.event.title,
+          style: BigStyle(height, Colors.black),
+        ),
+        if (widget.event.location != null && widget.event.location!.isNotEmpty)
+          Text(
+            "Location:",
+            style: SmallBoldStyle(width, blue),
+          ),
+        if (widget.event.location != null && widget.event.location!.isNotEmpty)
+          Text(
+            widget.event.location ?? "",
+            style: SmallStyle(width, Colors.black),
+          ),
+        Container(
+          height: 0.01 * height,
+        ),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              width: 0.45 * width,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
                   Text(
-                    "Location:",
-                    style: SmallBoldStyle(width, blue),
+                    "Start Date",
+                    style: SmallStyle(width, blue),
                   ),
-                if (widget.event.location != null &&
-                    widget.event.location!.isNotEmpty)
                   Text(
-                    widget.event.location ?? "",
+                    DateFormat('d-M-yyyy').format(widget.event.startDate),
                     style: SmallStyle(width, Colors.black),
-                  ),
-                Container(
-                  height: 0.01 * height,
-                ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      width: 0.45 * width,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Start Date",
-                            style: SmallStyle(width, blue),
-                          ),
-                          Text(
-                            DateFormat('d-M-yyyy')
-                                .format(widget.event.startDate),
-                            style: SmallStyle(width, Colors.black),
-                          )
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      width: 0.45 * width,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "End Date",
-                            style: SmallStyle(width, blue),
-                          ),
-                          Text(
-                            DateFormat('d-M-yyyy').format(widget.event.endDate),
-                            style: SmallStyle(width, Colors.black),
-                          )
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                Container(
-                  height: 0.01 * height,
-                ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      width: 0.45 * width,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Start Time",
-                            style: SmallStyle(width, blue),
-                          ),
-                          Text(
-                            DateFormat('h:mm a')
-                                .format(widget.event.startWorkingHour),
-                            style: SmallStyle(width, Colors.black),
-                          )
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      width: 0.45 * width,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "End Time",
-                            style: SmallStyle(width, blue),
-                          ),
-                          Text(
-                            DateFormat('h:mm a')
-                                .format(widget.event.endWorkingHour),
-                            style: SmallStyle(width, Colors.black),
-                          )
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                Container(
-                  height: 0.01 * height,
-                ),
-                TextButton(
-                    onPressed: () {
-                      MapsLauncher.launchCoordinates(widget.event.latitude,
-                          widget.event.longitude, widget.event.location);
-                    },
-                    style: TextButton.styleFrom(
-                        backgroundColor: blue,
-                        minimumSize: Size(width * 0.9, height * 0.05),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(width / 26))),
-                    child: Text(
-                      "Directions",
-                      style: NormalStyle(height, Colors.white),
-                    ))
-              ],
+                  )
+                ],
+              ),
             ),
-          );
-        });
+            SizedBox(
+              width: 0.45 * width,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "End Date",
+                    style: SmallStyle(width, blue),
+                  ),
+                  Text(
+                    DateFormat('d-M-yyyy').format(widget.event.endDate),
+                    style: SmallStyle(width, Colors.black),
+                  )
+                ],
+              ),
+            ),
+          ],
+        ),
+        Container(
+          height: 0.01 * height,
+        ),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              width: 0.45 * width,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Start Time",
+                    style: SmallStyle(width, blue),
+                  ),
+                  Text(
+                    DateFormat('h:mm a').format(widget.event.startWorkingHour),
+                    style: SmallStyle(width, Colors.black),
+                  )
+                ],
+              ),
+            ),
+            SizedBox(
+              width: 0.45 * width,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "End Time",
+                    style: SmallStyle(width, blue),
+                  ),
+                  Text(
+                    DateFormat('h:mm a').format(widget.event.endWorkingHour),
+                    style: SmallStyle(width, Colors.black),
+                  )
+                ],
+              ),
+            ),
+          ],
+        ),
+        Container(
+          height: 0.01 * height,
+        ),
+        TextButton(
+            onPressed: () {
+              MapsLauncher.launchCoordinates(widget.event.latitude,
+                  widget.event.longitude, widget.event.location);
+            },
+            style: TextButton.styleFrom(
+                backgroundColor: blue,
+                minimumSize: Size(width * 0.9, height * 0.05),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(width / 26))),
+            child: Text(
+              "Directions",
+              style: NormalStyle(height, Colors.white),
+            ))
+      ],
+    );
   }
 }
