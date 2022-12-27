@@ -18,6 +18,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'layout/home_layout.dart';
 import 'modules/login_UI/User_login/cubit/user_login_cubit.dart';
 import 'modules/login_UI/institution_login/cubit/institution_login_cubit.dart';
+import 'modules/settings/UserSettings.dart';
 import 'modules/signUP_UI/sign_up_State_management/sign_up_cubit.dart';
 import 'modules/transactions_modules/institution_tranaction/cubic/institution_transaction_cubit.dart';
 
@@ -73,7 +74,8 @@ class MyApp extends StatelessWidget {
           darkTheme: darkTheme,
           // themeMode: false ? ThemeMode.dark : ThemeMode.light,
           themeMode: ThemeMode.light,
-          home: startWidget,
+          //home: startWidget,
+          home: UserSettings(),
         ));
   }
 }
