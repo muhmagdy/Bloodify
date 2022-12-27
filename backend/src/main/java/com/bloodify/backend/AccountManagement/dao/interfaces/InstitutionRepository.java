@@ -118,14 +118,15 @@ public interface InstitutionRepository extends JpaRepository<Institution, Intege
     int incrementONegBagsCountBy(@NonNull Integer negativeO_bagsCount, @NonNull String email);
 
     // getting blood bags counts:
+
     @Query("select i.negativeA_bagsCount from Institution i where i.email like ?1")
     Integer findANByEmailLike(String email);
 
     @Query("select i.negativeB_bagsCount from Institution i where i.email like ?1")
-    Integer findBNEmailLike(String email);
+    Integer findBNByEmailLike(String email);
 
     @Query("select i.negativeO_bagsCount from Institution i where i.email like ?1")
-    Integer findONEmailLike(String email);
+    Integer findONByEmailLike(String email);
 
     @Query("select i.negativeAB_bagsCount from Institution i where i.email like ?1")
     Integer findABNByEmailLike(String email);

@@ -6,7 +6,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BloodBagsCountWrapper {
-    String bloodType;
-    int bagsCount;
-    double bagsPercentage;
+    public String bloodType;
+    public int bagsCount;
+//    public double bagsPercentage;
 }
+

@@ -5,12 +5,10 @@ import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 public class PostsStatisticsWrapper {
-    String bloodType;
-
-    int postsCount;
-    double postsPercentage;
-
-    int bagsCount;
-    double bagsPercentage;
+    public String bloodType;
+    public int postsCount;
+//    public double postsPercentage;
+    public int bagsCount;
+//    public double bagsPercentage;
 
 }
