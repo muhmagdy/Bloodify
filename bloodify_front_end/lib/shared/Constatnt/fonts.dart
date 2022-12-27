@@ -133,3 +133,12 @@ TextStyle NormalStyle(double height, Color color) {
     color: color,
   );
 }
+
+TextStyle BigStyle(double height, Color color) {
+  return SafeGoogleFont(
+    'Poppins',
+    fontSize: 0.04 * height,
+    fontWeight: FontWeight.w700,
+    color: color,
+  );
+}

@@ -42,3 +42,5 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+bloodify_front_end/.vscode/settings.json
+bloodify_front_end/.metals/metals.mv.db
