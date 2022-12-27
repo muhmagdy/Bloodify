@@ -20,19 +20,11 @@ class UserEventPage extends StatefulWidget {
 }
 
 class _UserEventPage extends State<UserEventPage> {
+  var _isLoading = true;
   Position? position;
-  List<Event_model> events = [
-    // Event(123, "Some Event Name", "Location of event",
-    //     DateTime(2022, 12, 31, 12, 30)),
-    // Event(952, "The Greatest Event in The World", "A dump location",
-    //     DateTime(2022, 12, 20, 12, 30)),
-    // Event(654, "Another Name for an Event", "Location of locations",
-    //     DateTime(2023, 1, 31, 12, 30)),
-    // Event(741, "Also another event name", "Somewhere on earth",
-    //     DateTime(2022, 12, 25, 20)),
-  ];
+  List<Event_model> events = [];
   _UserEventPage() {
-    _pullRefresh();
+    _pullRefresh(isStarting: true);
   }
   @override
   Widget build(BuildContext context) {
@@ -64,31 +56,53 @@ class _UserEventPage extends State<UserEventPage> {
             ),
           ],
         )),
-        body: Container(
-            padding: EdgeInsets.only(left: 0.02 * width, right: 0.02 * width),
-            child: RefreshIndicator(
-                triggerMode: RefreshIndicatorTriggerMode.anywhere,
-                color: blue,
-                onRefresh: _pullRefresh,
-                child: ListView(
-                    physics: const ClampingScrollPhysics(
-                        parent: AlwaysScrollableScrollPhysics()),
-                    children: [
-                      Text(
-                        "Current Events",
-                        style: HeadingStyle(height, grey),
-                      ),
-                      ListView.builder(
-                          physics: const NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: events.length,
-                          itemBuilder: (context, index) =>
-                              UserEventTile(events[index], position!)),
-                      Container(height: 0.03 * height)
-                    ]))));
+        body: Stack(
+          children: [
+            Container(
+                padding:
+                    EdgeInsets.only(left: 0.02 * width, right: 0.02 * width),
+                child: RefreshIndicator(
+                    triggerMode: RefreshIndicatorTriggerMode.anywhere,
+                    color: blue,
+                    onRefresh: _pullRefresh,
+                    child: ListView(
+                        physics: const ClampingScrollPhysics(
+                            parent: AlwaysScrollableScrollPhysics()),
+                        children: [
+                          Text(
+                            "Current Events",
+                            style: HeadingStyle(height, grey),
+                          ),
+                          ListView.builder(
+                              physics: const NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount: events.length,
+                              itemBuilder: (context, index) =>
+                                  UserEventTile(events[index], position!)),
+                          Container(height: 0.03 * height)
+                        ]))),
+            if (_isLoading)
+              Center(
+                  child: Container(
+                width: 0.2 * width,
+                height: 0.2 * width,
+                decoration: BoxDecoration(
+                    color: const Color(0xff8D8D8D),
+                    borderRadius: BorderRadius.circular(width / 26),
+                    backgroundBlendMode: BlendMode.overlay),
+                child:
+                    const Center(child: CircularProgressIndicator(color: blue)),
+              ))
+          ],
+        ));
   }
 
-  Future<void> _pullRefresh() async {
+  Future<void> _pullRefresh({bool isStarting = false}) async {
+    if (!isStarting) {
+      setState(() {
+        _isLoading = true;
+      });
+    }
     position = await getLocation();
     DioHelper.getData(url: 'user/events', query: {}).then((value) {
       events = [];
@@ -98,7 +112,9 @@ class _UserEventPage extends State<UserEventPage> {
         events.add(event);
       }
       print(events);
-      setState(() {});
+      setState(() {
+        _isLoading = false;
+      });
     }).catchError((error) {});
   }
 }
