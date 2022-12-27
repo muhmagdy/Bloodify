@@ -29,6 +29,7 @@ class _EventTile extends State<UserEventTile> {
           onTap: () => _onTap(context),
           height: height,
           width: width,
+          color: lightGrey,
           child: SizedBox(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

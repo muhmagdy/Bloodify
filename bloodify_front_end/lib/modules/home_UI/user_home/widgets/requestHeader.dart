@@ -1,8 +1,10 @@
 import 'package:bloodify_front_end/models/postBrief.dart';
 import 'package:bloodify_front_end/models/request.dart';
 import 'package:bloodify_front_end/shared/Constatnt/colors.dart';
+import 'package:bloodify_front_end/shared/styles/container.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../shared/Constatnt/fonts.dart';
@@ -21,15 +23,11 @@ class RequestHeader extends StatelessWidget {
     }
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
-    return Container(
-      margin: EdgeInsets.only(bottom: 0.005 * height),
-      padding: EdgeInsets.fromLTRB(
-          0.05 * width, 0.02 * height, 0.05 * width, 0.02 * height),
-      width: double.infinity,
-      decoration: BoxDecoration(
-        color: blue,
-        borderRadius: BorderRadius.circular(0.05128 * width),
-      ),
+    return TileContainer(
+      height: height,
+      width: width,
+      color: blue,
+      onTap: () => _onTap(context),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -117,7 +115,7 @@ class RequestHeader extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    DateFormat("d MMM y 'at' h:m a").format(request.dateTime),
+                    DateFormat("d MMM y 'at' h:mm a").format(request.dateTime),
                     style: SafeGoogleFont(
                       'Poppins',
                       fontSize: 0.025 * height,
@@ -151,5 +149,16 @@ class RequestHeader extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  void _onTap(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
+    StyledBottomSheet(context: context, children: [
+      Text(
+        "#${request.id}",
+        style: SmallStyle(width, blue),
+      ),
+    ]);
   }
 }

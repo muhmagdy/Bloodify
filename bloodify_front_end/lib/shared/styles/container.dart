@@ -2,7 +2,7 @@ import 'package:bloodify_front_end/shared/Constatnt/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-Widget TileContainer({height, width, child, onTap}) {
+Widget TileContainer({height, width, child, onTap, color}) {
   return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -12,13 +12,14 @@ Widget TileContainer({height, width, child, onTap}) {
           width: double.infinity,
           // height: 93 * fem,
           decoration: BoxDecoration(
-            color: lightGrey,
+            color: color,
             borderRadius: BorderRadius.circular(width / 26),
           ),
           child: child));
 }
 
-void StyledBottomSheet({context, children}) {
+void StyledBottomSheet(
+    {required BuildContext context, required List<Widget> children}) {
   showModalBottomSheet(
       backgroundColor: Colors.transparent,
       context: context,

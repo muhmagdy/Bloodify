@@ -49,6 +49,7 @@ class _TransactionTile extends State<TransactionTile>
         onTap: () => _onTap(context),
         width: width,
         height: height,
+        color: lightGrey,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
