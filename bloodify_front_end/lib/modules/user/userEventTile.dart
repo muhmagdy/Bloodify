@@ -109,7 +109,7 @@ class _EventTile extends State<UserEventTile> {
         ),
         Text(
           widget.event.title,
-          style: BigStyle(height, Colors.black),
+          style: BigBoldStyle(height, Colors.black),
         ),
         if (widget.event.location != null && widget.event.location!.isNotEmpty)
           Text(

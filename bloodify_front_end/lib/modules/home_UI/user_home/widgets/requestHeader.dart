@@ -1,11 +1,14 @@
 import 'package:bloodify_front_end/models/postBrief.dart';
 import 'package:bloodify_front_end/models/request.dart';
+import 'package:bloodify_front_end/shared/Constatnt/Component.dart';
 import 'package:bloodify_front_end/shared/Constatnt/colors.dart';
+import 'package:bloodify_front_end/shared/network/remote/dio_helper.dart';
 import 'package:bloodify_front_end/shared/styles/container.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
+import 'package:maps_launcher/maps_launcher.dart';
 
 import '../../../../shared/Constatnt/fonts.dart';
 
@@ -155,9 +158,108 @@ class RequestHeader extends StatelessWidget {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
     StyledBottomSheet(context: context, children: [
+      Text("#${request.id}", style: SmallStyle(width, blue)),
+      Text("Requester", style: SmallStyle(width, Colors.black)),
+      Text(request.name, style: BigBoldStyle(height, Colors.black)),
       Text(
-        "#${request.id}",
-        style: SmallStyle(width, blue),
+        request.hospitalName,
+        style: NormalStyle(height, Colors.black),
+      ),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          if (request.count == 1)
+            Text(
+              "${request.count} Blood Bag",
+              style: NormalStyle(height, blue),
+            ),
+          if (request.count > 1)
+            Text(
+              "${request.count} Blood Bags",
+              style: NormalStyle(height, blue),
+            ),
+          Text(
+            request.bloodType,
+            style: BigBoldStyle(height, red),
+          )
+        ],
+      ),
+      Text("Needed At", style: SmallStyle(width, blue)),
+      Text(
+        DateFormat("EEE d MMMM y h:mm a").format(request.dateTime),
+        style: SmallStyle(width, Colors.black),
+      ),
+      Text("Distance", style: SmallStyle(width, blue)),
+      Text(
+        "${request.distance.toStringAsFixed(3)} KM",
+        style: SmallStyle(width, Colors.black),
+      ),
+      Container(
+        height: 0.01 * height,
+      ),
+      TextButton(
+          onPressed: () {
+            MapsLauncher.launchCoordinates(
+                request.latitude, request.longitude, request.hospitalName);
+          },
+          style: TextButton.styleFrom(
+              backgroundColor: blue,
+              minimumSize: Size(width * 0.9, height * 0.05),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(width / 26))),
+          child: Text(
+            "Directions",
+            style: NormalStyle(height, Colors.white),
+          )),
+      Container(
+        height: 0.01 * height,
+      ),
+      if (request.state == 0)
+        TextButton(
+            onPressed: () {
+              DioHelper.postData(url: 'user/post/accept', data: {
+                'id': request.id,
+                'longitude': request.location.longitude,
+                'latitude': request.location.latitude,
+                'threshold': 5000.0,
+              }).then((value) => {
+                    if (value.data['state'])
+                      {
+                        showToast(
+                            text: "Post accepted successfully!",
+                            color: blue,
+                            time: 3000)
+                      }
+                    else
+                      {
+                        showToast(
+                            text: value.data['message'], color: red, time: 3000)
+                      }
+                  });
+            },
+            style: TextButton.styleFrom(
+                backgroundColor: red,
+                minimumSize: Size(width * 0.9, height * 0.05),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(width / 26))),
+            child: Text(
+              "Accept",
+              style: NormalStyle(height, Colors.white),
+            )),
+      if (request.state == 2)
+        TextButton(
+            onPressed: () {},
+            style: TextButton.styleFrom(
+                backgroundColor: red,
+                minimumSize: Size(width * 0.9, height * 0.05),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(width / 26))),
+            child: Text(
+              "Cancel",
+              style: NormalStyle(height, Colors.white),
+            )),
+      Container(
+        height: 0.01 * height,
       ),
     ]);
   }
