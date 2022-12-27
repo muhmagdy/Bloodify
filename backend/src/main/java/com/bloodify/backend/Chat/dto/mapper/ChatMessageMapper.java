@@ -3,7 +3,6 @@ package com.bloodify.backend.Chat.dto.mapper;
 import org.springframework.stereotype.Component;
 
 import com.bloodify.backend.AccountManagement.dao.interfaces.UserDAO;
-import com.bloodify.backend.AccountManagement.model.entities.User;
 import com.bloodify.backend.Chat.controller.requests.entities.ChatMessageRequest;
 import com.bloodify.backend.Chat.dto.entities.ChatMessageDto;
 import com.bloodify.backend.Chat.exceptions.RecipientNotFoundException;
@@ -32,8 +31,7 @@ public class ChatMessageMapper{
                 chatMessageRequest.getMessageID(),
                 chatMessageRequest.getPostID(),
                 chatMessageRequest.getDonorID(),
-                chatMessageRequest.getSenderID(),
-                chatMessageRequest.getRecipientID(),
+                chatMessageRequest.getDirection(),
                 chatMessageRequest.getContent(),
                 chatMessageRequest.getTimestamp());
     }
@@ -44,14 +42,6 @@ public class ChatMessageMapper{
         if (chatMessageDto == null)
             return null;
 
-        // Post post = postDao.getPostByID(chatMessageDto.getPostID());
-        // if (post == null)
-        //     throw new PostNotFoundException();
-
-        // User donor = userDAO.findByID(chatMessageDto.getDonorID());
-        // if (donor == null)
-        //     throw new DonorNotFoundException();
-
         AcceptedPost acceptedPost = acceptRepository
                                     .findByPostPostIDAndUserUserID(
                                         chatMessageDto.getPostID(), chatMessageDto.getDonorID());
@@ -59,19 +49,11 @@ public class ChatMessageMapper{
         if(acceptedPost == null)
                 throw new AcceptedPostNotFoundException();
 
-        User sender = userDAO.findByID(chatMessageDto.getSenderID());
-        if (sender == null)
-            throw new SenderNotFoundException();
-
-        User recipient = userDAO.findByID(chatMessageDto.getRecipientID()); // thanks mockito
-        if (recipient == null)
-            throw new RecipientNotFoundException();
 
         return new ChatMessage(
                 chatMessageDto.getMessageID(), // thanks mockit
                 acceptedPost,
-                sender,
-                recipient,
+                chatMessageDto.getDirection(),
                 chatMessageDto.getContent(),
                 chatMessageDto.getTimestamp());
     }
@@ -83,8 +65,7 @@ public class ChatMessageMapper{
                 chatMessageDto.getMessageID(),
                 chatMessageDto.getPostID(),
                 chatMessageDto.getDonorID(),
-                chatMessageDto.getSenderID(),
-                chatMessageDto.getRecipientID(),
+                chatMessageDto.getDirection(),
                 chatMessageDto.getContent(),
                 chatMessageDto.getTimestamp());
     }
@@ -97,8 +78,7 @@ public class ChatMessageMapper{
                 chatMessage.getMessageID(),
                 chatMessage.getAcceptedPost().getPost().getPostID(),
                 chatMessage.getAcceptedPost().getUser().getUserID(),
-                chatMessage.getSender().getUserID(),
-                chatMessage.getRecipient().getUserID(),
+                chatMessage.getDirection(),
                 chatMessage.getContent(),
                 chatMessage.getTimestamp());
     }

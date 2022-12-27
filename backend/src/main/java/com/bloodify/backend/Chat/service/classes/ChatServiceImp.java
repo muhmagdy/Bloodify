@@ -29,7 +29,10 @@ public class ChatServiceImp implements ChatService {
     @Override
     public boolean saveMessage(ChatMessageDto message) throws Exception {
         ChatMessage chatMessage = this.chatMessageMapper.dtoToEntity(message);
-        Integer recipientID = chatMessage.getRecipient().getUserID();
+        Integer recipientID = chatMessage.getAcceptedPost().getPost().getUser().getUserID();
+        if(chatMessage.getDirection()){
+            recipientID = chatMessage.getAcceptedPost().getUser().getUserID();
+        }
         chatMessage.getAcceptedPost().setNewMsgFor(recipientID);
         return this.chatMessageDao.saveMessage(chatMessage);
     }

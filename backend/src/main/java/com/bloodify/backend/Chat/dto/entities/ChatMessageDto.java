@@ -18,9 +18,7 @@ public class ChatMessageDto {
 
     private Integer donorID;
 
-    private Integer senderID;
-    
-    private Integer recipientID;
+    private Boolean direction;
 
     private String content;
 
