@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bloodify_front_end/models/chat_message.dart';
 import 'package:bloodify_front_end/modules/Chat/chat.dart';
 import 'package:bloodify_front_end/shared/Constatnt/colors.dart';
@@ -5,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 
 class ChatScreen extends StatelessWidget {
   final String firstName, lastName;
@@ -69,12 +72,14 @@ class _MainChatScreen extends StatelessWidget {
 }
 
 class _MessagesList extends StatelessWidget {
-  const _MessagesList({
+  _MessagesList({
     Key? key,
     required this.cubit,
   }) : super(key: key);
 
   final ChatCubit cubit;
+
+  final ScrollController _scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
@@ -82,15 +87,56 @@ class _MessagesList extends StatelessWidget {
 
     return Flexible(
       child: ListView.builder(
+        reverse: true,
+        shrinkWrap: true,
+        controller: _scrollController,
         physics: const AlwaysScrollableScrollPhysics(),
         itemBuilder: (context, i) {
-          return Padding(
+          ChatMessage msg = cubit.state.msgs[i];
+
+          Widget msgCard = Padding(
               padding: EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
               child: cubit.whoAmI(cubit.state.msgs[i].direction)
-                  ? HomeMessageCard(message: cubit.state.msgs[i].content)
-                  : AwayMessageCard(message: cubit.state.msgs[i].content));
+                  ? HomeMessageCard(message: cubit.state.msgs[i])
+                  : AwayMessageCard(message: cubit.state.msgs[i]));
+
+          if (i == 0 ||
+              !DateUtils.isSameDay(
+                  msg.timestamp, cubit.state.msgs[i - 1].timestamp)) {
+            var dateFormat = DateFormat("MMM d, yyyy");
+            return Column(
+              children: [
+                _DateSeparatorWidget(dateFormat: dateFormat, msg: msg),
+                msgCard
+              ],
+            );
+          }
+          return msgCard;
         },
         itemCount: cubit.state.msgs.length,
+      ),
+    );
+  }
+}
+
+class _DateSeparatorWidget extends StatelessWidget {
+  const _DateSeparatorWidget({
+    Key? key,
+    required this.dateFormat,
+    required this.msg,
+  }) : super(key: key);
+
+  final DateFormat dateFormat;
+  final ChatMessage msg;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Card(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
+          child: Text(dateFormat.format(msg.timestamp)),
+        ),
       ),
     );
   }
@@ -174,7 +220,7 @@ class _MessageTextField extends StatelessWidget {
 }
 
 abstract class MessageCard extends StatelessWidget {
-  final String message;
+  final ChatMessage message;
   MessageCard({required this.message, super.key});
 
   MainAxisAlignment getAlignment();
@@ -185,6 +231,7 @@ abstract class MessageCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double maxWidth = MediaQuery.of(context).size.width * 0.6;
     return Container(
       decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
       child: Row(
@@ -193,15 +240,27 @@ abstract class MessageCard extends StatelessWidget {
           Flexible(
             child: Card(
               color: getBackgroundColor(),
-              child: Padding(
+              child: Container(
                 padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  constraints: BoxConstraints(
-                      maxWidth: MediaQuery.of(context).size.width * 0.6),
-                  child: Text(
-                    message,
-                    style: TextStyle(color: getTextColor()),
-                    softWrap: true,
+                constraints: BoxConstraints(maxWidth: maxWidth),
+                child: IntrinsicWidth(
+                  child: Column(
+                    children: [
+                      Text(
+                        message.content,
+                        style: TextStyle(color: getTextColor()),
+                        softWrap: true,
+                      ),
+                      Container(
+                        padding: EdgeInsets.fromLTRB(0, 2, 0, 0),
+                        alignment: Alignment.bottomRight,
+                        child: Text(
+                          DateFormat("HH:mm").format(message.timestamp),
+                          style:
+                              TextStyle(color: getTextColor(), fontSize: 12.0),
+                        ),
+                      )
+                    ],
                   ),
                 ),
               ),

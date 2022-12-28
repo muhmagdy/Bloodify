@@ -89,7 +89,9 @@ Never gonna tell a lie and hurt you'''
                 direction: entry.key % 2 == 0,
                 content: entry.value,
                 timestamp: DateTime.now()
-                    .subtract(Duration(minutes: msgs.length - entry.key))))
+                    .subtract(Duration(days: msgs.length - entry.key))))
+            .toList()
+            .reversed
             .toList()));
   }
 
