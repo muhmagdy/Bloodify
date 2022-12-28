@@ -1,20 +1,56 @@
-import 'package:bloodify_front_end/modules/notifications_history/notification_history_cubit/notification_history_states.dart';
+import 'package:bloodify_front_end/modules/BloodFinding/bloc/blood_finder_service.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geolocator/geolocator.dart';
 
-import '../../shared/Constatnt/fonts.dart';
+import '../../models/notification.dart';
+import '../../shared/styles/container.dart';
 import 'notification_history_cubit/notification_history_cubit.dart';
+import 'notification_history_cubit/notification_history_states.dart';
 
-Widget buildNotificatio(Notification notification) {
-  return Container(
-    height: 200,
-    width: double.infinity,
-    color: Colors.purple,
-    child: const Text("Hello! i am inside a container!",
-        style: TextStyle(fontSize: 20)),
-  );
+Widget buildNotification(
+  NotificationBody notification,
+  height,
+  width,
+) {
+  return TileContainer(
+      height: height,
+      width: width,
+      child: Container(
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "${notification.acceptorName} needs your help",
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              Text(
+                "The institute name ${notification.instituteName}",
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 15,
+                ),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              Text("${notification.distance.toStringAsFixed(2)} KM"),
+            ]),
+      ),
+      onTap: () {});
 }
 
 class NotificationHistory extends StatelessWidget {
@@ -22,6 +58,8 @@ class NotificationHistory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     return BlocConsumer<NotificationHistoryCubit, NotificationStates>(
         listener: (context, state) {},
         builder: (context, state) {
@@ -53,17 +91,21 @@ class NotificationHistory extends StatelessWidget {
                 )
               ]),
             ),
-            body: RefreshIndicator(
-              onRefresh: () async {
-                cubit.getNotifications();
-              },
-              child: ListView.separated(
-                itemBuilder: (context, index) {
-                  return Container();
+            body: Container(
+              margin: const EdgeInsets.all(20),
+              child: RefreshIndicator(
+                onRefresh: () async {
+                  cubit.getNotifications();
                 },
-                separatorBuilder: (context, index) =>
-                    const SizedBox(height: 10),
-                itemCount: notifications.length,
+                child: ListView.separated(
+                  itemBuilder: (context, index) {
+                    return buildNotification(
+                        notifications[index], height, width);
+                  },
+                  separatorBuilder: (context, index) =>
+                      const SizedBox(height: 10),
+                  itemCount: notifications.length,
+                ),
               ),
             ),
           );

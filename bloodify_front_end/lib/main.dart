@@ -1,4 +1,5 @@
 import 'package:bloodify_front_end/layout/start_layout.dart';
+import 'package:bloodify_front_end/modules/BloodFinding/bloc/blood_finder_service.dart';
 
 import 'package:bloodify_front_end/modules/navbar/institution_navbar.dart';
 import 'package:bloodify_front_end/modules/notifications_history/notification_history.dart';
@@ -39,6 +40,7 @@ void main() async {
     UserInfo.isUser = CachHelper.getData(key: 'isUser');
 
     if (UserInfo.isUser!) {
+      UserInfo.location = await getLocation();
       widget = HomeLayout();
     } else {
       widget = const InstNavBar();

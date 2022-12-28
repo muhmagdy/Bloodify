@@ -14,7 +14,7 @@ int i = 0;
 
 Future<bool> isInRange(PushNotification notification) async {
   var location = await getLocation();
-  return (Geolocator.distanceBetween(location.latitude, location.latitude,
+  return (Geolocator.distanceBetween(location.latitude, location.longitude,
               notification.latitude, notification.longtitude) /
           1000 <
       50);

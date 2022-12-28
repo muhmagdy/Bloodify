@@ -1,6 +1,5 @@
 package com.bloodify.backend.AccountManagement.services.classes;
 
-
 import com.bloodify.backend.AccountManagement.services.exceptions.BothEmailAndNationalIdExists;
 import com.bloodify.backend.AccountManagement.services.exceptions.NationalIdExistsException;
 import com.bloodify.backend.AccountManagement.services.interfaces.AccountManagerService;
@@ -26,7 +25,7 @@ public class AccountManagerServiceImp implements AccountManagerService {
     @Autowired
     UserDAO userDAO;
 
-    @Autowired 
+    @Autowired
     InstitutionDAO instDAO;
 
     @Autowired
@@ -38,21 +37,20 @@ public class AccountManagerServiceImp implements AccountManagerService {
     LoginSessionDAO loginSessionDAO;
 
     @Override
-    public LoginResponseBody userLogIn(Authentication auth,String mobileToken) {
-        try{
+    public LoginResponseBody userLogIn(Authentication auth, String mobileToken) {
+        try {
             String token = tokenUtil.generateToken(auth);
             User user = userDAO.findUserByEmail(auth.getName());
             String loginToken = loginSessionDAO.getToken(user.getEmail());
             System.out.println(loginToken);
-            if(loginToken!=null){
+            if (loginToken != null) {
                 loginSessionDAO.updateToken(user.getEmail(), mobileToken);
-            }
-          else { 
-                LoginSession loginSession= new LoginSession(user.getEmail(),mobileToken);
+            } else {
+                LoginSession loginSession = new LoginSession(user.getEmail(), mobileToken);
                 loginSessionDAO.save(loginSession);
             }
             return new LoginResponseBody(user, token);
-        }catch (Exception e){
+        } catch (Exception e) {
             log.info(e.getMessage());
             return null;
         }
@@ -60,12 +58,12 @@ public class AccountManagerServiceImp implements AccountManagerService {
 
     @Override
     public LoginResponseBody instLogIn(Authentication auth) {
-        try{
+        try {
             String token = tokenUtil.generateToken(auth);
             Institution inst = instDAO.findInstitutionByEmail(auth.getName());
             log.info("login inst");
             return new LoginResponseBody(inst, token);
-        }catch (Exception e){
+        } catch (Exception e) {
             log.info(e.getMessage());
             return null;
         }
@@ -98,12 +96,18 @@ public class AccountManagerServiceImp implements AccountManagerService {
     }
 
     @Override
-    public void userSignOut(Authentication auth) {
+    public boolean userSignOut(Authentication auth) {
+        try {
+
+            loginSessionDAO.delete(auth.getName());
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     @Override
     public void instSignOut(Authentication auth) {
     }
-
 
 }
