@@ -40,6 +40,13 @@ public interface InstitutionRepository extends JpaRepository<Institution, Intege
 
     List<Institution> haveBloodPacketsNegativeO(int quantity);
 
+    boolean existsByEmail(String email);
+
+    @Transactional
+    @Modifying(clearAutomatically = true,flushAutomatically = true)
+    @Query("update Institution u set u.password = ?1 where u.email = ?2")
+    boolean updatePasswordByEmail(@NonNull String newPassword,
+                                  @NonNull String email);
 
     @Transactional
     @Modifying(clearAutomatically = true, flushAutomatically = true)

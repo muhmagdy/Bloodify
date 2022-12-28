@@ -122,6 +122,16 @@ public class InstitutionDAOImp implements InstitutionDAO {
         };
     }
 
+    @Override
+    public boolean isInstitutionExistByEmail(String email) {
+        return instRepo.existsByEmail(email);
+    }
+
+    @Override
+    public boolean updatePassword(String email, String newPassword) {
+        return instRepo.updatePasswordByEmail(newPassword, email);
+    }
+
 //    public void setChangedPacketCount(List<String> changes, Institution institution) {
 //        for(String change: changes) {
 //            switch (change) {
