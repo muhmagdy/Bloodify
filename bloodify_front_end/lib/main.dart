@@ -1,4 +1,5 @@
 import 'package:bloodify_front_end/layout/start_layout.dart';
+import 'package:bloodify_front_end/modules/Chat/chat.dart';
 
 import 'package:bloodify_front_end/modules/navbar/institution_navbar.dart';
 
@@ -18,6 +19,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'layout/home_layout.dart';
 import 'modules/login_UI/User_login/cubit/user_login_cubit.dart';
 import 'modules/login_UI/institution_login/cubit/institution_login_cubit.dart';
+import 'modules/navbar/navbar.dart';
 import 'modules/signUP_UI/sign_up_State_management/sign_up_cubit.dart';
 import 'modules/transactions_modules/institution_tranaction/cubic/institution_transaction_cubit.dart';
 
@@ -40,7 +42,14 @@ void main() async {
   Bloc.observer = MyBlocObserver();
   DioHelper.init();
   runApp(MyApp(
-    startWidget: widget,
+    // startWidget: widget,
+    startWidget: ChatScreen(
+      postID: 1,
+      donorID: 2,
+      firstName: "Rick",
+      lastName: "Astley",
+      myID: 2,
+    ),
   ));
 }
 
