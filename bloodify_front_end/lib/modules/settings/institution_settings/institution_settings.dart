@@ -1,9 +1,12 @@
+import 'package:bloodify_front_end/modules/settings/common/email_confirmation.dart';
 import 'package:flutter/material.dart';
 
-import '../../layout/start_layout.dart';
-import '../../shared/Constatnt/colors.dart';
-import '../../shared/Constatnt/fonts.dart';
-import '../../shared/network/local/cach_helper.dart';
+import '../../../layout/start_layout.dart';
+import '../../../shared/Constatnt/colors.dart';
+import '../../../shared/Constatnt/fonts.dart';
+import '../../../shared/Constatnt/sharedFunctions.dart';
+import '../../../shared/network/local/cach_helper.dart';
+import '../../create_event/create_event.dart';
 
 class InstitutionSettings extends StatefulWidget {
   const InstitutionSettings({super.key});
@@ -13,14 +16,6 @@ class InstitutionSettings extends StatefulWidget {
 }
 
 class _InstitutionSettingsState extends State<InstitutionSettings> {
-  Future logout(BuildContext context) async {
-    if (await CachHelper.removeData(key: 'isUser') &&
-        await CachHelper.removeData(key: 'token')) {
-      Navigator.of(context, rootNavigator: true).pushReplacement(
-          MaterialPageRoute(builder: (context) => const StartWidget()));
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final double width = MediaQuery.of(context).size.width;
@@ -74,20 +69,22 @@ class _InstitutionSettingsState extends State<InstitutionSettings> {
               style: TextStyle(fontSize: 30),
             ),
             SizedBox(height: 0.01 * height),
+            // TextButton(
+            //     onPressed: () {},
+            //     style: TextButton.styleFrom(
+            //         backgroundColor: red,
+            //         minimumSize: Size(width * 0.9, height * 0.05),
+            //         shape: RoundedRectangleBorder(
+            //             borderRadius: BorderRadius.circular(width / 26))),
+            //     child: Text(
+            //       "Change email",
+            //       style: NormalStyle(height, Colors.white),
+            //     )),
+            // SizedBox(height: 0.01 * height),
             TextButton(
-                onPressed: () {},
-                style: TextButton.styleFrom(
-                    backgroundColor: red,
-                    minimumSize: Size(width * 0.9, height * 0.05),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(width / 26))),
-                child: Text(
-                  "Change email",
-                  style: NormalStyle(height, Colors.white),
-                )),
-            SizedBox(height: 0.01 * height),
-            TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  _onChangePasswordTap(context);
+                },
                 style: TextButton.styleFrom(
                     backgroundColor: red,
                     minimumSize: Size(width * 0.9, height * 0.05),
@@ -125,7 +122,7 @@ class _InstitutionSettingsState extends State<InstitutionSettings> {
                     },
                   );
                   if (result) {
-                    await logout(context);
+                    await _onLogoutTap(context);
                   }
                 },
                 style: TextButton.styleFrom(
@@ -142,4 +139,31 @@ class _InstitutionSettingsState extends State<InstitutionSettings> {
       ),
     );
   }
+
+  void _onChangePasswordTap(BuildContext context) {
+    // TODO: CONTACT THE BACKEND TO GENERATE THE CODE
+    Navigator.of(context).push(PageRouteBuilder(
+        pageBuilder: (context, animation, secondaryAnimation) =>
+            const EmailConfirmation(),
+        transitionsBuilder: ((context, animation, secondaryAnimation, child) {
+          const begin = Offset(0.0, 1.0);
+          const end = Offset.zero;
+          const curve = Curves.ease;
+          var tween =
+          Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+          return SlideTransition(
+            position: animation.drive(tween),
+            child: child,
+          );
+        })));
+  }
+
+  Future _onLogoutTap(BuildContext context) async {
+    if (await CachHelper.removeData(key: 'isUser') &&
+        await CachHelper.removeData(key: 'token')) {
+      Navigator.of(context, rootNavigator: true).pushReplacement(
+          MaterialPageRoute(builder: (context) => const StartWidget()));
+    }
+  }
+
 }

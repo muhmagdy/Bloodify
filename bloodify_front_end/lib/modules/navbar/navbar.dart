@@ -1,6 +1,6 @@
 import 'package:bloodify_front_end/modules/BloodFinding/blood_finding.dart';
 import 'package:bloodify_front_end/modules/home_UI/user_home/userHome.dart';
-import 'package:bloodify_front_end/modules/settings/user_settigns.dart';
+import 'package:bloodify_front_end/modules/settings/user_settings/user_settigns.dart';
 import 'package:bloodify_front_end/shared/Constatnt/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

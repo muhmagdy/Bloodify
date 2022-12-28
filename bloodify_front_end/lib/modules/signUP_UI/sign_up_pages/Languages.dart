@@ -8,6 +8,7 @@ abstract class Language {
   String getLabel(abbrev);
   String showIncorrectDOB();
   String showIncorrectLDT();
+  String showInvalidConfCode();
 }
 
 class EnglishLanguage extends Language {
@@ -30,7 +31,8 @@ class EnglishLanguage extends Language {
     'blood type': "Blood Type",
     'location': 'Location',
     'back': "Back",
-    'submit': "Submit"
+    'submit': "Submit",
+    'confCode': "Confirmation Code"
   };
   @override
   String showInvalidPassword() =>
@@ -49,4 +51,6 @@ class EnglishLanguage extends Language {
   String showIncorrectDOB() => 'Not Correct Date of Birth';
   @override
   String showIncorrectLDT() => 'Not Correct Last Donated Time';
+  @override
+  String showInvalidConfCode() => "Code must have 4 digits only";
 }
