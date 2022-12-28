@@ -179,20 +179,20 @@ class UserDAOTest {
         saveRepeatedDataExceptUniques();
     }
 
-    @Test
+//    @Test
 //    @Order(5)
-    void get5() {
-        reset();
-        List<User> gotUsers = userDao.getUsersByBloodType("AB-");
-        List<String> gotEmails = new ArrayList<>();
-        for (User gotUser : gotUsers) {
-            gotEmails.add(gotUser.getEmail());
-        }
-        List<String> actualEmails = new ArrayList<>();
-        actualEmails.add(emails[2]);
-        actualEmails.add(emails[0]);
-        assertEquals(actualEmails, gotEmails);
-    }
+//    void get5() {
+//        reset();
+//        List<User> gotUsers = userDao.getUsersByBloodType("AB-");
+//        List<String> gotEmails = new ArrayList<>();
+//        for (User gotUser : gotUsers) {
+//            gotEmails.add(gotUser.getEmail());
+//        }
+//        List<String> actualEmails = new ArrayList<>();
+//        actualEmails.add(emails[2]);
+//        actualEmails.add(emails[0]);
+//        assertEquals(actualEmails, gotEmails);
+//    }
 
     @Test
 //    @Order(5)
