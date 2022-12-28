@@ -7,7 +7,7 @@ import com.bloodify.backend.UserRequests.service.bloodTypes.bloodGroups.BloodGro
 import java.util.ArrayList;
 import java.util.List;
 
-public class RHD_positive extends RHD{
+public class RHD_positive extends RHD {
     BloodTypeFactory bloodTypeFactory;
 
     public RHD_positive(BloodGroup group) {
@@ -16,10 +16,10 @@ public class RHD_positive extends RHD{
     }
 
     @Override
-    public List<BloodType> getCompatibleTypes() {
-        List<BloodType> compatibleGroups = super.getCompatibleTypes();
+    public List<BloodType> getCompatibleTypesPost() {
+        List<BloodType> compatibleGroups = super.getCompatibleTypesPost();
         List<BloodType> compatibleTypes = new ArrayList<>();
-        for (BloodType type: compatibleGroups) {
+        for (BloodType type : compatibleGroups) {
             compatibleTypes.add(bloodTypeFactory.generatePositive((BloodGroup) type));
             compatibleTypes.add(bloodTypeFactory.generateNegative((BloodGroup) type));
         }

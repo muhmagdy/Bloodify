@@ -5,17 +5,20 @@ import com.bloodify.backend.UserRequests.service.bloodTypes.BloodType;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BloodGroupO extends BloodGroup{
+public class BloodGroupO extends BloodGroup {
     private static BloodGroupO groupO;
-    private BloodGroupO(){}
+
+    private BloodGroupO() {
+    }
 
     public static BloodGroupO getGroupO() {
-        if(groupO == null) groupO = new BloodGroupO();
+        if (groupO == null)
+            groupO = new BloodGroupO();
         return groupO;
     }
 
     @Override
-    public List<BloodType> getCompatibleTypes() {
+    public List<BloodType> getCompatibleTypesPost() {
         List<BloodType> compatibleGroups = new ArrayList<>();
         compatibleGroups.add(this);
         return compatibleGroups;

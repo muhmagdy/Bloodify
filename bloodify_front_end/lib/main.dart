@@ -1,6 +1,7 @@
 import 'package:bloodify_front_end/layout/start_layout.dart';
 
 import 'package:bloodify_front_end/modules/navbar/institution_navbar.dart';
+import 'package:bloodify_front_end/modules/notifications_history/notification_history.dart';
 
 import 'package:bloodify_front_end/modules/transactions_modules/event_transaction/cubit/eventTransaction_cubit.dart';
 import 'package:bloodify_front_end/modules/transactions_modules/post_transaction/cubit/post_transaction_cubit.dart';
@@ -21,6 +22,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'layout/home_layout.dart';
 import 'modules/login_UI/User_login/cubit/user_login_cubit.dart';
 import 'modules/login_UI/institution_login/cubit/institution_login_cubit.dart';
+import 'modules/notifications_history/notification_history_cubit/notification_history_cubit.dart';
 import 'modules/signUP_UI/sign_up_State_management/sign_up_cubit.dart';
 import 'modules/transactions_modules/institution_tranaction/cubic/institution_transaction_cubit.dart';
 
@@ -30,7 +32,6 @@ void main() async {
   await notificationSystem?.start();
 
   UserInfo.deviceToken = await FirebaseMessaging.instance.getToken();
-  print(UserInfo.deviceToken);
   await CachHelper.init();
   UserInfo.token = CachHelper.getData(key: 'token');
   Widget widget;
@@ -75,6 +76,9 @@ class MyApp extends StatelessWidget {
           BlocProvider(create: (context) => EventTransactionCubit()),
           BlocProvider(create: (context) => InstituteTransactionCubit()),
           BlocProvider(create: (context) => CreateEventCubit()),
+          BlocProvider(
+              create: (context) =>
+                  NotificationHistoryCubit()..getNotifications()),
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,

@@ -4,7 +4,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:notification_permissions/notification_permissions.dart';
 
-import '../../models/notification.dart';
+import '../../models/push_notification.dart';
 import '../../modules/BloodFinding/bloc/blood_finder_service.dart';
 import 'dart:math' show cos, sqrt, asin;
 
@@ -12,7 +12,7 @@ enum PermissionStatus { provisional, granted, unknown, denied }
 
 int i = 0;
 
-Future<bool> isInRange(Notification notification) async {
+Future<bool> isInRange(PushNotification notification) async {
   var location = await getLocation();
   return (Geolocator.distanceBetween(location.latitude, location.latitude,
               notification.latitude, notification.longtitude) /
@@ -22,7 +22,7 @@ Future<bool> isInRange(Notification notification) async {
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   print(message.data);
-  Notification notification = Notification.fromJson(message.data);
+  PushNotification notification = PushNotification.fromJson(message.data);
   bool inRange = await isInRange(notification);
   if (inRange) {
     LocalNotificationService ls = LocalNotificationService();
@@ -78,7 +78,7 @@ class NotificationIntalizor {
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
       print(message.data);
-      Notification notification = Notification.fromJson(message.data);
+      PushNotification notification = PushNotification.fromJson(message.data);
       bool inRange = await isInRange(notification);
       if (inRange) {
         print("sending.....");

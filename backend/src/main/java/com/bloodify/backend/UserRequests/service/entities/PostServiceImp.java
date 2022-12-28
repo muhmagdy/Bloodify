@@ -46,18 +46,18 @@ public class PostServiceImp implements PostService {
     @Autowired
     private UserDAO userDAO;
 
-
     public PostServiceImp(Post_DTO_Mapper postDtoMapper) {
         this.postDtoMapper = postDtoMapper;
     }
-   
-    @Autowired 
+
+    @Autowired
     LoginSessionDAO loginSessionDAO;
     @Autowired
     FirebaseMessagingService firebaseMessagingService;
 
-     @Autowired 
+    @Autowired
     NotificationHistoryDAO notificationHistoryDAO;
+
     @Override
     public boolean savePost(PostDto dto) {
         System.out.println("adding some post");
@@ -67,21 +67,25 @@ public class PostServiceImp implements PostService {
             boolean status = this.postDao.addPost(postToSave);
             if (status) {
                 List<User> users = this.getUsersToBeNotified(postToSave);
-                //TODO   Notification Goes Here
+                // TODO Notification Goes Here
                 for (User itr : users) {
-                    String sessionToken =loginSessionDAO.getToken(itr.getEmail());
+                    String sessionToken = loginSessionDAO.getToken(itr.getEmail());
                     System.out.println(sessionToken);
-                    if(sessionToken!=null){
-                        PushNotificationRequest pushableNotification= new PushNotificationRequest("", postToSave.getInstitution().getLatitude(), postToSave.getInstitution().getLongitude(), postToSave.getInstitution().getName(), false);
+                    if (sessionToken != null) {
+                        PushNotificationRequest pushableNotification = new PushNotificationRequest("",
+                                postToSave.getInstitution().getLatitude(), postToSave.getInstitution().getLongitude(),
+                                postToSave.getInstitution().getName(), false);
                         firebaseMessagingService.sendNotification(pushableNotification, sessionToken);
                     }
-                    NotificationHistoryKey notificationHistoryKey = new NotificationHistoryKey(postToSave.getPostID(), itr.getUserID());
-                    NotificationHistory notificationHistory = new NotificationHistory(notificationHistoryKey, itr, postToSave);
+                    NotificationHistoryKey notificationHistoryKey = new NotificationHistoryKey(postToSave.getPostID(),
+                            itr.getUserID());
+                    NotificationHistory notificationHistory = new NotificationHistory(notificationHistoryKey, itr,
+                            postToSave);
                     notificationHistoryDAO.Save(notificationHistory);
                 }
             }
             return status;
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
             return false;
@@ -91,130 +95,151 @@ public class PostServiceImp implements PostService {
     @Override
     public boolean updatePost(PostDto dto) {
         Post postToEdit;
-        try{
+        try {
             postToEdit = this.postDtoMapper.map_to_Post(dto);
             Post supposed = this.postDao.getPostByID(dto.getPostID());
-            if(supposed == null) throw new PostNotFoundException();
-            if(!supposed.getUser().getEmail().equals(dto.getUserEmail())) throw new IllegalPostAccessException();
+            if (supposed == null)
+                throw new PostNotFoundException();
+            if (!supposed.getUser().getEmail().equals(dto.getUserEmail()))
+                throw new IllegalPostAccessException();
             postToEdit.setPostID(dto.getPostID());
             return this.postDao.updatePost(postToEdit);
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
             return false;
         }
     }
+
     @Override
-    public boolean deletePost(int postID, String userEmail){
+    public boolean deletePost(int postID, String userEmail) {
         Post postToDelete;
         try {
-           postToDelete = this.postDao.getPostByID(postID);
-           if (postToDelete != null && !postToDelete.getUser().getEmail().equals(userEmail))
-               throw new IllegalPostAccessException();
-        } catch (Exception e){
+            postToDelete = this.postDao.getPostByID(postID);
+            if (postToDelete != null && !postToDelete.getUser().getEmail().equals(userEmail))
+                throw new IllegalPostAccessException();
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
             return false;
         }
         return this.postDao.deleteSpecificUserPost(postToDelete);
     }
+
     @Override
     public List<PostRequest> getUserPosts(String userEmail) {
         List<Post> posts = this.postDao.getUserAllPosts(userEmail);
-        if(posts.size() == 0) return new ArrayList<>();
+        if (posts.size() == 0)
+            return new ArrayList<>();
         List<PostRequest> requestsToShow = new ArrayList<>();
-        for (Post post: posts) requestsToShow.add(requestMapper.map_to_request(post));
+        for (Post post : posts)
+            requestsToShow.add(requestMapper.map_to_request(post));
         return requestsToShow;
     }
+
     @Override
     public Post getSpecificPost(String userEmail, int institutionID, String bloodType) {
         try {
             return this.postDao.getSpecificUserPost(userEmail, institutionID, bloodType);
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
             return null;
         }
     }
-    boolean filterCriteria(User u,Post acceptedPost){
-       boolean b = u.getLastTimeDonated().isBefore(LocalDate.now().minusMonths(6))&&
-                 acceptedPost.getUser().getUserID() != u.getUserID();
-    
-            System.out.println(b);
-                 return b;
+
+    boolean filterCriteria(User u, Post acceptedPost) {
+        boolean b = u.getLastTimeDonated().isBefore(LocalDate.now().minusMonths(6)) &&
+                acceptedPost.getUser().getUserID() != u.getUserID();
+
+        System.out.println(b);
+        return b;
     }
+
     @Override
     public List<User> getUsersToBeNotified(Post acceptedPost) {
         BloodTypeFactory factory = BloodTypeFactory.getFactory();
         BloodType type = factory.generateFromString(acceptedPost.getBloodType());
-        List<BloodType> compatibleTypes = type.getCompatibleTypes();
+        List<BloodType> compatibleTypes = type.getCompatibleTypesPost();
         List<String> typesInString = new ArrayList<>();
-        for (BloodType bType: compatibleTypes) typesInString.add(bType.toString());
+        for (BloodType bType : compatibleTypes)
+            typesInString.add(bType.toString());
         return (userDAO.findByBloodTypeIn(typesInString)).stream().filter(
-            (User u)->  (filterCriteria(u, acceptedPost)
-             )
-        ).toList();
+                (User u) -> (filterCriteria(u, acceptedPost))).toList();
     }
+
     @Override
-    public List<User> getUsersToBeNotified(Post acceptedPost, Double instLongitude, Double instLatitude, int threshold) {
+    public List<User> getUsersToBeNotified(Post acceptedPost, Double instLongitude, Double instLatitude,
+            int threshold) {
         return null;
     }
+
     @Override
     public int getPostID(PostDto dto) {
         Post postToRetrieve;
         try {
-            postToRetrieve = this.getSpecificPost(dto.getUserEmail(), dto.getInstitutionID(), dto.getBloodType().toString());
-            if(postToRetrieve == null) return -1;
+            postToRetrieve = this.getSpecificPost(dto.getUserEmail(), dto.getInstitutionID(),
+                    dto.getBloodType().toString());
+            if (postToRetrieve == null)
+                return -1;
             return postToRetrieve.getPostID();
-        } catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
             return -1;
         }
     }
+
     @Override
     public User getReceiverFromPost(int postID) {
         Post postToRetrieve;
         try {
             postToRetrieve = this.postDao.getPostByID(postID);
-            if (postToRetrieve == null) return null;
+            if (postToRetrieve == null)
+                return null;
             return postToRetrieve.getUser();
-        } catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
             return null;
         }
     }
+
     @Override
     public boolean decrementBags(int postID) {
         Post postToRetrieve;
         try {
             postToRetrieve = this.postDao.getPostByID(postID);
             postToRetrieve.setBagsNum(postToRetrieve.getBagsNum() - 1);
-            if (postToRetrieve.getBagsNum() == 0) this.postDao.deleteSpecificUserPost(postToRetrieve);
-            else this.postDao.updatePost(postToRetrieve);
+            if (postToRetrieve.getBagsNum() == 0)
+                this.postDao.deleteSpecificUserPost(postToRetrieve);
+            else
+                this.postDao.updatePost(postToRetrieve);
             return true;
-        } catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
             return false;
         }
     }
+
     @Override
-    public Institution getInstitutionFromPost(int postID){
+    public Institution getInstitutionFromPost(int postID) {
         Post postToRetrieve;
         try {
             postToRetrieve = this.postDao.getPostByID(postID);
-            if (postToRetrieve == null) return null;
+            if (postToRetrieve == null)
+                return null;
             return postToRetrieve.getInstitution();
-        } catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
             return null;
         }
     }
+
     @Scheduled(fixedRate = 3600000)
-    public void deleteOldPosts(){
+    public void deleteOldPosts() {
         this.postDao.deleteUnnecessaryPosts();
     }
 }

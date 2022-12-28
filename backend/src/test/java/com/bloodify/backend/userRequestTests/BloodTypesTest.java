@@ -16,47 +16,54 @@ public class BloodTypesTest {
     BloodTypeFactory factory = BloodTypeFactory.getFactory();
 
     @Test
-    void getCompatibleForAp(){
-        List<BloodType> compatibleTypes = factory.generateFromString("A+").getCompatibleTypes();
+    void getCompatibleForAp() {
+        List<BloodType> compatibleTypes = factory.generateFromString("A+").getCompatibleTypesPost();
         List<String> compatibleStrings = new ArrayList<>();
-        for (BloodType type: compatibleTypes) compatibleStrings.add(type.toString());
-        assertEquals(compatibleStrings.size() ,4);
+        for (BloodType type : compatibleTypes)
+            compatibleStrings.add(type.toString());
+        assertEquals(compatibleStrings.size(), 4);
         assertTrue(compatibleStrings.contains("A+") && compatibleStrings.contains("A-")
                 && compatibleStrings.contains("O+") && compatibleStrings.contains("O-"));
     }
 
     @Test
-    void getCompatibleForAm(){
-        List<BloodType> compatibleTypes = factory.generateFromString("A-").getCompatibleTypes();
+    void getCompatibleForAm() {
+        List<BloodType> compatibleTypes = factory.generateFromString("A-").getCompatibleTypesPost();
         List<String> compatibleStrings = new ArrayList<>();
-        for (BloodType type: compatibleTypes) compatibleStrings.add(type.toString());
-        assertEquals(compatibleStrings.size() ,2);
+        for (BloodType type : compatibleTypes)
+            compatibleStrings.add(type.toString());
+        assertEquals(compatibleStrings.size(), 2);
         assertTrue(compatibleStrings.contains("A-") && compatibleStrings.contains("O-"));
     }
+
     @Test
-    void getCompatibleForBp(){
-        List<BloodType> compatibleTypes = factory.generateFromString("B+").getCompatibleTypes();
+    void getCompatibleForBp() {
+        List<BloodType> compatibleTypes = factory.generateFromString("B+").getCompatibleTypesPost();
         List<String> compatibleStrings = new ArrayList<>();
-        for (BloodType type: compatibleTypes) compatibleStrings.add(type.toString());
-        assertEquals(compatibleStrings.size() ,4);
+        for (BloodType type : compatibleTypes)
+            compatibleStrings.add(type.toString());
+        assertEquals(compatibleStrings.size(), 4);
         assertTrue(compatibleStrings.contains("B+") && compatibleStrings.contains("B-")
                 && compatibleStrings.contains("O+") && compatibleStrings.contains("O-"));
     }
 
     @Test
-    void getCompatibleForBm(){
-        List<BloodType> compatibleTypes = factory.generateFromString("B-").getCompatibleTypes();
+    void getCompatibleForBm() {
+        List<BloodType> compatibleTypes = factory.generateFromString("B-").getCompatibleTypesPost();
         List<String> compatibleStrings = new ArrayList<>();
-        for (BloodType type: compatibleTypes) compatibleStrings.add(type.toString());
-        assertEquals(compatibleStrings.size() ,2);
+        for (BloodType type : compatibleTypes)
+            compatibleStrings.add(type.toString());
+        assertEquals(compatibleStrings.size(), 2);
         assertTrue(compatibleStrings.contains("B-") && compatibleStrings.contains("O-"));
     }
+
     @Test
-    void getCompatibleForABp(){
-        List<BloodType> compatibleTypes = factory.generateFromString("AB+").getCompatibleTypes();
+    void getCompatibleForABp() {
+        List<BloodType> compatibleTypes = factory.generateFromString("AB+").getCompatibleTypesPost();
         List<String> compatibleStrings = new ArrayList<>();
-        for (BloodType type: compatibleTypes) compatibleStrings.add(type.toString());
-        assertEquals(compatibleStrings.size() ,8);
+        for (BloodType type : compatibleTypes)
+            compatibleStrings.add(type.toString());
+        assertEquals(compatibleStrings.size(), 8);
         assertTrue(compatibleStrings.contains("B+") && compatibleStrings.contains("B-")
                 && compatibleStrings.contains("O+") && compatibleStrings.contains("O-")
                 && compatibleStrings.contains("A+") && compatibleStrings.contains("A-")
@@ -64,36 +71,39 @@ public class BloodTypesTest {
     }
 
     @Test
-    void getCompatibleForABm(){
-        List<BloodType> compatibleTypes = factory.generateFromString("AB-").getCompatibleTypes();
+    void getCompatibleForABm() {
+        List<BloodType> compatibleTypes = factory.generateFromString("AB-").getCompatibleTypesPost();
         List<String> compatibleStrings = new ArrayList<>();
-        for (BloodType type: compatibleTypes) compatibleStrings.add(type.toString());
-        assertEquals(compatibleStrings.size() ,4);
+        for (BloodType type : compatibleTypes)
+            compatibleStrings.add(type.toString());
+        assertEquals(compatibleStrings.size(), 4);
         assertTrue(compatibleStrings.contains("B-") && compatibleStrings.contains("O-")
                 && compatibleStrings.contains("A-") && compatibleStrings.contains("AB-"));
     }
 
     @Test
-    void getCompatibleForOp(){
-        List<BloodType> compatibleTypes = factory.generateFromString("O+").getCompatibleTypes();
+    void getCompatibleForOp() {
+        List<BloodType> compatibleTypes = factory.generateFromString("O+").getCompatibleTypesPost();
         List<String> compatibleStrings = new ArrayList<>();
-        for (BloodType type: compatibleTypes) compatibleStrings.add(type.toString());
-        assertEquals(compatibleStrings.size() ,2);
+        for (BloodType type : compatibleTypes)
+            compatibleStrings.add(type.toString());
+        assertEquals(compatibleStrings.size(), 2);
         assertTrue(compatibleStrings.contains("O+") && compatibleStrings.contains("O-"));
     }
 
     @Test
-    void getCompatibleForOm(){
-        List<BloodType> compatibleTypes = factory.generateFromString("O-").getCompatibleTypes();
+    void getCompatibleForOm() {
+        List<BloodType> compatibleTypes = factory.generateFromString("O-").getCompatibleTypesPost();
         List<String> compatibleStrings = new ArrayList<>();
-        for (BloodType type: compatibleTypes) compatibleStrings.add(type.toString());
-        assertEquals(compatibleStrings.size() ,1);
+        for (BloodType type : compatibleTypes)
+            compatibleStrings.add(type.toString());
+        assertEquals(compatibleStrings.size(), 1);
         assertTrue(compatibleStrings.contains("O-"));
     }
 
     @Test
-    void getCompatibleForInvalid(){
+    void getCompatibleForInvalid() {
         String type = "ABO+_";
-        assertThrows(InvalidBLoodTypeException.class, () -> factory.generateFromString(type).getCompatibleTypes());
+        assertThrows(InvalidBLoodTypeException.class, () -> factory.generateFromString(type).getCompatibleTypesPost());
     }
 }

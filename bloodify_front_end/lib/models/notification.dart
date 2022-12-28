@@ -1,10 +1,14 @@
 class Notification {
-  late double longtitude;
-  late double latitude;
   late String instituteName;
+  late String acceptorName;
+  late DateTime lastTime;
+  late double longitude;
+  late double latitude;
   Notification.fromJson(Map<String, dynamic> json) {
-    longtitude = double.parse(json['longtitude']);
-    latitude = double.parse(json['latitude']);
-    instituteName = json['Institute'];
+    instituteName = json["instituteName"];
+    acceptorName = json["acceptorName"];
+    lastTime = DateTime.parse(json["lastTime"]);
+    longitude = json["longitude"];
+    latitude = json["latitude"];
   }
 }

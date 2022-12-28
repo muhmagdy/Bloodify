@@ -1,5 +1,6 @@
 import 'package:bloodify_front_end/modules/BloodFinding/blood_finding.dart';
 import 'package:bloodify_front_end/modules/home_UI/user_home/userHome.dart';
+import 'package:bloodify_front_end/modules/notifications_history/notification_history.dart';
 import 'package:bloodify_front_end/shared/Constatnt/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +12,7 @@ class NavBar extends StatelessWidget {
   List<Widget> _buildScreens() {
     return [
       UserHome(),
-      const Screen2(),
+      const NotificationHistory(),
       const BloodFinder(),
       const Screen4(),
       const Screen5()

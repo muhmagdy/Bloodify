@@ -3,7 +3,6 @@ package com.bloodify.backend.notification.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,32 +24,34 @@ import ch.qos.logback.core.subst.Token;
 
 @RestController
 @RequestMapping("/try")
-public class controllerFireBAse {
+public class ControllerFireBase {
     @Autowired
     FirebaseMessagingService firebaseMessagingService;
+
     @GetMapping("/message/{token}")
-    void searchInInstitution(@PathVariable("token") String token) throws FirebaseMessagingException{
-       System.out.println("GGGGGGGGGGG");
-        PushNotificationRequest ps = new PushNotificationRequest("HI" ,29.9292617,31.1924,"hos",false);
-       firebaseMessagingService.sendNotification(ps, token);
+    void searchInInstitution(@PathVariable("token") String token) throws FirebaseMessagingException {
+        PushNotificationRequest ps = new PushNotificationRequest("HI", 29.9292617, 31.1924, "hos", false);
+        firebaseMessagingService.sendNotification(ps, token);
     }
+
     @Autowired
     NotificationHistoryRepository notificationHistoryRepository;
     @Autowired
     UserRepository ur;
-    @Autowired 
+    @Autowired
     PostRepository po;
+
     @GetMapping("/user/{userid}")
-    List<Post> getNotificationsToPost(@PathVariable("userid") int userid){
-        NotificationHistoryKey notificationHistoryKey = new NotificationHistoryKey(1,1);
+    List<Post> getNotificationsToPost(@PathVariable("userid") int userid) {
+        NotificationHistoryKey notificationHistoryKey = new NotificationHistoryKey(1, 1);
         Post p = po.findByPostID(1);
         System.out.println(p.toString());
-        User u= ur.findByEmail("john@legend.me").get(0);
+        User u = ur.findByEmail("john@legend.me").get(0);
         System.out.println(u.toString());
         NotificationHistory notificationHistory = new NotificationHistory(notificationHistoryKey, u, p);
-        
+
         notificationHistoryRepository.save(notificationHistory);
         return notificationHistoryRepository.findPostsbyUser(userid);
-        
+
     }
 }

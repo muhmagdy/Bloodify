@@ -7,13 +7,14 @@ import java.util.List;
 
 public class RHD implements BloodType {
     private BloodGroup group;
+
     public RHD(BloodGroup group) {
         this.group = group;
     }
 
     @Override
-    public List<BloodType> getCompatibleTypes(){
-        return group.getCompatibleTypes();
+    public List<BloodType> getCompatibleTypesPost() {
+        return group.getCompatibleTypesPost();
     }
 
     @Override
