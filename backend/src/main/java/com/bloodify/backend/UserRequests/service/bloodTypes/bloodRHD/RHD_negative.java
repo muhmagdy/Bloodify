@@ -25,6 +25,18 @@ public class RHD_negative extends RHD {
     }
 
     @Override
+    public List<BloodType> getCompatibleTypesUser() {
+        List<BloodType> compatibleGroups = super.getCompatibleTypesPost();
+        List<BloodType> compatibleTypes = new ArrayList<>();
+        for (BloodType type: compatibleGroups) {
+            compatibleTypes.add(bloodTypeFactory.generatePositive((BloodGroup) type));
+            compatibleTypes.add(bloodTypeFactory.generateNegative((BloodGroup) type));
+        }
+        return compatibleTypes;
+    }
+
+
+    @Override
     public String toString() {
         return super.toString() + "-";
     }

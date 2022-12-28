@@ -72,8 +72,7 @@ public class SearchServiceImp implements SearchService {
                         institution.getLocation()))
                 .toList();
     }
-
-    private List<String> getCompatibleTypes(BloodType bloodType) {
+    private List<String> getCompatibleTypes(BloodType bloodType){
         List<BloodType> compatibleTypes = bloodType.getCompatibleTypesPost();
         List<String> compatibleTypesStr = new ArrayList<>();
         for (BloodType type : compatibleTypes)

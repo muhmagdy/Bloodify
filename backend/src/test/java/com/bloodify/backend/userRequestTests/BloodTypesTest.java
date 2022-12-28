@@ -16,7 +16,7 @@ public class BloodTypesTest {
     BloodTypeFactory factory = BloodTypeFactory.getFactory();
 
     @Test
-    void getCompatibleForAp() {
+    void getCompatibleForAp(){
         List<BloodType> compatibleTypes = factory.generateFromString("A+").getCompatibleTypesPost();
         List<String> compatibleStrings = new ArrayList<>();
         for (BloodType type : compatibleTypes)
@@ -27,7 +27,7 @@ public class BloodTypesTest {
     }
 
     @Test
-    void getCompatibleForAm() {
+    void getCompatibleForAm(){
         List<BloodType> compatibleTypes = factory.generateFromString("A-").getCompatibleTypesPost();
         List<String> compatibleStrings = new ArrayList<>();
         for (BloodType type : compatibleTypes)
@@ -37,7 +37,7 @@ public class BloodTypesTest {
     }
 
     @Test
-    void getCompatibleForBp() {
+    void getCompatibleForBp(){
         List<BloodType> compatibleTypes = factory.generateFromString("B+").getCompatibleTypesPost();
         List<String> compatibleStrings = new ArrayList<>();
         for (BloodType type : compatibleTypes)
@@ -48,7 +48,7 @@ public class BloodTypesTest {
     }
 
     @Test
-    void getCompatibleForBm() {
+    void getCompatibleForBm(){
         List<BloodType> compatibleTypes = factory.generateFromString("B-").getCompatibleTypesPost();
         List<String> compatibleStrings = new ArrayList<>();
         for (BloodType type : compatibleTypes)
@@ -58,7 +58,7 @@ public class BloodTypesTest {
     }
 
     @Test
-    void getCompatibleForABp() {
+    void getCompatibleForABp(){
         List<BloodType> compatibleTypes = factory.generateFromString("AB+").getCompatibleTypesPost();
         List<String> compatibleStrings = new ArrayList<>();
         for (BloodType type : compatibleTypes)
@@ -71,7 +71,7 @@ public class BloodTypesTest {
     }
 
     @Test
-    void getCompatibleForABm() {
+    void getCompatibleForABm(){
         List<BloodType> compatibleTypes = factory.generateFromString("AB-").getCompatibleTypesPost();
         List<String> compatibleStrings = new ArrayList<>();
         for (BloodType type : compatibleTypes)
@@ -82,7 +82,7 @@ public class BloodTypesTest {
     }
 
     @Test
-    void getCompatibleForOp() {
+    void getCompatibleForOp(){
         List<BloodType> compatibleTypes = factory.generateFromString("O+").getCompatibleTypesPost();
         List<String> compatibleStrings = new ArrayList<>();
         for (BloodType type : compatibleTypes)
@@ -92,7 +92,7 @@ public class BloodTypesTest {
     }
 
     @Test
-    void getCompatibleForOm() {
+    void getCompatibleForOm(){
         List<BloodType> compatibleTypes = factory.generateFromString("O-").getCompatibleTypesPost();
         List<String> compatibleStrings = new ArrayList<>();
         for (BloodType type : compatibleTypes)
