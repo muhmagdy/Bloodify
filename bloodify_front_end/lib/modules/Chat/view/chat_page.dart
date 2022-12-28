@@ -178,9 +178,11 @@ class _SendButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-        onPressed: () => cubit.sendMessage(),
-        // icon: Icon(Icons.send_rounded))
-        icon: Icon(Icons.send_rounded));
+      onPressed: () => cubit.sendMessage(),
+      // icon: Icon(Icons.send_rounded))
+      icon: Icon(Icons.send_rounded),
+      color: defaultColor,
+    );
   }
 }
 
