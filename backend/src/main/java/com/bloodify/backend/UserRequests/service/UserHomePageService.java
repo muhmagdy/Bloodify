@@ -156,7 +156,7 @@ public class UserHomePageService {
 
     PostBrief postToPostBrief(Post post, User user, Institution inst, Double distance){
         return new PostBrief(post.getPostID(), user.getNationalID(), user.getFirstName()+" "+user.getLastName(),
-                post.getStartTime(), post.getBagsNum(), post.getBloodType(), distance, inst.getName(), inst.getLongitude(),
+                post.getLastTime(), post.getBagsNum(), post.getBloodType(), distance, inst.getName(), inst.getLongitude(),
                 inst.getLatitude());
     }
 }
