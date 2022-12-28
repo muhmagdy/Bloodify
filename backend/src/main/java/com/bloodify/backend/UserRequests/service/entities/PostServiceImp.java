@@ -1,5 +1,6 @@
 package com.bloodify.backend.UserRequests.service.entities;
 
+import com.bloodify.backend.AccountManagement.dao.interfaces.LoginSessionDAO;
 import com.bloodify.backend.AccountManagement.dao.interfaces.UserDAO;
 import com.bloodify.backend.AccountManagement.model.entities.Institution;
 import com.bloodify.backend.AccountManagement.model.entities.User;
@@ -14,11 +15,22 @@ import com.bloodify.backend.UserRequests.service.bloodTypes.BloodType;
 import com.bloodify.backend.UserRequests.service.bloodTypes.BloodTypeFactory;
 import com.bloodify.backend.UserRequests.service.interfaces.PostDao;
 import com.bloodify.backend.UserRequests.service.interfaces.PostService;
+import com.bloodify.backend.notification.dao.Interfaces.NotificationHistoryDAO;
+import com.bloodify.backend.notification.model.NotificationHistory;
+import com.bloodify.backend.notification.model.NotificationHistoryKey;
+import com.bloodify.backend.notification.model.PushNotificationRequest;
+import com.bloodify.backend.notification.service.FirebaseMessagingService;
+
+import ch.qos.logback.core.subst.Token;
 import lombok.extern.slf4j.Slf4j;
+import net.bytebuddy.asm.Advice.Local;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,7 +50,14 @@ public class PostServiceImp implements PostService {
     public PostServiceImp(Post_DTO_Mapper postDtoMapper) {
         this.postDtoMapper = postDtoMapper;
     }
+   
+    @Autowired 
+    LoginSessionDAO loginSessionDAO;
+    @Autowired
+    FirebaseMessagingService firebaseMessagingService;
 
+     @Autowired 
+    NotificationHistoryDAO notificationHistoryDAO;
     @Override
     public boolean savePost(PostDto dto) {
         System.out.println("adding some post");
@@ -49,6 +68,17 @@ public class PostServiceImp implements PostService {
             if (status) {
                 List<User> users = this.getUsersToBeNotified(postToSave);
                 //TODO   Notification Goes Here
+                for (User itr : users) {
+                    String sessionToken =loginSessionDAO.getToken(itr.getEmail());
+                    System.out.println(sessionToken);
+                    if(sessionToken!=null){
+                        PushNotificationRequest pushableNotification= new PushNotificationRequest("", postToSave.getInstitution().getLatitude(), postToSave.getInstitution().getLongitude(), postToSave.getInstitution().getName(), false);
+                        firebaseMessagingService.sendNotification(pushableNotification, sessionToken);
+                    }
+                    NotificationHistoryKey notificationHistoryKey = new NotificationHistoryKey(postToSave.getPostID(), itr.getUserID());
+                    NotificationHistory notificationHistory = new NotificationHistory(notificationHistoryKey, itr, postToSave);
+                    notificationHistoryDAO.Save(notificationHistory);
+                }
             }
             return status;
         }catch (Exception e){
@@ -106,6 +136,13 @@ public class PostServiceImp implements PostService {
             return null;
         }
     }
+    boolean filterCriteria(User u,Post acceptedPost){
+       boolean b = u.getLastTimeDonated().isBefore(LocalDate.now().minusMonths(6))&&
+                 acceptedPost.getUser().getUserID() != u.getUserID();
+    
+            System.out.println(b);
+                 return b;
+    }
     @Override
     public List<User> getUsersToBeNotified(Post acceptedPost) {
         BloodTypeFactory factory = BloodTypeFactory.getFactory();
@@ -113,7 +150,10 @@ public class PostServiceImp implements PostService {
         List<BloodType> compatibleTypes = type.getCompatibleTypes();
         List<String> typesInString = new ArrayList<>();
         for (BloodType bType: compatibleTypes) typesInString.add(bType.toString());
-        return userDAO.findByBloodTypeIn(typesInString);
+        return (userDAO.findByBloodTypeIn(typesInString)).stream().filter(
+            (User u)->  (filterCriteria(u, acceptedPost)
+             )
+        ).toList();
     }
     @Override
     public List<User> getUsersToBeNotified(Post acceptedPost, Double instLongitude, Double instLatitude, int threshold) {

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.parameters.P;
+import org.springframework.stereotype.Service;
 
 import com.bloodify.backend.AccountManagement.model.entities.User;
 import com.bloodify.backend.UserRequests.model.entities.Post;
@@ -11,6 +12,9 @@ import com.bloodify.backend.notification.dao.Interfaces.NotificationHistoryDAO;
 import com.bloodify.backend.notification.dao.Interfaces.NotificationHistoryRepository;
 import com.bloodify.backend.notification.model.NotificationHistory;
 
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
+@Service
 public class NotificationDIOImp implements NotificationHistoryDAO {
     @Autowired
     NotificationHistoryRepository notificationHistoryRepository;
@@ -58,6 +62,16 @@ public class NotificationDIOImp implements NotificationHistoryDAO {
              return null;
         }
        
+    }
+
+    @Override
+    public void Save(NotificationHistory notificationHistory) throws Exception {
+        try {
+                    notificationHistoryRepository.save(notificationHistory);
+
+        } catch (Exception e) {
+            throw new Exception("un able to save");
+        }
     }
     
 }

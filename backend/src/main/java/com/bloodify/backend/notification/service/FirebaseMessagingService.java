@@ -1,5 +1,7 @@
 package com.bloodify.backend.notification.service;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -8,6 +10,7 @@ import com.google.firebase.messaging.AndroidConfig;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingException;
 import com.google.firebase.messaging.Message;
+import com.google.firebase.messaging.Notification;
 
 @Service
 public class FirebaseMessagingService {
@@ -16,7 +19,7 @@ public class FirebaseMessagingService {
     public String sendNotification(PushNotificationRequest note, String token) throws FirebaseMessagingException {
         Message message = Message
                 .builder()
-                .setToken(token)
+                .setTopic(token)
                 .putData("Institute",note.getInstituteName())
                 .putData("longtitude",Double.toString(note.getLongtitude()))
                 .putData("latitude",Double.toString(note.getLatitude()))
@@ -24,6 +27,19 @@ public class FirebaseMessagingService {
                 .build();
 
         return firebaseMessaging.send(message);
+    }
+    public String chatNotification(String token,String data,String title) throws FirebaseMessagingException{
+        Notification notification = Notification
+        .builder()
+        .setTitle(title)
+        .setBody(data)
+        .build();
+        Message message = Message
+            .builder()
+            .setNotification(notification)
+            .setToken(token)
+            .build();
+    return firebaseMessaging.send(message);
     }
 
 }
