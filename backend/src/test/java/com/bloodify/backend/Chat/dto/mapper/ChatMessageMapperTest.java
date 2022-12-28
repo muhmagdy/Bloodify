@@ -7,6 +7,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.when;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -86,13 +89,15 @@ public class ChatMessageMapperTest {
         when(dto.getPostID()).thenReturn(3);
         when(dto.getDirection()).thenReturn(true);
         when(dto.getMessageID()).thenReturn(1);
+        LocalDateTime dateTime = LocalDateTime.parse("2022-10-15T12:13");
+        when(dto.getTimestamp()).thenReturn(dateTime);
 
         ChatMessageRequest request = assertDoesNotThrow(() -> chatMessageMapper.dtoToRequest(dto));
 
         assertEquals(dto.getPostID(), request.getPostID());
         assertEquals(dto.getDirection(), request.getDirection());
         assertEquals(dto.getContent(), request.getContent());
-        assertEquals(dto.getTimestamp(), request.getTimestamp());
+        assertEquals(dto.getTimestamp().toString(), request.getTimestamp());
         assertEquals(dto.getMessageID(), request.getMessageID());
     }
 
@@ -134,13 +139,15 @@ public class ChatMessageMapperTest {
         when(request.getPostID()).thenReturn(1);
         when(request.getDirection()).thenReturn(false);
         when(request.getMessageID()).thenReturn(1);
+        LocalDateTime dateTime = LocalDateTime.parse("2022-10-15T12:13");
+        when(request.getTimestamp()).thenReturn(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm").format(dateTime));
 
         ChatMessageDto dto = assertDoesNotThrow(() -> chatMessageMapper.requestToDto(request));
 
         assertEquals(request.getPostID(), dto.getPostID());
         assertEquals(request.getDirection(), dto.getDirection());
         assertEquals(request.getContent(), dto.getContent());
-        assertEquals(request.getTimestamp(), dto.getTimestamp());
+        assertEquals(dateTime, dto.getTimestamp());
         assertEquals(request.getMessageID(), dto.getMessageID());
 
     }

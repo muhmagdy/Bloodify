@@ -1,5 +1,8 @@
 package com.bloodify.backend.Chat.dto.mapper;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import org.springframework.stereotype.Component;
 
 import com.bloodify.backend.AccountManagement.dao.interfaces.UserDAO;
@@ -33,7 +36,7 @@ public class ChatMessageMapper{
                 chatMessageRequest.getDonorID(),
                 chatMessageRequest.getDirection(),
                 chatMessageRequest.getContent(),
-                chatMessageRequest.getTimestamp());
+                LocalDateTime.parse(chatMessageRequest.getTimestamp(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
     }
 
     public ChatMessage dtoToEntity(ChatMessageDto chatMessageDto)
@@ -67,7 +70,7 @@ public class ChatMessageMapper{
                 chatMessageDto.getDonorID(),
                 chatMessageDto.getDirection(),
                 chatMessageDto.getContent(),
-                chatMessageDto.getTimestamp());
+                chatMessageDto.getTimestamp().toString());
     }
 
     public ChatMessageDto entityToDto(ChatMessage chatMessage) {
