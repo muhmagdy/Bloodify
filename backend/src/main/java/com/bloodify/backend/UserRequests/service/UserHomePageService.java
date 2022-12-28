@@ -75,6 +75,7 @@ public class UserHomePageService {
             post = acceptedPost.getPost();
             Institution inst = post.getInstitution();
             Double distance = compatiblePosts.distance(acceptedPost.getLatitude(), acceptedPost.getLongitude(), inst.getLatitude(), inst.getLongitude());
+            System.out.println("Distance = " + distance);
             User user = acceptedPost.getUser();
             userBriefs.add(
                     new UserBrief(user.getUserID(), user.getFirstName()+" "+user.getLastName()

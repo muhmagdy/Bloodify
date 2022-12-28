@@ -16,7 +16,9 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Entity
@@ -70,6 +72,9 @@ public class Post {
     @Size(max = 3, message = "blood type is too long")
     @Column(name = "blood_type", nullable = false, length = 3)
     String bloodType;
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
+    private Set<AcceptedPost> acceptedPostSet = new HashSet<>();
 
     public Post(@NonNull User user, @NonNull Institution institution, @NonNull Integer bagsNum,
                 @NonNull LocalDateTime startTime, @NonNull LocalDateTime lastTime, @NonNull String bloodType) {
