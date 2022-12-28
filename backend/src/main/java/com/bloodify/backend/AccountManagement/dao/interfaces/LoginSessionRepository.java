@@ -16,15 +16,15 @@ import jakarta.transaction.Transactional;
 @Repository("LoginSessionRepository")
 
 public interface LoginSessionRepository extends JpaRepository<LoginSession, Integer> {
-    LoginSession findTokenByEmail(String email);
-    void deleteSessionByEmail(String email);
-    @Transactional
-    @Modifying(clearAutomatically = true,flushAutomatically = true)
-    @Query(value =
-            "UPDATE login_session " +
-                    "SET token = :currentToken " +
-                    "WHERE email = :email",
-            nativeQuery = true)
-    void updateToken(@Param("email") String email,
-                                    @Param("currentToken") String currentToken);
+        LoginSession findTokenByEmail(String email);
+
+        void deleteSessionByEmail(String email);
+
+        @Transactional
+        @Modifying(clearAutomatically = true, flushAutomatically = true)
+        @Query(value = "UPDATE login_session " +
+                        "SET token = :currentToken " +
+                        "WHERE email = :email", nativeQuery = true)
+        void updateToken(@Param("email") String email,
+                        @Param("currentToken") String currentToken);
 }

@@ -1,0 +1,822 @@
+{
+	"info": {
+		"_postman_id": "74eb7f26-c38a-4606-8c59-3a2e0ae04485",
+		"name": "firebase try",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18722631"
+	},
+	"item": [
+		{
+			"name": "https://fcm.googleapis.com/fcm/send",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "key=AAAA7P3xlSE:APA91bF14czGW4WuFfOWvBVKw-XCmILsrnYcqzqSviIuaP2L7S5RojB9hdQDDZvRcZh4v98YCJAFcQD5v4lqXMg15wFANP8brrceN920dFjdgeOJx7bHZn91NKiR15_TWtz5_fArXP5k",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n{\r\n    \"to\": \"dhCi7q5kTb6XIhUZ3fwmbh:APA91bG_eTB2Ft-PX4BPycro3NVgb265ZoNDSDDJ0mC2hbm-r-sR3vj6XbMrscBPFMWSM8xX4E-xE04N8HlWSNhq8zO4IzOuCpbuIb87_V15rfH0WZyRZg1oqbn0kUkH9TcldhuGXKL7\",\r\n    \r\n    \"data\": {\r\n                \"latitude\": 50.102514,\r\n                \"longtitude\": 50.112001\r\n            }\r\n            ,\r\n    \"Priority\":\"Heigh\"\r\n }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://fcm.googleapis.com/fcm/send",
+					"protocol": "https",
+					"host": [
+						"fcm",
+						"googleapis",
+						"com"
+					],
+					"path": [
+						"fcm",
+						"send"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Send notification To token",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:8080/try/dhCi7q5kTb6XIhUZ3fwmbh:APA91bG_eTB2Ft-PX4BPycro3NVgb265ZoNDSDDJ0mC2hbm-r-sR3vj6XbMrscBPFMWSM8xX4E-xE04N8HlWSNhq8zO4IzOuCpbuIb87_V15rfH0WZyRZg1oqbn0kUkH9TcldhuGXKL7",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"try",
+						"dhCi7q5kTb6XIhUZ3fwmbh:APA91bG_eTB2Ft-PX4BPycro3NVgb265ZoNDSDDJ0mC2hbm-r-sR3vj6XbMrscBPFMWSM8xX4E-xE04N8HlWSNhq8zO4IzOuCpbuIb87_V15rfH0WZyRZg1oqbn0kUkH9TcldhuGXKL7"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Inst 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"  pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"state is true\", function () {\r",
+							"    pm.expect(pm.response.json().state).to.eql(true)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"ok@email.com\",\r\n    \"name\": \"Hospital1\",\r\n    \"password\": \"OKOKokok123_\",\r\n    \"location\": \"Alex\",\r\n    \"latitude\": 123.456,\r\n    \"longitude\": 456.789,\r\n    \"positiveA_bagsCount\": 1000,\r\n    \"positiveB_bagsCount\": 1000,\r\n    \"positiveAB_bagsCount\": 1000,\r\n    \"positiveO_bagsCount\": 1000,\r\n    \"negativeA_bagsCount\": 1000,\r\n    \"negativeB_bagsCount\": 1000,\r\n    \"negativeAB_bagsCount\": 1000,\r\n    \"negativeO_bagsCount\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/v1/institution",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"institution"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Inst 2 Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"  pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"state is true\", function () {\r",
+							"    pm.expect(pm.response.json().state).to.eql(true)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"hospital@gmail.com\",\r\n    \"name\": \"Hospital1\",\r\n    \"password\": \"{{$randomPassword}}\",\r\n    \"location\": \"Cairo\",\r\n    \"latitude\":  31.1924,\r\n    \"longitude\":  29.9292617\r\n   \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/v1/institution",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"institution"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New User 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"  pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"state is true\", function () {\r",
+							"    pm.expect(pm.response.json().state).to.eql(true)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\": \"John\",\r\n    \"lastName\": \"Legend\",\r\n    \"nationalID\": \"27901010102345\",\r\n    \"email\": \"john@legend.me\",\r\n    \"bloodType\": \"A-\",\r\n    \"hasDiseases\": false,\r\n    \"lastTimeDonated\": \"07-08-1979\",\r\n    \"password\": \"HAHAhaha123_\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/v1/user",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New User 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"  pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"state is true\", function () {\r",
+							"    pm.expect(pm.response.json().state).to.eql(true)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\": \"Selena\",\r\n    \"lastName\": \"Gomez\",\r\n    \"nationalID\": \"30012020109999\",\r\n    \"email\": \"selenaa@hotmail.com\",\r\n    \"bloodType\": \"A+\",\r\n    \"hasDiseases\": false,\r\n    \"lastTimeDonated\": \"07-12-1999\",\r\n    \"password\": \"123456\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/v1/user",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New User 3",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"  pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"state is true\", function () {\r",
+							"    pm.expect(pm.response.json().state).to.eql(true)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\": \"Ali\",\r\n    \"lastName\": \"Gomez\",\r\n    \"nationalID\": \"30002020109999\",\r\n    \"email\": \"Ali@hotmail.com\",\r\n    \"bloodType\": \"AB+\",\r\n    \"hasDiseases\": false,\r\n    \"lastTimeDonated\": \"07-12-1999\",\r\n    \"password\": \"{{$randomPassword}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/v1/user",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New User 4",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"  pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"state is true\", function () {\r",
+							"    pm.expect(pm.response.json().state).to.eql(true)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\": \"Karim\",\r\n    \"lastName\": \"Alaa\",\r\n    \"nationalID\": \"20103050100123\",\r\n    \"email\": \"karim@gmail.com\",\r\n    \"bloodType\": \"A+\",\r\n    \"hasDiseases\": false,\r\n    \"lastTimeDonated\": \"05-03-2001\",\r\n    \"password\": \"{{$randomPassword}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/v1/user",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New User 4",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"  pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"state is true\", function () {\r",
+							"    pm.expect(pm.response.json().state).to.eql(true)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\": \"youhana\",\r\n    \"lastName\": \"Alaa\",\r\n    \"nationalID\": \"12345678912345\",\r\n    \"email\": \"youhana@gmail.com\",\r\n    \"bloodType\": \"O+\",\r\n    \"hasDiseases\": false,\r\n    \"lastTimeDonated\": \"05-03-2001\",\r\n    \"password\": \"{{$randomPassword}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/v1/user",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Correct Password Signin Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"state is true\", function () {\r",
+							"    pm.expect(pm.response.json().status).to.eql(true)\r",
+							"})\r",
+							"let institution_token = pm.response.json().data.token;\r",
+							"pm.collectionVariables.set(\"user_token\", institution_token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "john@legend.me",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "HAHAhaha123_",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"token\":\"ss\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/v1/user/auth",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"user",
+						"auth"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Correct Password Signin Copy 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"state is true\", function () {\r",
+							"    pm.expect(pm.response.json().status).to.eql(true)\r",
+							"})\r",
+							"let institution_token = pm.response.json().data.token;\r",
+							"pm.collectionVariables.set(\"user_token_notified\", institution_token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "123456",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "selenaa@hotmail.com",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"token\":\"ss\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/v1/user/auth",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"user",
+						"auth"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Valid posting Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"valid post status code\", () => {\r",
+							"    pm.response.to.have.status(201)\r",
+							"})\r",
+							"\r",
+							"pm.test(\"valid post status flag\", () => {\r",
+							"    pm.expect(pm.response.json().status).to.eql(true)\r",
+							"})\r",
+							"\r",
+							"pm.test(\"valid post body\", () => {\r",
+							"    pm.expect(pm.response.json().responseBody).to.eql(\"Your Request Posted Successfully\")\r",
+							"})\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{user_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"postID\": -1,\r\n    \"institutionID\": 1,\r\n    \"LastUpdateTime\": \"2022-12-18T07:29:00\",\r\n    \"expiryTime\": \"2025-12-18T08:51:00\",\r\n    \"requiredBags\": 90, \r\n    \"bloodType\": \"A+\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/v1/user/posting/add",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"user",
+						"posting",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Valid posting Copy 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"valid post status code\", () => {\r",
+							"    pm.response.to.have.status(201)\r",
+							"})\r",
+							"\r",
+							"pm.test(\"valid post status flag\", () => {\r",
+							"    pm.expect(pm.response.json().status).to.eql(true)\r",
+							"})\r",
+							"\r",
+							"pm.test(\"valid post body\", () => {\r",
+							"    pm.expect(pm.response.json().responseBody).to.eql(\"Your Request Posted Successfully\")\r",
+							"})\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{user_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"postID\": -1,\r\n    \"institutionID\": 1,\r\n    \"LastUpdateTime\": \"2022-12-18T07:29:00\",\r\n    \"expiryTime\": \"2026-12-18T08:51:00\",\r\n    \"requiredBags\": 90, \r\n    \"bloodType\": \"AB+\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/v1/user/posting/add",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"user",
+						"posting",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Valid posting Copy 3",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"valid post status code\", () => {\r",
+							"    pm.response.to.have.status(201)\r",
+							"})\r",
+							"\r",
+							"pm.test(\"valid post status flag\", () => {\r",
+							"    pm.expect(pm.response.json().status).to.eql(true)\r",
+							"})\r",
+							"\r",
+							"pm.test(\"valid post body\", () => {\r",
+							"    pm.expect(pm.response.json().responseBody).to.eql(\"Your Request Posted Successfully\")\r",
+							"})\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{user_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"postID\": -1,\r\n    \"institutionID\": 2,\r\n    \"LastUpdateTime\": \"2022-12-18T07:29:00\",\r\n    \"expiryTime\": \"2025-12-15T08:51:00\",\r\n    \"requiredBags\": 90, \r\n    \"bloodType\": \"O-\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/v1/user/posting/add",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"user",
+						"posting",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetNotifications",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"    let resp = pm.response.json(); \r",
+							"pm.test(\"status is true\", function () {\r",
+							"    pm.expect(resp.status).to.eql(true)\r",
+							"})\r",
+							"pm.test(\"have expected post\", function () {\r",
+							"    pm.expect(resp.notificationResponses.length).to.eql(2)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{user_token_notified}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/v1/user/notification/getNotifications",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"user",
+						"notification",
+						"getNotifications"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "logout",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{user_token_notified}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/v1/user/logout",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"user",
+						"logout"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "user_token",
+			"value": ""
+		},
+		{
+			"key": "user_token_notified",
+			"value": ""
+		}
+	]
+}

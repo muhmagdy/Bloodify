@@ -98,7 +98,7 @@ public class AccountManagerServiceImp implements AccountManagerService {
     @Override
     public boolean userSignOut(Authentication auth) {
         try {
-
+            System.out.println(auth.getName());
             loginSessionDAO.delete(auth.getName());
             return true;
         } catch (Exception e) {

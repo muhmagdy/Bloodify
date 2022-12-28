@@ -62,7 +62,7 @@ public class AccountController {
 
     @PostMapping(test + "/user/logout")
     public ResponseEntity<Boolean> logout(Authentication credentials) {
-        credentials.getName();
+        System.out.println(credentials.getName());
         boolean success = accountManagerService.userSignOut(credentials);
         if (success) {
             return ResponseEntity.ok(true);
