@@ -25,6 +25,17 @@ public class BloodGroupO extends BloodGroup {
     }
 
     @Override
+    public List<BloodType> getCompatibleTypesUser() {
+        List<BloodType> compatibleGroups = new ArrayList<>();
+        compatibleGroups.add(this);
+        compatibleGroups.add(BloodGroupAB.getGroupAB());
+        compatibleGroups.add(BloodGroupA.getGroupA());
+        compatibleGroups.add(BloodGroupB.getGroupB());
+        return compatibleGroups;
+    }
+
+
+    @Override
     public String toString() {
         return "O";
     }

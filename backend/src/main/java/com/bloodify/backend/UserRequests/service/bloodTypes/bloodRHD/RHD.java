@@ -13,8 +13,13 @@ public class RHD implements BloodType {
     }
 
     @Override
-    public List<BloodType> getCompatibleTypesPost() {
+    public List<BloodType> getCompatibleTypesPost(){
         return group.getCompatibleTypesPost();
+    }
+
+    @Override
+    public List<BloodType> getCompatibleTypesUser() {
+        return group.getCompatibleTypesUser();
     }
 
     @Override

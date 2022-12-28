@@ -10,7 +10,6 @@ import com.bloodify.backend.UserRequests.model.response.UserBrief;
 import com.bloodify.backend.UserRequests.repository.interfaces.AcceptRepository;
 import com.bloodify.backend.UserRequests.service.bloodTypes.BloodType;
 import com.bloodify.backend.UserRequests.service.bloodTypes.BloodTypeFactory;
-import com.bloodify.backend.UserRequests.service.entities.CompatiblePostsImp;
 import com.bloodify.backend.UserRequests.service.interfaces.CompatiblePosts;
 import com.bloodify.backend.UserRequests.service.interfaces.PostDao;
 import jakarta.annotation.Resource;
@@ -18,6 +17,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,14 +46,13 @@ public class UserHomePageService {
         return 0;
     }
 
-    /// TODO: Compatible types instead of exact
-    public List<PostBrief> getCompatiblePosts(String email, Double longitude, Double latitude, Double threshold) {
+    public List<PostBrief> getCompatiblePosts(String email, Double longitude, Double latitude, Double threshold){
         User user = userDAO.findUserByEmail(email);
-        if (user.isHasDiseases())
+        if(user.isHasDiseases() || ChronoUnit.MONTHS.between(user.getLastTimeDonated(), LocalDate.now()) >= 6)
             return new ArrayList<>();
         BloodType currentType = BloodTypeFactory.getFactory().generateFromString(user.getBloodType());
         List<Post> posts = new ArrayList<>();
-        for (BloodType compatibleType : currentType.getCompatibleTypesPost()) {
+        for(BloodType compatibleType: currentType.getCompatibleTypesUser()){
             posts.addAll(postDao.getAllBloodTypePosts(compatibleType.toString()));
         }
         List<PostBrief> postBriefs = new ArrayList<>();
