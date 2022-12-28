@@ -1,18 +1,18 @@
-import 'package:bloodify_front_end/layout/start_layout.dart';
 import 'package:flutter/material.dart';
 
+import '../../layout/start_layout.dart';
 import '../../shared/Constatnt/colors.dart';
 import '../../shared/Constatnt/fonts.dart';
 import '../../shared/network/local/cach_helper.dart';
 
-class UserSettings extends StatefulWidget {
-  const UserSettings({super.key});
+class InstitutionSettings extends StatefulWidget {
+  const InstitutionSettings({super.key});
 
   @override
-  State<UserSettings> createState() => _UserSettingsState();
+  State<InstitutionSettings> createState() => _InstitutionSettingsState();
 }
 
-class _UserSettingsState extends State<UserSettings> {
+class _InstitutionSettingsState extends State<InstitutionSettings> {
   Future logout(BuildContext context) async {
     if (await CachHelper.removeData(key: 'isUser') &&
         await CachHelper.removeData(key: 'token')) {
@@ -65,11 +65,12 @@ class _UserSettingsState extends State<UserSettings> {
               decoration: const BoxDecoration(
                   // color: Colors.white,
                   image: DecorationImage(
-                      image: AssetImage('assets/images/user-settings-icon.png'),
+                      image: AssetImage(
+                          'assets/images/institution-settings-icon.png'),
                       fit: BoxFit.contain)),
             ),
             const Text(
-              "El Saber Dealer",
+              "El Saber Hospital",
               style: TextStyle(fontSize: 30),
             ),
             SizedBox(height: 0.01 * height),

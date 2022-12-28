@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
+import '../settings/institution_settings.dart';
 import '../transactions_modules/institution_tranaction/InstituteTransaction.dart';
 
 class InstNavBar extends StatelessWidget {
@@ -17,7 +18,7 @@ class InstNavBar extends StatelessWidget {
       const Screen2(),
       InstituteTransaction(),
       InstitutionEventPage(),
-      const Screen5()
+      const InstitutionSettings()
     ];
   }
 
