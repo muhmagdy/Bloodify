@@ -1,4 +1,4 @@
-package com.bloodify.backend.Statistics.Service.Transaction;
+package com.bloodify.backend.Statistics.Service.Transactions;
 
 import com.bloodify.backend.InstitutionManagement.repository.interfaces.UserToInstDonRepository;
 import com.bloodify.backend.Statistics.Service.Common.BagsNumbersAndPercentsCalculation;
@@ -14,7 +14,8 @@ import java.time.LocalDate;
 public class UserToInstitutionImpl implements UserToInstitution {
     @Resource
     UserToInstDonRepository repository;
-    BagsNumbersAndPercentsCalculation calculate = new BagsNumbersAndPercentsCalculation();
+
+//    BagsNumbersAndPercentsCalculation calculate = new BagsNumbersAndPercentsCalculation();
     Wrapper wrap = new Wrapper();
 
     public BloodBagsCountWrapper[] bagsGotFromTransaction(LocalDate start, LocalDate end, String institutionEmail) {
@@ -25,7 +26,7 @@ public class UserToInstitutionImpl implements UserToInstitution {
         int[] bagsCounts = new int[8];
         getCounts(start, end, bloodTypesNames, bagsCounts, institutionEmail);
 
-        int totalBags = calculate.countTotalBags(bagsCounts);
+//        int totalBags = calculate.countTotalBags(bagsCounts);
 
 //        double[] percentages = new double[8];
 //        calculate.calculateBagsPercents(bagsCounts, totalBags, percentages);
