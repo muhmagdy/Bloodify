@@ -42,7 +42,7 @@ public class API_Controller {
             return ResponseEntity.status(HttpStatus.OK).body(new PostResponse<>(true, "Your Request Edited Successfully"));
         return ResponseEntity.status(422).body(new PostResponse<>(false, "Failed to Edit Your Request"));
     }
-    @DeleteMapping("/delete/{postId}")
+    @DeleteMapping("/{postId}")
     public ResponseEntity<PostResponse<String>> deletePost(@PathVariable("postId") int id, Authentication auth){
         boolean status = this.postService.deletePost(id, auth.getName());
         if (status)

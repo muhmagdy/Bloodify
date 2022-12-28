@@ -13,7 +13,7 @@ class DioHelper {
       BaseOptions(
         // baseUrl:
         // "https://7722b390-519c-4d05-810f-90091b05282c.mock.pstmn.io/api/v1/",
-        baseUrl: 'http://192.168.1.5:8080/api/v1/',
+        baseUrl: 'http://192.168.1.113:8080/api/v1/',
         receiveDataWhenStatusError: true,
         headers: {
           'Content-Type': 'application/json',
@@ -66,6 +66,33 @@ class DioHelper {
     }
     print(dio!.options.headers);
     return dio!.post(
+      url,
+      queryParameters: query,
+      data: data,
+    );
+  }
+
+  static Future<Response> deleteData({
+    required String url,
+    Map<String, dynamic>? query,
+    required Map<String, dynamic> data,
+    String lang = 'en',
+  }) async {
+    String? auth;
+    if (token == null) {
+      dio!.options.headers = {
+        'Content-Type': 'application/json',
+        'lang': lang,
+      };
+    } else {
+      dio!.options.headers = {
+        'Content-Type': 'application/json',
+        'lang': lang,
+        'Authorization': "Bearer $token",
+      };
+    }
+    print(dio!.options.headers);
+    return dio!.delete(
       url,
       queryParameters: query,
       data: data,

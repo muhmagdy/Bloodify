@@ -14,7 +14,8 @@ import '../../../../shared/Constatnt/fonts.dart';
 
 class RequestHeader extends StatelessWidget {
   final PostBrief request;
-  const RequestHeader(this.request, {super.key});
+  final Function updateParent;
+  const RequestHeader(this.request, this.updateParent, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -34,20 +35,6 @@ class RequestHeader extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          // if (request.state != 0)
-          //   Container(
-          //     alignment: Alignment.centerLeft,
-          //     margin: EdgeInsets.only(bottom: .005 * height),
-          //     child: Text(
-          //       title,
-          //       style: SafeGoogleFont(
-          //         'Poppins',
-          //         fontSize: 0.02 * height,
-          //         fontWeight: FontWeight.w400,
-          //         color: lightBlue,
-          //       ),
-          //     ),
-          //   ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             // crossAxisAlignment: CrossAxisAlignment.start,
@@ -216,27 +203,7 @@ class RequestHeader extends StatelessWidget {
       ),
       if (request.state == 0)
         TextButton(
-            onPressed: () {
-              DioHelper.postData(url: 'user/post/accept', data: {
-                'id': request.id,
-                'longitude': request.location.longitude,
-                'latitude': request.location.latitude,
-                'threshold': 5000.0,
-              }).then((value) => {
-                    if (value.data['state'])
-                      {
-                        showToast(
-                            text: "Post accepted successfully!",
-                            color: blue,
-                            time: 3000)
-                      }
-                    else
-                      {
-                        showToast(
-                            text: value.data['message'], color: red, time: 3000)
-                      }
-                  });
-            },
+            onPressed: () => acceptPost(context),
             style: TextButton.styleFrom(
                 backgroundColor: red,
                 minimumSize: Size(width * 0.9, height * 0.05),
@@ -246,21 +213,51 @@ class RequestHeader extends StatelessWidget {
               "Accept",
               style: NormalStyle(height, Colors.white),
             )),
-      if (request.state == 2)
+      if (request.state == 1)
         TextButton(
-            onPressed: () {},
+            onPressed: () => deletePost(context),
             style: TextButton.styleFrom(
                 backgroundColor: red,
                 minimumSize: Size(width * 0.9, height * 0.05),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(width / 26))),
             child: Text(
-              "Cancel",
+              "Delete Post",
               style: NormalStyle(height, Colors.white),
             )),
       Container(
         height: 0.01 * height,
       ),
     ]);
+  }
+
+  void deletePost(BuildContext context) {
+    DioHelper.deleteData(url: 'user/posting/${request.id}', data: {})
+        .then((value) {
+      if (value.data['status']) {
+        showToast(text: "Post deleted successfully!", color: blue, time: 3000);
+      } else {
+        showToast(text: value.data['message'], color: red, time: 3000);
+      }
+      Navigator.pop(context);
+      updateParent();
+    });
+  }
+
+  void acceptPost(BuildContext context) {
+    DioHelper.postData(url: 'user/post/accept', data: {
+      'id': request.id,
+      'longitude': request.location.longitude,
+      'latitude': request.location.latitude,
+      'threshold': 5000.0,
+    }).then((value) {
+      if (value.data['state']) {
+        showToast(text: "Post accepted successfully!", color: blue, time: 3000);
+      } else {
+        showToast(text: value.data['message'], color: red, time: 3000);
+      }
+      Navigator.pop(context);
+      updateParent();
+    });
   }
 }

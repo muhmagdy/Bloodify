@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:bloodify_front_end/models/postBrief.dart';
 import 'package:bloodify_front_end/models/userBrief.dart';
 import 'package:bloodify_front_end/modules/BloodFinding/bloc/blood_finder_service.dart';
@@ -54,44 +56,59 @@ class _UserHome extends State<UserHome> {
                     children: [
                       Scaffold(
                           body: RefreshIndicator(
-                        triggerMode: RefreshIndicatorTriggerMode.anywhere,
-                        onRefresh: _pullRefresh,
-                        child: ListView(
-                            shrinkWrap: false,
-                            physics: const ClampingScrollPhysics(
-                                parent: AlwaysScrollableScrollPhysics()),
-                            children: [
-                              Container(
-                                height: 0.01 * height,
-                              ),
-                              if (posts.isEmpty)
-                                Text("There's no avaliable request for you..",
-                                    style: NormalStyle(height, grey)),
-                              if (status == 0 && posts.length == 1)
-                                Text("Compatible Post",
-                                    style: NormalStyle(height, grey)),
-                              if (status == 0 && posts.length > 1)
-                                Text("Compatible Posts",
-                                    style: NormalStyle(height, grey)),
-                              if (status == 1)
-                                Text("You have the following requests:",
-                                    style: NormalStyle(height, grey)),
-                              if (status == 2)
-                                Text("You have accepted the following request:",
-                                    style: NormalStyle(height, grey)),
-                              Container(
-                                height: 0.01 * height,
-                              ),
-                              ListView.builder(
-                                physics: const NeverScrollableScrollPhysics(),
-                                shrinkWrap: true,
-                                itemCount: posts.length,
-                                itemBuilder: (context, index) =>
-                                    RequestFullWidget(
-                                        posts[index], people[index], status),
-                              )
-                            ]),
-                      )),
+                              triggerMode: RefreshIndicatorTriggerMode.anywhere,
+                              onRefresh: _pullRefresh,
+                              child: ScrollConfiguration(
+                                behavior:
+                                    ScrollConfiguration.of(context).copyWith(
+                                  dragDevices: {
+                                    PointerDeviceKind.touch,
+                                    PointerDeviceKind.mouse,
+                                  },
+                                ),
+                                child: ListView(
+                                    shrinkWrap: false,
+                                    physics: const ClampingScrollPhysics(
+                                        parent:
+                                            AlwaysScrollableScrollPhysics()),
+                                    children: [
+                                      Container(
+                                        height: 0.01 * height,
+                                      ),
+                                      if (posts.isEmpty)
+                                        Text(
+                                            "There's no avaliable request for you..",
+                                            style: NormalStyle(height, grey)),
+                                      if (status == 0 && posts.length == 1)
+                                        Text("Compatible Post",
+                                            style: NormalStyle(height, grey)),
+                                      if (status == 0 && posts.length > 1)
+                                        Text("Compatible Posts",
+                                            style: NormalStyle(height, grey)),
+                                      if (status == 1)
+                                        Text("You have the following requests:",
+                                            style: NormalStyle(height, grey)),
+                                      if (status == 2)
+                                        Text(
+                                            "You have accepted the following request:",
+                                            style: NormalStyle(height, grey)),
+                                      Container(
+                                        height: 0.01 * height,
+                                      ),
+                                      ListView.builder(
+                                        physics:
+                                            const NeverScrollableScrollPhysics(),
+                                        shrinkWrap: true,
+                                        itemCount: posts.length,
+                                        itemBuilder: (context, index) =>
+                                            RequestFullWidget(
+                                                posts[index],
+                                                people[index],
+                                                status,
+                                                _pullRefresh),
+                                      )
+                                    ]),
+                              ))),
                       if (_isLoading)
                         Center(
                             child: Container(
@@ -130,7 +147,8 @@ class _UserHome extends State<UserHome> {
             }).then((value) {
               print(value.data);
               for (int i = 0; i < value.data.length; i++) {
-                var event = PostBrief.fromJson(value.data[i], status);
+                var event = PostBrief.fromJsonWithLocation(
+                    value.data[i], status, position);
                 posts.add(event);
                 people.add([]);
               }
