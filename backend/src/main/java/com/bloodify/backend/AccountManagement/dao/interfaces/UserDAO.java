@@ -39,4 +39,8 @@ public interface UserDAO extends UserDetailsService{
                                                       String bloodType,
                                                       String nationalID);
 
+    public boolean isUserExistByEmail(String email);
+
+    public boolean updatePassword(String email, String newPassword);
+
 }

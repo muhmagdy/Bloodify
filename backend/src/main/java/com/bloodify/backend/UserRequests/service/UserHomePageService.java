@@ -46,6 +46,8 @@ public class UserHomePageService {
     ///TODO: Compatible types instead of exact
     public List<PostBrief> getCompatiblePosts(String email, Double longitude, Double latitude, Double threshold){
         User user = userDAO.findUserByEmail(email);
+        if(user.isHasDiseases())
+            return new ArrayList<>();
         List<Post> posts = postDao.getAllBloodTypePosts(user.getBloodType());
         List<PostBrief> postBriefs = new ArrayList<>();
         for(Post post: posts){
@@ -73,6 +75,7 @@ public class UserHomePageService {
             post = acceptedPost.getPost();
             Institution inst = post.getInstitution();
             Double distance = compatiblePosts.distance(acceptedPost.getLatitude(), acceptedPost.getLongitude(), inst.getLatitude(), inst.getLongitude());
+            System.out.println("Distance = " + distance);
             User user = acceptedPost.getUser();
             userBriefs.add(
                     new UserBrief(user.getUserID(), user.getFirstName()+" "+user.getLastName()
@@ -153,6 +156,7 @@ public class UserHomePageService {
 
     PostBrief postToPostBrief(Post post, User user, Institution inst, Double distance){
         return new PostBrief(post.getPostID(), user.getNationalID(), user.getFirstName()+" "+user.getLastName(),
-                post.getStartTime(), post.getBagsNum(), post.getBloodType(), distance, inst.getName());
+                post.getLastTime(), post.getBagsNum(), post.getBloodType(), distance, inst.getName(), inst.getLongitude(),
+                inst.getLatitude());
     }
 }

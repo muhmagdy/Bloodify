@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "2ef62343-cdc0-4e45-840a-97274496e1dd",
+		"_postman_id": "76854b59-41b5-41ef-9d16-4cc51a688707",
 		"name": "Bloodyify",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "18289071"
+		"_exporter_id": "18245343"
 	},
 	"item": [
 		{
@@ -155,7 +155,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"firstName\": \"Selena\",\r\n    \"lastName\": \"Gomez\",\r\n    \"nationalID\": \"30002020109999\",\r\n    \"email\": \"selena@hotmail.com\",\r\n    \"bloodType\": \"O+\",\r\n    \"hasDiseases\": false,\r\n    \"lastTimeDonated\": \"07-12-1999\",\r\n    \"password\": \"{{$randomPassword}}\"\r\n}",
+									"raw": "{\r\n    \"firstName\": \"Selena\",\r\n    \"lastName\": \"Gomez\",\r\n    \"nationalID\": \"30002020109999\",\r\n    \"email\": \"selena@hotmail.com\",\r\n    \"bloodType\": \"O+\",\r\n    \"hasDiseases\": false,\r\n    \"lastTimeDonated\": \"07-12-1999\",\r\n    \"password\": \"JUSTaPASSWORD123_\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -963,7 +963,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"email\": \"{{$randomExampleEmail}}\",\r\n    \"name\": \"{{$randomLoremWord}}\",\r\n    \"password\": \"{{$randomPassword}}\",\r\n    \"location\": \"{{$randomCity}}\",\r\n    \"latitude\": {{$randomLatitude}},\r\n    \"longitude\": {{$randomLongitude}}\r\n}",
+									"raw": "{\r\n    \"email\": \"{{$randomExampleEmail}}\",\r\n    \"name\": \"{{$randomLoremWord}}\",\r\n    \"password\": \"{{$randomPassword}}\",\r\n    \"location\": \"{{$randomCity}}\",\r\n    \"latitude\": {{$randomLatitude}},\r\n    \"longitude\": {{$randomLongitude}},\r\n    \"positiveA_bagsCount\": 982,\r\n    \"positiveB_bagsCount\": 321,\r\n    \"positiveAB_bagsCount\": 123,\r\n    \"positiveO_bagsCount\": 2465,\r\n    \"negativeA_bagsCount\": 865,\r\n    \"negativeB_bagsCount\": 724,\r\n    \"negativeAB_bagsCount\": 89,\r\n    \"negativeO_bagsCount\": 768\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1009,7 +1009,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"email\": \"ok@email.com\",\r\n    \"name\": \"Hospital1\",\r\n    \"password\": \"OKOKokok123_\",\r\n    \"location\": \"Alex\",\r\n    \"latitude\": 123.456,\r\n    \"longitude\": 456.789,\r\n    \"positiveA_bagsCount\": 1000,\r\n    \"positiveB_bagsCount\": 1000,\r\n    \"positiveAB_bagsCount\": 1000,\r\n    \"positiveO_bagsCount\": 1000,\r\n    \"negativeA_bagsCount\": 1000,\r\n    \"negativeB_bagsCount\": 1000,\r\n    \"negativeAB_bagsCount\": 1000,\r\n    \"negativeO_bagsCount\": 1\r\n}",
+									"raw": "{\r\n    \"email\": \"ok@email.com\",\r\n    \"name\": \"Gamal Abd El Naser Hospital\",\r\n    \"password\": \"OKOKokok123_\",\r\n    \"location\": \"El Horia Road, El Ibrahemia, Alexandria\",\r\n    \"latitude\": 31.20451,\r\n    \"longitude\": 29.92622,\r\n    \"positiveA_bagsCount\": 1000,\r\n    \"positiveB_bagsCount\": 1000,\r\n    \"positiveAB_bagsCount\": 1000,\r\n    \"positiveO_bagsCount\": 1000,\r\n    \"negativeA_bagsCount\": 1000,\r\n    \"negativeB_bagsCount\": 1000,\r\n    \"negativeAB_bagsCount\": 1000,\r\n    \"negativeO_bagsCount\": 1\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1055,7 +1055,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"email\": \"hospital@gmail.com\",\r\n    \"name\": \"Hospital1\",\r\n    \"password\": \"{{$randomPassword}}\",\r\n    \"location\": \"Cairo\",\r\n    \"latitude\": 786.987,\r\n    \"longitude\": 203.2345\r\n}",
+									"raw": "{\r\n    \"email\": \"hospital@gmail.com\",\r\n    \"name\": \"Smouha International Hospital\",\r\n    \"password\": \"{{$randomPassword}}\",\r\n    \"location\": \"1 Mohammed Fawzi Moaz, Ezbet Saad, Sidi Gaber, Alexandria Governorate\",\r\n    \"latitude\": 31.20900,\r\n    \"longitude\": 29.93488,\r\n    \"positiveA_bagsCount\": 452,\r\n    \"positiveB_bagsCount\": 856,\r\n    \"positiveAB_bagsCount\": 326,\r\n    \"positiveO_bagsCount\": 532,\r\n    \"negativeA_bagsCount\": 312,\r\n    \"negativeB_bagsCount\": 96,\r\n    \"negativeAB_bagsCount\": 22,\r\n    \"negativeO_bagsCount\": 85\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1101,7 +1101,53 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"email\": \"luxorh@hospital.org\",\r\n    \"name\": \"Luxor General Hospital\",\r\n    \"password\": \"{{$randomPassword}}\",\r\n    \"location\": \"Luxor\",\r\n    \"latitude\": 999.321,\r\n    \"longitude\": 129.225\r\n}",
+									"raw": "{\r\n    \"email\": \"sharq@hospital.org\",\r\n    \"name\": \"Sharq El Madina Hospital\",\r\n    \"password\": \"{{$randomPassword}}\",\r\n    \"location\": \"Gamal Abd El-Nasir Road, Sidi Beshr, Alexandria\",\r\n    \"latitude\": 31.26221,\r\n    \"longitude\": 29.99193,\r\n    \"positiveA_bagsCount\": 0,\r\n    \"positiveB_bagsCount\": 1,\r\n    \"positiveAB_bagsCount\": 0,\r\n    \"positiveO_bagsCount\": 1,\r\n    \"negativeA_bagsCount\": 0,\r\n    \"negativeB_bagsCount\": 1,\r\n    \"negativeAB_bagsCount\": 0,\r\n    \"negativeO_bagsCount\": 1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/api/v1/institution",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"institution"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "New Inst 4",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"  pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"state is true\", function () {\r",
+											"    pm.expect(pm.response.json().state).to.eql(true)\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"elkasr@hospital.org\",\r\n    \"name\": \"El Kasr El Einey Hospital\",\r\n    \"password\": \"{{$randomPassword}}\",\r\n    \"location\": \"Gamal Abd El-Nasir Road, Sidi Beshr, Alexandria\",\r\n    \"latitude\": 30.03158,\r\n    \"longitude\": 31.22707,\r\n    \"positiveA_bagsCount\": 1245,\r\n    \"positiveB_bagsCount\": 825,\r\n    \"positiveAB_bagsCount\": 452,\r\n    \"positiveO_bagsCount\": 1425,\r\n    \"negativeA_bagsCount\": 244,\r\n    \"negativeB_bagsCount\": 348,\r\n    \"negativeAB_bagsCount\": 128,\r\n    \"negativeO_bagsCount\": 826\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -2446,7 +2492,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"postID\": -1,\r\n    \"institutionID\": 1,\r\n    \"LastUpdateTime\": \"2022-12-18T07:29:00\",\r\n    \"expiryTime\": \"2022-12-18T08:51:00\",\r\n    \"requiredBags\": 9, \r\n    \"bloodType\": \"B-\"\r\n}",
+							"raw": "{\r\n    \"postID\": -1,\r\n    \"institutionID\": 2,\r\n    \"LastUpdateTime\": \"2022-12-18T07:29:00\",\r\n    \"expiryTime\": \"2022-12-31T08:51:00\",\r\n    \"requiredBags\": 9, \r\n    \"bloodType\": \"O+\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -3127,7 +3173,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/api/v1/user/posting/delete/0",
+							"raw": "localhost:8080/api/v1/user/posting/0",
 							"host": [
 								"localhost"
 							],
@@ -3137,7 +3183,6 @@
 								"v1",
 								"user",
 								"posting",
-								"delete",
 								"0"
 							]
 						}
@@ -3187,7 +3232,7 @@
 							}
 						],
 						"url": {
-							"raw": "localhost:8080/api/v1/user/posting/delete/1",
+							"raw": "localhost:8080/api/v1/user/posting/1",
 							"host": [
 								"localhost"
 							],
@@ -3197,7 +3242,6 @@
 								"v1",
 								"user",
 								"posting",
-								"delete",
 								"1"
 							]
 						}
@@ -3321,144 +3365,51 @@
 					"response": []
 				},
 				{
-					"name": "insert institution2",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 201\", function () {\r",
-									"  pm.response.to.have.status(201);\r",
-									"});\r",
-									"\r",
-									"pm.test(\"state is true\", function () {\r",
-									"    pm.expect(pm.response.json().state).to.eql(true)\r",
-									"})"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"hosp@gmail.com\",\r\n    \"name\": \"Hsopital\",\r\n    \"password\": \"{{$randomPassword}}\",\r\n    \"location\": \"Cairo\",\r\n    \"latitude\": 786.987,\r\n    \"longitude\": 203.2345,\r\n    \"positiveA_bagsCount\": 0,\r\n    \"positiveB_bagsCount\": 1,\r\n    \"positiveAB_bagsCount\": 0,\r\n    \"positiveO_bagsCount\": 1,\r\n    \"negativeA_bagsCount\": 0,\r\n    \"negativeB_bagsCount\": 1,\r\n    \"negativeAB_bagsCount\": 0,\r\n    \"negativeO_bagsCount\": 1\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "localhost:8080/api/v1/institution",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"v1",
-								"institution"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "insert institution2 Copy",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 201\", function () {\r",
-									"  pm.response.to.have.status(201);\r",
-									"});\r",
-									"\r",
-									"pm.test(\"state is true\", function () {\r",
-									"    pm.expect(pm.response.json().state).to.eql(true)\r",
-									"})"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"lospitalol@gmail.com\",\r\n    \"name\": \"hohpitaljh\",\r\n    \"password\": \"{{$randomPassword}}\",\r\n    \"location\": \"Alexandria\",\r\n    \"latitude\": 189.987,\r\n    \"longitude\": 316.2345,\r\n    \"positiveA_bagsCount\": 2,\r\n    \"positiveB_bagsCount\": 1,\r\n    \"positiveAB_bagsCount\": 0,\r\n    \"positiveO_bagsCount\": 3,\r\n    \"negativeA_bagsCount\": 2,\r\n    \"negativeB_bagsCount\": 1,\r\n    \"negativeAB_bagsCount\": 0,\r\n    \"negativeO_bagsCount\": 3\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "localhost:8080/api/v1/institution",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"v1",
-								"institution"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "searchA+",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"get A+\", () => {\r",
-									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[0].types_bags['A+']).to.eql(1000)\r",
-									"})\r",
-									"pm.test(\"get A+\", () => {\r",
-									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[0].types_bags['A-']).to.eql(995)\r",
-									"})\r",
-									"pm.test(\"get A+\", () => {\r",
-									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[0].types_bags['O+']).to.eql(1000)\r",
-									"})\r",
-									"pm.test(\"get A+\", () => {\r",
-									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[0].types_bags['O-']).to.eql(2)\r",
-									"})\r",
+									"function searchByName(name){\r",
+									"    let list =  pm.response.json();\r",
+									"    for(let i = 0; i < list.length; i++){\r",
+									"        if(list[i].institutionName == name)\r",
+									"            return list[i];\r",
+									"    }\r",
+									"}\r",
+									"\r",
+									"let gamal = searchByName(\"Gamal Abd El Naser Hospital\");\r",
 									"\r",
 									"pm.test(\"get A+\", () => {\r",
-									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[1].types_bags['A+']).to.eql(0)\r",
+									"    pm.expect(gamal.types_bags['A+']).to.eql(1000)\r",
+									"})\r",
+									"pm.test(\"get A-\", () => {\r",
+									"    pm.expect(gamal.types_bags['A-']).to.eql(995)\r",
+									"})\r",
+									"pm.test(\"get O+\", () => {\r",
+									"    pm.expect(gamal.types_bags['O+']).to.eql(1000)\r",
+									"})\r",
+									"pm.test(\"get O-\", () => {\r",
+									"    pm.expect(gamal.types_bags['O-']).to.eql(2)\r",
 									"})\r",
 									"\r",
+									"let sharq = searchByName(\"Sharq El Madina Hospital\");\r",
 									"pm.test(\"get A+\", () => {\r",
-									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[1].types_bags['A-']).to.eql(0)\r",
+									"    pm.expect(sharq.types_bags['A+']).to.eql(0)\r",
 									"})\r",
 									"\r",
-									"pm.test(\"get A+\", () => {\r",
-									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[1].types_bags['O+']).to.eql(1)\r",
+									"pm.test(\"get A-\", () => {\r",
+									"    pm.expect(sharq.types_bags['A-']).to.eql(0)\r",
 									"})\r",
-									"pm.test(\"get A+\", () => {\r",
-									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[1].types_bags['O-']).to.eql(1)\r",
+									"\r",
+									"pm.test(\"get O+\", () => {\r",
+									"\r",
+									"    pm.expect(sharq.types_bags['O+']).to.eql(1)\r",
+									"})\r",
+									"pm.test(\"get O-\", () => {\r",
+									"\r",
+									"    pm.expect(sharq.types_bags['O-']).to.eql(1)\r",
 									"})"
 								],
 								"type": "text/javascript"
@@ -3503,40 +3454,51 @@
 							"listen": "test",
 							"script": {
 								"exec": [
+									"function searchByName(name){\r",
+									"    let list =  pm.response.json();\r",
+									"    for(let i = 0; i < list.length; i++){\r",
+									"        if(list[i].institutionName == name)\r",
+									"            return list[i];\r",
+									"    }\r",
+									"}\r",
+									"\r",
+									"let gamal = searchByName(\"Gamal Abd El Naser Hospital\");\r",
+									"let sharq = searchByName(\"Sharq El Madina Hospital\");\r",
+									"\r",
 									"pm.test(\"get B+\", () => {\r",
-									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[0].types_bags['B+']).to.eql(1000)\r",
+									"\r",
+									"    pm.expect(gamal.types_bags['B+']).to.eql(1000)\r",
 									"})\r",
 									"pm.test(\"get B+\", () => {\r",
-									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[0].types_bags['B-']).to.eql(1000)\r",
+									"\r",
+									"    pm.expect(gamal.types_bags['B-']).to.eql(1000)\r",
 									"})\r",
 									"pm.test(\"get B+\", () => {\r",
-									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[0].types_bags['O+']).to.eql(1000)\r",
+									"\r",
+									"    pm.expect(gamal.types_bags['O+']).to.eql(1000)\r",
 									"})\r",
 									"pm.test(\"get B+\", () => {\r",
-									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[0].types_bags['O-']).to.eql(2)\r",
+									"\r",
+									"    pm.expect(gamal.types_bags['O-']).to.eql(2)\r",
 									"})\r",
 									"\r",
 									"pm.test(\"get B+\", () => {\r",
-									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[1].types_bags['B+']).to.eql(1)\r",
+									"\r",
+									"    pm.expect(sharq.types_bags['B+']).to.eql(1)\r",
 									"})\r",
 									"\r",
 									"pm.test(\"get B+\", () => {\r",
-									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[1].types_bags['B-']).to.eql(1)\r",
+									"\r",
+									"    pm.expect(sharq.types_bags['B-']).to.eql(1)\r",
 									"})\r",
 									"\r",
 									"pm.test(\"get B+\", () => {\r",
-									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[1].types_bags['O+']).to.eql(1)\r",
+									"\r",
+									"    pm.expect(sharq.types_bags['O+']).to.eql(1)\r",
 									"})\r",
 									"pm.test(\"get B+\", () => {\r",
-									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[1].types_bags['O-']).to.eql(1)\r",
+									"\r",
+									"    pm.expect(sharq.types_bags['O-']).to.eql(1)\r",
 									"})"
 								],
 								"type": "text/javascript"
@@ -3581,78 +3543,89 @@
 							"listen": "test",
 							"script": {
 								"exec": [
+									"function searchByName(name){\r",
+									"    let list =  pm.response.json();\r",
+									"    for(let i = 0; i < list.length; i++){\r",
+									"        if(list[i].institutionName == name)\r",
+									"            return list[i];\r",
+									"    }\r",
+									"}\r",
+									"\r",
+									"let gamal = searchByName(\"Gamal Abd El Naser Hospital\");\r",
+									"let sharq = searchByName(\"Sharq El Madina Hospital\");\r",
+									"\r",
 									"pm.test(\"get AB+\", () => {\r",
 									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[0].types_bags['B+']).to.eql(1000)\r",
+									"    pm.expect(gamal.types_bags['B+']).to.eql(1000)\r",
 									"})\r",
 									"pm.test(\"get AB+\", () => {\r",
 									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[0].types_bags['A+']).to.eql(1000)\r",
+									"    pm.expect(gamal.types_bags['A+']).to.eql(1000)\r",
 									"})\r",
 									"pm.test(\"get AB+\", () => {\r",
 									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[0].types_bags['AB+']).to.eql(1000)\r",
+									"    pm.expect(gamal.types_bags['AB+']).to.eql(1000)\r",
 									"})\r",
 									"pm.test(\"get AB+\", () => {\r",
 									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[0].types_bags['A-']).to.eql(995)\r",
+									"    pm.expect(gamal.types_bags['A-']).to.eql(995)\r",
 									"})\r",
 									"\r",
 									"pm.test(\"get AB+\", () => {\r",
 									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[0].types_bags['B-']).to.eql(1000)\r",
+									"    pm.expect(gamal.types_bags['B-']).to.eql(1000)\r",
 									"})\r",
 									"\r",
 									"pm.test(\"get AB+\", () => {\r",
 									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[0].types_bags['AB-']).to.eql(1000)\r",
+									"    pm.expect(gamal.types_bags['AB-']).to.eql(1000)\r",
 									"})\r",
 									"\r",
 									"pm.test(\"get AB+\", () => {\r",
 									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[0].types_bags['O+']).to.eql(1000)\r",
+									"    pm.expect(gamal.types_bags['O+']).to.eql(1000)\r",
 									"})\r",
 									"pm.test(\"get AB+\", () => {\r",
 									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[0].types_bags['O-']).to.eql(2)\r",
-									"})\r",
-									"\r",
-									"\r",
-									"\r",
-									"pm.test(\"get AB+\", () => {\r",
-									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[1].types_bags['B+']).to.eql(1)\r",
-									"})\r",
-									"pm.test(\"get AB+\", () => {\r",
-									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[1].types_bags['A+']).to.eql(0)\r",
-									"})\r",
-									"pm.test(\"get AB+\", () => {\r",
-									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[1].types_bags['AB+']).to.eql(0)\r",
-									"})\r",
-									"pm.test(\"get AB+\", () => {\r",
-									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[1].types_bags['A-']).to.eql(0)\r",
+									"    pm.expect(gamal.types_bags['O-']).to.eql(2)\r",
 									"})\r",
 									"\r",
+									"\r",
+									"\r",
 									"pm.test(\"get AB+\", () => {\r",
 									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[1].types_bags['B-']).to.eql(1)\r",
+									"    pm.expect(sharq.types_bags['B+']).to.eql(1)\r",
+									"})\r",
+									"pm.test(\"get AB+\", () => {\r",
+									"    let lista = pm.response.json(); \r",
+									"    pm.expect(sharq.types_bags['A+']).to.eql(0)\r",
+									"})\r",
+									"pm.test(\"get AB+\", () => {\r",
+									"    let lista = pm.response.json(); \r",
+									"    pm.expect(sharq.types_bags['AB+']).to.eql(0)\r",
+									"})\r",
+									"pm.test(\"get AB+\", () => {\r",
+									"    let lista = pm.response.json(); \r",
+									"    pm.expect(sharq.types_bags['A-']).to.eql(0)\r",
 									"})\r",
 									"\r",
 									"pm.test(\"get AB+\", () => {\r",
 									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[1].types_bags['AB-']).to.eql(0)\r",
+									"    pm.expect(sharq.types_bags['B-']).to.eql(1)\r",
 									"})\r",
 									"\r",
 									"pm.test(\"get AB+\", () => {\r",
 									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[1].types_bags['O+']).to.eql(1)\r",
+									"    pm.expect(sharq.types_bags['AB-']).to.eql(0)\r",
+									"})\r",
+									"\r",
+									"pm.test(\"get AB+\", () => {\r",
+									"    let lista = pm.response.json(); \r",
+									"    pm.expect(sharq.types_bags['O+']).to.eql(1)\r",
 									"})\r",
 									"pm.test(\"get AB+\", () => {\r",
 									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[1].types_bags['O-']).to.eql(1)\r",
+									"    pm.expect(sharq.types_bags['O-']).to.eql(1)\r",
 									"})"
 								],
 								"type": "text/javascript"
@@ -3697,21 +3670,32 @@
 							"listen": "test",
 							"script": {
 								"exec": [
+									"function searchByName(name){\r",
+									"    let list =  pm.response.json();\r",
+									"    for(let i = 0; i < list.length; i++){\r",
+									"        if(list[i].institutionName == name)\r",
+									"            return list[i];\r",
+									"    }\r",
+									"}\r",
+									"\r",
+									"let gamal = searchByName(\"Gamal Abd El Naser Hospital\");\r",
+									"let sharq = searchByName(\"Sharq El Madina Hospital\");\r",
+									"\r",
 									"pm.test(\"get O+\", () => {\r",
 									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[0].types_bags['O+']).to.eql(1000)\r",
+									"    pm.expect(gamal.types_bags['O+']).to.eql(1000)\r",
 									"})\r",
 									"pm.test(\"get O+\", () => {\r",
 									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[0].types_bags['O-']).to.eql(2)\r",
+									"    pm.expect(gamal.types_bags['O-']).to.eql(2)\r",
 									"})\r",
 									"pm.test(\"get O+\", () => {\r",
 									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[1].types_bags['O+']).to.eql(1)\r",
+									"    pm.expect(sharq.types_bags['O+']).to.eql(1)\r",
 									"})\r",
 									"pm.test(\"get O+\", () => {\r",
 									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[1].types_bags['O-']).to.eql(1)\r",
+									"    pm.expect(sharq.types_bags['O-']).to.eql(1)\r",
 									"})\r",
 									""
 								],
@@ -3757,24 +3741,35 @@
 							"listen": "test",
 							"script": {
 								"exec": [
+									"function searchByName(name){\r",
+									"    let list =  pm.response.json();\r",
+									"    for(let i = 0; i < list.length; i++){\r",
+									"        if(list[i].institutionName == name)\r",
+									"            return list[i];\r",
+									"    }\r",
+									"}\r",
+									"\r",
+									"let gamal = searchByName(\"Gamal Abd El Naser Hospital\");\r",
+									"let sharq = searchByName(\"Sharq El Madina Hospital\");\r",
+									"\r",
 									"pm.test(\"get A-\", () => {\r",
 									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[0].types_bags['A-']).to.eql(995)\r",
+									"    pm.expect(gamal.types_bags['A-']).to.eql(995)\r",
 									"})\r",
 									"pm.test(\"get A-\", () => {\r",
 									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[0].types_bags['O-']).to.eql(2)\r",
+									"    pm.expect(gamal.types_bags['O-']).to.eql(2)\r",
 									"})\r",
 									"\r",
 									"\r",
 									"pm.test(\"get A-\", () => {\r",
 									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[1].types_bags['A-']).to.eql(0)\r",
+									"    pm.expect(sharq.types_bags['A-']).to.eql(0)\r",
 									"})\r",
 									"\r",
 									"pm.test(\"get A-\", () => {\r",
 									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[1].types_bags['O-']).to.eql(1)\r",
+									"    pm.expect(sharq.types_bags['O-']).to.eql(1)\r",
 									"})"
 								],
 								"type": "text/javascript"
@@ -3819,22 +3814,33 @@
 							"listen": "test",
 							"script": {
 								"exec": [
+									"function searchByName(name){\r",
+									"    let list =  pm.response.json();\r",
+									"    for(let i = 0; i < list.length; i++){\r",
+									"        if(list[i].institutionName == name)\r",
+									"            return list[i];\r",
+									"    }\r",
+									"}\r",
+									"\r",
+									"let gamal = searchByName(\"Gamal Abd El Naser Hospital\");\r",
+									"let sharq = searchByName(\"Sharq El Madina Hospital\");\r",
+									"\r",
 									"pm.test(\"get B-\", () => {\r",
 									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[0].types_bags['B-']).to.eql(1000)\r",
+									"    pm.expect(gamal.types_bags['B-']).to.eql(1000)\r",
 									"})\r",
 									"pm.test(\"get B-\", () => {\r",
 									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[0].types_bags['O-']).to.eql(2)\r",
+									"    pm.expect(gamal.types_bags['O-']).to.eql(2)\r",
 									"})\r",
 									"\r",
 									"pm.test(\"get B-\", () => {\r",
 									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[1].types_bags['B-']).to.eql(1)\r",
+									"    pm.expect(sharq.types_bags['B-']).to.eql(1)\r",
 									"})\r",
 									"pm.test(\"get B-\", () => {\r",
 									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[1].types_bags['O-']).to.eql(1)\r",
+									"    pm.expect(sharq.types_bags['O-']).to.eql(1)\r",
 									"})"
 								],
 								"type": "text/javascript"
@@ -3879,46 +3885,57 @@
 							"listen": "test",
 							"script": {
 								"exec": [
+									"function searchByName(name){\r",
+									"    let list =  pm.response.json();\r",
+									"    for(let i = 0; i < list.length; i++){\r",
+									"        if(list[i].institutionName == name)\r",
+									"            return list[i];\r",
+									"    }\r",
+									"}\r",
+									"\r",
+									"let gamal = searchByName(\"Gamal Abd El Naser Hospital\");\r",
+									"let sharq = searchByName(\"Sharq El Madina Hospital\");\r",
+									"\r",
 									"pm.test(\"get AB-\", () => {\r",
 									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[1].types_bags['A-']).to.eql(0)\r",
+									"    pm.expect(gamal.types_bags['A-']).to.eql(995)\r",
 									"})\r",
 									"\r",
 									"pm.test(\"get AB-\", () => {\r",
 									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[1].types_bags['B-']).to.eql(1)\r",
+									"    pm.expect(gamal.types_bags['B-']).to.eql(1000)\r",
 									"})\r",
 									"\r",
 									"pm.test(\"get AB-\", () => {\r",
 									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[1].types_bags['AB-']).to.eql(0)\r",
+									"    pm.expect(gamal.types_bags['AB-']).to.eql(1000)\r",
 									"})\r",
 									"pm.test(\"get AB-\", () => {\r",
 									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[1].types_bags['O-']).to.eql(1)\r",
+									"    pm.expect(gamal.types_bags['O-']).to.eql(2)\r",
 									"})\r",
 									"\r",
-									"\r",
-									"\r",
-									"pm.test(\"get AB-\", () => {\r",
-									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[2].types_bags['A-']).to.eql(2)\r",
-									"})\r",
-									"\r",
-									"pm.test(\"get AB-\", () => {\r",
-									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[2].types_bags['B-']).to.eql(1)\r",
-									"})\r",
-									"\r",
-									"pm.test(\"get AB-\", () => {\r",
-									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[2].types_bags['AB-']).to.eql(0)\r",
-									"})\r",
 									"\r",
 									"\r",
 									"pm.test(\"get AB-\", () => {\r",
 									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[2].types_bags['O-']).to.eql(3)\r",
+									"    pm.expect(sharq.types_bags['A-']).to.eql(0)\r",
+									"})\r",
+									"\r",
+									"pm.test(\"get AB-\", () => {\r",
+									"    let lista = pm.response.json(); \r",
+									"    pm.expect(sharq.types_bags['B-']).to.eql(1)\r",
+									"})\r",
+									"\r",
+									"pm.test(\"get AB-\", () => {\r",
+									"    let lista = pm.response.json(); \r",
+									"    pm.expect(sharq.types_bags['AB-']).to.eql(0)\r",
+									"})\r",
+									"\r",
+									"\r",
+									"pm.test(\"get AB-\", () => {\r",
+									"    let lista = pm.response.json(); \r",
+									"    pm.expect(sharq.types_bags['O-']).to.eql(1)\r",
 									"})"
 								],
 								"type": "text/javascript"
@@ -3963,13 +3980,24 @@
 							"listen": "test",
 							"script": {
 								"exec": [
+									"function searchByName(name){\r",
+									"    let list =  pm.response.json();\r",
+									"    for(let i = 0; i < list.length; i++){\r",
+									"        if(list[i].institutionName == name)\r",
+									"            return list[i];\r",
+									"    }\r",
+									"}\r",
+									"\r",
+									"let gamal = searchByName(\"Gamal Abd El Naser Hospital\");\r",
+									"let sharq = searchByName(\"Sharq El Madina Hospital\");\r",
+									"\r",
 									"pm.test(\"get O-\", () => {\r",
 									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[0].types_bags['O-']).to.eql(2)\r",
+									"    pm.expect(gamal.types_bags['O-']).to.eql(2)\r",
 									"})\r",
 									"pm.test(\"get O-\", () => {\r",
 									"    let lista = pm.response.json(); \r",
-									"    pm.expect(lista[1].types_bags['O-']).to.eql(1)\r",
+									"    pm.expect(sharq.types_bags['O-']).to.eql(1)\r",
 									"})\r",
 									""
 								],
@@ -4063,7 +4091,7 @@
 								"exec": [
 									"pm.test(\"getting all institutions\", () => {\r",
 									"    let retreived = pm.response.json()\r",
-									"    pm.expect(retreived.length).to.eql(7)\r",
+									"    pm.expect(retreived.length).to.eql(6)\r",
 									"})"
 								],
 								"type": "text/javascript"
@@ -4101,6 +4129,14 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
 		}
 	],
 	"variable": [

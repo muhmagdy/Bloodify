@@ -137,4 +137,14 @@ public class UserDAOImp implements UserDAO {
         // return new User("foo", "foo", List.of());
     }
 
+    @Override
+    public boolean isUserExistByEmail(String email){
+        return userRepo.existsByEmail(email);
+    }
+
+    @Override
+    public boolean updatePassword(String email, String newPassword) {
+        return userRepo.updatePasswordByEmail(newPassword, email) == 1;
+    }
+
 }

@@ -107,10 +107,10 @@ public class Institution {
     @Column(unique = true, nullable = false, length = 40)
     String email;
 
-    @Column(nullable = false, length = 40)
+    @Column(nullable = false, length = 50)
     String name;   
 
-    @Column(nullable = false, length = 50)
+    @Column(nullable = false, length = 120)
     String location;
     @Column()
     Double latitude;

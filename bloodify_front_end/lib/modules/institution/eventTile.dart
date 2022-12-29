@@ -6,15 +6,15 @@ import 'package:bloodify_front_end/shared/styles/container.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class EventTile extends StatefulWidget {
+class InstEventTile extends StatefulWidget {
   final Event_model event;
-  const EventTile(this.event, {super.key});
+  const InstEventTile(this.event, {super.key});
 
   @override
   createState() => _EventTile();
 }
 
-class _EventTile extends State<EventTile> {
+class _EventTile extends State<InstEventTile> {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
@@ -26,6 +26,7 @@ class _EventTile extends State<EventTile> {
           onTap: () => _onTap(context),
           height: height,
           width: width,
+          color: lightGrey,
           child: SizedBox(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

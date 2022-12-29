@@ -7,6 +7,9 @@ import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -17,6 +20,8 @@ class InstitutionDAOTest {
     @Resource(name = "institutionDAOImp")
     @Mock
     private InstitutionDAO instDao;
+
+    static RandomUserGenerations random = new RandomUserGenerations();
 
     static int dataLength = 10;
     static String[] emails = new String[dataLength];
@@ -29,7 +34,6 @@ class InstitutionDAOTest {
 
     @BeforeAll
     public static void setters() {
-        RandomUserGenerations random = new RandomUserGenerations();
 
         for(int i=0; i<dataLength; i++) {
             emails[i] = random.generateEmail(10,30);
@@ -50,6 +54,9 @@ class InstitutionDAOTest {
         assertTrue(instDao.saveInstitution(new Institution(
                 emails[n], names[n], passwords[n], locations[n], workingHours[n]
         ))) ;
+        instDao.saveInstitution(new Institution(
+                emails[n], names[n], passwords[n], locations[n], workingHours[n]
+        ));
     }
 
 //  Legal Statement
@@ -192,72 +199,79 @@ class InstitutionDAOTest {
         assertNull(institution);
     }
 
+    @Test
+    @Order(7)
+    void ifUserEmail0Exist_thenReturnTrue() {
+        assertTrue(instDao.isInstitutionExistByEmail(emails[0]));
+    }
 
-//    /**********   Retrieving institutions with blood packets above threshold   **********/
-//    @Test
-//    @Order(5)
-//    void haveBloodPackets1() {
-//        List<Institution> expectedInstitutions = instDao.haveBloodPackets("Ap", 11);
-////        11, 21
-//        List<Institution> actualInstitutions = new ArrayList<>();
-//        actualInstitutions.add(instDao.findInstitutionByEmail(emails[1]));
-//        actualInstitutions.add(instDao.findInstitutionByEmail(emails[2]));
-//        assertEquals(expectedInstitutions, actualInstitutions);
-//    }
-//
-//    @Test
-//    @Order(5)
-//    void haveBloodPackets2() {
-//        List<Institution> expectedInstitutions = instDao.haveBloodPackets("An", 1);
-//        List<Institution> actualInstitutions = new ArrayList<>();
-//        actualInstitutions.add(instDao.findInstitutionByEmail(emails[0]));
-//        actualInstitutions.add(instDao.findInstitutionByEmail(emails[2]));
-//        assertEquals(expectedInstitutions, actualInstitutions);
-//    }
-//
-//    @Test
-//    @Order(5)
-//    void haveBloodPackets3() {
-//        List<Institution> expectedInstitutions = instDao.haveBloodPackets("Bn", 11);
-//        List<Institution> actualInstitutions = new ArrayList<>();
-//        actualInstitutions.add(instDao.findInstitutionByEmail(emails[2]));
-//        assertEquals(expectedInstitutions, actualInstitutions);
-//    }
-//
-//    @Test
-//    @Order(5)
-//    void haveBloodPackets4() {
-//        List<Institution> expectedInstitutions = instDao.haveBloodPackets("Bn", 21);
-//        List<Institution> actualInstitutions = new ArrayList<>();
-//        actualInstitutions.add(instDao.findInstitutionByEmail(emails[2]));
-//        assertEquals(expectedInstitutions, actualInstitutions);
-//    }
-//
-//    @Test
-//    @Order(5)
-//    void haveBloodPackets5() {
-//        List<Institution> expectedInstitutions = instDao.haveBloodPackets("On", 11);
-//        assertEquals(expectedInstitutions.size(), 0);
-//    }
-//
-//    @Test
-//    @Order(5)
-//    void haveBloodPackets6() {
-//        List<Institution> expectedInstitutions = instDao.haveBloodPackets("Op", 11);
-//        assertEquals(expectedInstitutions.size(), 1);
-//    }
-//
-//    @Test
-//    @Order(5)
-//    void countingPackets1() {
-//        assertEquals(instDao.findInstitutionByEmail(emails[0]).getNegativeA_bagsCount(), 2);
-//    }
-//
-//    @Test
-//    @Order(5)
-//    void countingPackets2() {
-//        assertEquals(instDao.findInstitutionByEmail(emails[1]).getPositiveAB_bagsCount(), 15);
-//    }
-//
+    @Test
+    @Order(7)
+    void ifUserEmail1Exist_thenReturnTrue() {
+        assertTrue(instDao.isInstitutionExistByEmail(emails[1]));
+    }
+
+    @Test
+    @Order(7)
+    void ifUserEmail2Exist_thenReturnTrue() {
+        assertTrue(instDao.isInstitutionExistByEmail(emails[2]));
+    }
+
+    @Test
+    @Order(7)
+    void ifUserEmail3Exist_thenReturnTrue() {
+        assertTrue(instDao.isInstitutionExistByEmail(emails[5]));
+    }
+
+    @Test
+    @Order(7)
+    void ifUserEmail7Exist_thenReturnFalse() {
+        assertFalse(instDao.isInstitutionExistByEmail(emails[7]));
+    }
+
+    @Test
+    @Order(7)
+    void ifUserEmail8Exist_thenReturnFalse() {
+        assertFalse(instDao.isInstitutionExistByEmail(emails[8]));
+    }
+
+    @Test
+    @Order(7)
+    void updatePasswordUser0_UserExists_thenReturnTrueAndCheckPassword() {
+        String newPassword = random.generatePassword(30);
+        assertTrue(instDao.updatePassword(emails[0], newPassword));
+        assertEquals(newPassword, instDao.findInstitutionByEmail(emails[0]).getPassword());
+    }
+
+    @Test
+    @Order(7)
+    void updatePasswordUser1_UserExists_thenReturnTrueAndCheckPassword() {
+        String newPassword = random.generatePassword(30);
+        assertTrue(instDao.updatePassword(emails[1], newPassword));
+        assertEquals(newPassword, instDao.findInstitutionByEmail(emails[1]).getPassword());
+    }
+
+    @Test
+    @Order(7)
+    void updatePasswordUser2_UserExists_thenReturnTrueAndCheckPassword() {
+        String newPassword = random.generatePassword(30);
+        assertTrue(instDao.updatePassword(emails[2], newPassword));
+        assertEquals(newPassword, instDao.findInstitutionByEmail(emails[2]).getPassword());
+    }
+
+    @Test
+    @Order(7)
+    void updatePasswordUser7_UserExists_thenReturnTrueAndCheckPassword() {
+        String newPassword = random.generatePassword(30);
+        assertFalse(instDao.updatePassword(emails[7], newPassword));
+    }
+
+    @Test
+    @Order(7)
+    void updatePasswordUser8_UserExists_thenReturnTrueAndCheckPassword() {
+        String newPassword = random.generatePassword(30);
+        assertFalse(instDao.updatePassword(emails[8], newPassword));
+    }
+
 
 }
