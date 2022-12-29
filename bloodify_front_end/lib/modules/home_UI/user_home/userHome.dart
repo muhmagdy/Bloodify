@@ -138,86 +138,89 @@ class _UserHome extends State<UserHome> {
   }
 
   Future<void> _pullRefresh() async {
-    setState(() {
-      DioHelper.getData(url: "user/status", query: {}).then(
-        (value) {
-          posts = [];
-          people = [];
-          status = int.parse(value.data.toString());
-          print(status);
-          switch (status) {
-            case 0:
-              DioHelper.getData(url: "user/posts/compatible", query: {
-                'longitude': 30.0,
-                'latitude': 30.0,
-                'threshold': 500000.0
-              }).then((value) {
-                print("HELLOOOOO\n\n\n");
-                print(value.data);
-                for (int i = 0; i < value.data.length; i++) {
-                  var event = PostBrief.fromJson(value.data[i], status);
-                  posts.add(event);
-                  people.add([]);
-                }
-                print(posts);
-              });
-              break;
-            case 1:
-              DioHelper.getData(url: "user/posts/requester", query: {
-                'longitude': 30.0,
-                'latitude': 30.0,
-                'threshold': 500000.0
-              }).then((value) {
-                print(value.data);
-                for (int i = 0; i < value.data.length; i++) {
-                  var event = PostBrief.fromJson(value.data[i], status);
-                  posts.add(event);
-                  people.add(<UserBrief>[]);
-                }
-                for (int i = 0; i < posts.length; i++) {
-                  DioHelper.getData(
-                      url: "user/post/donors",
-                      query: {'id': posts[i].id}).then((value) {
-                    print(
-                        "posts length = ${posts.length} \n users length = ${value.data.length}");
-                    for (int j = 0; j < value.data.length; j++) {
-                      print(j);
-                      people[i].add(UserBrief.fromJson(value.data[j]));
-                    }
-                    print(value.data);
-                  });
-                }
-                print(posts);
-              });
-              break;
-            case 2:
-              DioHelper.getData(url: "user/posts/current", query: {
-                'longitude': 30.0,
-                'latitude': 30.0,
-                'threshold': 500000.0
-              }).then((value) {
-                print(value.data);
-                for (int i = 0; i < value.data.length; i++) {
-                  var event = PostBrief.fromJson(value.data[i], status);
-                  posts.add(event);
-                  people.add([]);
-                }
-                for (int i = 0; i < posts.length; i++) {
-                  DioHelper.getData(url: "user/post/requester", query: {
-                    'id': posts[i].id,
-                    'longitude': 30.0,
-                    'latitude': 30.0,
-                    'threshold': 500000.0
-                  }).then((value) {
-                    people[i].add(UserBrief.fromJson(value.data));
-                  });
-                }
-                print(posts);
-              });
-              break;
-          }
-        },
-      );
-    });
+    DioHelper.getData(url: "user/status", query: {}).then(
+      (value) {
+        posts = [];
+        people = [];
+        status = int.parse(value.data.toString());
+        switch (status) {
+          case 0:
+            DioHelper.getData(url: "user/posts/compatible", query: {
+              'longitude': 30.0,
+              'latitude': 30.0,
+              'threshold': 500000.0
+            }).then((value) {
+              print(value.data);
+              for (int i = 0; i < value.data.length; i++) {
+                var event = PostBrief.fromJson(value.data[i], status);
+                posts.add(event);
+                people.add([]);
+              }
+              setState(() {});
+              print(posts);
+            });
+            break;
+          case 1:
+            DioHelper.getData(url: "user/posts/requester", query: {
+              'longitude': 30.0,
+              'latitude': 30.0,
+              'threshold': 500000.0
+            }).then((value) {
+              print(value.data);
+              for (int i = 0; i < value.data.length; i++) {
+                var event = PostBrief.fromJson(value.data[i], status);
+                posts.add(event);
+                people.add(<UserBrief>[]);
+              }
+              for (int i = 0; i < posts.length; i++) {
+                DioHelper.getData(
+                    url: "user/post/donors",
+                    query: {'id': posts[i].id}).then((value) {
+                  print(
+                      "posts length = ${posts.length} \n users length = ${value.data.length}");
+                  for (int j = 0; j < value.data.length; j++) {
+                    print(j);
+                    people[i].add(UserBrief.fromJson(value.data[j]));
+                  }
+                  if (i == posts.length - 1) {
+                    setState(() {});
+                  }
+                  print(value.data);
+                });
+              }
+              print(posts);
+            });
+            break;
+          case 2:
+            DioHelper.getData(url: "user/posts/current", query: {
+              'longitude': 30.0,
+              'latitude': 30.0,
+              'threshold': 500000.0
+            }).then((value) {
+              print(value.data);
+              for (int i = 0; i < value.data.length; i++) {
+                var event = PostBrief.fromJson(value.data[i], status);
+                posts.add(event);
+                people.add([]);
+              }
+              for (int i = 0; i < posts.length; i++) {
+                DioHelper.getData(url: "user/post/requester", query: {
+                  'id': posts[i].id,
+                  'longitude': 30.0,
+                  'latitude': 30.0,
+                  'threshold': 500000.0
+                }).then((value) {
+                  people[i].add(UserBrief.fromJson(value.data));
+                  if (i == posts.length - 1) {
+                    setState(() {});
+                  }
+                });
+              }
+              print(posts);
+            });
+            break;
+        }
+      },
+    );
   }
 }
