@@ -72,7 +72,6 @@ class _ChangePasswordState extends State<ChangePassword> {
                 onPressed: () {
                   // validating the input
                   if (_formKey.currentState!.validate()) {
-                    // TODO: CONTACT THE BACKEND TO VALIDATE THE CODE
                     DioHelper.patchData(url: "password", data: {
                       'email': CachHelper.getData(key: 'email'),
                       'code': widget.confirmationCode,
