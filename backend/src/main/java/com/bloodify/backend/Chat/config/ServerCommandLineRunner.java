@@ -11,8 +11,11 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ServerCommandLineRunner implements CommandLineRunner {
     private final SocketIOServer server;
+    //TODO: set to true to enable websocket
+    private boolean run = false;
     @Override
     public void run(String... args) throws Exception {
-        server.start();
+
+        if(run) server.start();
     }
 }
