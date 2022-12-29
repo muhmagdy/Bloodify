@@ -67,7 +67,6 @@ public class PostServiceImp implements PostService {
             boolean status = this.postDao.addPost(postToSave);
             if (status) {
                 List<User> users = this.getUsersToBeNotified(postToSave);
-                // TODO Notification Goes Here
                 for (User itr : users) {
                     String sessionToken = loginSessionDAO.getToken(itr.getEmail());
                     System.out.println(sessionToken);

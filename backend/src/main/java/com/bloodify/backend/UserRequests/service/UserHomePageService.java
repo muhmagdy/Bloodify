@@ -1,5 +1,6 @@
 package com.bloodify.backend.UserRequests.service;
 
+import com.bloodify.backend.AccountManagement.dao.interfaces.LoginSessionDAO;
 import com.bloodify.backend.AccountManagement.dao.interfaces.UserDAO;
 import com.bloodify.backend.AccountManagement.model.entities.Institution;
 import com.bloodify.backend.AccountManagement.model.entities.User;
@@ -16,7 +17,7 @@ import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import com.bloodify.backend.notification.service.FirebaseMessagingService;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -30,9 +31,13 @@ public class UserHomePageService {
     @Resource(name = "postDaoImp")
     PostDao postDao;
     @Autowired
+    LoginSessionDAO loginSessionDAO;
+    @Autowired
     AcceptRepository acceptRepository;
     @Autowired
     CompatiblePosts compatiblePosts;
+    @Autowired
+    FirebaseMessagingService firebaseMessagingService;
 
     // Check if has current post -> 1
     // Check if has accepted requests -> 2
@@ -48,9 +53,9 @@ public class UserHomePageService {
 
     public List<PostBrief> getCompatiblePosts(String email, Double longitude, Double latitude, Double threshold) {
         User user = userDAO.findUserByEmail(email);
-        // if (user.isHasDiseases() ||
-        // ChronoUnit.MONTHS.between(user.getLastTimeDonated(), LocalDate.now()) >= 6)
-        // return new ArrayList<>();
+        if (user.isHasDiseases() ||
+                user.getLastTimeDonated().isAfter(LocalDate.now().minusMonths(6)))
+            return new ArrayList<>();
         BloodType currentType = BloodTypeFactory.getFactory().generateFromString(user.getBloodType());
         System.out.println();
         System.out.println(currentType);
@@ -125,6 +130,12 @@ public class UserHomePageService {
             Post post = postDao.getPostByID(postID);
             User user = userDAO.findUserByEmail(email);
             AcceptedPost acceptedPost = new AcceptedPost(post, user, longitude, latitude, threshold);
+            User requesterUser = post.getUser();
+            String token = loginSessionDAO.getToken(requesterUser.getEmail());
+            if (token != null) {
+                firebaseMessagingService.chatNotification(token, "Your request has been accepted",
+                        user.getFirstName() + " has accepted your request");
+            }
             acceptRepository.save(acceptedPost);
         } catch (Exception e) {
             return false;

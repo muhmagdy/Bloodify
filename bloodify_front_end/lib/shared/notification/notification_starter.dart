@@ -26,6 +26,9 @@ Future<bool> isInRange(PushNotification notification) async {
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   print(message.data);
+  if (message.data["latitude"] != null) {
+    return;
+  }
   PushNotification notification = PushNotification.fromJson(message.data);
   bool inRange = await isInRange(notification);
   if (inRange) {
@@ -82,6 +85,9 @@ class NotificationIntalizor {
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
       print(message.data);
+      if (message.data["latitude"] != null) {
+        return;
+      }
       PushNotification notification = PushNotification.fromJson(message.data);
       bool inRange = await isInRange(notification);
       print("sending.....");

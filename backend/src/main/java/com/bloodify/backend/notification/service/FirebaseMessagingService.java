@@ -26,11 +26,14 @@ public class FirebaseMessagingService {
                 .putData("latitude", Double.toString(note.getLatitude()))
                 .putData("isReaded", "false")
                 .build();
-
-        return firebaseMessaging.send(message);
+        try {
+            return firebaseMessaging.send(message);
+        } catch (FirebaseMessagingException e) {
+            return null;
+        }
     }
 
-    public String chatNotification(String token, String data, String title) throws FirebaseMessagingException {
+    public String chatNotification(String token, String title, String data) throws FirebaseMessagingException {
         Notification notification = Notification
                 .builder()
                 .setTitle(title)

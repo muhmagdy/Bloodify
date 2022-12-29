@@ -1,10 +1,13 @@
 import 'package:bloodify_front_end/modules/BloodFinding/bloc/blood_finder_service.dart';
+import 'package:bloodify_front_end/shared/Constatnt/Component.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:intl/intl.dart';
 
 import '../../models/notification.dart';
+import '../../shared/Constatnt/fonts.dart';
 import '../../shared/Constatnt/userInfo.dart';
 import '../../shared/styles/container.dart';
 import 'notification_history_cubit/notification_history_cubit.dart';
@@ -48,10 +51,32 @@ Widget buildNotification(
               const SizedBox(
                 height: 15,
               ),
+              Text(
+                  "expiry time ${DateFormat('yyyy-MM-dd – kk:mm').format(notification.lastTime)}"),
+              const SizedBox(
+                height: 10,
+              ),
               Text("${notification.distance.toStringAsFixed(2)} KM"),
+              const SizedBox(
+                height: 10,
+              ),
+              TextButton(
+                  onPressed: () {},
+                  // deletePost(context),
+                  style: TextButton.styleFrom(
+                      backgroundColor: Colors.red,
+                      minimumSize: Size(width * 0.9, height * 0.05),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(width / 26))),
+                  child: Text(
+                    "Accept Post",
+                    style: NormalStyle(height, Colors.white),
+                  ))
             ]),
       ),
-      onTap: () {});
+      onTap: () {
+        // TODO
+      });
 }
 
 class NotificationHistory extends StatelessWidget {
