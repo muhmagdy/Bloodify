@@ -1,5 +1,6 @@
 package com.bloodify.backend.Chat.service.classes;
 
+import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
@@ -19,6 +20,10 @@ import com.bloodify.backend.Chat.dto.mapper.ChatMessageMapper;
 import com.bloodify.backend.Chat.model.entities.ChatMessage;
 import com.bloodify.backend.Chat.repository.interfaces.ChatMessageDao;
 import com.bloodify.backend.Chat.service.interfaces.ChatService;
+import com.bloodify.backend.UserRequests.exceptions.UserNotFoundException;
+import com.bloodify.backend.UserRequests.model.entities.AcceptedPost;
+import com.bloodify.backend.UserRequests.model.entities.Post;
+import com.bloodify.backend.UserRequests.repository.interfaces.AcceptRepository;
 
 public class ChatServiceImpTest {
 
@@ -26,6 +31,8 @@ public class ChatServiceImpTest {
     ChatMessageMapper msgMapper;
 
     UserDAO userDAO;
+
+    AcceptRepository acceptRepository;
 
     ChatService service;
 
@@ -58,7 +65,7 @@ public class ChatServiceImpTest {
         msgDao = Mockito.mock(ChatMessageDao.class);
         msgMapper = Mockito.mock(ChatMessageMapper.class);
         userDAO = Mockito.mock(UserDAO.class);
-
+        acceptRepository = Mockito.mock(AcceptRepository.class);
 
 
         user = Mockito.mock(User.class);
@@ -78,7 +85,7 @@ public class ChatServiceImpTest {
             msgsDto.add(mockMsgDto(i));
         }
         chatMessageDto =  Mockito.mock(ChatMessageDto.class);
-        service = new ChatServiceImp(userDAO, null, msgDao, msgMapper);
+        service = new ChatServiceImp(userDAO, acceptRepository, msgDao, msgMapper);
     }
     
     @Test
@@ -98,6 +105,25 @@ public class ChatServiceImpTest {
         List<ChatMessageDto> actual = assertDoesNotThrow(() -> service.loadChatMessages(email, 3, 5));
 
         assertEquals(msgsDto, actual);
+
+    }
+
+    @Test
+    void testLoadChatMessages_UserNotFound() throws Exception {
+        when(msgDao.findChatMessages(3, 5)).thenReturn(msgs);
+        Iterator<ChatMessage> msgIter = msgs.iterator();
+        Iterator<ChatMessageDto> dtoIter = msgsDto.iterator();
+
+        when(user.getUserID()).thenReturn(userID);
+        when(userDAO.findUserByEmail(email)).thenReturn(null);
+
+
+
+        while(msgIter.hasNext() && dtoIter.hasNext()){
+            when(msgMapper.entityToDto(msgIter.next())).thenReturn(dtoIter.next());
+        }
+        assertThrows(UserNotFoundException.class,  () -> service.loadChatMessages(email, 3, 5));
+
     }
 
     @Test
@@ -111,15 +137,57 @@ public class ChatServiceImpTest {
     }
 
     @Test
-    void testSaveMessage_happy() throws Exception {
+    void testSaveMessage_PostOwnerToDonor() throws Exception {
+
+        AcceptedPost acceptedPost = Mockito.spy(AcceptedPost.class);
+
+        Post post = Mockito.spy(Post.class);
+
+        when(acceptedPost.getUser()).thenReturn(user);
+        when(acceptedPost.getPost()).thenReturn(post);
+
+
         ChatMessage msg = Mockito.spy(ChatMessage.class);
 
         when(msgMapper.dtoToEntity(chatMessageDto)).thenReturn(msg);
 
-        //TODO
+        when(msg.getAcceptedPost()).thenReturn(acceptedPost);
+        when(msg.getPostOwnerID()).thenReturn(userID);
+        when(msg.getDonorID()).thenReturn(donorID);
+        when(msg.getDirection()).thenReturn(true);
 
-        // boolean actual = assertDoesNotThrow(() -> service.saveMessage(chatMessageDto));
+        when(msgDao.saveMessage(msg)).thenReturn(true);
 
-        // assertTrue(actual);
+        assertDoesNotThrow(() -> service.saveMessage(chatMessageDto));
+
+        assertEquals(msg.getNewMsgFor(), donorID);
+    }
+
+    
+    @Test
+    void testSaveMessage_DonorToPostOwner() throws Exception {
+
+        AcceptedPost acceptedPost = Mockito.spy(AcceptedPost.class);
+
+        Post post = Mockito.spy(Post.class);
+
+        when(acceptedPost.getUser()).thenReturn(user);
+        when(acceptedPost.getPost()).thenReturn(post);
+
+
+        ChatMessage msg = Mockito.spy(ChatMessage.class);
+
+        when(msgMapper.dtoToEntity(chatMessageDto)).thenReturn(msg);
+
+        when(msg.getAcceptedPost()).thenReturn(acceptedPost);
+        when(msg.getPostOwnerID()).thenReturn(userID);
+        when(msg.getDonorID()).thenReturn(donorID);
+        when(msg.getDirection()).thenReturn(false);
+
+        when(msgDao.saveMessage(msg)).thenReturn(true);
+
+        assertDoesNotThrow(() -> service.saveMessage(chatMessageDto));
+
+        assertEquals(msg.getNewMsgFor(), userID);
     }
 }

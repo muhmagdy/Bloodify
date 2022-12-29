@@ -12,6 +12,7 @@ import com.bloodify.backend.Chat.dto.mapper.ChatMessageMapper;
 import com.bloodify.backend.Chat.model.entities.ChatMessage;
 import com.bloodify.backend.Chat.repository.interfaces.ChatMessageDao;
 import com.bloodify.backend.Chat.service.interfaces.ChatService;
+import com.bloodify.backend.UserRequests.exceptions.UserNotFoundException;
 import com.bloodify.backend.UserRequests.repository.interfaces.AcceptRepository;
 
 import jakarta.transaction.Transactional;
@@ -43,6 +44,8 @@ public class ChatServiceImp implements ChatService {
     @Transactional
     public boolean saveMessage(ChatMessageDto message) throws Exception {
         ChatMessage chatMessage = this.chatMessageMapper.dtoToEntity(message);
+
+        //get the recipient of this message and set the unread flag to be the recipient ID.
         Integer recipientID = chatMessage.getPostOwnerID();
         if(chatMessage.getDirection()){
             recipientID = chatMessage.getDonorID();
@@ -55,11 +58,13 @@ public class ChatServiceImp implements ChatService {
 
     @Override
     @Transactional
-    public List<ChatMessageDto> loadChatMessages(String email, Integer postID, Integer donorID) {
+    public List<ChatMessageDto> loadChatMessages(String email, Integer postID, Integer donorID) throws UserNotFoundException {
         List<ChatMessage> chatMessages = this.chatMessageDao.findChatMessages(postID, donorID);
         
         if(!chatMessages.isEmpty()){
+            //When loading messages, if the unread flag is this user ID, unset it (-1).
             User user = userDAO.findUserByEmail(email);
+            if(user == null)    throw new UserNotFoundException();
             ChatMessage firstMessage = chatMessages.get(0);
             if(firstMessage.getNewMsgFor() == user.getUserID()){
                 firstMessage.setNewMsgFor(-1);
