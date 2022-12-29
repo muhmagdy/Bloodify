@@ -1,0 +1,16 @@
+
+4 methods:
+1- institution blood bags count
+--> BloodBagsCountWrapper[] getAllCounts (String email) <--
+
+2- Blood bags numbers in posts
+--> BloodBagsCountWrapper[] postsNumber() <--
+
+3- UserToInstitution
+--> BloodBagsCountWrapper[] bagsGotFromTransaction(LocalDate start, LocalDate end, String instEmail) <--
+
+4- AllThreeTypes
+--> BloodBagsCountWrapper[] getAllTransactionsBagsCount (LocalDate start, LocalDate end, String instEmail) <--
+
+
+

@@ -38,4 +38,13 @@ public class InstToUserDonDAOImp implements InstToUserDonDAO {
         );
     }
 
+    @Override
+    public int requestedBloodBagsByTypeAndDate(String bloodType, LocalDate startDate, LocalDate endDate, String instEmail) {
+        try {
+            return instToUserDonRepository.addByBloodTypeLikeAndTransactionDateBetween(bloodType, startDate, endDate, instEmail);
+        } catch(Exception e) {
+            System.out.println(e.getMessage());
+            return 0;
+        }
+    }
 }

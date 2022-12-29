@@ -20,4 +20,5 @@ public interface InstToUserDonDAO {
     List<InstToUserDonation> findByInstitutionEmailAndDate(@NonNull String email,
                                                            @NonNull LocalDate transactionDate);
 
+    int requestedBloodBagsByTypeAndDate(String bloodType, LocalDate startDate, LocalDate endDate, String instEmail);
 }
