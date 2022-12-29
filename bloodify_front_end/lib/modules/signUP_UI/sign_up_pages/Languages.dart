@@ -9,6 +9,7 @@ abstract class Language {
   String showIncorrectDOB();
   String showIncorrectLDT();
   String showInvalidConfCode();
+  String showInvalidThreshold();
 }
 
 class EnglishLanguage extends Language {
@@ -32,7 +33,8 @@ class EnglishLanguage extends Language {
     'location': 'Location',
     'back': "Back",
     'submit': "Submit",
-    'confCode': "Confirmation Code"
+    'confCode': "Confirmation Code",
+    'threshold': "New Threshold",
   };
   @override
   String showInvalidPassword() =>
@@ -44,7 +46,7 @@ class EnglishLanguage extends Language {
   @override
   String enterPassword() => "Password should be of > 7 characters";
   @override
-  String enterValue(value) => "${dictionary[value]} musn't be embty  ";
+  String enterValue(value) => "${dictionary[value]} can't be empty  ";
   @override
   String getLabel(abbrev) => '${dictionary[abbrev]}';
   @override
@@ -53,4 +55,6 @@ class EnglishLanguage extends Language {
   String showIncorrectLDT() => 'Not Correct Last Donated Time';
   @override
   String showInvalidConfCode() => "Code must have 4 digits only";
+  @override
+  String showInvalidThreshold() => "Threshold value must be between 1 km and 50 km";
 }

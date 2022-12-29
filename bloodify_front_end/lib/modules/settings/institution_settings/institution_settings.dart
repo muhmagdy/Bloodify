@@ -64,9 +64,9 @@ class _InstitutionSettingsState extends State<InstitutionSettings> {
                           'assets/images/institution-settings-icon.png'),
                       fit: BoxFit.contain)),
             ),
-            const Text(
-              "El Saber Hospital",
-              style: TextStyle(fontSize: 30),
+            Text(
+              CachHelper.getData(key: 'username'),
+              style: const TextStyle(fontSize: 30),
             ),
             SizedBox(height: 0.01 * height),
             // TextButton(
@@ -142,6 +142,8 @@ class _InstitutionSettingsState extends State<InstitutionSettings> {
 
   void _onChangePasswordTap(BuildContext context) {
     // TODO: CONTACT THE BACKEND TO GENERATE THE CODE
+    CachHelper.saveData(
+        key: 'confirmationEmail', value: CachHelper.getData(key: 'email'));
     Navigator.of(context).push(PageRouteBuilder(
         pageBuilder: (context, animation, secondaryAnimation) =>
             const EmailConfirmation(),
@@ -150,7 +152,7 @@ class _InstitutionSettingsState extends State<InstitutionSettings> {
           const end = Offset.zero;
           const curve = Curves.ease;
           var tween =
-          Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+              Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
           return SlideTransition(
             position: animation.drive(tween),
             child: child,
@@ -159,11 +161,9 @@ class _InstitutionSettingsState extends State<InstitutionSettings> {
   }
 
   Future _onLogoutTap(BuildContext context) async {
-    if (await CachHelper.removeData(key: 'isUser') &&
-        await CachHelper.removeData(key: 'token')) {
+    if (await CachHelper.removeAllData()) {
       Navigator.of(context, rootNavigator: true).pushReplacement(
           MaterialPageRoute(builder: (context) => const StartWidget()));
     }
   }
-
 }

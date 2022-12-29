@@ -1,8 +1,12 @@
 import 'package:bloodify_front_end/layout/start_layout.dart';
 import 'package:bloodify_front_end/modules/settings/common/email_confirmation.dart';
+import 'package:bloodify_front_end/modules/settings/user_settings/change_disease_status.dart';
+
+import 'package:bloodify_front_end/modules/settings/user_settings/change_threshold.dart';
 import 'package:bloodify_front_end/shared/network/remote/dio_helper.dart';
 import 'package:flutter/material.dart';
 
+import '../../../shared/Constatnt/Component.dart';
 import '../../../shared/Constatnt/colors.dart';
 import '../../../shared/Constatnt/fonts.dart';
 import '../../../shared/network/local/cach_helper.dart';
@@ -49,7 +53,6 @@ class _UserSettingsState extends State<UserSettings> {
         width: double.infinity,
         alignment: Alignment.center,
         child: Column(
-          // crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
               width: 0.15 * height,
@@ -62,23 +65,39 @@ class _UserSettingsState extends State<UserSettings> {
                       image: AssetImage('assets/images/user-settings-icon.png'),
                       fit: BoxFit.contain)),
             ),
-            const Text(
-              "El Saber Dealer",
-              style: TextStyle(fontSize: 30),
+            Text(
+              CachHelper.getData(key: 'username'),
+              style: const TextStyle(fontSize: 30),
             ),
             SizedBox(height: 0.01 * height),
-            // TextButton(
-            //     onPressed: () {},
-            //     style: TextButton.styleFrom(
-            //         backgroundColor: red,
-            //         minimumSize: Size(width * 0.9, height * 0.05),
-            //         shape: RoundedRectangleBorder(
-            //             borderRadius: BorderRadius.circular(width / 26))),
-            //     child: Text(
-            //       "Change email",
-            //       style: NormalStyle(height, Colors.white),
-            //     )),
-            // SizedBox(height: 0.01 * height),
+            TextButton(
+                onPressed: () {
+                  _onChangeThresholdTap(context);
+                },
+                style: TextButton.styleFrom(
+                    backgroundColor: red,
+                    minimumSize: Size(width * 0.9, height * 0.05),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(width / 26))),
+                child: Text(
+                  "Change threshold",
+                  style: NormalStyle(height, Colors.white),
+                )),
+            SizedBox(height: 0.01 * height),
+            TextButton(
+                onPressed: () {
+                  _onChangeDiseaseStatus(context);
+                },
+                style: TextButton.styleFrom(
+                    backgroundColor: red,
+                    minimumSize: Size(width * 0.9, height * 0.05),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(width / 26))),
+                child: Text(
+                  "Change disease status",
+                  style: NormalStyle(height, Colors.white),
+                )),
+            SizedBox(height: 0.01 * height),
             TextButton(
                 onPressed: () {
                   _onChangePasswordTap(context);
@@ -138,8 +157,50 @@ class _UserSettingsState extends State<UserSettings> {
     );
   }
 
+  void _onChangeThresholdTap(BuildContext context) {
+    Navigator.of(context).push(PageRouteBuilder(
+        pageBuilder: (context, animation, secondaryAnimation) =>
+            const ChangeThreshold(),
+        transitionsBuilder: ((context, animation, secondaryAnimation, child) {
+          const begin = Offset(0.0, 1.0);
+          const end = Offset.zero;
+          const curve = Curves.ease;
+          var tween =
+              Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+          return SlideTransition(
+            position: animation.drive(tween),
+            child: child,
+          );
+        })));
+  }
+
+  void _onChangeDiseaseStatus(BuildContext context) {
+    Navigator.of(context).push(PageRouteBuilder(
+        pageBuilder: (context, animation, secondaryAnimation) =>
+            const ChangeDiseaseStatus(),
+        transitionsBuilder: ((context, animation, secondaryAnimation, child) {
+          const begin = Offset(0.0, 1.0);
+          const end = Offset.zero;
+          const curve = Curves.ease;
+          var tween =
+              Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+          return SlideTransition(
+            position: animation.drive(tween),
+            child: child,
+          );
+        })));
+  }
+
   void _onChangePasswordTap(BuildContext context) {
-    // TODO: CONTACT THE BACKEND TO GENERATE THE CODE
+    DioHelper.postData(url: "password", data: {
+      'email': CachHelper.getData(key: 'email'),
+    }).then((value) {
+      showToast(text: value.data['message'], color: Colors.blue, time: 3000);
+    }).catchError((error) => print(error));
+
+    CachHelper.saveData(
+        key: 'confirmationEmail', value: CachHelper.getData(key: 'email'));
+
     Navigator.of(context).push(PageRouteBuilder(
         pageBuilder: (context, animation, secondaryAnimation) =>
             const EmailConfirmation(),
@@ -157,8 +218,7 @@ class _UserSettingsState extends State<UserSettings> {
   }
 
   Future _onLogoutTap(BuildContext context) async {
-    if (await CachHelper.removeData(key: 'isUser') &&
-        await CachHelper.removeData(key: 'token')) {
+    if (await CachHelper.removeAllData()) {
       DioHelper.postData(url: "user/logout", data: {});
       Navigator.of(context, rootNavigator: true).pushReplacement(
           MaterialPageRoute(builder: (context) => const StartWidget()));
