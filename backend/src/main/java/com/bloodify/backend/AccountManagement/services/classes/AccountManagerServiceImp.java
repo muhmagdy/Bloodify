@@ -137,9 +137,11 @@ public class AccountManagerServiceImp implements AccountManagerService {
         if(passwordReset.getCreatedAt().isBefore(LocalDateTime.now().minusMinutes(30)))
             return false;
         String encodedPassword = encoderService.encode(newPassword);
-        if(!userDAO.updatePassword(email, encodedPassword))
-            return instDAO.updatePassword(email, encodedPassword);
-        return true;
+        if(userDAO.updatePassword(email, encodedPassword) || instDAO.updatePassword(email, encodedPassword)) {
+            passwordResetRepository.deleteByEmail(email);
+            return true;
+        }
+        return false;
     }
 
     @Scheduled(fixedRate = 1800000)
