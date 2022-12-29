@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "2ef62343-cdc0-4e45-840a-97274496e1dd",
+		"_postman_id": "5f03d0d3-43d4-423b-944e-bb083d457193",
 		"name": "Bloodyify",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "18289071"
+		"_exporter_id": "23578365"
 	},
 	"item": [
 		{
@@ -4095,6 +4095,578 @@
 								"user",
 								"blood",
 								"allInstitutions"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Statistics",
+			"item": [
+				{
+					"name": "insert institution",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"  pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"state is true\", function () {\r",
+									"    pm.expect(pm.response.json().state).to.eql(true)\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"mosta4faZa3bolla@gmail.com\",\r\n    \"name\": \"Hsopital Za3bolla\",\r\n    \"password\": \"Za3bolla_\",\r\n    \"location\": \"Alex\",\r\n    \"latitude\": 786.987,\r\n    \"longitude\": 203.2345,\r\n    \"positiveA_bagsCount\": 0,\r\n    \"positiveB_bagsCount\": 1,\r\n    \"positiveAB_bagsCount\": 0,\r\n    \"positiveO_bagsCount\": 1,\r\n    \"negativeA_bagsCount\": 0,\r\n    \"negativeB_bagsCount\": 1,\r\n    \"negativeAB_bagsCount\": 0,\r\n    \"negativeO_bagsCount\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/institution",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"institution"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "institSignIn",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"state is true\", function () {\r",
+									"    pm.expect(pm.response.json().status).to.eql(true)\r",
+									"})\r",
+									"\r",
+									"let institution_token = pm.response.json().data.token;\r",
+									"\r",
+									"pm.collectionVariables.set(\"institution_token\", institution_token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "mosta4faZa3bolla@gmail.com",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "Za3bolla_",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/v1/institution/auth",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"institution",
+								"auth"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "posting1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"valid post status code\", () => {\r",
+									"    pm.response.to.have.status(201)\r",
+									"})\r",
+									"\r",
+									"pm.test(\"valid post status flag\", () => {\r",
+									"    pm.expect(pm.response.json().status).to.eql(true)\r",
+									"})\r",
+									"\r",
+									"pm.test(\"valid post body\", () => {\r",
+									"    pm.expect(pm.response.json().responseBody).to.eql(\"Your Request Posted Successfully\")\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{user_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"postID\": -1,\r\n    \"institutionID\": 11,\r\n    \"LastUpdateTime\": \"2022-12-18T07:29:00\",\r\n    \"expiryTime\": \"2022-12-18T08:51:00\",\r\n    \"requiredBags\": 9, \r\n    \"bloodType\": \"B-\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/user/posting/add",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"posting",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "posting2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"valid post status code\", () => {\r",
+									"    pm.response.to.have.status(201)\r",
+									"})\r",
+									"\r",
+									"pm.test(\"valid post status flag\", () => {\r",
+									"    pm.expect(pm.response.json().status).to.eql(true)\r",
+									"})\r",
+									"\r",
+									"pm.test(\"valid post body\", () => {\r",
+									"    pm.expect(pm.response.json().responseBody).to.eql(\"Your Request Posted Successfully\")\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{user_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"postID\": -1,\r\n    \"institutionID\": 10,\r\n    \"LastUpdateTime\": \"2022-12-18T07:29:00\",\r\n    \"expiryTime\": \"2022-12-18T08:51:00\",\r\n    \"requiredBags\": 9, \r\n    \"bloodType\": \"B+\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/user/posting/add",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"posting",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "bagsOfPost",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"valid status code\", () => {\r",
+									"    pm.response.to.have.status(200)\r",
+									"})\r",
+									"\r",
+									"pm.test(\"valid status flag\", () => {\r",
+									"    pm.expect(pm.response.json().status).to.eql(true)\r",
+									"})\r",
+									"\r",
+									"pm.test(\"valid post body\", () => {\r",
+									"    pm.expect(pm.response.json().responseBody[3].bagsCount).to.eql(9)\r",
+									"})\r",
+									"pm.test(\"valid post body\", () => {\r",
+									"    pm.expect(pm.response.json().responseBody[0].bagsCount).to.eql(0)\r",
+									"})\r",
+									"pm.test(\"valid post body\", () => {\r",
+									"    pm.expect(pm.response.json().responseBody[1].bagsCount).to.eql(0)\r",
+									"})\r",
+									"pm.test(\"valid post body\", () => {\r",
+									"    pm.expect(pm.response.json().responseBody[2].bagsCount).to.eql(0)\r",
+									"})\r",
+									"pm.test(\"valid post body\", () => {\r",
+									"    pm.expect(pm.response.json().responseBody[4].bagsCount).to.eql(0)\r",
+									"})\r",
+									"pm.test(\"valid post body\", () => {\r",
+									"    pm.expect(pm.response.json().responseBody[5].bagsCount).to.eql(0)\r",
+									"})\r",
+									"pm.test(\"valid post body\", () => {\r",
+									"    pm.expect(pm.response.json().responseBody[6].bagsCount).to.eql(0)\r",
+									"})\r",
+									"pm.test(\"valid post body\", () => {\r",
+									"    pm.expect(pm.response.json().responseBody[7].bagsCount).to.eql(0)\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{institution_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/v1/institution/stats/postBags",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"institution",
+								"stats",
+								"postBags"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "available bags",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"valid post status code\", () => {\r",
+									"    pm.response.to.have.status(200)\r",
+									"})\r",
+									"\r",
+									"pm.test(\"valid post status flag\", () => {\r",
+									"    pm.expect(pm.response.json().status).to.eql(true)\r",
+									"})\r",
+									"\r",
+									"pm.test(\"valid post body\", () => {\r",
+									"    pm.expect(pm.response.json().responseBody[0].bagsCount).to.eql(0)\r",
+									"})\r",
+									"pm.test(\"valid post body\", () => {\r",
+									"    pm.expect(pm.response.json().responseBody[1].bagsCount).to.eql(0)\r",
+									"})\r",
+									"pm.test(\"valid post body\", () => {\r",
+									"    pm.expect(pm.response.json().responseBody[2].bagsCount).to.eql(1)\r",
+									"})\r",
+									"pm.test(\"valid post body\", () => {\r",
+									"    pm.expect(pm.response.json().responseBody[3].bagsCount).to.eql(1)\r",
+									"})\r",
+									"pm.test(\"valid post body\", () => {\r",
+									"    pm.expect(pm.response.json().responseBody[4].bagsCount).to.eql(1)\r",
+									"})\r",
+									"pm.test(\"valid post body\", () => {\r",
+									"    pm.expect(pm.response.json().responseBody[5].bagsCount).to.eql(1)\r",
+									"})\r",
+									"pm.test(\"valid post body\", () => {\r",
+									"    pm.expect(pm.response.json().responseBody[6].bagsCount).to.eql(0)\r",
+									"})\r",
+									"pm.test(\"valid post body\", () => {\r",
+									"    pm.expect(pm.response.json().responseBody[7].bagsCount).to.eql(0)\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{institution_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/v1/institution/stats/institutionBags",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"institution",
+								"stats",
+								"institutionBags"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "donation transaction",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{institution_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"donorNationalID\": \"27901010102359\",\r\n    \"bloodType\": \"B+\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/institution/transaction/user-to-inst",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"institution",
+								"transaction",
+								"user-to-inst"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "donations",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"valid post status code\", () => {\r",
+									"    pm.response.to.have.status(200)\r",
+									"})\r",
+									"\r",
+									"pm.test(\"valid post status flag\", () => {\r",
+									"    pm.expect(pm.response.json().status).to.eql(true)\r",
+									"})\r",
+									"\r",
+									"pm.test(\"valid post body\", () => {\r",
+									"    pm.expect(pm.response.json().responseBody[0].bagsCount).to.eql(0)\r",
+									"})\r",
+									"pm.test(\"valid post body\", () => {\r",
+									"    pm.expect(pm.response.json().responseBody[1].bagsCount).to.eql(0)\r",
+									"})\r",
+									"pm.test(\"valid post body\", () => {\r",
+									"    pm.expect(pm.response.json().responseBody[2].bagsCount).to.eql(1)\r",
+									"})\r",
+									"pm.test(\"valid post body\", () => {\r",
+									"    pm.expect(pm.response.json().responseBody[3].bagsCount).to.eql(0)\r",
+									"})\r",
+									"pm.test(\"valid post body\", () => {\r",
+									"    pm.expect(pm.response.json().responseBody[4].bagsCount).to.eql(0)\r",
+									"})\r",
+									"pm.test(\"valid post body\", () => {\r",
+									"    pm.expect(pm.response.json().responseBody[5].bagsCount).to.eql(0)\r",
+									"})\r",
+									"pm.test(\"valid post body\", () => {\r",
+									"    pm.expect(pm.response.json().responseBody[6].bagsCount).to.eql(0)\r",
+									"})\r",
+									"pm.test(\"valid post body\", () => {\r",
+									"    pm.expect(pm.response.json().responseBody[7].bagsCount).to.eql(0)\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{institution_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/v1/institution/stats/collectedBagsFromUser",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"institution",
+								"stats",
+								"collectedBagsFromUser"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "all transactions",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"valid post status code\", () => {\r",
+									"    pm.response.to.have.status(200)\r",
+									"})\r",
+									"\r",
+									"pm.test(\"valid post status flag\", () => {\r",
+									"    pm.expect(pm.response.json().status).to.eql(true)\r",
+									"})\r",
+									"\r",
+									"pm.test(\"valid post body\", () => {\r",
+									"    pm.expect(pm.response.json().responseBody[0].bagsCount).to.eql(0)\r",
+									"})\r",
+									"pm.test(\"valid post body\", () => {\r",
+									"    pm.expect(pm.response.json().responseBody[1].bagsCount).to.eql(0)\r",
+									"})\r",
+									"pm.test(\"valid post body\", () => {\r",
+									"    pm.expect(pm.response.json().responseBody[2].bagsCount).to.eql(1)\r",
+									"})\r",
+									"pm.test(\"valid post body\", () => {\r",
+									"    pm.expect(pm.response.json().responseBody[3].bagsCount).to.eql(0)\r",
+									"})\r",
+									"pm.test(\"valid post body\", () => {\r",
+									"    pm.expect(pm.response.json().responseBody[4].bagsCount).to.eql(0)\r",
+									"})\r",
+									"pm.test(\"valid post body\", () => {\r",
+									"    pm.expect(pm.response.json().responseBody[5].bagsCount).to.eql(0)\r",
+									"})\r",
+									"pm.test(\"valid post body\", () => {\r",
+									"    pm.expect(pm.response.json().responseBody[6].bagsCount).to.eql(0)\r",
+									"})\r",
+									"pm.test(\"valid post body\", () => {\r",
+									"    pm.expect(pm.response.json().responseBody[7].bagsCount).to.eql(0)\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{institution_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/v1/institution/stats/collectedBagsFromAllTransactions",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"institution",
+								"stats",
+								"collectedBagsFromAllTransactions"
 							]
 						}
 					},
