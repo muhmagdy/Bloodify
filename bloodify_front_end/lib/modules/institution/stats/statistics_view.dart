@@ -118,12 +118,12 @@ Widget ChartsWidget(List<RequestedOrAvailableBlood> requestedBlood, List<Request
                               fontWeight: FontWeight.bold
                           )
                       ),
-                      primaryYAxis: CategoryAxis(
-                          labelStyle: const TextStyle(
-                              fontSize: 11,
-                              fontWeight: FontWeight.bold
-                          )
-                      ),
+                      // primaryYAxis: CategoryAxis(
+                      //     labelStyle: const TextStyle(
+                      //         fontSize: 11,
+                      //         fontWeight: FontWeight.bold
+                      //     )
+                      // ),
                       title: ChartTitle(
                         text: "Blood type - Avaialable bags",
                         textStyle: const TextStyle(
