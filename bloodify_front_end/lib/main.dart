@@ -1,6 +1,5 @@
 import 'package:bloodify_front_end/layout/start_layout.dart';
 import 'package:bloodify_front_end/modules/Chat/bloc/chat_service.dart';
-import 'package:bloodify_front_end/modules/Chat/chat.dart';
 
 import 'package:bloodify_front_end/modules/navbar/institution_navbar.dart';
 
@@ -20,7 +19,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'layout/home_layout.dart';
 import 'modules/login_UI/User_login/cubit/user_login_cubit.dart';
 import 'modules/login_UI/institution_login/cubit/institution_login_cubit.dart';
-import 'modules/navbar/navbar.dart';
 import 'modules/signUP_UI/sign_up_State_management/sign_up_cubit.dart';
 import 'modules/transactions_modules/institution_tranaction/cubic/institution_transaction_cubit.dart';
 
@@ -28,13 +26,10 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await CachHelper.init();
   ChatService.init();
-  // UserInfo.token = CachHelper.getData(key: 'token');
-  UserInfo.token =
-      'eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJzZWxmIiwic3ViIjoiZm9vIiwiaWF0IjoxNjcwMDkwMTU4fQ.PthvAwbYE70O8FDj0YjDRHqVwkn-OO-y54OIcUSEDByBmEumWZAYvO0lwpinv6aeJwpnpBEHLx2Jjeelap4Njv_8SaX4bWBSQJT8VZZlQGNEvdOWzMpr0tLtMMUsiBYqP03Qdlf7JkLR6jvfcfBZqFZQmZCt6IUbmNTPN7T64iZRoNsl2CL3DllwFcbdQzbTfHrDK8QZStxExrRCPOrbqq2kH0A30mtUv12cwtIwusVivLHTbdhB2VfLp9ZhYqKkR4sAiukmYAfOpP9IK1ioZuj5stuFLOQssWRLPlWHALeapd-Py4YCrTPThfSYN3ZlYQi9Z4EP6pDo1PLdcrRguQ';
+  UserInfo.token = CachHelper.getData(key: 'token');
   Widget widget;
   if (UserInfo.token != null) {
-    // UserInfo.isUser = CachHelper.getData(key: 'isUser');
-    UserInfo.isUser = true;
+    UserInfo.isUser = CachHelper.getData(key: 'isUser');
 
     if (UserInfo.isUser!) {
       widget = HomeLayout();
@@ -47,14 +42,7 @@ void main() async {
   Bloc.observer = MyBlocObserver();
   DioHelper.init();
   runApp(MyApp(
-    // startWidget: widget,
-    startWidget: ChatScreen(
-      postID: 1,
-      donorID: 2,
-      firstName: "Rick",
-      lastName: "Astley",
-      myID: 2,
-    ),
+    startWidget: widget,
   ));
 }
 
