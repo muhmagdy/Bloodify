@@ -137,15 +137,13 @@ class AllThreeTypesTest {
 
     }
 
-//  metlassama, I don't understand why it gives unexpected errors! but I added a try catch to the
-//  InstToUserDonDAOImp requestedBagsByTypeAndDate method to avoid wrong results, but still don't know what's wrong!!
     @AfterEach
     public void tear_down(){
-        this.instRepository.deleteAll();
-//        this.userRepository.deleteAll();
         this.userToInstRepository.deleteAll();
         this.instToUserDonRepository.deleteAll();
-//        this.userToUserRepository.deleteAll();
+        this.userToUserRepository.deleteAll();
+        this.instRepository.deleteAll();
+        this.userRepository.deleteAll();
     }
 
     @Test

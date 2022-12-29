@@ -64,7 +64,7 @@ class BloodBagsCountTest {
     void getAllCounts() {
         randomConstructor();
         Institution institution = institutionDAO.findInstitutionByEmail("inst1@yahoo.com");
-        String[] bloodTypesNames = {"Ap", "An", "Bp", "Bn", "Op", "On", "ABp", "ABn"};
+        String[] bloodTypesNames = {"A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-"};
 
         BloodBagsCountWrapper[] resultWrapper = bloodBagsCount.getAllCounts(institution.getEmail());
 

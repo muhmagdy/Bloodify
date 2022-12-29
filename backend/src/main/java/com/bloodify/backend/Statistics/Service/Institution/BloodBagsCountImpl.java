@@ -3,6 +3,7 @@ package com.bloodify.backend.Statistics.Service.Institution;
 import com.bloodify.backend.AccountManagement.dao.interfaces.InstitutionRepository;
 import com.bloodify.backend.Statistics.Service.Common.BagsNumbersAndPercentsCalculation;
 import com.bloodify.backend.Statistics.Service.Common.BloodBagsCountWrapper;
+import com.bloodify.backend.Statistics.Service.Common.Wrapper;
 import com.bloodify.backend.Statistics.Service.Interfaces.BloodBagsCount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -13,23 +14,16 @@ public class BloodBagsCountImpl implements BloodBagsCount {
     @Autowired
     @Qualifier("InstitutionRepository")
     InstitutionRepository instRepo;
-
-    BagsNumbersAndPercentsCalculation calculate = new BagsNumbersAndPercentsCalculation();
+    Wrapper wrap = new Wrapper();
 
     public BloodBagsCountWrapper[] getAllCounts (String email) {
-        String[] bloodTypesNames = {"Ap", "An", "Bp", "Bn", "Op", "On", "ABp", "ABn"};
+        String[] bloodTypesNames = {"A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-"};
 //      ordering here: a+, a-, b+, b-, o+, o-, ab+, ab-
         int[] bloodTypes = new int[8];
         calculateBagsNum(email, bloodTypes);
-        int totalBags = calculate.countTotalBags(bloodTypes);
-
-//        double[] bloodTypePercents = new double[8];
-//        calculate.calculateBagsPercents(bloodTypes, totalBags, bloodTypePercents);
 
         BloodBagsCountWrapper[] result = new BloodBagsCountWrapper[8];
-        for(int i=0; i<8; i++) {
-            result[i] = new BloodBagsCountWrapper(bloodTypesNames[i], bloodTypes[i]);
-        }
+        wrap.wrapAnswer(result, bloodTypesNames, bloodTypes);
 
         return result;
     }

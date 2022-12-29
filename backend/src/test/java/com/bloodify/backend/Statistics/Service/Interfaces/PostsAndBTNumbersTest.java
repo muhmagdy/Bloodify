@@ -6,48 +6,31 @@ import com.bloodify.backend.AccountManagement.dao.interfaces.UserDAO;
 import com.bloodify.backend.AccountManagement.model.entities.Institution;
 import com.bloodify.backend.AccountManagement.model.entities.User;
 import com.bloodify.backend.Statistics.Service.Common.BloodBagsCountWrapper;
-import com.bloodify.backend.Statistics.Service.Institution.BloodBagsCountImpl;
-import com.bloodify.backend.Statistics.Service.Post.PostsAndBTNumbersImpl;
-import com.bloodify.backend.Statistics.Service.Post.PostsStatisticsWrapper;
+import com.bloodify.backend.Statistics.Service.Post.BloodBagsNumbersInPostsImpl;
 import com.bloodify.backend.UserRequests.model.entities.Post;
 import com.bloodify.backend.UserRequests.repository.interfaces.PostRepository;
-import com.bloodify.backend.UserRequests.service.entities.PostDaoImp;
-import com.bloodify.backend.UserRequests.service.interfaces.PostDao;
 import com.bloodify.backend.userRequestTests.Randomizer;
 import jakarta.annotation.Resource;
-import lombok.NonNull;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
 import java.time.LocalDateTime;
-import java.util.Random;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class PostsAndBTNumbersTest {
 
     @Autowired
-//    @Resource(name = "PostRepository")
     PostRepository postRepository;
 
     @Resource(name = "userDAOImp")
-//    @Mock
     UserDAO userDAO;
 
     @Resource(name = "institutionDAOImp")
-//    @Mock
     private InstitutionDAO instDao;
 
     @Autowired
-    PostsAndBTNumbersImpl target;
-
-    int[] bagsCounts = {5, 3, 7, 6, 4, 2, 9, 6};
+    BloodBagsNumbersInPostsImpl target;
 
     int postsNumber = 20;
     int bagsNumber = 0;
@@ -60,9 +43,7 @@ class PostsAndBTNumbersTest {
     Randomizer random = new Randomizer();
     int[] randomNumbers = new int[postsNumber];
     Post[] posts = new Post[postsNumber];
-
     String[] bloodTypeNames = {"A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-"};
-
     BloodBagsCountWrapper[] wrapActualAnswer = new BloodBagsCountWrapper[8];
 
     private final RandomUserGenerations userGenerations = new RandomUserGenerations();

@@ -1,4 +1,0 @@
-Repository: adding 8 queries to get the numbers of available bags for each blood type
-Service: 8 functions to call each of these queries
-       + function to calculate percentages (calls the previous 8 functions + calculation)
-Controller: get blood type to receive its count, get nothing to receive all counts + percentages.

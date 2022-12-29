@@ -4,6 +4,7 @@ import com.bloodify.backend.InstitutionManagement.repository.interfaces.InstToUs
 import com.bloodify.backend.InstitutionManagement.repository.interfaces.UserToInstDonDAO;
 import com.bloodify.backend.InstitutionManagement.repository.interfaces.UserToUserDonDAO;
 import com.bloodify.backend.Statistics.Service.Common.BloodBagsCountWrapper;
+import com.bloodify.backend.Statistics.Service.Common.Wrapper;
 import com.bloodify.backend.Statistics.Service.Interfaces.AllThreeTypes;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
@@ -20,20 +21,22 @@ public class AllThreeTypesImpl implements AllThreeTypes {
 
     @Resource
     UserToInstDonDAO userToInstDonDAO;
+    Wrapper wrap = new Wrapper();
+
 
     @Override
     public BloodBagsCountWrapper[] getAllTransactionsBagsCount (LocalDate start, LocalDate end, String instEmail) {
-        BloodBagsCountWrapper[] wrapAnswer = new BloodBagsCountWrapper[8];
+        BloodBagsCountWrapper[] result = new BloodBagsCountWrapper[8];
         String[] bloodTypesNames = {"A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-"};
         int[] bagsCounts = new int[8];
         for(int i=0; i<8; i++) {
             bagsCounts[i] += instToUserDonDAO.requestedBloodBagsByTypeAndDate(bloodTypesNames[i], start, end, instEmail);
             bagsCounts[i] += userToUserDonDAO.requestedBloodBagsByTypeAndDate(bloodTypesNames[i], start, end, instEmail);
             bagsCounts[i] += userToInstDonDAO.requestedBloodBagsByTypeAndDate(bloodTypesNames[i], start, end, instEmail);
-            wrapAnswer[i] = new BloodBagsCountWrapper(bloodTypesNames[i], bagsCounts[i]);
         }
 
-        return wrapAnswer;
+        wrap.wrapAnswer(result, bloodTypesNames, bagsCounts);
+        return result;
     }
 
 }
