@@ -43,6 +43,8 @@ class PostsAndBTNumbersTest {
     Randomizer random = new Randomizer();
     int[] randomNumbers = new int[postsNumber];
     Post[] posts = new Post[postsNumber];
+    User[] users = new User[postsNumber];
+    Institution[] institutions = new Institution[1];
     String[] bloodTypeNames = {"A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-"};
     BloodBagsCountWrapper[] wrapActualAnswer = new BloodBagsCountWrapper[8];
 
@@ -54,18 +56,17 @@ class PostsAndBTNumbersTest {
             randomNumbers[i] = (int) (Math.random() * 15);
             bagsNumber += randomNumbers[i];
         }
+        institutions[0] = random.generateRandomInstitution();
+        this.instDao.saveInstitution(institutions[0]);
         for(int i=0; i<posts.length; i++) {
-
-            User user = userGenerations.generateRandomUser();
-            Institution institution = random.generateRandomInstitution();
-            Post post = new Post(user, institution, randomNumbers[i], LocalDateTime.now(), bloodTypeNames[i%8]);
-            this.userDAO.saveUser(user);
-            this.instDao.saveInstitution(institution);
+            users[i] = userGenerations.generateRandomUser();
+        }
+        for(int i=0; i<posts.length; i++) {
+            Post post = new Post(users[i], institutions[0], randomNumbers[i], LocalDateTime.now(), bloodTypeNames[i%8]);
+            this.userDAO.saveUser(users[i]);
             this.postRepository.save(post);
             posts[i] = post;
-
         }
-        wrapActualAnswer = target.postsNumber();
     }
 
     @Test
@@ -77,7 +78,7 @@ class PostsAndBTNumbersTest {
             totalBagsOfThisType += randomNumbers[order];
             order += 8;
         }
-
+        wrapActualAnswer = target.postsNumber(institutions[0].getEmail());
         BloodBagsCountWrapper wrapExpected = new BloodBagsCountWrapper("A+", totalBagsOfThisType);
         order %= 8;
 //        assertEquals(wrapExpected.postsCount, wrapActualAnswer[order].postsCount);
@@ -95,7 +96,7 @@ class PostsAndBTNumbersTest {
             totalBagsOfThisType += randomNumbers[order];
             order += 8;
         }
-
+        wrapActualAnswer = target.postsNumber(institutions[0].getEmail());
         BloodBagsCountWrapper wrapExpected = new BloodBagsCountWrapper("A-", totalBagsOfThisType);
 
         order %= 8;
@@ -114,7 +115,7 @@ class PostsAndBTNumbersTest {
             totalBagsOfThisType += randomNumbers[order];
             order += 8;
         }
-
+        wrapActualAnswer = target.postsNumber(institutions[0].getEmail());
         BloodBagsCountWrapper wrapExpected = new BloodBagsCountWrapper("B+", totalBagsOfThisType);
 
         order %= 8;
@@ -133,7 +134,7 @@ class PostsAndBTNumbersTest {
             totalBagsOfThisType += randomNumbers[order];
             order += 8;
         }
-
+        wrapActualAnswer = target.postsNumber(institutions[0].getEmail());
         BloodBagsCountWrapper wrapExpected = new BloodBagsCountWrapper("B-", totalBagsOfThisType);
 
         order %= 8;
@@ -152,7 +153,7 @@ class PostsAndBTNumbersTest {
             totalBagsOfThisType += randomNumbers[order];
             order += 8;
         }
-
+        wrapActualAnswer = target.postsNumber(institutions[0].getEmail());
         BloodBagsCountWrapper wrapExpected = new BloodBagsCountWrapper("O+", totalBagsOfThisType);
 
         order %= 8;
@@ -171,7 +172,7 @@ class PostsAndBTNumbersTest {
             totalBagsOfThisType += randomNumbers[order];
             order += 8;
         }
-
+        wrapActualAnswer = target.postsNumber(institutions[0].getEmail());
         BloodBagsCountWrapper wrapExpected = new BloodBagsCountWrapper("O-", totalBagsOfThisType);
 
         order %= 8;
@@ -190,7 +191,7 @@ class PostsAndBTNumbersTest {
             totalBagsOfThisType += randomNumbers[order];
             order += 8;
         }
-
+        wrapActualAnswer = target.postsNumber(institutions[0].getEmail());
         BloodBagsCountWrapper wrapExpected = new BloodBagsCountWrapper("AB+", totalBagsOfThisType);
 
         order %= 8;
@@ -209,7 +210,7 @@ class PostsAndBTNumbersTest {
             totalBagsOfThisType += randomNumbers[order];
             order += 8;
         }
-
+        wrapActualAnswer = target.postsNumber(institutions[0].getEmail());
         BloodBagsCountWrapper wrapExpected = new BloodBagsCountWrapper("AB-", totalBagsOfThisType);
 
         order %= 8;

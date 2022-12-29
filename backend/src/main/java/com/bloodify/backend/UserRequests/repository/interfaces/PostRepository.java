@@ -62,8 +62,9 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
     @Query("select count(p) from Post p where p.bloodType = ?1")
     int countByBloodType(String bloodType);
 
-    @Query("select sum(p.bagsNum) from Post p where p.bloodType = ?1")
-    int sumBagsByBloodType(String BloodType);
+    @Query("select sum(p.bagsNum) from Post p where p.bloodType = ?1 and p.institution.email = ?2")
+    int sumBagsByBloodType(String BloodType, String instEmail);
+
 
 
 }

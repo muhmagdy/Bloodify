@@ -1,5 +1,6 @@
 package com.bloodify.backend.Statistics.Service.Post;
 
+import com.bloodify.backend.AccountManagement.model.entities.Institution;
 import com.bloodify.backend.Statistics.Service.Common.BloodBagsCountWrapper;
 import com.bloodify.backend.Statistics.Service.Common.Wrapper;
 import com.bloodify.backend.Statistics.Service.Interfaces.BloodBagsNumbersInPosts;
@@ -16,20 +17,20 @@ public class BloodBagsNumbersInPostsImpl implements BloodBagsNumbersInPosts {
     Wrapper wrap = new Wrapper();
 
 
-    public BloodBagsCountWrapper[] postsNumber() {
+    public BloodBagsCountWrapper[] postsNumber(String instEmail) {
         String[] bloodTypesNames = {"A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-"};
         int[] bagsNumbers = new int[8];
-        getBagsNumbers(bloodTypesNames, bagsNumbers);
+        getBagsNumbers(bloodTypesNames, bagsNumbers, instEmail);
         BloodBagsCountWrapper[] result = new BloodBagsCountWrapper[8];
         wrap.wrapAnswer(result, bloodTypesNames, bagsNumbers);
         return result;
     }
 
 
-    private void getBagsNumbers(String[] bloodTypesNames, int[] bagsNumbers) {
+    private void getBagsNumbers(String[] bloodTypesNames, int[] bagsNumbers, String instEmail) {
 //        int totalBags = 0;
         for(int i = 0; i< bagsNumbers.length; i++) {
-            int sum = repository.sumBagsByBloodType(bloodTypesNames[i]);
+            int sum = repository.sumBagsByBloodType(bloodTypesNames[i], instEmail);
             bagsNumbers[i] = sum;
 //            totalBags+=sum;
         }
