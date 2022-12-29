@@ -89,7 +89,7 @@ public class ChatMessageMapperTest {
         when(dto.getPostID()).thenReturn(3);
         when(dto.getDirection()).thenReturn(true);
         when(dto.getMessageID()).thenReturn(1);
-        LocalDateTime dateTime = LocalDateTime.parse("2022-10-15T12:13");
+        LocalDateTime dateTime = LocalDateTime.parse("2022-10-15T12:13:00");
         when(dto.getTimestamp()).thenReturn(dateTime);
 
         ChatMessageRequest request = assertDoesNotThrow(() -> chatMessageMapper.dtoToRequest(dto));
@@ -97,7 +97,7 @@ public class ChatMessageMapperTest {
         assertEquals(dto.getPostID(), request.getPostID());
         assertEquals(dto.getDirection(), request.getDirection());
         assertEquals(dto.getContent(), request.getContent());
-        assertEquals(dto.getTimestamp().toString(), request.getTimestamp());
+        assertEquals(dto.getTimestamp().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")), request.getTimestamp());
         assertEquals(dto.getMessageID(), request.getMessageID());
     }
 
@@ -140,7 +140,7 @@ public class ChatMessageMapperTest {
         when(request.getDirection()).thenReturn(false);
         when(request.getMessageID()).thenReturn(1);
         LocalDateTime dateTime = LocalDateTime.parse("2022-10-15T12:13");
-        when(request.getTimestamp()).thenReturn(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm").format(dateTime));
+        when(request.getTimestamp()).thenReturn(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(dateTime));
 
         ChatMessageDto dto = assertDoesNotThrow(() -> chatMessageMapper.requestToDto(request));
 

@@ -1,7 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:bloodify_front_end/models/chat_message.dart';
 import 'package:bloodify_front_end/modules/Chat/bloc/chat_service.dart';
-import 'package:bloodify_front_end/modules/Chat/chat.dart';
 import 'package:bloodify_front_end/shared/Constatnt/Component.dart';
 import 'package:bloodify_front_end/shared/Constatnt/colors.dart';
 import 'package:equatable/equatable.dart';
@@ -56,8 +55,6 @@ class ChatCubit extends Cubit<ChatState> {
       state.messageController!.clear();
       showToast(text: "message sent", color: defaultColor, time: 1);
       emit(state);
-
-      // loadMessages();
     }
   }
 

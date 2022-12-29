@@ -22,7 +22,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-// @IdClass(ChatMessagePk.class)
 public class ChatMessage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,15 +35,6 @@ public class ChatMessage {
             @JoinColumn(name = "donor_id", referencedColumnName = "user_userid") })
     private AcceptedPost acceptedPost;
 
-
-    // @Id
-    // @Column(name = "message_id")
-    // @GeneratedValue
-    // private Integer messageID;
-
-    // @EmbeddedId
-    // @GeneratedValue
-    // private ChatMessagePk pk;
     /**
      * <p>The direction of the message,</p>
      * 

@@ -1,11 +1,7 @@
-import 'dart:async';
-
 import 'package:bloodify_front_end/models/chat_message.dart';
 import 'package:bloodify_front_end/modules/Chat/chat.dart';
 import 'package:bloodify_front_end/shared/Constatnt/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 

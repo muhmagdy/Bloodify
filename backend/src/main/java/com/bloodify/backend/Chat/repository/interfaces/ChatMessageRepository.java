@@ -6,9 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 
 import com.bloodify.backend.Chat.model.entities.ChatMessage;
-import com.bloodify.backend.Chat.model.entities.ChatMessagePk;
 
-public interface ChatMessageRepository extends JpaRepository<ChatMessage, ChatMessagePk> {
+public interface ChatMessageRepository extends JpaRepository<ChatMessage, Integer> {
 
 
     // save is ls already implemented
