@@ -12,6 +12,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import com.bloodify.backend.AccountManagement.dao.interfaces.UserDAO;
+import com.bloodify.backend.AccountManagement.model.entities.User;
 import com.bloodify.backend.Chat.dto.entities.ChatMessageDto;
 import com.bloodify.backend.Chat.dto.mapper.ChatMessageMapper;
 import com.bloodify.backend.Chat.model.entities.ChatMessage;
@@ -23,17 +25,25 @@ public class ChatServiceImpTest {
     ChatMessageDao msgDao;
     ChatMessageMapper msgMapper;
 
+    UserDAO userDAO;
+
     ChatService service;
 
     ChatMessageDto chatMessageDto;
     List<ChatMessage> msgs;
     List<ChatMessageDto> msgsDto;
 
+    User user;
+    String email;
+    Integer donorID, postID, userID;
+
 
     ChatMessage mockMsg(int i){
         ChatMessage msg  = Mockito.mock(ChatMessage.class);
         when(msg.getMessageID()).thenReturn(i);
         when(msg.getContent()).thenReturn(String.valueOf(i*234));
+        when(msg.getDonorID()).thenReturn(donorID);
+        when(msg.getPostOwnerID()).thenReturn(userID);
         return msg;
     }
     ChatMessageDto mockMsgDto(int i){
@@ -47,6 +57,18 @@ public class ChatServiceImpTest {
     void init(){
         msgDao = Mockito.mock(ChatMessageDao.class);
         msgMapper = Mockito.mock(ChatMessageMapper.class);
+        userDAO = Mockito.mock(UserDAO.class);
+
+
+
+        user = Mockito.mock(User.class);
+        email = "mock@email.com";
+        donorID = 5;
+        postID = 3;
+        userID = 2;
+        when(user.getEmail()).thenReturn(email);
+
+
         msgs = new LinkedList<>();
         msgsDto = new LinkedList<>();
 
@@ -56,7 +78,7 @@ public class ChatServiceImpTest {
             msgsDto.add(mockMsgDto(i));
         }
         chatMessageDto =  Mockito.mock(ChatMessageDto.class);
-        service = new ChatServiceImp(msgDao, msgMapper);
+        service = new ChatServiceImp(userDAO, null, msgDao, msgMapper);
     }
     
     @Test
@@ -64,10 +86,16 @@ public class ChatServiceImpTest {
         when(msgDao.findChatMessages(3, 5)).thenReturn(msgs);
         Iterator<ChatMessage> msgIter = msgs.iterator();
         Iterator<ChatMessageDto> dtoIter = msgsDto.iterator();
+
+        when(user.getUserID()).thenReturn(userID);
+        when(userDAO.findUserByEmail(email)).thenReturn(user);
+
+
+
         while(msgIter.hasNext() && dtoIter.hasNext()){
             when(msgMapper.entityToDto(msgIter.next())).thenReturn(dtoIter.next());
         }
-        List<ChatMessageDto> actual = assertDoesNotThrow(() -> service.loadChatMessages(3, 5));
+        List<ChatMessageDto> actual = assertDoesNotThrow(() -> service.loadChatMessages(email, 3, 5));
 
         assertEquals(msgsDto, actual);
     }
@@ -77,7 +105,7 @@ public class ChatServiceImpTest {
         when(msgDao.findChatMessages(3, 5)).thenReturn(List.of());
         
 
-        List<ChatMessageDto> actual = assertDoesNotThrow(() -> service.loadChatMessages(3, 5));
+        List<ChatMessageDto> actual = assertDoesNotThrow(() -> service.loadChatMessages(email, 3, 5));
 
         assertEquals(new LinkedList<ChatMessageDto>(), actual);
     }

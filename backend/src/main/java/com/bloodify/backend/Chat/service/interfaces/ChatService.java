@@ -8,7 +8,7 @@ public interface ChatService {
 
     boolean saveMessage(ChatMessageDto message) throws Exception;
 
-    List<ChatMessageDto> loadChatMessages(Integer postID, Integer donorID);
+    List<ChatMessageDto> loadChatMessages(String email, Integer postID, Integer donorID);
 
     void notifyRecipient(ChatMessageRequest message);
 
