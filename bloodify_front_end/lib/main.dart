@@ -1,4 +1,5 @@
 import 'package:bloodify_front_end/layout/start_layout.dart';
+import 'package:bloodify_front_end/modules/institution/stats/stats_cubit.dart';
 
 import 'package:bloodify_front_end/modules/navbar/institution_navbar.dart';
 
@@ -66,6 +67,7 @@ class MyApp extends StatelessWidget {
           BlocProvider(create: (context) => EventTransactionCubit()),
           BlocProvider(create: (context) => InstituteTransactionCubit()),
           BlocProvider(create: (context) => CreateEventCubit()),
+          BlocProvider(create: (context) => StatsCubit())
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
