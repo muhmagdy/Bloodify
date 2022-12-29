@@ -18,8 +18,8 @@ import jakarta.transaction.Transactional;
 public interface LoginSessionRepository extends JpaRepository<LoginSession, Integer> {
         LoginSession findTokenByEmail(String email);
 
-//        void deleteSessionByEmail(String email);
-
+        // void deleteSessionByEmail(String email);
+        @Transactional
         long deleteByEmail(@NonNull String email);
 
         @Transactional
