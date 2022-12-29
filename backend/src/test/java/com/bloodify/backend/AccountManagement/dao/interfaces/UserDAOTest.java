@@ -189,9 +189,10 @@ class UserDAOTest {
             gotEmails.add(gotUser.getEmail());
         }
         List<String> actualEmails = new ArrayList<>();
-        actualEmails.add(emails[2]);
         actualEmails.add(emails[0]);
-        assertEquals(actualEmails, gotEmails);
+        actualEmails.add(emails[2]);
+        assertTrue(actualEmails.contains(gotEmails.get(0)));
+        assertTrue(actualEmails.contains(gotEmails.get(1)));
     }
 
     @Test
