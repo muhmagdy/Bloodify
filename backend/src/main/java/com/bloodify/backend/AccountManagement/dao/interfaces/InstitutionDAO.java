@@ -21,4 +21,8 @@ public interface InstitutionDAO extends UserDetailsService{
 
     int incrementBagsCountBy(String email, String bloodType, Integer addedBagsCount);
 
+    public boolean isInstitutionExistByEmail(String email);
+
+    public boolean updatePassword(String email, String newPassword);
+
 }

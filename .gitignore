@@ -42,5 +42,14 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+<<<<<<< Updated upstream
+=======
 bloodify_front_end/.vscode/settings.json
 bloodify_front_end/.metals/metals.mv.db
+bloodify_front_end/linux/flutter/generated_plugin_registrant.cc
+bloodify_front_end/linux/flutter/generated_plugins.cmake
+bloodify_front_end/macos/Flutter/GeneratedPluginRegistrant.swift
+bloodify_front_end/windows/flutter/generated_plugin_registrant.cc
+bloodify_front_end/.metals/metals.lock.db
+bloodify_front_end/windows/flutter/generated_plugins.cmake
+>>>>>>> Stashed changes
