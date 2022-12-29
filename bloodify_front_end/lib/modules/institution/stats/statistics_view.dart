@@ -18,34 +18,37 @@ class _StatisticsState extends State<Statistics> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text("Institution Statistics"),),
-      body: Container(
-      padding: EdgeInsets.symmetric(vertical: 16),
-        alignment: Alignment.center,
-        child: BlocBuilder<StatsCubit, StatsState>(
-          builder: (context, state){
-            if(state is StatsLoading){
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
+      body: RefreshIndicator(
+        onRefresh: () async { StatsCubit.get(context).loadStats(); },
+        child: Container(
+        padding: EdgeInsets.symmetric(vertical: 16),
+          alignment: Alignment.center,
+          child: BlocBuilder<StatsCubit, StatsState>(
+            builder: (context, state){
+              if(state is StatsLoading){
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              else if(state is StatsLoaded){
+                return Center(
+                  child: ChartsWidget(state.requestedBlood, state.availableBlood, state.donationAndTransactionBlood),
+                );
+              }
+              else if (state is StatsError){
+                return Center(
+                    child: ErrWidget(),
+                );
+              }
+              else{
+                return Center(
+                  child: Container(),
+                );
+              }
             }
-            else if(state is StatsLoaded){
-              return Center(
-                child: ChartsWidget(state.requestedBlood, state.availableBlood, state.donationAndTransactionBlood),
-              );
-            }
-            else if (state is StatsError){
-              return Center(
-                  child: ErrWidget(),
-              );
-            }
-            else{
-              return Center(
-                child: Container(),
-              );
-            }
-          }
-        )
+          )
     ),
+      ),
     );
   }
 }

@@ -4,7 +4,7 @@ class RequestedOrAvailableBlood{
 
   RequestedOrAvailableBlood(this.type, this.bags);
   static RequestedOrAvailableBlood fromJson(Map<String, dynamic> json) {
-    return RequestedOrAvailableBlood(json["type"], json["bags"]);
+    return RequestedOrAvailableBlood(json["bloodType"], json["bagsCount"]);
   }
 }
 

@@ -21,6 +21,7 @@ class StatsCubit extends Cubit<StatsState> {
       List<RequestedOrAvailableBlood> availableBags = await getAvailableBags();
       List<TransactionBlood> transactionBags = await getTransactionBags();
       emit(StatsLoaded(requestedBags, availableBags, transactionBags));
+      // emit(StatsLoaded(requestedBags, const [], const []));
     }catch(e){
       emit(StatsError());
     }
