@@ -10,6 +10,8 @@ class ChatState extends Equatable {
 
   final TextEditingController? messageController;
 
+  final bool loadingMessages, messagesAreLoaded, connected;
+
   const ChatState._(
       {this.msgs = const <ChatMessage>[],
       this.firstName,
@@ -18,7 +20,10 @@ class ChatState extends Equatable {
       this.postID,
       this.myID,
       this.formKey,
-      this.messageController});
+      this.messageController,
+      this.loadingMessages = false,
+      this.messagesAreLoaded = false,
+      this.connected = false});
 
   const ChatState.initial(
       {required String firstName,
@@ -45,7 +50,10 @@ class ChatState extends Equatable {
       int? postID,
       int? myID,
       GlobalKey<FormState>? formKey,
-      TextEditingController? messageController}) {
+      TextEditingController? messageController,
+      bool? loadingMessages,
+      bool? messagesAreLoaded,
+      bool? connected}) {
     return ChatState._(
         msgs: msgs ?? this.msgs,
         firstName: firstName ?? this.firstName,
@@ -54,7 +62,10 @@ class ChatState extends Equatable {
         postID: postID ?? this.postID,
         myID: myID ?? this.myID,
         formKey: formKey ?? this.formKey,
-        messageController: messageController ?? this.messageController);
+        messageController: messageController ?? this.messageController,
+        loadingMessages: loadingMessages ?? this.loadingMessages,
+        messagesAreLoaded: messagesAreLoaded ?? this.messagesAreLoaded,
+        connected: connected ?? this.connected);
   }
 
   @override

@@ -26,7 +26,7 @@ public class ChatMessageDaoImp implements ChatMessageDao{
 
     @Override
     public List<ChatMessage> findChatMessages(Integer postID,  Integer donorID) {
-        return repository.findByAcceptedPostPostPostIDAndAcceptedPostUserUserID(postID, donorID);
+        return repository.findByAcceptedPostPostPostIDAndAcceptedPostUserUserIDOrderByTimestampDesc(postID, donorID);
     }
 
     

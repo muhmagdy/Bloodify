@@ -1,4 +1,5 @@
 import 'package:bloodify_front_end/layout/start_layout.dart';
+import 'package:bloodify_front_end/modules/Chat/bloc/chat_service.dart';
 import 'package:bloodify_front_end/modules/Chat/chat.dart';
 
 import 'package:bloodify_front_end/modules/navbar/institution_navbar.dart';
@@ -26,10 +27,14 @@ import 'modules/transactions_modules/institution_tranaction/cubic/institution_tr
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await CachHelper.init();
-  UserInfo.token = CachHelper.getData(key: 'token');
+  ChatService.init();
+  // UserInfo.token = CachHelper.getData(key: 'token');
+  UserInfo.token =
+      'eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJzZWxmIiwic3ViIjoiZm9vIiwiaWF0IjoxNjcwMDkwMTU4fQ.PthvAwbYE70O8FDj0YjDRHqVwkn-OO-y54OIcUSEDByBmEumWZAYvO0lwpinv6aeJwpnpBEHLx2Jjeelap4Njv_8SaX4bWBSQJT8VZZlQGNEvdOWzMpr0tLtMMUsiBYqP03Qdlf7JkLR6jvfcfBZqFZQmZCt6IUbmNTPN7T64iZRoNsl2CL3DllwFcbdQzbTfHrDK8QZStxExrRCPOrbqq2kH0A30mtUv12cwtIwusVivLHTbdhB2VfLp9ZhYqKkR4sAiukmYAfOpP9IK1ioZuj5stuFLOQssWRLPlWHALeapd-Py4YCrTPThfSYN3ZlYQi9Z4EP6pDo1PLdcrRguQ';
   Widget widget;
   if (UserInfo.token != null) {
-    UserInfo.isUser = CachHelper.getData(key: 'isUser');
+    // UserInfo.isUser = CachHelper.getData(key: 'isUser');
+    UserInfo.isUser = true;
 
     if (UserInfo.isUser!) {
       widget = HomeLayout();

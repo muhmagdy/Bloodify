@@ -1,11 +1,7 @@
-import 'dart:async';
-
 import 'package:bloodify_front_end/models/chat_message.dart';
 import 'package:bloodify_front_end/modules/Chat/chat.dart';
 import 'package:bloodify_front_end/shared/Constatnt/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
@@ -47,6 +43,7 @@ class _MainChatScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cubit = context.watch<ChatCubit>();
+    cubit.establishConnection();
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(color: lightGrey),
@@ -83,7 +80,7 @@ class _MessagesList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    cubit.loadMessages();
+    cubit.loadMessages(false);
 
     return Flexible(
       child: ListView.builder(
@@ -100,9 +97,9 @@ class _MessagesList extends StatelessWidget {
                   ? HomeMessageCard(message: cubit.state.msgs[i])
                   : AwayMessageCard(message: cubit.state.msgs[i]));
 
-          if (i == 0 ||
+          if (i == cubit.state.msgs.length - 1 ||
               !DateUtils.isSameDay(
-                  msg.timestamp, cubit.state.msgs[i - 1].timestamp)) {
+                  msg.timestamp, cubit.state.msgs[i + 1].timestamp)) {
             var dateFormat = DateFormat("MMM d, yyyy");
             return Column(
               children: [
@@ -233,7 +230,7 @@ abstract class MessageCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double maxWidth = MediaQuery.of(context).size.width * 0.6;
+    double width = MediaQuery.of(context).size.width;
     return Container(
       decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
       child: Row(
@@ -244,14 +241,17 @@ abstract class MessageCard extends StatelessWidget {
               color: getBackgroundColor(),
               child: Container(
                 padding: const EdgeInsets.all(8.0),
-                constraints: BoxConstraints(maxWidth: maxWidth),
+                constraints: BoxConstraints(maxWidth: width * 0.6),
                 child: IntrinsicWidth(
                   child: Column(
                     children: [
-                      Text(
-                        message.content,
-                        style: TextStyle(color: getTextColor()),
-                        softWrap: true,
+                      Container(
+                        constraints: BoxConstraints(minWidth: width * 0.12),
+                        child: Text(
+                          message.content,
+                          style: TextStyle(color: getTextColor()),
+                          softWrap: true,
+                        ),
                       ),
                       Container(
                         padding: EdgeInsets.fromLTRB(0, 2, 0, 0),

@@ -9,9 +9,6 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ChatMessageRequest {
-    private Integer messageID, postID, donorID;
-    private Boolean direction;
-    private String content;
-    private String timestamp;
+public class ChatMessageNotification {
+    private Integer postID, donorID;
 }

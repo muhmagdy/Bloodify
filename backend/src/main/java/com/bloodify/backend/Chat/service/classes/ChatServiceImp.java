@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.bloodify.backend.Chat.controller.requests.entities.ChatMessageRequest;
 import com.bloodify.backend.Chat.dto.entities.ChatMessageDto;
 import com.bloodify.backend.Chat.dto.mapper.ChatMessageMapper;
 import com.bloodify.backend.Chat.model.entities.ChatMessage;
@@ -14,10 +15,10 @@ import com.bloodify.backend.Chat.service.interfaces.ChatService;
 public class ChatServiceImp implements ChatService {
 
 
-    ChatMessageDao chatMessageDao;
+    final ChatMessageDao chatMessageDao;
 
 
-    ChatMessageMapper chatMessageMapper;
+    final ChatMessageMapper chatMessageMapper;
 
 
     public ChatServiceImp(ChatMessageDao chatMessageDao, ChatMessageMapper chatMessageMapper) {
@@ -34,6 +35,8 @@ public class ChatServiceImp implements ChatService {
             recipientID = chatMessage.getAcceptedPost().getUser().getUserID();
         }
         chatMessage.getAcceptedPost().setNewMsgFor(recipientID);
+        // chatMessage.getPk().setMessageID(null);
+        chatMessage.setMessageID(null);
         return this.chatMessageDao.saveMessage(chatMessage);
     }
 
@@ -44,6 +47,13 @@ public class ChatServiceImp implements ChatService {
                 .stream()
                 .map((chatMessage) -> this.chatMessageMapper.entityToDto(chatMessage))
                 .toList();
+    }
+
+
+    @Override
+    public void notifyRecipient(ChatMessageRequest message) {
+        // TODO Auto-generated method stub
+        
     }
 
 }

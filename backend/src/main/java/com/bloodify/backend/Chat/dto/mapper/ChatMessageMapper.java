@@ -1,5 +1,8 @@
 package com.bloodify.backend.Chat.dto.mapper;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import org.springframework.stereotype.Component;
 
 import com.bloodify.backend.AccountManagement.dao.interfaces.UserDAO;
@@ -8,6 +11,7 @@ import com.bloodify.backend.Chat.dto.entities.ChatMessageDto;
 import com.bloodify.backend.Chat.exceptions.RecipientNotFoundException;
 import com.bloodify.backend.Chat.exceptions.SenderNotFoundException;
 import com.bloodify.backend.Chat.model.entities.ChatMessage;
+// import com.bloodify.backend.Chat.model.entities.ChatMessagePk;
 import com.bloodify.backend.UserRequests.exceptions.AcceptedPostNotFoundException;
 import com.bloodify.backend.UserRequests.model.entities.AcceptedPost;
 import com.bloodify.backend.UserRequests.repository.interfaces.AcceptRepository;
@@ -19,9 +23,12 @@ public class ChatMessageMapper{
 
     UserDAO userDAO;
 
+    final DateTimeFormatter formatter;;
+
     public ChatMessageMapper(AcceptRepository acceptRepository, UserDAO userDAO) {
         this.acceptRepository = acceptRepository;
         this.userDAO = userDAO;
+        this.formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     }
 
     public ChatMessageDto requestToDto(ChatMessageRequest chatMessageRequest) {
@@ -33,7 +40,7 @@ public class ChatMessageMapper{
                 chatMessageRequest.getDonorID(),
                 chatMessageRequest.getDirection(),
                 chatMessageRequest.getContent(),
-                chatMessageRequest.getTimestamp());
+                LocalDateTime.parse(chatMessageRequest.getTimestamp().replaceAll("T", " "), formatter));
     }
 
     public ChatMessage dtoToEntity(ChatMessageDto chatMessageDto)
@@ -51,8 +58,7 @@ public class ChatMessageMapper{
 
 
         return new ChatMessage(
-                chatMessageDto.getMessageID(), // thanks mockit
-                acceptedPost,
+                chatMessageDto.getMessageID(), acceptedPost, // thanks mockit
                 chatMessageDto.getDirection(),
                 chatMessageDto.getContent(),
                 chatMessageDto.getTimestamp());
@@ -67,7 +73,7 @@ public class ChatMessageMapper{
                 chatMessageDto.getDonorID(),
                 chatMessageDto.getDirection(),
                 chatMessageDto.getContent(),
-                chatMessageDto.getTimestamp());
+                chatMessageDto.getTimestamp().format(formatter));
     }
 
     public ChatMessageDto entityToDto(ChatMessage chatMessage) {
