@@ -1,5 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:bloodify_front_end/models/chat_message.dart';
+import 'package:bloodify_front_end/modules/Chat/bloc/chat_service.dart';
+import 'package:bloodify_front_end/modules/Chat/chat.dart';
 import 'package:bloodify_front_end/shared/Constatnt/Component.dart';
 import 'package:bloodify_front_end/shared/Constatnt/colors.dart';
 import 'package:equatable/equatable.dart';
@@ -19,90 +21,50 @@ class ChatCubit extends Cubit<ChatState> {
     if (value == null || value.isEmpty) return "";
   }
 
-  Future<void> loadMessages() async {
-    //TODO: load message
+  Future<void> loadMessages(bool update) async {
+    emit(state.copyWith(loadingMessages: true));
+    List<ChatMessage> chatMessages;
+    if (state.postID != null &&
+        state.donorID != null &&
+        (!state.messagesAreLoaded || update)) {
+      chatMessages =
+          await ChatService.loadMessages(state.postID, state.donorID);
+      emit(state.copyWith(
+          msgs: chatMessages, loadingMessages: false, messagesAreLoaded: true));
+    }
+  }
 
-    List<String> msgs = '''We're no strangers to love
-You know the rules and so do I (do I)
-A full commitment's what I'm thinking of
-You wouldn't get this from any other guy
-I just wanna tell you how I'm feeling
-Gotta make you understand
-Never gonna give you up
-Never gonna let you down
-Never gonna run around and desert you
-Never gonna make you cry
-Never gonna say goodbye
-Never gonna tell a lie and hurt you
-We've known each other for so long
-Your heart's been aching, but you're too shy to say it (say it)
-Inside, we both know what's been going on (going on)
-We know the game and we're gonna play it
-And if you ask me how I'm feeling
-Don't tell me you're too blind to see
-Never gonna give you up
-Never gonna let you down
-Never gonna run around and desert you
-Never gonna make you cry
-Never gonna say goodbye
-Never gonna tell a lie and hurt you
-Never gonna give you up
-Never gonna let you down
-Never gonna run around and desert you
-Never gonna make you cry
-Never gonna say goodbye
-Never gonna tell a lie and hurt you
-We've known each other for so long
-Your heart's been aching, but you're too shy to say it (to say it)
-Inside, we both know what's been going on (going on)
-We know the game and we're gonna play it
-I just wanna tell you how I'm feeling
-Gotta make you understand
-Never gonna give you up
-Never gonna let you down
-Never gonna run around and desert you
-Never gonna make you cry
-Never gonna say goodbye
-Never gonna tell a lie and hurt you
-Never gonna give you up
-Never gonna let you down
-Never gonna run around and desert you
-Never gonna make you cry
-Never gonna say goodbye
-Never gonna tell a lie and hurt you
-Never gonna give you up
-Never gonna let you down
-Never gonna run around and desert you
-Never gonna make you cry
-Never gonna say goodbye
-Never gonna tell a lie and hurt you'''
-        .split("\n");
-
-    emit(state.copyWith(
-        msgs: msgs
-            .asMap()
-            .entries
-            .map((entry) => ChatMessage(
-                messageID: entry.key,
-                postID: 2,
-                donorID: 3,
-                direction: entry.key % 2 == 0,
-                content: entry.value,
-                timestamp: DateTime.now()
-                    .subtract(Duration(days: msgs.length - entry.key))))
-            .toList()
-            .reversed
-            .toList()));
+  updateMessages(Map<String, dynamic> json) {
+    if (json['postID'] != state.postID || json['donorID'] != state.donorID)
+      return;
+    print("updating messages...");
+    loadMessages(true);
   }
 
   sendMessage() {
     if (state.formKey!.currentState!.validate()) {
       print(state.messageController!.text);
-      //TODO: send message
+      ChatService.sendMessage(ChatMessage(
+          messageID: 0,
+          postID: state.postID ?? -1,
+          donorID: state.donorID ?? -1,
+          direction: state.myID != state.donorID,
+          content: state.messageController!.text,
+          timestamp: DateTime.now()));
+
       state.formKey!.currentState!.reset();
       state.messageController!.clear();
       showToast(text: "message sent", color: defaultColor, time: 1);
       emit(state);
+
+      // loadMessages();
     }
+  }
+
+  void establishConnection() {
+    if (state.connected) return;
+    print("establishing connection...");
+    ChatService.socketConnect(state.postID ?? -1, state.donorID ?? -1, this);
+    emit(state.copyWith(connected: true));
   }
 }

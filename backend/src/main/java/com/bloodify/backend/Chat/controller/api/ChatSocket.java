@@ -36,7 +36,7 @@ public class ChatSocket {
 
     private DataListener<ChatMessageRequest> onChatReceived() {
         return (senderClient, data, ackSender) -> {
-            log.info(data.toString());
+            // log.info(data.toString());
             String room = data.getPostID() + "_" + data.getDonorID();
             sendMessage(room, "get_message", senderClient, data);
 
@@ -56,9 +56,11 @@ public class ChatSocket {
         log.info(message.getContent());
         for (SocketIOClient client : senderClient.getNamespace().getRoomOperations(room).getClients()) {
             if (!client.getSessionId().equals(senderClient.getSessionId())) {
+                // log.info("found");
                 isRecipientOnline = true;
-                client.sendEvent(eventName, new ChatMessageNotification(message.getPostID(), message.getDonorID()));
             }
+            client.sendEvent(eventName, new ChatMessageNotification(message.getPostID(), message.getDonorID()));
+
         }
 
         if(!isRecipientOnline){
@@ -69,6 +71,7 @@ public class ChatSocket {
     private ConnectListener onConnected() {
         return (client) -> {
             String room = client.getHandshakeData().getSingleUrlParam("room");
+            log.info(room);
             client.joinRoom(room);
             log.info("Socket ID[{}]  Connected to socket", client.getSessionId().toString());
         };

@@ -5,14 +5,15 @@ import java.time.LocalDateTime;
 import com.bloodify.backend.UserRequests.model.entities.AcceptedPost;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
+// import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.IdClass;
+// import jakarta.persistence.IdClass;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinColumns;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.PrimaryKeyJoinColumn;
-import jakarta.persistence.PrimaryKeyJoinColumns;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,19 +22,29 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-@IdClass(ChatMessagePk.class)
+// @IdClass(ChatMessagePk.class)
 public class ChatMessage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "message_id")
     private Integer messageID;
 
-    @Id
+    // @Id
     @ManyToOne(cascade = CascadeType.REMOVE)
-    @PrimaryKeyJoinColumns({ 
-            @PrimaryKeyJoinColumn(name = "post_id", referencedColumnName = "post_id"),
-            @PrimaryKeyJoinColumn(name = "donor_id", referencedColumnName = "userID") })
+    @JoinColumns({ 
+            @JoinColumn(name = "post_id", referencedColumnName = "post_postid"),
+            @JoinColumn(name = "donor_id", referencedColumnName = "user_userid") })
     private AcceptedPost acceptedPost;
+
+
+    // @Id
+    // @Column(name = "message_id")
+    // @GeneratedValue
+    // private Integer messageID;
+
+    // @EmbeddedId
+    // @GeneratedValue
+    // private ChatMessagePk pk;
     /**
      * <p>The direction of the message,</p>
      * 
@@ -52,5 +63,12 @@ public class ChatMessage {
 
     public ChatMessage() {
     }
+
+    // public AcceptedPost getAcceptedPost() {
+    //     return this.getPk().getAcceptedPost();
+    // }
+    // public Integer getMessageID() {
+    //     return this.getPk().getMessageID();
+    // }
 
 }

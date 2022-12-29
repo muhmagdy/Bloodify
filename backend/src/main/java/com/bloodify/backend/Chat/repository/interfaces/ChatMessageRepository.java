@@ -13,5 +13,5 @@ public interface ChatMessageRepository extends JpaRepository<ChatMessage, ChatMe
 
     // save is ls already implemented
 
-    List<ChatMessage> findByAcceptedPostPostPostIDAndAcceptedPostUserUserID(Integer postID, Integer donorID);
+    List<ChatMessage> findByAcceptedPostPostPostIDAndAcceptedPostUserUserIDOrderByTimestampDesc(Integer postID, Integer donorID);
 }

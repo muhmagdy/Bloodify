@@ -22,38 +22,23 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
-@RequestMapping("/chat")
-// @MessageMapping("/chat")
+@RequestMapping("/api/v1/user/chat")
 public class ChatController {
 
-    private ChatService chatService;
-    private ChatMessageMapper mapper;
+    final private ChatService chatService;
+    final private ChatMessageMapper mapper;
 
-    // private SimpMessagingTemplate messagingTemplate;
 
-    ChatController(ChatService chatService){
+    ChatController(ChatService chatService, ChatMessageMapper mapper){
         this.chatService = chatService;
+        this.mapper = mapper;
     }
-
-    // @MessageMapping("/test")
-    // // @SendTo("/app/v1/user/chat/send")
-    // public void processMessage(@Payload ChatMessageRequest chatMessageRequest) throws Exception{
-    //     // log.info(chatMessageRequest.toString());
-    //     System.out.println("===========================");
-    //     System.out.println(chatMessageRequest.getContent());
-    //     this.chatService.saveMessage(mapper.requestToDto(chatMessageRequest));
-    //     // messageingTemplate.convertAndSendToUser(
-    //     //         chatMessageRequest.getRecipientID().toString(), "/queue/messages",
-    //     //         "You may have new messages."
-    //     // );
-        
-    // }
 
 
     @GetMapping("/messages")
     ResponseEntity<List<ChatMessageRequest>> messages(@RequestParam Integer postID, @RequestParam Integer donorID){
-        log.info(postID.toString());
-        log.info(donorID.toString());
+        log.info("postID: " + postID.toString());
+        log.info("donorID: " + donorID.toString());
         return ResponseEntity.ok().body(this.chatService.loadChatMessages(postID, donorID)
                 .stream()
                 .map((dto) -> this.mapper.dtoToRequest(dto))

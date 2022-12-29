@@ -35,6 +35,8 @@ public class ChatServiceImp implements ChatService {
             recipientID = chatMessage.getAcceptedPost().getUser().getUserID();
         }
         chatMessage.getAcceptedPost().setNewMsgFor(recipientID);
+        // chatMessage.getPk().setMessageID(null);
+        chatMessage.setMessageID(null);
         return this.chatMessageDao.saveMessage(chatMessage);
     }
 
