@@ -17,7 +17,7 @@ class NotificationHistoryCubit extends Cubit<NotificationStates> {
     DioHelper.getData(url: '/user/notification/getNotifications', query: {})
         .then((value) {
       // print(UserInfo.token);
-
+      print("length ======= ${value.data['notificationResponses'].length}");
       this.notifications = [];
 
       for (int i = 0; i < value.data['notificationResponses'].length; i++) {

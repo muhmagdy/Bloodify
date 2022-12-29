@@ -17,7 +17,7 @@ Future<bool> isInRange(PushNotification notification) async {
   var dist = Geolocator.distanceBetween(location.latitude, location.longitude,
           notification.latitude, notification.longtitude) /
       1000;
-  print(dist);
+  print("Distance == " + dist.toString());
   return (Geolocator.distanceBetween(location.latitude, location.longitude,
               notification.latitude, notification.longtitude) /
           1000 <
@@ -26,7 +26,7 @@ Future<bool> isInRange(PushNotification notification) async {
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   print(message.data);
-  if (message.data["latitude"] != null) {
+  if (message.data["latitude"] == null) {
     return;
   }
   PushNotification notification = PushNotification.fromJson(message.data);
@@ -85,7 +85,7 @@ class NotificationIntalizor {
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
       print(message.data);
-      if (message.data["latitude"] != null) {
+      if (message.data["latitude"] == null) {
         return;
       }
       PushNotification notification = PushNotification.fromJson(message.data);
