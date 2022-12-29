@@ -114,8 +114,9 @@ public class AccountManagerServiceImp implements AccountManagerService {
         PasswordReset passwordReset = new PasswordReset(
                 email, generateCode(), LocalDateTime.now()
         );
-        passwordResetRepository.save(passwordReset);
         try {
+            passwordResetRepository.deleteByEmail(email);
+            passwordResetRepository.save(passwordReset);
             emailService.sendPasswordResetEmail(email, passwordReset.getCode());
             System.out.println("Email sent successfully");
             return new SignUpResponse(true, "Code sent successfully to " + email);

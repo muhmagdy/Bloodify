@@ -38,7 +38,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     @Transactional
     @Modifying(clearAutomatically = true,flushAutomatically = true)
     @Query("update User u set u.password = ?1 where u.email = ?2")
-    boolean updatePasswordByEmail(@NonNull String newPassword,
+    int updatePasswordByEmail(@NonNull String newPassword,
                                           @NonNull String email);
 
 //    @Query("SELECT u.acceptedPost FROM User u where u.email = :email")

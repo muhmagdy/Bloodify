@@ -137,7 +137,7 @@ public class UserDAOImp implements UserDAO {
 
     @Override
     public boolean updatePassword(String email, String newPassword) {
-        return userRepo.updatePasswordByEmail(newPassword, email);
+        return userRepo.updatePasswordByEmail(newPassword, email) == 1;
     }
 
 }

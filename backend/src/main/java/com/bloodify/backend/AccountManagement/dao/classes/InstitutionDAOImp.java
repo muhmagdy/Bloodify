@@ -129,7 +129,7 @@ public class InstitutionDAOImp implements InstitutionDAO {
 
     @Override
     public boolean updatePassword(String email, String newPassword) {
-        return instRepo.updatePasswordByEmail(newPassword, email);
+        return instRepo.updatePasswordByEmail(newPassword, email) == 1;
     }
 
 //    public void setChangedPacketCount(List<String> changes, Institution institution) {
