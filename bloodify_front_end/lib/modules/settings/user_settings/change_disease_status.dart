@@ -27,10 +27,10 @@ class _ChangeDiseaseStatusState extends State<ChangeDiseaseStatus> {
           children: [
             SizedBox(height: 0.02 * height),
             RadioListTile(
-              title: const Text("Yes"),
+              title: const Text("I have diseases"),
               value: "true",
               groupValue: hasDiseases,
-              onChanged: (value){
+              onChanged: (value) {
                 setState(() {
                   hasDiseases = value;
                 });
@@ -38,10 +38,10 @@ class _ChangeDiseaseStatusState extends State<ChangeDiseaseStatus> {
             ),
             SizedBox(height: 0.02 * height),
             RadioListTile(
-              title: const Text("No"),
+              title: const Text("I don't have any diseases"),
               value: "false",
               groupValue: hasDiseases,
-              onChanged: (value){
+              onChanged: (value) {
                 setState(() {
                   hasDiseases = value;
                 });
@@ -49,11 +49,7 @@ class _ChangeDiseaseStatusState extends State<ChangeDiseaseStatus> {
             ),
             TextButton(
               onPressed: () {
-                DioHelper.postData(url: 'user/disease', data: {
-                  'hasDiseases': hasDiseases == "true"
-                }).then((value) {
-
-                });
+                _onSubmit();
               },
               child: const Text('Submit'),
             ),
@@ -61,5 +57,16 @@ class _ChangeDiseaseStatusState extends State<ChangeDiseaseStatus> {
         ),
       ),
     );
+  }
+
+  void _onSubmit() {
+    DioHelper.postData(
+            url: 'user/disease', data: {'hasDiseases': hasDiseases == "true"})
+        .then((value) {
+      showToast(text: value.data['message'], color: Colors.blue, time: 3000);
+      if (value.data['status'] == true) {
+        Navigator.pop(context);
+      }
+    }).catchError((error) => print(error));
   }
 }
