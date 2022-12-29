@@ -10,7 +10,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -188,13 +190,13 @@ class UserDAOTest {
     void get5() {
         reset();
         List<User> gotUsers = userDao.getUsersByBloodType("AB-");
-        List<String> gotEmails = new ArrayList<>();
+        Set<String> gotEmails = new HashSet<>();
         for (User gotUser : gotUsers) {
             gotEmails.add(gotUser.getEmail());
         }
-        List<String> actualEmails = new ArrayList<>();
-        actualEmails.add(emails[2]);
+        Set<String> actualEmails = new HashSet<>();
         actualEmails.add(emails[0]);
+        actualEmails.add(emails[2]);
         assertEquals(actualEmails, gotEmails);
     }
 
