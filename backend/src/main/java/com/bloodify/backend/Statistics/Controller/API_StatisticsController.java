@@ -18,7 +18,7 @@ import java.time.LocalDate;
 
 @RestController
 @CrossOrigin()
-@RequestMapping("/api/v1/institution/displayStatistics")
+@RequestMapping("/api/v1/institution/stats")
 
 public class API_StatisticsController {
     @Autowired
@@ -69,5 +69,4 @@ public class API_StatisticsController {
             return ResponseEntity.status(200).body(new PostResponse<>(true, response));
         return ResponseEntity.status(422).body(new PostResponse<>(false, null));
     }
-
 }

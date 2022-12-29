@@ -30,8 +30,8 @@ public class BloodBagsNumbersInPostsImpl implements BloodBagsNumbersInPosts {
     private void getBagsNumbers(String[] bloodTypesNames, int[] bagsNumbers, String instEmail) {
 //        int totalBags = 0;
         for(int i = 0; i< bagsNumbers.length; i++) {
-            int sum = repository.sumBagsByBloodType(bloodTypesNames[i], instEmail);
-            bagsNumbers[i] = sum;
+            Integer sum = repository.sumBagsByBloodType(bloodTypesNames[i], instEmail);
+            bagsNumbers[i] = sum == null? 0: sum;
 //            totalBags+=sum;
         }
     }
