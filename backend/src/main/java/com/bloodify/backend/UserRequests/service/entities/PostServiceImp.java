@@ -73,7 +73,8 @@ public class PostServiceImp implements PostService {
                     System.out.println(sessionToken);
                     if (sessionToken != null) {
                         PushNotificationRequest pushableNotification = new PushNotificationRequest("",
-                                postToSave.getInstitution().getLatitude(), postToSave.getInstitution().getLongitude(),
+                                postToSave.getInstitution().getLongitude(),
+                                postToSave.getInstitution().getLatitude(),
                                 postToSave.getInstitution().getName(), false);
                         firebaseMessagingService.sendNotification(pushableNotification, sessionToken);
                     }

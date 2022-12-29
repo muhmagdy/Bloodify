@@ -99,8 +99,8 @@ public class AccountManagerServiceImp implements AccountManagerService {
     public boolean userSignOut(Authentication auth) {
         try {
             System.out.println(auth.getName());
-            loginSessionDAO.delete(auth.getName());
-            return true;
+            return loginSessionDAO.delete(auth.getName());
+
         } catch (Exception e) {
             return false;
         }

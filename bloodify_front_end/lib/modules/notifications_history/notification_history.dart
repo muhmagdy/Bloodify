@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 
 import '../../models/notification.dart';
+import '../../shared/Constatnt/userInfo.dart';
 import '../../shared/styles/container.dart';
 import 'notification_history_cubit/notification_history_cubit.dart';
 import 'notification_history_cubit/notification_history_states.dart';
@@ -65,6 +66,9 @@ class NotificationHistory extends StatelessWidget {
         builder: (context, state) {
           var cubit = NotificationHistoryCubit.get(context);
           var notifications = cubit.notifications;
+          print("buider");
+          print(UserInfo.deviceToken);
+          print(notifications);
           return Scaffold(
             appBar: AppBar(
               backgroundColor: const Color.fromARGB(255, 255, 78, 66),

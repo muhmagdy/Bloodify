@@ -34,6 +34,7 @@ void main() async {
 
   UserInfo.deviceToken = await FirebaseMessaging.instance.getToken();
   await CachHelper.init();
+
   UserInfo.token = CachHelper.getData(key: 'token');
   Widget widget;
   if (UserInfo.token != null) {

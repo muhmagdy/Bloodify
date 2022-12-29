@@ -46,13 +46,20 @@ public class UserHomePageService {
         return 0;
     }
 
-    public List<PostBrief> getCompatiblePosts(String email, Double longitude, Double latitude, Double threshold){
+    public List<PostBrief> getCompatiblePosts(String email, Double longitude, Double latitude, Double threshold) {
         User user = userDAO.findUserByEmail(email);
-        if(user.isHasDiseases() || ChronoUnit.MONTHS.between(user.getLastTimeDonated(), LocalDate.now()) >= 6)
-            return new ArrayList<>();
+        // if (user.isHasDiseases() ||
+        // ChronoUnit.MONTHS.between(user.getLastTimeDonated(), LocalDate.now()) >= 6)
+        // return new ArrayList<>();
         BloodType currentType = BloodTypeFactory.getFactory().generateFromString(user.getBloodType());
+        System.out.println();
+        System.out.println(currentType);
+        System.out.println();
         List<Post> posts = new ArrayList<>();
-        for(BloodType compatibleType: currentType.getCompatibleTypesUser()){
+        for (BloodType compatibleType : currentType.getCompatibleTypesUser()) {
+            System.out.println("in loop");
+            System.out.println(compatibleType);
+            System.out.println();
             posts.addAll(postDao.getAllBloodTypePosts(compatibleType.toString()));
         }
         List<PostBrief> postBriefs = new ArrayList<>();

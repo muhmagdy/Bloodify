@@ -16,11 +16,12 @@ class NotificationHistoryCubit extends Cubit<NotificationStates> {
     emit(NotificationLoadingState());
     DioHelper.getData(url: '/user/notification/getNotifications', query: {})
         .then((value) {
-      print(UserInfo.token);
-      print(value.data['notificationResponses'][0]);
-      notifications = [];
+      // print(UserInfo.token);
+
+      this.notifications = [];
 
       for (int i = 0; i < value.data['notificationResponses'].length; i++) {
+        print(i);
         NotificationBody notificationBody =
             NotificationBody.fromJson(value.data['notificationResponses'][i]);
         double distance = Geolocator.distanceBetween(
@@ -30,10 +31,14 @@ class NotificationHistoryCubit extends Cubit<NotificationStates> {
                 notificationBody.longitude) /
             1000;
         notificationBody.distance = distance;
+        print(notificationBody);
+
         notifications.add(notificationBody);
       }
+      print(notifications);
       emit(NotificationSuccesState());
     }).catchError((onError) {
+      this.notifications = [];
       emit(NotificationErrorState(onError.toString()));
     });
   }

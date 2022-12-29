@@ -143,9 +143,8 @@ class _UserHome extends State<UserHome> {
         (value) {
           posts = [];
           people = [];
-          var token =
-              "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJzZWxmIiwic3ViIjoiam9obkBsZWdlbmQubWUiLCJpYXQiOjE2NzE2Mzk1NDR9.DIUuR9b8BC9FuN6m0TPMAcGFp1j5ipQ3c5IGDEVttY8XBmUucl2_ogiPRzxdxlZidjlSvr_t4c8NnWnYR1UmTXlilhRgv14eDOnICz4woFqquM35KA3FDfiLPl5TQjGo4fe9UHdRcbfOOJLkjk0SBrrD54VQgoyH2YyzPRwBK_-gpjCAH2030zO0o438mnPq2E3Wl_Z1vfDevjfANNJG6httNA606qmHAR9r66staZkAedLDrlgYA5_a-MyHSs1jSTQLfWFq4CNSK9PZwVO-LZ3dUujG26aF7gTV8q9eJsdoWRnvZqpj2Tov3FWMmrMzD-ZxoJ0SLEkHyKUc4GNq5Q";
           status = int.parse(value.data.toString());
+          print(status);
           switch (status) {
             case 0:
               DioHelper.getData(url: "user/posts/compatible", query: {
@@ -153,6 +152,7 @@ class _UserHome extends State<UserHome> {
                 'latitude': 30.0,
                 'threshold': 500000.0
               }).then((value) {
+                print("HELLOOOOO\n\n\n");
                 print(value.data);
                 for (int i = 0; i < value.data.length; i++) {
                   var event = PostBrief.fromJson(value.data[i], status);

@@ -14,6 +14,10 @@ int i = 0;
 
 Future<bool> isInRange(PushNotification notification) async {
   var location = await getLocation();
+  var dist = Geolocator.distanceBetween(location.latitude, location.longitude,
+          notification.latitude, notification.longtitude) /
+      1000;
+  print(dist);
   return (Geolocator.distanceBetween(location.latitude, location.longitude,
               notification.latitude, notification.longtitude) /
           1000 <
@@ -80,6 +84,8 @@ class NotificationIntalizor {
       print(message.data);
       PushNotification notification = PushNotification.fromJson(message.data);
       bool inRange = await isInRange(notification);
+      print("sending.....");
+
       if (inRange) {
         print("sending.....");
         LocalNotificationService ls = LocalNotificationService();

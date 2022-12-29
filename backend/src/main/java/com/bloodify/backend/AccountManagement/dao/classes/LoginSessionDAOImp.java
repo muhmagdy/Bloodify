@@ -33,7 +33,6 @@ public class LoginSessionDAOImp implements LoginSessionDAO {
             if (loginSessionRepository.deleteByEmail(email) == 0) {
                 return false;
             }
-
             return true;
         } catch (Exception e) {
             System.out.println(e.getMessage());
