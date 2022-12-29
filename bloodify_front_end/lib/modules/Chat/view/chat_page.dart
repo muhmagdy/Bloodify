@@ -207,7 +207,7 @@ class _MessageTextField extends StatelessWidget {
             cubit.sendMessage();
           },
           onEditingComplete: () {},
-          textInputAction: TextInputAction.send,
+          textInputAction: TextInputAction.newline,
           keyboardType: TextInputType.multiline,
           maxLines: null,
           maxLength: 250,

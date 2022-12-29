@@ -61,4 +61,20 @@ public class ChatMessage {
     //     return this.getPk().getMessageID();
     // }
 
+    public Integer getPostOwnerID(){
+        return this.getAcceptedPost().getUser().getUserID();
+    }
+
+    public Integer getDonorID(){
+        return this.getAcceptedPost().getUser().getUserID();
+    }
+
+    public Integer getNewMsgFor(){
+        return this.getAcceptedPost().getNewMsgFor();
+    }
+
+    public void setNewMsgFor(Integer newMsgFor){
+        this.getAcceptedPost().setNewMsgFor(newMsgFor);
+    }
+
 }

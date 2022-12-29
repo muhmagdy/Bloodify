@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 // import org.springframework.messaging.handler.annotation.MessageMapping;
 // import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Controller;
@@ -36,10 +37,11 @@ public class ChatController {
 
 
     @GetMapping("/messages")
-    ResponseEntity<List<ChatMessageRequest>> messages(@RequestParam Integer postID, @RequestParam Integer donorID){
+    ResponseEntity<List<ChatMessageRequest>> messages(Authentication auth, @RequestParam Integer postID, @RequestParam Integer donorID){
         log.info("postID: " + postID.toString());
         log.info("donorID: " + donorID.toString());
-        return ResponseEntity.ok().body(this.chatService.loadChatMessages(postID, donorID)
+        log.info(auth.getName());
+        return ResponseEntity.ok().body(this.chatService.loadChatMessages(auth.getName(), postID, donorID)
                 .stream()
                 .map((dto) -> this.mapper.dtoToRequest(dto))
                 .toList());
