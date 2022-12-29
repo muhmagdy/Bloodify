@@ -23,6 +23,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 //    @Query("SELECT DISTINCT u FROM User u LEFT JOIN FETCH u.posts WHERE email = :email")
 //    List<User> findByEmailJoin(@Param("email") String email);
 
+
     List<User> findByNationalID(String nationalID);
 
     List<User> findByBloodType(String bloodType);

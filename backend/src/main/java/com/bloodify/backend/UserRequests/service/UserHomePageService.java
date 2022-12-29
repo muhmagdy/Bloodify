@@ -111,7 +111,7 @@ public class UserHomePageService {
         try {
             Post post = postDao.getPostByID(postID);
             User user = userDAO.findUserByEmail(email);
-            AcceptedPost acceptedPost = new AcceptedPost(post, user, longitude, latitude, threshold);
+            AcceptedPost acceptedPost = new AcceptedPost(post, user, longitude, latitude, threshold, post.getUser().getUserID());
             acceptRepository.save(acceptedPost);
         } catch(Exception e){
             return false;

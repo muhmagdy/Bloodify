@@ -24,6 +24,12 @@
 		</dependency>
 
 		<dependency>
+			<groupId>com.corundumstudio.socketio</groupId>
+			<artifactId>netty-socketio</artifactId>
+			<version>1.7.19</version>
+		 </dependency>
+
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
 			<version>3.0.0</version>
@@ -108,7 +114,7 @@
 			<artifactId>junit</artifactId>
 			<scope>test</scope>
 		</dependency>
-	</dependencies>
+ </dependencies>
 
 	<build>
 		<plugins>

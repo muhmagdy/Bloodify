@@ -24,4 +24,6 @@ public interface AcceptRepository extends JpaRepository<AcceptedPost, Integer> {
     long deleteByPost(Post post);
 
     List<AcceptedPost> findByUser(User user);
+
+    AcceptedPost findByPostPostIDAndUserUserID(Integer postID, Integer donorID);
 }

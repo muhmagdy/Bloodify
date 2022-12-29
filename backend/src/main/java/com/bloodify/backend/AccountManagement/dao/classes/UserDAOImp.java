@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Required Services:
@@ -50,6 +51,12 @@ public class UserDAOImp implements UserDAO {
             return null;
         else
             return foundUsers.get(0);
+    }
+
+    @Override
+    public User findByID(int userID) {
+        Optional<User> user = userRepo.findById(userID);
+        return user.orElse(null);
     }
 
     @Override
