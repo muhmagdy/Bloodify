@@ -17,7 +17,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 @Service
 @Slf4j
 public class SearchServiceImp implements SearchService {
@@ -44,20 +43,22 @@ public class SearchServiceImp implements SearchService {
         List<String> compatibleTypes;
         try {
             compatibleTypes = getCompatibleTypes(BloodTypeFactory.getFactory().generateFromString(bloodType));
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
             return null;
         }
         List<String> compatibleTypesForInstit = new ArrayList<>();
-        for (String type: compatibleTypes) compatibleTypesForInstit.add(type_fieldMap.get(type));
+        for (String type : compatibleTypes)
+            compatibleTypesForInstit.add(type_fieldMap.get(type));
 
         List<Institution> found = searchForTypes(compatibleTypesForInstit);
         List<SearchResult> results = new ArrayList<>();
 
-        for (Institution i : found){
+        for (Institution i : found) {
             Map<String, Integer> types_bags = new HashMap<>();
-            for (String type: compatibleTypes) types_bags.put(type, getCount(type, i));
+            for (String type : compatibleTypes)
+                types_bags.put(type, getCount(type, i));
             results.add(new SearchResult(i.getInstitutionID(), i.getName(), i.getLocation(), i.getLongitude(),
                     i.getLatitude(), types_bags, i.getWorkingHours()));
         }
@@ -67,23 +68,25 @@ public class SearchServiceImp implements SearchService {
     @Override
     public List<InstitutionBrief> getALlInstitutions() {
         return this.institutionRepository.findAll().stream()
-                .map(institution -> new InstitutionBrief(institution.getInstitutionID(), institution.getName(), institution.getLocation()))
+                .map(institution -> new InstitutionBrief(institution.getInstitutionID(), institution.getName(),
+                        institution.getLocation()))
                 .toList();
     }
     private List<String> getCompatibleTypes(BloodType bloodType){
-        List<BloodType> compatibleTypes = bloodType.getCompatibleTypes();
+        List<BloodType> compatibleTypes = bloodType.getCompatibleTypesPost();
         List<String> compatibleTypesStr = new ArrayList<>();
-        for (BloodType type : compatibleTypes) compatibleTypesStr.add(type.toString());
+        for (BloodType type : compatibleTypes)
+            compatibleTypesStr.add(type.toString());
         return compatibleTypesStr;
     }
 
-    private List<Institution> searchForTypes(List<String> compatibleTypes){
+    private List<Institution> searchForTypes(List<String> compatibleTypes) {
         SpecificationBuilder builder = new SpecificationBuilder(compatibleTypes);
         Specification<Institution> spec = builder.build();
         return institutionRepository.findAll(spec);
     }
 
-    private int getCount(String type, Institution i){
+    private int getCount(String type, Institution i) {
         return switch (type) {
             case "A+" -> i.getPositiveA_bagsCount();
             case "B+" -> i.getPositiveB_bagsCount();

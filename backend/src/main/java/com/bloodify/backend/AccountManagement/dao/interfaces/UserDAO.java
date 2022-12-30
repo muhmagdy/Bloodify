@@ -15,6 +15,8 @@ public interface UserDAO extends UserDetailsService{
 
     public User findUserByEmail(String email);
 
+    User findByID(int userID);
+
     public User findUserByEmailJoin(String email);
 
     public User findUserByNationalID(String nationalID);
@@ -38,5 +40,9 @@ public interface UserDAO extends UserDetailsService{
                                                       String nationalID);
 
     int updateHasDiseases(boolean hasDiseases, String email);
+    
+    public boolean isUserExistByEmail(String email);
+
+    public boolean updatePassword(String email, String newPassword);
 
 }

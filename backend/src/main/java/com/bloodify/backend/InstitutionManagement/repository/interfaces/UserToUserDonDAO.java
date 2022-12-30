@@ -27,4 +27,6 @@ public interface UserToUserDonDAO {
 
     // finds all the (user to user) donations where the specified user (by NID) was an acceptor
     List<UserToUserDonation> findByAcceptorNID(@NonNull String nationalID);
+
+    public int requestedBloodBagsByTypeAndDate (String bloodType, LocalDate start, LocalDate end, String instEmail);
 }

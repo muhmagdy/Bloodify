@@ -1,22 +1,30 @@
 package com.bloodify.backend.AccountManagement.services.classes;
 
-
+import com.bloodify.backend.AccountManagement.dao.interfaces.PasswordResetRepository;
+import com.bloodify.backend.AccountManagement.model.entities.PasswordReset;
+import com.bloodify.backend.AccountManagement.model.responses.SignUpResponse;
 import com.bloodify.backend.AccountManagement.services.exceptions.BothEmailAndNationalIdExists;
 import com.bloodify.backend.AccountManagement.services.exceptions.NationalIdExistsException;
 import com.bloodify.backend.AccountManagement.services.interfaces.AccountManagerService;
 import com.bloodify.backend.AccountManagement.Utils.TokenUtil;
 import com.bloodify.backend.AccountManagement.dao.interfaces.InstitutionDAO;
+import com.bloodify.backend.AccountManagement.dao.interfaces.LoginSessionDAO;
 import com.bloodify.backend.AccountManagement.dao.interfaces.UserDAO;
 import com.bloodify.backend.AccountManagement.model.responses.LoginResponseBody;
 import com.bloodify.backend.AccountManagement.model.entities.Institution;
+import com.bloodify.backend.AccountManagement.model.entities.LoginSession;
 import com.bloodify.backend.AccountManagement.model.entities.User;
 import com.bloodify.backend.AccountManagement.services.exceptions.EmailExistsException;
 
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.Random;
 
 @Slf4j
 @Service
@@ -24,7 +32,7 @@ public class AccountManagerServiceImp implements AccountManagerService {
     @Autowired
     UserDAO userDAO;
 
-    @Autowired 
+    @Autowired
     InstitutionDAO instDAO;
 
     @Autowired
@@ -32,14 +40,30 @@ public class AccountManagerServiceImp implements AccountManagerService {
 
     @Autowired
     EncoderService encoderService;
+    @Autowired
+    LoginSessionDAO loginSessionDAO;
+
+    @Autowired
+    PasswordResetRepository passwordResetRepository;
+
+    @Autowired
+    EmailService emailService;
 
     @Override
-    public LoginResponseBody userLogIn(Authentication auth) {
-        try{
+    public LoginResponseBody userLogIn(Authentication auth, String mobileToken) {
+        try {
             String token = tokenUtil.generateToken(auth);
             User user = userDAO.findUserByEmail(auth.getName());
+            String loginToken = loginSessionDAO.getToken(user.getEmail());
+            System.out.println(loginToken);
+            if (loginToken != null) {
+                loginSessionDAO.updateToken(user.getEmail(), mobileToken);
+            } else {
+                LoginSession loginSession = new LoginSession(user.getEmail(), mobileToken);
+                loginSessionDAO.save(loginSession);
+            }
             return new LoginResponseBody(user, token);
-        }catch (Exception e){
+        } catch (Exception e) {
             log.info(e.getMessage());
             return null;
         }
@@ -47,12 +71,12 @@ public class AccountManagerServiceImp implements AccountManagerService {
 
     @Override
     public LoginResponseBody instLogIn(Authentication auth) {
-        try{
+        try {
             String token = tokenUtil.generateToken(auth);
             Institution inst = instDAO.findInstitutionByEmail(auth.getName());
             log.info("login inst");
             return new LoginResponseBody(inst, token);
-        }catch (Exception e){
+        } catch (Exception e) {
             log.info(e.getMessage());
             return null;
         }
@@ -64,7 +88,6 @@ public class AccountManagerServiceImp implements AccountManagerService {
         System.out.println(user.getPassword());
         boolean nationalIdExists = userDAO.findUserByNationalID(user.getNationalID()) != null;
         boolean emailExists = userDAO.findUserByEmail(user.getEmail()) != null;
-
         if (nationalIdExists) {
             if (emailExists)
                 throw new BothEmailAndNationalIdExists();
@@ -86,7 +109,14 @@ public class AccountManagerServiceImp implements AccountManagerService {
     }
 
     @Override
-    public void userSignOut(Authentication auth) {
+    public boolean userSignOut(Authentication auth) {
+        try {
+            System.out.println(auth.getName());
+            return loginSessionDAO.delete(auth.getName());
+
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     @Override
@@ -98,5 +128,50 @@ public class AccountManagerServiceImp implements AccountManagerService {
         return userDAO.updateHasDiseases(hasDiseases, email) != 0;
     }
 
+    public SignUpResponse sendVerificationCode(String email) {
+        if (!userDAO.isUserExistByEmail(email) && !instDAO.isInstitutionExistByEmail(email))
+            return new SignUpResponse(false, "Cannot send code.");
+
+        PasswordReset passwordReset = new PasswordReset(
+                email, generateCode(), LocalDateTime.now());
+        try {
+            passwordResetRepository.deleteByEmail(email);
+            passwordResetRepository.save(passwordReset);
+            emailService.sendPasswordResetEmail(email, passwordReset.getCode());
+            System.out.println("Email sent successfully");
+            return new SignUpResponse(true, "Code sent successfully to " + email);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new SignUpResponse(false, "Cannot send code. Please try again later.");
+        }
+    }
+
+    @Override
+    public boolean resetPassword(String email, String code, String newPassword) {
+        PasswordReset passwordReset = passwordResetRepository.findByEmail(email);
+        if (passwordReset == null)
+            return false;
+        if (!passwordReset.getCode().equals(code))
+            return false;
+        if (passwordReset.getCreatedAt().isBefore(LocalDateTime.now().minusMinutes(30)))
+            return false;
+        String encodedPassword = encoderService.encode(newPassword);
+        if (userDAO.updatePassword(email, encodedPassword) || instDAO.updatePassword(email, encodedPassword)) {
+            passwordResetRepository.deleteByEmail(email);
+            return true;
+        }
+        return false;
+    }
+
+    @Scheduled(fixedRate = 1800000)
+    private void deleteExpiredCodes() {
+        passwordResetRepository.removeOlderThan(
+                LocalDateTime.now().minusMinutes(30));
+    }
+
+    private String generateCode() {
+        Random random = new Random();
+        return String.format("%04d", random.nextInt(1000, 10000));
+    }
 
 }
