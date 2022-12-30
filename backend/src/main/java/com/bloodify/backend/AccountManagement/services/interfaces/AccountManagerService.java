@@ -22,6 +22,9 @@ public interface AccountManagerService {
 
     void instSignOut(Authentication auth);
 
+    boolean updateHasDiseases(boolean hasDiseases, String email);
+
     SignUpResponse sendVerificationCode(String email);
+    
     boolean resetPassword(String email, String code, String newPassword);
 }

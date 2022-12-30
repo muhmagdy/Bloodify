@@ -1,5 +1,6 @@
 import 'package:bloodify_front_end/modules/BloodFinding/blood_finding.dart';
 import 'package:bloodify_front_end/modules/home_UI/user_home/userHome.dart';
+import 'package:bloodify_front_end/modules/settings/user_settings/user_settigns.dart';
 import 'package:bloodify_front_end/modules/notifications_history/notification_history.dart';
 import 'package:bloodify_front_end/modules/user/eventUser.dart';
 import 'package:bloodify_front_end/shared/Constatnt/colors.dart';
@@ -18,7 +19,7 @@ class NavBar extends StatelessWidget {
       const NotificationHistory(),
       const BloodFinder(),
       UserEventPage(),
-      const Screen5()
+      const UserSettings()
     ];
   }
 

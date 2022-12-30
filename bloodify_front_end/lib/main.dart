@@ -25,6 +25,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'layout/home_layout.dart';
 import 'modules/login_UI/User_login/cubit/user_login_cubit.dart';
 import 'modules/login_UI/institution_login/cubit/institution_login_cubit.dart';
+import 'modules/settings/common/change_password_cubit.dart';
 import 'modules/notifications_history/notification_history_cubit/notification_history_cubit.dart';
 import 'modules/signUP_UI/sign_up_State_management/sign_up_cubit.dart';
 import 'modules/transactions_modules/institution_tranaction/cubic/institution_transaction_cubit.dart';
@@ -82,6 +83,7 @@ class MyApp extends StatelessWidget {
           BlocProvider(create: (context) => EventTransactionCubit()),
           BlocProvider(create: (context) => InstituteTransactionCubit()),
           BlocProvider(create: (context) => CreateEventCubit()),
+          BlocProvider(create: (context) => ChangePasswordCubit())
           BlocProvider(create: (context) => StatsCubit())
           BlocProvider(
               create: (context) =>

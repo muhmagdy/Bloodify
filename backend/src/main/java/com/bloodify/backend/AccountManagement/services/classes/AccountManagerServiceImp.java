@@ -124,6 +124,10 @@ public class AccountManagerServiceImp implements AccountManagerService {
     }
 
     @Override
+    public boolean updateHasDiseases(boolean hasDiseases, String email) {
+        return userDAO.updateHasDiseases(hasDiseases, email) != 0;
+    }
+
     public SignUpResponse sendVerificationCode(String email) {
         if (!userDAO.isUserExistByEmail(email) && !instDAO.isInstitutionExistByEmail(email))
             return new SignUpResponse(false, "Cannot send code.");

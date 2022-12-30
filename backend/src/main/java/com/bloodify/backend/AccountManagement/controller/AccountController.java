@@ -2,6 +2,8 @@ package com.bloodify.backend.AccountManagement.controller;
 
 import com.bloodify.backend.AccountManagement.dao.interfaces.LoginSessionDAO;
 import com.bloodify.backend.AccountManagement.model.entities.Institution;
+import com.bloodify.backend.AccountManagement.model.requests.DiseasesStatusRequest;
+import com.bloodify.backend.AccountManagement.model.responses.DiseasesStatusResponse;
 import com.bloodify.backend.AccountManagement.services.exceptions.SignupDuplicateException;
 import com.bloodify.backend.AccountManagement.model.entities.User;
 import com.bloodify.backend.AccountManagement.model.responses.SignUpResponse;
@@ -94,6 +96,18 @@ public class AccountController {
             return ResponseEntity.status(422).body(new LogInResponse(false, "wrong credentials", body));
         }
         return ResponseEntity.ok(new LogInResponse(true, "login successful", body));
+    }
+
+    @PostMapping(test + "/user/disease")
+    public ResponseEntity<DiseasesStatusResponse> updateHasDiseases(@RequestBody DiseasesStatusRequest diseasesStatusRequest,
+                                                                    Authentication credentials){
+        if(accountManagerService.updateHasDiseases(diseasesStatusRequest.isHasDiseases(), credentials.getName())) {
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(new DiseasesStatusResponse(true, "Update Successful!"));
+        }
+        // this should never be reached but was done for safety
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body(new DiseasesStatusResponse(false, "Failed to Update!"));
     }
 
     @PostMapping(test + "/password")
