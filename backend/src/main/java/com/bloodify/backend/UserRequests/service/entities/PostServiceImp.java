@@ -11,6 +11,7 @@ import com.bloodify.backend.UserRequests.exceptions.IllegalPostAccessException;
 import com.bloodify.backend.UserRequests.exceptions.PostNotFoundException;
 import com.bloodify.backend.UserRequests.model.entities.Post;
 import com.bloodify.backend.UserRequests.model.mapper.Post_DTO_Mapper;
+import com.bloodify.backend.UserRequests.repository.interfaces.AcceptRepository;
 import com.bloodify.backend.UserRequests.service.bloodTypes.BloodType;
 import com.bloodify.backend.UserRequests.service.bloodTypes.BloodTypeFactory;
 import com.bloodify.backend.UserRequests.service.interfaces.PostDao;
@@ -45,6 +46,8 @@ public class PostServiceImp implements PostService {
     private Post_PostRequestMapper requestMapper;
     @Autowired
     private UserDAO userDAO;
+    @Autowired
+    private AcceptRepository acceptRepository;
 
     public PostServiceImp(Post_DTO_Mapper postDtoMapper) {
         this.postDtoMapper = postDtoMapper;
@@ -123,6 +126,7 @@ public class PostServiceImp implements PostService {
             e.printStackTrace();
             return false;
         }
+        acceptRepository.deleteByPost(postToDelete);
         return this.postDao.deleteSpecificUserPost(postToDelete);
     }
 

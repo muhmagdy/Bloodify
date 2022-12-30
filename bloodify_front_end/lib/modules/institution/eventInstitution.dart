@@ -58,7 +58,7 @@ class _InstitutionEventPage extends State<InstitutionEventPage> {
                           shrinkWrap: true,
                           itemCount: events.length,
                           itemBuilder: (context, index) =>
-                              EventTile(events[index])),
+                              InstEventTile(events[index])),
                       Container(height: 0.03 * height)
                     ]))));
   }

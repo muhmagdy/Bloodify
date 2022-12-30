@@ -1,6 +1,6 @@
 package com.bloodify.backend.InstitutionManagement.controller.api;
 
-import com.bloodify.backend.InstitutionManagement.controller.reponse.TransactionResponse;
+import com.bloodify.backend.InstitutionManagement.controller.response.TransactionResponse;
 import com.bloodify.backend.InstitutionManagement.controller.request.InstToUserDonRequest;
 import com.bloodify.backend.InstitutionManagement.controller.request.UserToInstDonRequest;
 import com.bloodify.backend.InstitutionManagement.controller.request.UserToUserDonRequest;

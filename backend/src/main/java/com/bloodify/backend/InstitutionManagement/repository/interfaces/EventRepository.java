@@ -16,6 +16,8 @@ import java.util.List;
 public interface EventRepository extends JpaRepository<Event, Integer> {
     List<Event> findByInstitution_Email(@NonNull String email);
 
+    List<Event> findByOrderByEndDateAsc();
+
     @Transactional
     @Modifying
     @Query("delete from Event e where e.endDate <= current date and e.endWorkingHour <= current time ")

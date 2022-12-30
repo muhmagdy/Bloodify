@@ -1,4 +1,4 @@
-package com.bloodify.backend.InstitutionManagement.controller.reponse;
+package com.bloodify.backend.InstitutionManagement.controller.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

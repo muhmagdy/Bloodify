@@ -1,5 +1,6 @@
 import 'package:bloodify_front_end/layout/start_layout.dart';
 import 'package:bloodify_front_end/modules/BloodFinding/bloc/blood_finder_service.dart';
+import 'package:bloodify_front_end/modules/Chat/bloc/chat_service.dart';
 
 import 'package:bloodify_front_end/modules/navbar/institution_navbar.dart';
 import 'package:bloodify_front_end/modules/notifications_history/notification_history.dart';
@@ -36,6 +37,7 @@ void main() async {
   await CachHelper.init();
   // CachHelper.removeData(key: 'token');
   // CachHelper.removeData(key: 'isUser');
+  ChatService.init();
   UserInfo.token = CachHelper.getData(key: 'token');
   Widget widget;
 
@@ -44,10 +46,8 @@ void main() async {
 
     if (UserInfo.isUser!) {
       UserInfo.location = await getLocation();
-      widget = HomeLayout();
-    } else {
-      widget = const InstNavBar();
     }
+    widget = HomeLayout();
   } else {
     widget = const StartWidget();
   }

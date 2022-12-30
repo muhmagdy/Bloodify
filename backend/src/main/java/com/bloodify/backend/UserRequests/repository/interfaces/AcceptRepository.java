@@ -21,5 +21,9 @@ public interface AcceptRepository extends JpaRepository<AcceptedPost, Integer> {
     @Query("update AcceptedPost a set a.longitude = ?1, a.latitude = ?2, a.threshold = ?3 where a.user = ?4")
     void updateLocationInfo(Double longitude, Double latitude, Double threshold, @NonNull User user);
 
+    long deleteByPost(Post post);
+
     List<AcceptedPost> findByUser(User user);
+
+    AcceptedPost findByPostPostIDAndUserUserID(Integer postID, Integer donorID);
 }

@@ -95,6 +95,7 @@ public class UserHomePageService {
             Institution inst = post.getInstitution();
             Double distance = compatiblePosts.distance(acceptedPost.getLatitude(), acceptedPost.getLongitude(),
                     inst.getLatitude(), inst.getLongitude());
+            System.out.println("Distance = " + distance);
             User user = acceptedPost.getUser();
             userBriefs.add(
                     new UserBrief(user.getUserID(), user.getFirstName() + " " + user.getLastName(), user.getBloodType(),
@@ -129,7 +130,8 @@ public class UserHomePageService {
         try {
             Post post = postDao.getPostByID(postID);
             User user = userDAO.findUserByEmail(email);
-            AcceptedPost acceptedPost = new AcceptedPost(post, user, longitude, latitude, threshold);
+            AcceptedPost acceptedPost = new AcceptedPost(post, user, longitude, latitude, threshold,
+                    post.getUser().getUserID());
             User requesterUser = post.getUser();
             String token = loginSessionDAO.getToken(requesterUser.getEmail());
             if (token != null) {
@@ -177,8 +179,16 @@ public class UserHomePageService {
                 distance);
     }
 
+    // postToPostBrief(Post post, User user, Institution inst, Double distance) {
+    // return new PostBrief(post.getPostID(), user.getNationalID(),
+    // user.getFirstName() + " " + user.getLastName(),
+    // post.getStartTime(), post.getBagsNum(), post.getBloodType(), distance,
+    // inst.getName());
+
     PostBrief postToPostBrief(Post post, User user, Institution inst, Double distance) {
         return new PostBrief(post.getPostID(), user.getNationalID(), user.getFirstName() + " " + user.getLastName(),
-                post.getStartTime(), post.getBagsNum(), post.getBloodType(), distance, inst.getName());
+                post.getLastTime(), post.getBagsNum(), post.getBloodType(), distance, inst.getName(),
+                inst.getLongitude(),
+                inst.getLatitude());
     }
 }

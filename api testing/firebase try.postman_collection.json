@@ -43,32 +43,6 @@
 			"response": []
 		},
 		{
-			"name": "Send notification To token",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
-				"url": {
-					"raw": "localhost:8080/try/dhCi7q5kTb6XIhUZ3fwmbh:APA91bG_eTB2Ft-PX4BPycro3NVgb265ZoNDSDDJ0mC2hbm-r-sR3vj6XbMrscBPFMWSM8xX4E-xE04N8HlWSNhq8zO4IzOuCpbuIb87_V15rfH0WZyRZg1oqbn0kUkH9TcldhuGXKL7",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"try",
-						"dhCi7q5kTb6XIhUZ3fwmbh:APA91bG_eTB2Ft-PX4BPycro3NVgb265ZoNDSDDJ0mC2hbm-r-sR3vj6XbMrscBPFMWSM8xX4E-xE04N8HlWSNhq8zO4IzOuCpbuIb87_V15rfH0WZyRZg1oqbn0kUkH9TcldhuGXKL7"
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "New Inst 1",
 			"event": [
 				{
@@ -740,7 +714,7 @@
 							"    pm.expect(resp.status).to.eql(true)\r",
 							"})\r",
 							"pm.test(\"have expected post\", function () {\r",
-							"    pm.expect(resp.notificationResponses.length).to.eql(2)\r",
+							"    pm.expect(resp.notificationResponses.length).to.eql(1)\r",
 							"})"
 						],
 						"type": "text/javascript"

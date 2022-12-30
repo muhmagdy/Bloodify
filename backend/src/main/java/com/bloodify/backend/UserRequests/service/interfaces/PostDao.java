@@ -1,5 +1,6 @@
 package com.bloodify.backend.UserRequests.service.interfaces;
 
+import com.bloodify.backend.AccountManagement.model.entities.Institution;
 import com.bloodify.backend.AccountManagement.model.entities.User;
 import com.bloodify.backend.UserRequests.model.entities.Post;
 
@@ -14,6 +15,8 @@ public interface PostDao {
     List<Post> getUserAllPosts(String userEmail); // done
 
     List<Post> getInstitutionAllPosts(int institutionID); /// may be needed in next phase
+
+    List<Post> getInstitutionAllPosts(String institutionEmail);
 
     List<Post> getAllBloodTypePosts(String bloodType); // may not be needed
 

@@ -16,7 +16,7 @@ public class InstToUserDonation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer instToUserDonID;
 
-    @ManyToOne(cascade = CascadeType.ALL, optional = false)
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY, optional = false)
     private Institution institution;
 
     @Column(nullable = false)
