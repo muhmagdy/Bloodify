@@ -16,4 +16,6 @@ public class PostBrief {
     String bloodType;
     Double distance;
     String hospitalName;
+    Double longitude;
+    Double latitude;
 }

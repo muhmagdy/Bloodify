@@ -11,6 +11,8 @@ public interface EventDAO {
     // find all the currently active events of a specified institution (by email)
     List<Event> findAllInstEvents(String email);
 
+    List<Event> findAllEvents();
+
     // deletes all the expired events
     void deleteEvent();
 }

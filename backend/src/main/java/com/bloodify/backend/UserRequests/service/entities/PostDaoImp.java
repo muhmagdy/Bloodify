@@ -105,6 +105,19 @@ public class PostDaoImp implements PostDao {
             return null;
         }
     }
+
+    @Override
+    public List<Post> getInstitutionAllPosts(String institutionEmail){
+        try {
+            Institution institution = this.institutionDAO.findInstitutionByEmail(institutionEmail);
+            return this.postRepository.findPostsByInstitution(institution);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
+
     @Override
     public List<Post> getAllBloodTypePosts(String bloodType){
         return this.postRepository.findByBloodType(bloodType);

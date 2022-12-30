@@ -1,43 +1,20 @@
-import 'package:bloodify_front_end/models/transaction.dart';
-import 'package:bloodify_front_end/modules/institution/postTransaction.dart';
+import 'package:bloodify_front_end/models/postBrief.dart';
+
+import 'package:bloodify_front_end/modules/transactions_modules/post_transaction/postTransaction.dart';
 import 'package:bloodify_front_end/shared/Constatnt/colors.dart';
 import 'package:bloodify_front_end/shared/Constatnt/fonts.dart';
 import 'package:bloodify_front_end/shared/styles/container.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class TransactionTile extends StatefulWidget {
-  final Transaction transaction;
-  const TransactionTile(this.transaction, {super.key});
-
-  @override
-  createState() => _TransactionTile(transaction);
-}
-
-class _TransactionTile extends State<TransactionTile>
-    with TickerProviderStateMixin {
-  late final AnimationController _controller = AnimationController(
-    duration: const Duration(seconds: 10),
-    vsync: this,
-  )..repeat();
-  late final Animation<double> _animation = CurvedAnimation(
-    parent: _controller,
-    curve: Curves.fastOutSlowIn,
-  );
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  _TransactionTile(this.transaction);
-
-  final Transaction transaction;
+class TransactionTile extends StatelessWidget {
+  final PostBrief post;
   late String dateTime;
 
+  TransactionTile(this.post, {super.key});
+
   void init() {
-    dateTime = DateFormat("d MMM y 'at' h:m a").format(transaction.dateTime);
+    dateTime = DateFormat("d MMM y 'at' h:m a").format(post.dateTime);
   }
 
   @override
@@ -49,6 +26,7 @@ class _TransactionTile extends State<TransactionTile>
         onTap: () => _onTap(context),
         width: width,
         height: height,
+        color: lightGrey,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -56,11 +34,11 @@ class _TransactionTile extends State<TransactionTile>
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "#${transaction.id}",
+                  "#${post.id}",
                   style: VerySmallStyle(width, Colors.black),
                 ),
                 Text(
-                  transaction.status,
+                  "Pending",
                   style: VerySmallBoldStyle(width, Colors.black),
                 )
               ],
@@ -71,7 +49,7 @@ class _TransactionTile extends State<TransactionTile>
                     alignment: Alignment.centerLeft,
                     fit: BoxFit.scaleDown,
                     child: Text(
-                      transaction.name,
+                      post.name,
                       textAlign: TextAlign.start,
                       style: NormalStyle(height, Colors.black),
                     ))),
@@ -87,7 +65,7 @@ class _TransactionTile extends State<TransactionTile>
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              transaction.nationalID,
+                              post.nationalID,
                               style: SmallStyle(width, Colors.black),
                             ),
                             Text(
@@ -100,7 +78,7 @@ class _TransactionTile extends State<TransactionTile>
                   children: [
                     Text("Count", style: SmallStyle(width, red)),
                     Text(
-                      transaction.count.toString(),
+                      post.count.toString(),
                       style: NormalStyle(height, red),
                     )
                   ],
@@ -112,7 +90,7 @@ class _TransactionTile extends State<TransactionTile>
                       style: SmallStyle(width, red),
                     ),
                     Text(
-                      transaction.bloodType,
+                      post.bloodType,
                       style: NormalStyle(height, red),
                     )
                   ],
@@ -126,7 +104,7 @@ class _TransactionTile extends State<TransactionTile>
   void _onTap(BuildContext context) {
     Navigator.of(context).push(PageRouteBuilder(
         pageBuilder: (context, animation, secondaryAnimation) =>
-            PostTransactionWidget(transaction),
+            PostTransaction(post),
         transitionsBuilder: ((context, animation, secondaryAnimation, child) {
           const begin = Offset(0.0, 1.0);
           const end = Offset.zero;

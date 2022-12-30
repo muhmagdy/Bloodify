@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1017872749857",
+    "project_id": "bloodify-notification",
+    "storage_bucket": "bloodify-notification.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1017872749857:android:ab490bd59289235dc29a60",
+        "android_client_info": {
+          "package_name": "com.example.bloodify_front_end"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1017872749857-gfa2qdoqo436kgbtff517gmskidn2ad2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7n5XbQOuKn0BuV26jE5jWMB7Ga2QXA5g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1017872749857-gfa2qdoqo436kgbtff517gmskidn2ad2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

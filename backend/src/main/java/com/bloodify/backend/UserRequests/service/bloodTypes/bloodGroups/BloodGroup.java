@@ -6,5 +6,8 @@ import java.util.List;
 
 public abstract class BloodGroup implements BloodType {
     @Override
-    abstract public List<BloodType> getCompatibleTypes();
+    abstract public List<BloodType> getCompatibleTypesPost();
+
+    @Override
+    abstract public List<BloodType> getCompatibleTypesUser();
 }

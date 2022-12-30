@@ -4,5 +4,6 @@ import java.util.List;
 
 public interface BloodType {
     String toString();
-    List<BloodType> getCompatibleTypes();
+    List<BloodType> getCompatibleTypesPost();
+    List<BloodType> getCompatibleTypesUser();
 }

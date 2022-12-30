@@ -1,3 +1,4 @@
+import 'package:bloodify_front_end/modules/navbar/institution_navbar.dart';
 import 'package:bloodify_front_end/modules/navbar/navbar.dart';
 import 'package:bloodify_front_end/shared/Constatnt/userInfo.dart';
 
@@ -10,7 +11,12 @@ class HomeLayout extends StatelessWidget {
   bool isUser = UserInfo.isUser ?? true;
   @override
   Widget build(BuildContext context) {
-    isUser = true;
-    return const MaterialApp(debugShowCheckedModeBanner: false, home: NavBar());
+    if (isUser) {
+      return const MaterialApp(
+          debugShowCheckedModeBanner: false, home: NavBar());
+    } else {
+      return const MaterialApp(
+          debugShowCheckedModeBanner: false, home: InstNavBar());
+    }
   }
 }

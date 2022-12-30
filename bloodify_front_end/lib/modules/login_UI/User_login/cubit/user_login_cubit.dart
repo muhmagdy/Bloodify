@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../models/login_mode.dart';
+import '../../../../shared/Constatnt/userInfo.dart';
 import '../../../../shared/network/remote/dio_helper.dart';
 
 class UserLoginCubit extends Cubit<UserLoginStates> {
@@ -18,10 +19,10 @@ class UserLoginCubit extends Cubit<UserLoginStates> {
     emit(UserLoginLoadingState());
 
     DioHelper.postLogin(
-      url: 'user/auth',
-      email: email,
-      password: password,
-    ).then((Response value) {
+        url: 'user/auth',
+        email: email,
+        password: password,
+        data: {"token": UserInfo.deviceToken}).then((Response value) {
       if (value.statusCode == 422) {
         print("422");
       }
@@ -31,6 +32,7 @@ class UserLoginCubit extends Cubit<UserLoginStates> {
       print(value.data);
       print(value.data);
       loginModel = UserLoginModel.fromJson(value.data);
+
       emit(UserLoginSuccessState(loginModel));
     }).catchError((error) {
       print("api " + error.toString());
