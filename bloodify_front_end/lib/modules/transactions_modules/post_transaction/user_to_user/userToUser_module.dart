@@ -12,9 +12,9 @@ import '../cubit/post_transaction_state.dart';
 
 class UserToUser extends StatelessWidget {
   UserToUser({super.key});
-  final toController = TextEditingController();
-  final fromController = TextEditingController();
-  final formKey = GlobalKey<FormState>();
+  var toController = TextEditingController();
+  var fromController = TextEditingController();
+  // final formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<PostTransactionCubit, PostTransactionStates>(
@@ -23,14 +23,13 @@ class UserToUser extends StatelessWidget {
           PostBrief post = PostTransactionCubit.get(context).post;
           toController.text = post.nationalID;
           return Form(
-            key: formKey,
             child: Column(
               children: [
                 defaultInputText(
                     type: TextInputType.number,
                     prefix: Icons.credit_card_rounded,
                     controller: fromController,
-                    validate: (id) => nationalValidate(id),
+                    validate: (id) => null,
                     labelText: "donor national-ID"),
                 const SizedBox(
                   height: 20,
@@ -50,10 +49,8 @@ class UserToUser extends StatelessWidget {
                     builder: (context) {
                       return defaultButton(
                         onClick: () {
-                          if (formKey.currentState!.validate()) {
-                            PostTransactionCubit.get(context)
-                                .postTransaction(fromController.text);
-                          } else {}
+                          PostTransactionCubit.get(context)
+                              .postTransaction(fromController.text);
                         },
                         text: "Submit",
                         merginLeft: 0.0,

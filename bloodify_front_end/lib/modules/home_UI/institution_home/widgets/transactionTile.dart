@@ -1,6 +1,5 @@
 import 'package:bloodify_front_end/models/postBrief.dart';
-import 'package:bloodify_front_end/models/transaction.dart';
-import 'package:bloodify_front_end/modules/institution/postTransaction.dart';
+
 import 'package:bloodify_front_end/modules/transactions_modules/post_transaction/postTransaction.dart';
 import 'package:bloodify_front_end/shared/Constatnt/colors.dart';
 import 'package:bloodify_front_end/shared/Constatnt/fonts.dart';
@@ -8,35 +7,11 @@ import 'package:bloodify_front_end/shared/styles/container.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class TransactionTile extends StatefulWidget {
-  final PostBrief post;
-  const TransactionTile(this.post, {super.key});
-
-  @override
-  createState() => _TransactionTile(post);
-}
-
-class _TransactionTile extends State<TransactionTile>
-    with TickerProviderStateMixin {
-  late final AnimationController _controller = AnimationController(
-    duration: const Duration(seconds: 10),
-    vsync: this,
-  )..repeat();
-  late final Animation<double> _animation = CurvedAnimation(
-    parent: _controller,
-    curve: Curves.fastOutSlowIn,
-  );
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  _TransactionTile(this.post);
-
+class TransactionTile extends StatelessWidget {
   final PostBrief post;
   late String dateTime;
+
+  TransactionTile(this.post, {super.key});
 
   void init() {
     dateTime = DateFormat("d MMM y 'at' h:m a").format(post.dateTime);

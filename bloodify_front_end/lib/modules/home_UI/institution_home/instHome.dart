@@ -76,13 +76,17 @@ class _InstitutionHome extends State<InstitutionHome> {
                             : "Previous Transactions",
                         style: HeadingStyle(height, grey),
                       ),
-                    ListView.builder(
-                        key: UniqueKey(),
-                        physics: const NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        itemCount: posts.length,
-                        itemBuilder: (context, index) =>
-                            TransactionTile(posts[index])),
+                    ListView.separated(
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: posts.length,
+                      itemBuilder: (context, index) =>
+                          TransactionTile(posts[index]),
+                      separatorBuilder: (BuildContext context, int index) =>
+                          const SizedBox(
+                        height: 5,
+                      ),
+                    ),
                     Container(height: 0.03 * height)
                   ],
                 )),
@@ -100,7 +104,11 @@ class _InstitutionHome extends State<InstitutionHome> {
       }
       posts.sort((a, b) => a.dateTime.compareTo(b.dateTime));
       if (kDebugMode) print("posts.length = ${posts.length}");
-      setState(() {});
+      setState(() {
+        for (int i = 0; i < posts.length; i++) {
+          print(posts[i].id.toString() + " " + posts[i].bloodType);
+        }
+      });
     });
   }
 }
