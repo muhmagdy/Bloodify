@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.bloodify_front_end">
    <application
-        android:label="bloodify"
+        android:label="Bloodify"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <activity

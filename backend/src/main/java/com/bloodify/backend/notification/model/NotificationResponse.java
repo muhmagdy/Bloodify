@@ -17,6 +17,7 @@ public class NotificationResponse {
     private LocalDateTime lastTime;
     private double longitude;
     private double latitude;
+    private int postID;
 
     public NotificationResponse(Post post) {
         Institution institution = post.getInstitution();
@@ -26,5 +27,6 @@ public class NotificationResponse {
         this.lastTime = post.getLastTime();
         this.latitude = institution.getLatitude();
         this.longitude = institution.getLongitude();
+        this.postID = post.getPostID();
     }
 }
