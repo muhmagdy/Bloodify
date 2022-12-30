@@ -103,6 +103,7 @@ class DioHelper {
     required String url,
     required email,
     required password,
+    Map<String, dynamic>? data,
   }) async {
     var auth = 'Basic ${base64Encode(utf8.encode('$email:$password'))}';
     print(auth);
@@ -110,10 +111,12 @@ class DioHelper {
       'authorization': auth,
       'Content-Type': 'application/json',
     };
-
-    return dio!.post(
-      url,
-    );
+    if (data == null) {
+      return dio!.post(
+        url,
+      );
+    }
+    return dio!.post(url, data: data);
   }
 
   static Future<Response> putData({

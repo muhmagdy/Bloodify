@@ -33,31 +33,7 @@ class _InstitutionEventPage extends State<InstitutionEventPage> {
     final height = MediaQuery.of(context).size.height;
 
     return Scaffold(
-        appBar: AppBar(
-            title: Row(
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(70),
-              child: Container(
-                width: 40,
-                height: 40,
-                decoration: const BoxDecoration(
-                    color: Colors.white,
-                    image: DecorationImage(
-                        image: AssetImage(
-                            'assets/icons/blood-removebg-preview.ico'),
-                        fit: BoxFit.contain)),
-              ),
-            ),
-            SizedBox(
-              width: width * .25,
-            ),
-            const Text(
-              "Events",
-              style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-            ),
-          ],
-        )),
+        appBar: defaultAppBAr("Events"),
         floatingActionButton: FloatingActionButton(
           onPressed: () => {navigateTo(context, CreateEvent())},
           backgroundColor: red,

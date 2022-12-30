@@ -26,43 +26,41 @@ public class API_Controller {
     private Dto_PostRequest_Mapper mapper;
 
     @PostMapping("/add")
-    public ResponseEntity<PostResponse<String>> addPost(@RequestBody PostRequest request, Authentication auth){
+    public ResponseEntity<PostResponse<String>> addPost(@RequestBody PostRequest request, Authentication auth) {
         PostDto postDto = this.mapper.mapToPostDto(request, auth.getName());
         boolean status = this.postService.savePost(postDto);
-        if(status)
-            return ResponseEntity.status(HttpStatus.CREATED).body(new PostResponse<>(true, "Your Request Posted Successfully"));
-        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(new PostResponse<>(false, "Failed to Post Your Request"));
+        if (status)
+            return ResponseEntity.status(HttpStatus.CREATED)
+                    .body(new PostResponse<>(true, "Your Request Posted Successfully"));
+        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY)
+                .body(new PostResponse<>(false, "Failed to Post Your Request"));
     }
 
     @PutMapping("/edit")
-    public ResponseEntity<PostResponse<String>> editPost(@RequestBody PostRequest request, Authentication auth){
+    public ResponseEntity<PostResponse<String>> editPost(@RequestBody PostRequest request, Authentication auth) {
         PostDto postDto = this.mapper.mapToPostDto(request, auth.getName());
         boolean status = this.postService.updatePost(postDto);
         if (status)
-            return ResponseEntity.status(HttpStatus.OK).body(new PostResponse<>(true, "Your Request Edited Successfully"));
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(new PostResponse<>(true, "Your Request Edited Successfully"));
         return ResponseEntity.status(422).body(new PostResponse<>(false, "Failed to Edit Your Request"));
     }
+
     @DeleteMapping("/{postId}")
-    public ResponseEntity<PostResponse<String>> deletePost(@PathVariable("postId") int id, Authentication auth){
+    public ResponseEntity<PostResponse<String>> deletePost(@PathVariable("postId") int id, Authentication auth) {
         boolean status = this.postService.deletePost(id, auth.getName());
         if (status)
-            return ResponseEntity.status(HttpStatus.OK).body(new PostResponse<>(true, "Your Request Deleted Successfully"));
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(new PostResponse<>(true, "Your Request Deleted Successfully"));
         return ResponseEntity.status(422).body(new PostResponse<>(false, "Failed to Delete Your Request"));
     }
+
     @GetMapping("/userPosts")
-    public ResponseEntity<PostResponse<List<PostRequest>>> getLatestUserRequest(Authentication auth){
+    public ResponseEntity<PostResponse<List<PostRequest>>> getLatestUserRequest(Authentication auth) {
         List<PostRequest> userPosts = this.postService.getUserPosts(auth.getName());
         boolean status = userPosts.size() != 0;
         if (status)
             return ResponseEntity.status(HttpStatus.OK).body(new PostResponse<>(true, userPosts));
         return ResponseEntity.status(422).body(new PostResponse<>(false, null));
     }
-
-
-//    @GetMapping("/post/id")
-//    public PostResponse<Integer> getPostID(@RequestBody PostRequest request, Authentication auth){
-//        PostDto postDto = this.mapper.mapToPostDto(request, auth.getName());
-//        int postID = this.postService.getPostID(postDto);
-//        return new PostResponse<>(postID != -1, postID);
-//    }
 }
