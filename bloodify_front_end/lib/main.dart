@@ -83,8 +83,8 @@ class MyApp extends StatelessWidget {
           BlocProvider(create: (context) => EventTransactionCubit()),
           BlocProvider(create: (context) => InstituteTransactionCubit()),
           BlocProvider(create: (context) => CreateEventCubit()),
-          BlocProvider(create: (context) => ChangePasswordCubit())
-          BlocProvider(create: (context) => StatsCubit())
+          BlocProvider(create: (context) => ChangePasswordCubit()),
+          BlocProvider(create: (context) => StatsCubit()),
           BlocProvider(
               create: (context) =>
                   NotificationHistoryCubit()..getNotifications()),

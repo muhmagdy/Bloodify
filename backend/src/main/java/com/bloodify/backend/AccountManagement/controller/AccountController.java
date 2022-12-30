@@ -111,7 +111,7 @@ public class AccountController {
     }
 
     @PostMapping(test + "/password")
-    public ResponseEntity<SignUpResponse> requestPasswordChange(@RequestParam String email) {
+    public ResponseEntity<SignUpResponse> requestPasswordChange(@RequestBody String email) {
         return ResponseEntity.status(200).body(accountManagerService.sendVerificationCode(email));
     }
 

@@ -2,6 +2,7 @@ import 'package:bloodify_front_end/models/postBrief.dart';
 import 'package:bloodify_front_end/models/request.dart';
 import 'package:bloodify_front_end/shared/Constatnt/Component.dart';
 import 'package:bloodify_front_end/shared/Constatnt/colors.dart';
+import 'package:bloodify_front_end/shared/network/local/cach_helper.dart';
 import 'package:bloodify_front_end/shared/network/remote/dio_helper.dart';
 import 'package:bloodify_front_end/shared/styles/container.dart';
 import 'package:flutter/cupertino.dart';
@@ -245,11 +246,12 @@ class RequestHeader extends StatelessWidget {
   }
 
   void acceptPost(BuildContext context) {
+    var threshold = CachHelper.getData(key: 'threshold').toDouble();
     DioHelper.postData(url: 'user/post/accept', data: {
       'id': request.id,
       'longitude': request.location.longitude,
       'latitude': request.location.latitude,
-      'threshold': 5000.0,
+      'threshold': threshold,
     }).then((value) {
       if (value.data['state']) {
         showToast(text: "Post accepted successfully!", color: blue, time: 3000);

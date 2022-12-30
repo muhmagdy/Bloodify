@@ -1,5 +1,8 @@
 import 'package:bloodify_front_end/modules/settings/common/email_confirmation.dart';
+import 'package:bloodify_front_end/shared/Constatnt/Component.dart';
+import 'package:bloodify_front_end/shared/network/remote/dio_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:restart_app/restart_app.dart';
 
 import '../../../layout/start_layout.dart';
 import '../../../shared/Constatnt/colors.dart';
@@ -141,29 +144,37 @@ class _InstitutionSettingsState extends State<InstitutionSettings> {
   }
 
   void _onChangePasswordTap(BuildContext context) {
-    // TODO: CONTACT THE BACKEND TO GENERATE THE CODE
-    CachHelper.saveData(
-        key: 'confirmationEmail', value: CachHelper.getData(key: 'email'));
-    Navigator.of(context).push(PageRouteBuilder(
-        pageBuilder: (context, animation, secondaryAnimation) =>
-            const EmailConfirmation(),
-        transitionsBuilder: ((context, animation, secondaryAnimation, child) {
-          const begin = Offset(0.0, 1.0);
-          const end = Offset.zero;
-          const curve = Curves.ease;
-          var tween =
-              Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-          return SlideTransition(
-            position: animation.drive(tween),
-            child: child,
-          );
-        })));
+    DioHelper.postString(
+      url: "password",
+      data: CachHelper.getData(key: 'email'),
+    ).then((value) {
+      showToast(text: value.data['message'], color: Colors.blue, time: 3000);
+      if (value.data['state']) {
+        CachHelper.saveData(
+            key: 'confirmationEmail', value: CachHelper.getData(key: 'email'));
+        Navigator.of(context).push(PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation) =>
+                const EmailConfirmation(),
+            transitionsBuilder:
+                ((context, animation, secondaryAnimation, child) {
+              const begin = Offset(0.0, 1.0);
+              const end = Offset.zero;
+              const curve = Curves.ease;
+              var tween =
+                  Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+              return SlideTransition(
+                position: animation.drive(tween),
+                child: child,
+              );
+            })));
+      }
+      // Navigator.pop(context);
+    }).catchError((error) => print(error));
   }
 
   Future _onLogoutTap(BuildContext context) async {
     if (await CachHelper.removeAllData()) {
-      Navigator.of(context, rootNavigator: true).pushReplacement(
-          MaterialPageRoute(builder: (context) => const StartWidget()));
+      Restart.restartApp(webOrigin: '/');
     }
   }
 }

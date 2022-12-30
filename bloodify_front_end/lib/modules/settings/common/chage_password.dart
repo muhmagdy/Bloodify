@@ -1,3 +1,4 @@
+import 'package:bloodify_front_end/layout/home_layout.dart';
 import 'package:bloodify_front_end/shared/network/local/cach_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -73,7 +74,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                   // validating the input
                   if (_formKey.currentState!.validate()) {
                     DioHelper.patchData(url: "password", data: {
-                      'email': CachHelper.getData(key: 'email'),
+                      'email': CachHelper.getData(key: 'confirmationEmail'),
                       'code': widget.confirmationCode,
                       'newPassword': passController.value.text
                     }).then((value) {

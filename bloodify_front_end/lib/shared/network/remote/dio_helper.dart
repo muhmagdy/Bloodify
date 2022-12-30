@@ -71,7 +71,34 @@ class DioHelper {
       data: data,
     );
   }
-  
+
+  static Future<Response> postString({
+    required String url,
+    Map<String, dynamic>? query,
+    required String data,
+    String lang = 'en',
+  }) async {
+    String? auth;
+    if (token == null) {
+      dio!.options.headers = {
+        'Content-Type': 'application/json',
+        'lang': lang,
+      };
+    } else {
+      dio!.options.headers = {
+        'Content-Type': 'application/json',
+        'lang': lang,
+        'Authorization': "Bearer $token",
+      };
+    }
+    print(dio!.options.headers);
+    return dio!.post(
+      url,
+      queryParameters: query,
+      data: data,
+    );
+  }
+
   static Future<Response> patchData({
     required String url,
     Map<String, dynamic>? query,
@@ -98,7 +125,6 @@ class DioHelper {
       data: data,
     );
   }
-
 
   static Future<Response> deleteData({
     required String url,
