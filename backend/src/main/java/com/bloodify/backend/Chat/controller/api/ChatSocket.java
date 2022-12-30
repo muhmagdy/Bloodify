@@ -64,7 +64,7 @@ public class ChatSocket {
         }
 
         if(!isRecipientOnline){
-            this.service.notifyRecipient(message);
+            this.service.notifyRecipient(mapper.requestToDto(message));
         }
     }
 

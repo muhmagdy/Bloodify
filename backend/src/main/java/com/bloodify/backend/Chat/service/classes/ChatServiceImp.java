@@ -4,16 +4,22 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.bloodify.backend.AccountManagement.dao.interfaces.LoginSessionDAO;
 import com.bloodify.backend.AccountManagement.dao.interfaces.UserDAO;
 import com.bloodify.backend.AccountManagement.model.entities.User;
 import com.bloodify.backend.Chat.controller.requests.entities.ChatMessageRequest;
 import com.bloodify.backend.Chat.dto.entities.ChatMessageDto;
 import com.bloodify.backend.Chat.dto.mapper.ChatMessageMapper;
+import com.bloodify.backend.Chat.exceptions.RecipientNotFoundException;
+import com.bloodify.backend.Chat.exceptions.SenderNotFoundException;
 import com.bloodify.backend.Chat.model.entities.ChatMessage;
 import com.bloodify.backend.Chat.repository.interfaces.ChatMessageDao;
 import com.bloodify.backend.Chat.service.interfaces.ChatService;
+import com.bloodify.backend.UserRequests.exceptions.AcceptedPostNotFoundException;
 import com.bloodify.backend.UserRequests.exceptions.UserNotFoundException;
 import com.bloodify.backend.UserRequests.repository.interfaces.AcceptRepository;
+import com.bloodify.backend.notification.service.FirebaseMessagingService;
+import com.google.firebase.messaging.FirebaseMessagingException;
 
 import jakarta.transaction.Transactional;
 
@@ -31,12 +37,27 @@ public class ChatServiceImp implements ChatService {
 
     final UserDAO userDAO;
 
+    final FirebaseMessagingService messagingService;
+    final LoginSessionDAO loginSessionDAO;
 
-    public ChatServiceImp(UserDAO userDAO, AcceptRepository acceptRepository, ChatMessageDao chatMessageDao, ChatMessageMapper chatMessageMapper) {
+
+    public ChatServiceImp(UserDAO userDAO, AcceptRepository acceptRepository,
+     ChatMessageDao chatMessageDao, ChatMessageMapper chatMessageMapper, FirebaseMessagingService messagingService,
+     LoginSessionDAO loginSessionDAO) {
         this.userDAO = userDAO;
         this.acceptRepository = acceptRepository;
         this.chatMessageDao = chatMessageDao;
         this.chatMessageMapper = chatMessageMapper;
+        this.messagingService = messagingService;
+        this.loginSessionDAO = loginSessionDAO;
+    }
+
+    private Integer getRecipientID(ChatMessage chatMessage){
+        Integer recipientID = chatMessage.getPostOwnerID();
+        if(chatMessage.getDirection()){
+            recipientID = chatMessage.getDonorID();
+        }
+        return recipientID;
     }
 
 
@@ -46,10 +67,8 @@ public class ChatServiceImp implements ChatService {
         ChatMessage chatMessage = this.chatMessageMapper.dtoToEntity(message);
 
         //get the recipient of this message and set the unread flag to be the recipient ID.
-        Integer recipientID = chatMessage.getPostOwnerID();
-        if(chatMessage.getDirection()){
-            recipientID = chatMessage.getDonorID();
-        }
+        Integer recipientID = getRecipientID(chatMessage);
+
         chatMessage.setNewMsgFor(recipientID);
         this.acceptRepository.save(chatMessage.getAcceptedPost());
         chatMessage.setMessageID(null);
@@ -79,8 +98,15 @@ public class ChatServiceImp implements ChatService {
 
 
     @Override
-    public void notifyRecipient(ChatMessageRequest message) {
-        // TODO Auto-generated method stub
+    public void notifyRecipient(ChatMessageDto message) throws AcceptedPostNotFoundException, SenderNotFoundException,
+                                                                 RecipientNotFoundException, FirebaseMessagingException {
+        ChatMessage chatMessage = this.chatMessageMapper.dtoToEntity(message);
+
+        Integer recipientID = getRecipientID(chatMessage);
+
+        User recipient = userDAO.findByID(recipientID);
+
+        messagingService.chatNotification(loginSessionDAO.getToken(recipient.getEmail()), "You may have new message.", null);
         
     }
 
