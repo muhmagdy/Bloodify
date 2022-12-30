@@ -23,7 +23,7 @@ class _EventTile extends State<InstEventTile> {
     return Container(
       margin: const EdgeInsets.only(left: 20, right: 20),
       child: TileContainer(
-          onTap: () => _onTap(context),
+          // onTap: () => _onTap(context),
           height: height,
           width: width,
           color: lightGrey,

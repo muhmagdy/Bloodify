@@ -18,13 +18,29 @@ class PostBrief {
     nationalID = json['nationalID'];
     name = json['name'];
     print(json['dateTime']);
-    dateTime = DateTime.parse(json['dateTime']) ?? DateTime.now();
+    if (json['dateTime'] == null)
+      dateTime = DateTime.now();
+    else
+      dateTime = DateTime.parse(json['dateTime']) ?? DateTime.now();
     count = json['count'];
     bloodType = json['bloodType'];
     distance = json['distance'];
     hospitalName = json['hospitalName'];
     longitude = json['longitude'];
     latitude = json['latitude'];
+  }
+
+  PostBrief.fromInstJson(Map<String, dynamic> json) {
+    id = json['id'];
+    nationalID = json['nationalID'];
+    name = json['name'];
+    print(json['dateTime']);
+    if (json['dateTime'] == null)
+      dateTime = DateTime.now();
+    else
+      dateTime = DateTime.parse(json['dateTime']) ?? DateTime.now();
+    count = json['count'];
+    bloodType = json['bloodType'];
   }
 
   PostBrief.fromJsonWithLocation(
