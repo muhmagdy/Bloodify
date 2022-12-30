@@ -5,6 +5,7 @@ import 'package:bloodify_front_end/models/userBrief.dart';
 import 'package:bloodify_front_end/modules/BloodFinding/bloc/blood_finder_service.dart';
 import 'package:bloodify_front_end/modules/home_UI/user_home/widgets/requestFull.dart';
 import 'package:bloodify_front_end/shared/Constatnt/colors.dart';
+import 'package:bloodify_front_end/shared/network/local/cach_helper.dart';
 import 'package:bloodify_front_end/shared/network/remote/dio_helper.dart';
 import 'package:flutter/material.dart';
 
@@ -133,17 +134,19 @@ class _UserHome extends State<UserHome> {
       });
     }
     var position = await getLocation();
+    var threshold = (await CachHelper.getData(key: 'threshold')).toDouble();
     DioHelper.getData(url: "user/status", query: {}).then(
       (value) {
         posts = [];
         people = [];
         status = int.parse(value.data.toString());
+        print("status = $status");
         switch (status) {
           case 0:
             DioHelper.getData(url: "user/posts/compatible", query: {
               'longitude': position.longitude,
               'latitude': position.latitude,
-              'threshold': 500000.0
+              'threshold': threshold
             }).then((value) {
               print(value.data);
               for (int i = 0; i < value.data.length; i++) {
@@ -162,7 +165,7 @@ class _UserHome extends State<UserHome> {
             DioHelper.getData(url: "user/posts/requester", query: {
               'longitude': position.longitude,
               'latitude': position.latitude,
-              'threshold': 500000.0
+              'threshold': threshold
             }).then((value) {
               print(value.data);
               for (int i = 0; i < value.data.length; i++) {
@@ -196,7 +199,7 @@ class _UserHome extends State<UserHome> {
             DioHelper.getData(url: "user/posts/current", query: {
               'longitude': position.longitude,
               'latitude': position.latitude,
-              'threshold': 500000.0
+              'threshold': threshold
             }).then((value) {
               print(value.data);
               for (int i = 0; i < value.data.length; i++) {
@@ -209,7 +212,7 @@ class _UserHome extends State<UserHome> {
                   'id': posts[i].id,
                   'longitude': position.longitude,
                   'latitude': position.latitude,
-                  'threshold': 500000.0
+                  'threshold': threshold
                 }).then((value) {
                   people[i].add(UserBrief.fromJson(value.data));
                   if (i == posts.length - 1) {

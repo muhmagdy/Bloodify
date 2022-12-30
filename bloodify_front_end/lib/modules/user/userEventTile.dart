@@ -74,7 +74,7 @@ class _EventTile extends State<UserEventTile> {
                       style: SmallBoldStyle(width, Colors.black),
                     ),
                     Text(
-                      "${(Geolocator.distanceBetween(widget.event.latitude, widget.event.longitude, widget.position.latitude, widget.position.longitude) / 1000).toStringAsPrecision(3)} km",
+                      "${(Geolocator.distanceBetween(widget.event.latitude, widget.event.longitude, widget.position.latitude, widget.position.longitude) / 1000).toStringAsFixed(3)} km",
                       style: SmallStyle(width, Colors.black),
                     ),
                   ],

@@ -141,6 +141,7 @@ public class AccountManagerServiceImp implements AccountManagerService {
             System.out.println("Email sent successfully");
             return new SignUpResponse(true, "Code sent successfully to " + email);
         } catch (Exception e) {
+            System.out.println("Hello from exception");
             e.printStackTrace();
             return new SignUpResponse(false, "Cannot send code. Please try again later.");
         }

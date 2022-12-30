@@ -37,6 +37,7 @@ class UserLogin extends StatelessWidget {
                 key: 'username',
                 value:
                     '${state.loginModel.data!.fName} ${state.loginModel.data!.lName}');
+            CachHelper.saveData(key: 'threshold', value: 5);
             CachHelper.saveData(
               key: 'token',
               value: state.loginModel.data!.token,

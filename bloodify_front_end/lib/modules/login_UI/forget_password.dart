@@ -63,20 +63,20 @@ class _ForgetPasswordState extends State<ForgetPassword> {
   }
 
   void _nextTap(BuildContext context, String email) {
-    DioHelper.postData(url: "password", data: {
-      'email': CachHelper.getData(key: 'email'),
-    }).then((value) {
+    CachHelper.saveData(key: 'confirmationEmail', value: email);
+    DioHelper.postString(
+      url: "password",
+      data: email,
+    ).then((value) {
       showToast(text: value.data['message'], color: Colors.blue, time: 3000);
-      if (value.data['status'] == true) {
+      if (value.data['state']) {
         _navigateToChangePassword(context);
       }
-      Navigator.pop(context);
     }).catchError((error) => print(error));
-    CachHelper.saveData(key: 'confirmationEmail', value: email);
   }
 
   void _navigateToChangePassword(BuildContext context) {
-        Navigator.of(context).push(PageRouteBuilder(
+    Navigator.of(context).push(PageRouteBuilder(
         pageBuilder: (context, animation, secondaryAnimation) =>
             const EmailConfirmation(),
         transitionsBuilder: ((context, animation, secondaryAnimation, child) {
