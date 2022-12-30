@@ -93,5 +93,10 @@ public class AccountManagerServiceImp implements AccountManagerService {
     public void instSignOut(Authentication auth) {
     }
 
+    @Override
+    public boolean updateHasDiseases(boolean hasDiseases, String email) {
+        return userDAO.updateHasDiseases(hasDiseases, email) != 0;
+    }
+
 
 }

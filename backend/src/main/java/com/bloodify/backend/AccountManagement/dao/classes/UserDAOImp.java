@@ -93,6 +93,11 @@ public class UserDAOImp implements UserDAO {
                         bloodType, nationalID);
     }
 
+    @Override
+    public int updateHasDiseases(boolean hasDisease, String email) {
+        return userRepo.updateHasDiseasesByEmail(hasDisease, email);
+    }
+
     public List<User> getUsersByBloodType(String bloodType) {
         return userRepo.findByBloodType(bloodType);
     }
