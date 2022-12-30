@@ -147,40 +147,6 @@ class AccountControllerInstSignUpTest {
     }
 
     @Test
-    void whenValidPasswordRequest_thenReturnTrue() throws Exception {
-        String email = random.generateEmail(10,20);
-        SignUpResponse response = new SignUpResponse(true, "Code sent successfully to " + email);
-        when(accountManagerService.sendVerificationCode(email)).thenReturn(response);
-        MvcResult mvcResult =
-                mockMvc.perform(post("/api/v1/password")
-                .contentType("application/json")
-                        .content(objectMapper.writeValueAsString(email)))
-                .andReturn();
-
-        String expected =
-                objectMapper.writeValueAsString(response);
-        String actual = mvcResult.getResponse().getContentAsString();
-        assertThat(actual).isEqualToIgnoringWhitespace(expected);
-    }
-
-    @Test
-    void whenInvalidPasswordRequest_thenReturnFalse() throws Exception {
-        String email = random.generateEmail(10,20);
-        SignUpResponse response = new SignUpResponse(false, "Cannot send code. Please try again later.");
-        when(accountManagerService.sendVerificationCode(email)).thenReturn(response);
-        MvcResult mvcResult =
-                mockMvc.perform(post("/api/v1/password")
-                        .contentType("application/json")
-                        .content(objectMapper.writeValueAsString(email)))
-                        .andReturn();
-
-        String expected =
-                objectMapper.writeValueAsString(response);
-        String actual = mvcResult.getResponse().getContentAsString();
-        assertThat(actual).isEqualToIgnoringWhitespace(expected);
-    }
-
-    @Test
     void whenValidPasswordRequest_thenReturn200OK() throws Exception {
         String email = random.generateEmail(10,20);
         SignUpResponse response = new SignUpResponse(true, "Code sent successfully to " + email);
