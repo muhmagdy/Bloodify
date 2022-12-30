@@ -30,8 +30,9 @@ class NotificationHistoryCubit extends Cubit<NotificationStates> {
                 notificationBody.latitude,
                 notificationBody.longitude) /
             1000;
-        notificationBody.distance = distance;
         print("Body");
+        print(distance);
+        notificationBody.distance = distance;
         print(notificationBody);
 
         notifications.add(notificationBody);

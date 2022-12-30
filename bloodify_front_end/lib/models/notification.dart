@@ -16,5 +16,6 @@ class NotificationBody {
     longitude = json["longitude"];
     latitude = json["latitude"];
     postID = json["postID"];
+    print(postID);
   }
 }
