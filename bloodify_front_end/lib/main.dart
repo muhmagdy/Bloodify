@@ -1,4 +1,5 @@
 import 'package:bloodify_front_end/layout/start_layout.dart';
+import 'package:bloodify_front_end/modules/Chat/bloc/chat_service.dart';
 
 import 'package:bloodify_front_end/modules/navbar/institution_navbar.dart';
 
@@ -24,6 +25,7 @@ import 'modules/transactions_modules/institution_tranaction/cubic/institution_tr
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await CachHelper.init();
+  ChatService.init();
   UserInfo.token = CachHelper.getData(key: 'token');
   Widget widget;
   if (UserInfo.token != null) {

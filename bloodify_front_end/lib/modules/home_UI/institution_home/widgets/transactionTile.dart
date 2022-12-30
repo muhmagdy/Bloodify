@@ -26,6 +26,7 @@ class TransactionTile extends StatelessWidget {
         onTap: () => _onTap(context),
         width: width,
         height: height,
+        color: lightGrey,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

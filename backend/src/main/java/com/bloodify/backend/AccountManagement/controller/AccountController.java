@@ -8,9 +8,11 @@ import com.bloodify.backend.AccountManagement.model.responses.LogInResponse;
 import com.bloodify.backend.AccountManagement.model.responses.LoginResponseBody;
 import com.bloodify.backend.AccountManagement.services.interfaces.AccountManagerService;
 
+import com.bloodify.backend.UserRequests.model.request.PasswordChangeRequest;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -77,7 +79,24 @@ public class AccountController {
         return ResponseEntity.ok(new LogInResponse(true, "login successful", body));
     }
 
+    @PostMapping(test + "/password")
+    public ResponseEntity<SignUpResponse> requestPasswordChange (@RequestParam String email){
+        return ResponseEntity.status(200).body(accountManagerService.sendVerificationCode(email));
+    }
 
+    @PatchMapping(test + "/password")
+    public ResponseEntity<SignUpResponse> changePassword(@RequestBody PasswordChangeRequest passwordChangeRequest){
+        if(accountManagerService.resetPassword(
+                passwordChangeRequest.getEmail(), passwordChangeRequest.getCode(), passwordChangeRequest.getNewPassword()
+        )) {
+            return ResponseEntity.status(200).body(new SignUpResponse(
+                    true, "Password changed successfully"
+            ));
+        }
+        return ResponseEntity.status(200).body(new SignUpResponse(
+                false, "Incorrect code, please try again."
+        ));
+    }
 
     @ResponseStatus(HttpStatus.CONFLICT)
     @ExceptionHandler(SignupDuplicateException.class)

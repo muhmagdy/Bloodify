@@ -24,6 +24,11 @@ public class EventDAOImp implements EventDAO {
     }
 
     @Override
+    public List<Event> findAllEvents(){
+        return eventRepository.findByOrderByEndDateAsc();
+    }
+
+    @Override
     public void deleteEvent() {
         eventRepository.abortEvent();
     }

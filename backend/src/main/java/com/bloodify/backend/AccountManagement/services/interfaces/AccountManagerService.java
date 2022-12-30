@@ -2,6 +2,7 @@ package com.bloodify.backend.AccountManagement.services.interfaces;
 
 import com.bloodify.backend.AccountManagement.model.responses.LoginResponseBody;
 
+import com.bloodify.backend.AccountManagement.model.responses.SignUpResponse;
 import org.springframework.security.core.Authentication;
 
 import com.bloodify.backend.AccountManagement.model.entities.Institution;
@@ -17,4 +18,7 @@ public interface AccountManagerService {
 
     void userSignOut(Authentication auth);
     void instSignOut(Authentication auth);
+
+    SignUpResponse sendVerificationCode(String email);
+    boolean resetPassword(String email, String code, String newPassword);
 }

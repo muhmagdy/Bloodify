@@ -146,7 +146,8 @@ public class SecurityConfiguration {
         return (web) -> web.ignoring().requestMatchers(
                 this.endpoint + "/test/**",
                 this.endpoint+"/user",
-                this.endpoint+"/institution");
+                this.endpoint+"/institution",
+                this.endpoint+"/password");
     }
 
 }
