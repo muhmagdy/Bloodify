@@ -17,4 +17,6 @@ public interface AccountManagerService {
 
     void userSignOut(Authentication auth);
     void instSignOut(Authentication auth);
+
+    boolean updateHasDiseases(boolean hasDiseases, String email);
 }

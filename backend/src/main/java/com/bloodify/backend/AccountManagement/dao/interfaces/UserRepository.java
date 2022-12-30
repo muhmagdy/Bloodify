@@ -33,6 +33,11 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     List<User> findByStatusAndHasDiseases(int status, boolean hasDisease);
 
+    @Transactional
+    @Modifying
+    @Query("update User u set u.hasDiseases = ?1 where u.email = ?2")
+    int updateHasDiseasesByEmail(boolean hasDiseases, @NonNull String email);
+
 //    @Query("SELECT u.acceptedPost FROM User u where u.email = :email")
 //    Post findAcceptedPostByAcceptorEmail(@Param("email") String acceptorEmail);
 //

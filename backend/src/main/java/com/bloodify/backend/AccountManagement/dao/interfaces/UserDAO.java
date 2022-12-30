@@ -37,4 +37,6 @@ public interface UserDAO extends UserDetailsService{
                                                       String bloodType,
                                                       String nationalID);
 
+    int updateHasDiseases(boolean hasDiseases, String email);
+
 }

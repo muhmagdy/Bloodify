@@ -19,7 +19,7 @@ class _ChangeThresholdState extends State<ChangeThreshold> {
     final height = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Email Confirmation'),
+        title: const Text('Change Threshold'),
       ),
       body: Form(
         key: _formKey,
@@ -45,8 +45,9 @@ class _ChangeThresholdState extends State<ChangeThreshold> {
             TextButton(
               onPressed: () {
                 // validating the input
-                if(_formKey.currentState!.validate()) {
-                  CachHelper.saveData(key: 'threshold',
+                if (_formKey.currentState!.validate()) {
+                  CachHelper.saveData(
+                      key: 'threshold',
                       value: int.parse(_thresholdController.value.text));
                   Navigator.of(context).pop();
                 }
