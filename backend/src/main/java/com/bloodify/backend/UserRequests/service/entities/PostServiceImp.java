@@ -149,7 +149,7 @@ public class PostServiceImp implements PostService {
     }
 
     boolean filterCriteria(User u, Post acceptedPost) {
-        boolean b = u.getLastTimeDonated().isBefore(LocalDate.now().minusMonths(6)) &&
+        boolean b = !u.isHasDiseases() && u.getLastTimeDonated().isBefore(LocalDate.now().minusMonths(6)) &&
                 acceptedPost.getUser().getUserID() != u.getUserID();
 
         System.out.println(b);

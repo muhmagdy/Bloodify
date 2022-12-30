@@ -16,24 +16,24 @@ import lombok.NoArgsConstructor;
 @Table
 @Data
 @NoArgsConstructor
-@NamedNativeQuery(
-        name = "login_session.findTokenByEmail",
-        query = "SELECT * FROM LoginSession WHERE email = ?",
-        resultClass = LoginSession.class
-)
-@NamedNativeQuery(
-        name = "login_session.deleteSessionByEmail",
-        query = "DELETE FROM LoginSession WHERE email = ?"
-)
+// @NamedNativeQuery(
+// name = "login_session.findTokenByEmail",
+// query = "SELECT * FROM LoginSession WHERE email = ?",
+// resultClass = LoginSession.class
+// )
+// @NamedNativeQuery(
+// name = "login_session.deleteSessionByEmail",
+// query = "DELETE FROM LoginSession WHERE email = ?"
+// )
 @AllArgsConstructor
 public class LoginSession {
-    @Id
-    @NonNull
-    @Size(max = 40, message = "Email is too long")
-    @Column(unique = true, nullable = false, length = 40)
-    private String email;
-    @NonNull
-    @Size(max = 400, message = "Token is too long")
-    @Column(unique = true, nullable = false, length = 400)
-    private String token;
+        @Id
+        @NonNull
+        @Size(max = 40, message = "Email is too long")
+        @Column(unique = true, nullable = false, length = 40)
+        private String email;
+        @NonNull
+        @Size(max = 400, message = "Token is too long")
+        @Column(unique = true, nullable = false, length = 400)
+        private String token;
 }
