@@ -82,7 +82,6 @@ public class AccountController {
     @PostMapping(test + "/user/disease")
     public ResponseEntity<DiseasesStatusResponse> updateHasDiseases(@RequestBody DiseasesStatusRequest diseasesStatusRequest,
                                                                     Authentication credentials){
-        System.out.println(diseasesStatusRequest);
         if(accountManagerService.updateHasDiseases(diseasesStatusRequest.isHasDiseases(), credentials.getName())) {
             return ResponseEntity.status(HttpStatus.OK)
                     .body(new DiseasesStatusResponse(true, "Update Successful!"));
