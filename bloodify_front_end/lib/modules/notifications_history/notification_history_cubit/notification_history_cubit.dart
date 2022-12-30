@@ -21,7 +21,7 @@ class NotificationHistoryCubit extends Cubit<NotificationStates> {
       this.notifications = [];
 
       for (int i = 0; i < value.data['notificationResponses'].length; i++) {
-        print(i);
+        print(value.data['notificationResponses'][i]);
         NotificationBody notificationBody =
             NotificationBody.fromJson(value.data['notificationResponses'][i]);
         double distance = Geolocator.distanceBetween(
@@ -31,6 +31,7 @@ class NotificationHistoryCubit extends Cubit<NotificationStates> {
                 notificationBody.longitude) /
             1000;
         notificationBody.distance = distance;
+        print("Body");
         print(notificationBody);
 
         notifications.add(notificationBody);

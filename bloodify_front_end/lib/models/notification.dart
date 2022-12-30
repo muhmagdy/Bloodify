@@ -7,6 +7,7 @@ class NotificationBody {
   late double longitude;
   late double latitude;
   late double distance;
+  late int postID;
 
   NotificationBody.fromJson(Map<String, dynamic> json) {
     instituteName = json["instituteName"];
@@ -14,5 +15,6 @@ class NotificationBody {
     lastTime = DateTime.parse(json["lastTime"]);
     longitude = json["longitude"];
     latitude = json["latitude"];
+    postID = json["postID"];
   }
 }
