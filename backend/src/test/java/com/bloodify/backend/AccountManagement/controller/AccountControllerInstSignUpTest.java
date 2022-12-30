@@ -140,10 +140,10 @@ class AccountControllerInstSignUpTest {
     }
 
     @Test
-    void whenEmptyPasswordResponse_thenReturns400() throws Exception {
+    void whenEmptyPasswordResponse_thenReturns422() throws Exception {
         mockMvc.perform(post("/api/v1/password").
                 contentType("application/json")).
-                andExpect(status().isBadRequest());
+                andExpect(status().isUnprocessableEntity());
     }
 
     @Test
@@ -154,7 +154,7 @@ class AccountControllerInstSignUpTest {
         MvcResult mvcResult =
                 mockMvc.perform(post("/api/v1/password")
                 .contentType("application/json")
-                .param("email", email))
+                        .content(objectMapper.writeValueAsString(email)))
                 .andReturn();
 
         String expected =
@@ -171,7 +171,7 @@ class AccountControllerInstSignUpTest {
         MvcResult mvcResult =
                 mockMvc.perform(post("/api/v1/password")
                         .contentType("application/json")
-                        .param("email", email))
+                        .content(objectMapper.writeValueAsString(email)))
                         .andReturn();
 
         String expected =
@@ -188,7 +188,7 @@ class AccountControllerInstSignUpTest {
         MvcResult mvcResult =
                 mockMvc.perform(post("/api/v1/password")
                         .contentType("application/json")
-                        .param("email", email))
+                        .content(objectMapper.writeValueAsString(email)))
                         .andExpect(status().isOk())
                         .andReturn();
     }
@@ -197,7 +197,7 @@ class AccountControllerInstSignUpTest {
     void whenEmptyPasswordResetResponse_thenReturns400() throws Exception {
         mockMvc.perform(post("/api/v1/password").
                 contentType("application/json")).
-                andExpect(status().isBadRequest());
+                andExpect(status().isUnprocessableEntity());
     }
 
     @Test
