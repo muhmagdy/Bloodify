@@ -51,6 +51,7 @@ class ChatCubit extends Cubit<ChatState> {
           content: state.messageController!.text,
           timestamp: DateTime.now()));
 
+      print(DateTime.now());
       state.formKey!.currentState!.reset();
       state.messageController!.clear();
       showToast(text: "message sent", color: defaultColor, time: 1);
@@ -63,5 +64,9 @@ class ChatCubit extends Cubit<ChatState> {
     print("establishing connection...");
     ChatService.socketConnect(state.postID ?? -1, state.donorID ?? -1, this);
     emit(state.copyWith(connected: true));
+  }
+
+  void disconnect() {
+    ChatService.disconnect();
   }
 }

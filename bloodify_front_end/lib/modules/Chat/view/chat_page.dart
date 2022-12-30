@@ -6,20 +6,22 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
 class ChatScreen extends StatelessWidget {
-  final String name;
+  final String firstName, lastName;
   final int postID, donorID, myID;
   const ChatScreen(
       {super.key,
       required this.postID,
       required this.donorID,
       required this.myID,
-      required this.name});
+      required this.firstName,
+      required this.lastName});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
         create: (context) => ChatCubit(ChatState.initial(
-            name: name,
+            firstName: firstName,
+            lastName: lastName,
             postID: postID,
             donorID: donorID,
             myID: myID,
@@ -45,7 +47,7 @@ class _MainChatScreen extends StatelessWidget {
       appBar: AppBar(
         iconTheme: IconThemeData(color: lightGrey),
         backgroundColor: defaultColor,
-        title: Text('${cubit.state.name}'),
+        title: Text('${cubit.state.firstName} ${cubit.state.lastName}'),
       ),
       body: Container(
         height: MediaQuery.of(context).size.height * 0.9,

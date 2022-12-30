@@ -1,4 +1,5 @@
 import 'package:bloodify_front_end/layout/start_layout.dart';
+import 'package:bloodify_front_end/modules/Chat/chat.dart';
 import 'package:bloodify_front_end/modules/institution/stats/stats_cubit.dart';
 import 'package:bloodify_front_end/modules/BloodFinding/bloc/blood_finder_service.dart';
 import 'package:bloodify_front_end/modules/Chat/bloc/chat_service.dart';
@@ -40,11 +41,14 @@ void main() async {
   // CachHelper.removeData(key: 'token');
   // CachHelper.removeData(key: 'isUser');
   ChatService.init();
-  UserInfo.token = CachHelper.getData(key: 'token');
+  // UserInfo.token = CachHelper.getData(key: 'token');
+  UserInfo.token =
+      "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJzZWxmIiwic3ViIjoiam9obkBsZWdlbmQubWUiLCJpYXQiOjE2NzI0Mjk5ODJ9.zy9fpxnvRcZ0bV4cJrlLycBqG5DzZNSWzjj0oeXJWvKVno3w_zjJ_4T1cMC4T25-RpeMXi1Z_mi-yii_um4_gU83cypSy4qXkWujPtsCcy8BwjWnEQOncQ84AiMZyOCs9wuHbxm0eqmBz2aniIOzn96-42qHPxQsTPbcKBCwCb8dFAysJWzBaHXFljMDvjgjV2ULytzODjyesLUeuBtQ96ZmjTJdt3THGU6qflvTROrupVLi2ZIvRZAdqpY3i9MyK7aNgDNKMT53U4u23--t8jU8vyYs65PuzGYMlpOZCIUnZ_I9Mh2K-H9kEpUL7WsJIHnftiV6JWkOIrve_0QwXQ";
   Widget widget;
 
   if (UserInfo.token != null) {
-    UserInfo.isUser = CachHelper.getData(key: 'isUser');
+    // UserInfo.isUser = CachHelper.getData(key: 'isUser');
+    UserInfo.isUser = true;
 
     if (UserInfo.isUser!) {
       UserInfo.location = await getLocation();
@@ -57,7 +61,14 @@ void main() async {
 
   DioHelper.init();
   runApp(MyApp(
-    startWidget: widget,
+    // startWidget: widget,
+    startWidget: ChatScreen(
+      postID: 1,
+      donorID: 2,
+      myID: 1,
+      firstName: "Rick",
+      lastName: "Astley",
+    ),
   ));
 }
 

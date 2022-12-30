@@ -3,7 +3,7 @@ part of 'chat_bloc.dart';
 class ChatState extends Equatable {
   final List<ChatMessage> msgs;
 
-  final String? name;
+  final String? firstName, lastName;
   final int? postID, donorID, myID;
 
   final GlobalKey<FormState>? formKey;
@@ -14,7 +14,8 @@ class ChatState extends Equatable {
 
   const ChatState._(
       {this.msgs = const <ChatMessage>[],
-      this.name,
+      this.firstName,
+      this.lastName,
       this.donorID,
       this.postID,
       this.myID,
@@ -25,14 +26,16 @@ class ChatState extends Equatable {
       this.connected = false});
 
   const ChatState.initial(
-      {required String name,
+      {required String firstName,
+      required String lastName,
       required int donorID,
       required int postID,
       required int myID,
       required GlobalKey<FormState> formKey,
       required TextEditingController messageController})
       : this._(
-            name: name,
+            firstName: firstName,
+            lastName: lastName,
             donorID: donorID,
             postID: postID,
             myID: myID,
@@ -41,7 +44,8 @@ class ChatState extends Equatable {
 
   ChatState copyWith(
       {List<ChatMessage>? msgs,
-      String? name,
+      String? firstName,
+      String? lastName,
       int? donorID,
       int? postID,
       int? myID,
@@ -52,7 +56,8 @@ class ChatState extends Equatable {
       bool? connected}) {
     return ChatState._(
         msgs: msgs ?? this.msgs,
-        name: name ?? name,
+        firstName: firstName ?? this.firstName,
+        lastName: lastName ?? this.lastName,
         donorID: donorID ?? this.donorID,
         postID: postID ?? this.postID,
         myID: myID ?? this.myID,

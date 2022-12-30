@@ -37,6 +37,10 @@ class ChatService {
     socket!.onDisconnect((_) => print('disconnect'));
   }
 
+  static void disconnect() {
+    socket!.disconnect();
+  }
+
   static void sendMessage(ChatMessage message) {
     socket!.emit("send_message", message.toJson());
   }
