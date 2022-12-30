@@ -1,4 +1,5 @@
 import 'package:bloodify_front_end/layout/start_layout.dart';
+import 'package:bloodify_front_end/modules/BloodFinding/blood_finding.dart';
 import 'package:bloodify_front_end/modules/Chat/chat.dart';
 import 'package:bloodify_front_end/modules/institution/stats/stats_cubit.dart';
 import 'package:bloodify_front_end/modules/BloodFinding/bloc/blood_finder_service.dart';
@@ -61,15 +62,8 @@ void main() async {
 
   DioHelper.init();
   runApp(MyApp(
-    // startWidget: widget,
-    startWidget: ChatScreen(
-      postID: 1,
-      donorID: 2,
-      myID: 1,
-      firstName: "Rick",
-      lastName: "Astley",
-    ),
-  ));
+      // startWidget: widget,
+      startWidget: BloodFinder()));
 }
 
 class MyApp extends StatelessWidget {
