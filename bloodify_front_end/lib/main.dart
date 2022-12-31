@@ -1,4 +1,6 @@
 import 'package:bloodify_front_end/layout/start_layout.dart';
+import 'package:bloodify_front_end/modules/BloodFinding/blood_finding.dart';
+import 'package:bloodify_front_end/modules/Chat/chat.dart';
 import 'package:bloodify_front_end/modules/institution/stats/stats_cubit.dart';
 import 'package:bloodify_front_end/modules/BloodFinding/bloc/blood_finder_service.dart';
 import 'package:bloodify_front_end/modules/Chat/bloc/chat_service.dart';
@@ -56,9 +58,7 @@ void main() async {
   Bloc.observer = MyBlocObserver();
 
   DioHelper.init();
-  runApp(MyApp(
-    startWidget: widget,
-  ));
+  runApp(MyApp(startWidget: widget));
 }
 
 class MyApp extends StatelessWidget {
@@ -83,8 +83,8 @@ class MyApp extends StatelessWidget {
           BlocProvider(create: (context) => EventTransactionCubit()),
           BlocProvider(create: (context) => InstituteTransactionCubit()),
           BlocProvider(create: (context) => CreateEventCubit()),
-          BlocProvider(create: (context) => ChangePasswordCubit())
-          BlocProvider(create: (context) => StatsCubit())
+          BlocProvider(create: (context) => ChangePasswordCubit()),
+          BlocProvider(create: (context) => StatsCubit()),
           BlocProvider(
               create: (context) =>
                   NotificationHistoryCubit()..getNotifications()),

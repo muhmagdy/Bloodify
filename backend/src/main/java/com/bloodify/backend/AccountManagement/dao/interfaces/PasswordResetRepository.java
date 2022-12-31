@@ -15,6 +15,7 @@ public interface PasswordResetRepository extends JpaRepository<PasswordReset, St
 
     boolean existsByEmail(String email);
 
+    @Transactional
     long deleteByEmail(@NonNull String email);
 
     @Modifying

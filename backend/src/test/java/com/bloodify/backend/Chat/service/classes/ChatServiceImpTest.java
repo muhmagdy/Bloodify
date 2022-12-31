@@ -85,7 +85,7 @@ public class ChatServiceImpTest {
             msgsDto.add(mockMsgDto(i));
         }
         chatMessageDto =  Mockito.mock(ChatMessageDto.class);
-        service = new ChatServiceImp(userDAO, acceptRepository, msgDao, msgMapper);
+        service = new ChatServiceImp(userDAO, acceptRepository, msgDao, msgMapper, null, null);
     }
     
     @Test

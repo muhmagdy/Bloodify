@@ -8,14 +8,13 @@ import 'package:intl/intl.dart';
 class ChatScreen extends StatelessWidget {
   final String firstName, lastName;
   final int postID, donorID, myID;
-  const ChatScreen({
-    super.key,
-    required this.postID,
-    required this.donorID,
-    required this.myID,
-    required this.firstName,
-    required this.lastName,
-  });
+  const ChatScreen(
+      {super.key,
+      required this.postID,
+      required this.donorID,
+      required this.myID,
+      required this.firstName,
+      required this.lastName});
 
   @override
   Widget build(BuildContext context) {
@@ -44,25 +43,27 @@ class _MainChatScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final cubit = context.watch<ChatCubit>();
     cubit.establishConnection();
-    return Scaffold(
-      appBar: AppBar(
-        iconTheme: IconThemeData(color: lightGrey),
-        backgroundColor: defaultColor,
-        title: Text('${cubit.state.firstName} ${cubit.state.lastName}'),
-      ),
-      body: Container(
-        height: MediaQuery.of(context).size.height * 0.9,
-        // width: MediaQuery.of(context).size.width * 0.9,
-        child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              _MessagesList(cubit: cubit),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
-                child: _MessageForm(cubit: cubit),
-              )
-            ]),
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          iconTheme: IconThemeData(color: lightGrey),
+          backgroundColor: defaultColor,
+          title: Text('${cubit.state.firstName} ${cubit.state.lastName}'),
+        ),
+        body: Container(
+          height: MediaQuery.of(context).size.height * 0.8,
+          // width: MediaQuery.of(context).size.width * 0.9,
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                _MessagesList(cubit: cubit),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 4.0, horizontal: 8.0),
+                  child: _MessageForm(cubit: cubit),
+                )
+              ]),
+        ),
       ),
     );
   }

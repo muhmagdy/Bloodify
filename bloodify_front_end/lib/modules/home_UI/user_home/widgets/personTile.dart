@@ -1,5 +1,7 @@
 import 'package:bloodify_front_end/models/userBrief.dart';
+import 'package:bloodify_front_end/modules/Chat/chat.dart';
 import 'package:bloodify_front_end/shared/Constatnt/colors.dart';
+import 'package:bloodify_front_end/shared/network/local/cach_helper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -8,7 +10,9 @@ import '../../../../shared/Constatnt/fonts.dart';
 
 class PersonTile extends StatefulWidget {
   final UserBrief person;
-  const PersonTile(this.person, {super.key});
+  final int postID;
+  final int state;
+  const PersonTile(this.person, this.postID, this.state, {super.key});
   @override
   State<StatefulWidget> createState() => _PersonTile();
 }
@@ -111,7 +115,7 @@ class _PersonTile extends State<PersonTile> {
                     CupertinoIcons.chat_bubble_fill,
                     size: 0.08 * width,
                   ),
-                  onPressed: () => {},
+                  onPressed: () => _onTap(context),
                 ),
               ),
               if (widget.person.nMessages > 0)
@@ -143,5 +147,29 @@ class _PersonTile extends State<PersonTile> {
         ],
       ),
     );
+  }
+
+  void _onTap(BuildContext context) {
+    int myID = CachHelper.getData(key: 'id');
+    var names = widget.person.name.split(' ');
+    Navigator.of(context).push(PageRouteBuilder(
+        pageBuilder: (context, animation, secondaryAnimation) => ChatScreen(
+              postID: widget.postID,
+              donorID: (widget.state == 1) ? widget.person.userID : myID,
+              myID: myID,
+              firstName: names[0],
+              lastName: names[1],
+            ),
+        transitionsBuilder: ((context, animation, secondaryAnimation, child) {
+          const begin = Offset(0.0, 1.0);
+          const end = Offset.zero;
+          const curve = Curves.ease;
+          var tween =
+              Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+          return SlideTransition(
+            position: animation.drive(tween),
+            child: child,
+          );
+        })));
   }
 }

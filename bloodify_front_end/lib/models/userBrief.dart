@@ -1,3 +1,5 @@
+import 'package:bloodify_front_end/models/postBrief.dart';
+
 class UserBrief {
   late int userID;
   late String name;

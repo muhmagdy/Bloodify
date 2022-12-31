@@ -7,7 +7,7 @@ import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:socket_io_client/socket_io_client.dart';
 
 class ChatService {
-  static String socketUrl = "ws://192.168.1.7:8085";
+  static String socketUrl = "ws://192.168.249.67:8085";
   static String restUrl = "user/chat/messages";
 
   static IO.Socket? socket;
@@ -19,13 +19,14 @@ class ChatService {
   }
 
   static void socketConnect(int postID, int donorID, ChatCubit cubit) {
-    if (socket != null) return;
+    // if (socket != null) return;
     String room = '${postID}_$donorID';
 
     socket = IO.io(
         socketUrl,
         OptionBuilder()
             .setTransports(['websocket'])
+            .enableForceNew()
             .enableReconnection()
             .setQuery({'room': room})
             .build());
@@ -35,6 +36,12 @@ class ChatService {
     socket!.on('get_message', (data) => cubit.updateMessages(data));
 
     socket!.onDisconnect((_) => print('disconnect'));
+  }
+
+  static void disconnect() {
+    socket!.dispose();
+    print("===== Disconnected =====");
+    socket = null;
   }
 
   static void sendMessage(ChatMessage message) {

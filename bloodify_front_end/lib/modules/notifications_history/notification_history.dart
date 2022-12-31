@@ -1,5 +1,9 @@
+import 'dart:ui';
+
 import 'package:bloodify_front_end/modules/BloodFinding/bloc/blood_finder_service.dart';
 import 'package:bloodify_front_end/shared/Constatnt/Component.dart';
+import 'package:bloodify_front_end/shared/Constatnt/colors.dart';
+import 'package:bloodify_front_end/shared/network/remote/dio_helper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -61,7 +65,28 @@ Widget buildNotification(
                 height: 10,
               ),
               TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    getLocation().then((location) {
+                      DioHelper.postData(url: 'user/post/accept', data: {
+                        'id': notification.postID,
+                        'longitude': location.longitude,
+                        'latitude': location.latitude,
+                        'threshold': 0,
+                      }).then((value) {
+                        if (value.data['state']) {
+                          showToast(
+                              text: "Post accepted successfully!",
+                              color: blue,
+                              time: 3000);
+                        } else {
+                          showToast(
+                              text: value.data['message'],
+                              color: red,
+                              time: 3000);
+                        }
+                      });
+                    });
+                  },
                   // deletePost(context),
                   style: TextButton.styleFrom(
                       backgroundColor: Colors.red,
@@ -74,9 +99,7 @@ Widget buildNotification(
                   ))
             ]),
       ),
-      onTap: () {
-        // TODO
-      });
+      onTap: () {});
 }
 
 class NotificationHistory extends StatelessWidget {

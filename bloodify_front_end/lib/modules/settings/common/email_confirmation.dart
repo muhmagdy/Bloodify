@@ -21,15 +21,10 @@ class _EmailConfirmationState extends State<EmailConfirmation> {
   final _confirmationCodeController = TextEditingController();
   int _timeLeft = 90;
   late Timer _timer;
-  bool _isButtonDisabled = false;
+  bool _isButtonDisabled = true;
 
   _EmailConfirmationState() {
-    DioHelper.postData(
-            url: '/password',
-            data: {'email': CachHelper.getData(key: 'confirmationEmail')})
-        .then((value) {
-      showToast(text: value.data['message'], color: Colors.blue, time: 3000);
-    });
+    _startTimer(isInit: true);
   }
 
   @override
@@ -38,17 +33,22 @@ class _EmailConfirmationState extends State<EmailConfirmation> {
     super.dispose();
   }
 
-  void _startTimer() {
-    DioHelper.postData(url: "password", data: {
-      'email': CachHelper.getData(key: 'email'),
-    }).then((value) {
+  void _sendCode() {
+    DioHelper.postString(
+      url: "password",
+      data: CachHelper.getData(key: 'confirmationEmail'),
+    ).then((value) {
       showToast(text: value.data['message'], color: Colors.blue, time: 3000);
-      Navigator.pop(context);
+      // Navigator.pop(context);
     }).catchError((error) => print(error));
+  }
 
-    setState(() {
-      _isButtonDisabled = true;
-    });
+  void _startTimer({bool isInit = false}) {
+    if (!isInit) {
+      setState(() {
+        _isButtonDisabled = true;
+      });
+    }
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
         _timeLeft--;
@@ -93,7 +93,12 @@ class _EmailConfirmationState extends State<EmailConfirmation> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 TextButton(
-                    onPressed: _isButtonDisabled ? null : _startTimer,
+                    onPressed: _isButtonDisabled
+                        ? null
+                        : () {
+                            _sendCode();
+                            _startTimer();
+                          },
                     child: _isButtonDisabled
                         ? Text('Resend code ($_timeLeft seconds)')
                         : const Text('Resend code')),

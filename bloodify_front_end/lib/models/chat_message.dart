@@ -15,9 +15,10 @@ class ChatMessage {
       required this.content,
       required this.timestamp});
 
-  static var dateFormat = DateFormat("yyyy-MM-dd hh:mm:ss");
+  static var dateFormat = DateFormat("yyyy-MM-dd HH:mm:ss");
 
   Map<String, dynamic> toJson() {
+    print(dateFormat.format(timestamp));
     return Map.of({
       "messageID": messageID,
       "postID": postID,
