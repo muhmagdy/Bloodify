@@ -37,7 +37,8 @@ class RequestFullWidget extends StatelessWidget {
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           itemCount: people.length,
-          itemBuilder: (context, index) => PersonTile(people[index]),
+          itemBuilder: (context, index) =>
+              PersonTile(people[index], postBrief.id, status),
         ),
         Container(
           height: 0.01 * height,

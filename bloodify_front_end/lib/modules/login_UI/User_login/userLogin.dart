@@ -33,6 +33,7 @@ class UserLogin extends StatelessWidget {
             UserInfo.isUser = true;
             CachHelper.saveData(
                 key: 'email', value: state.loginModel.data!.email);
+            CachHelper.saveData(key: 'id', value: state.loginModel.data!.id);
             CachHelper.saveData(
                 key: 'username',
                 value:

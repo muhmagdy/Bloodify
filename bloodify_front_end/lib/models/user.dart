@@ -12,7 +12,10 @@ class UserData {
   bool isPatient = false;
   String bloodType = 'A+';
   late String token;
+
+  late final int id;
   UserData.fromJson(Map<String, dynamic> json) {
+    id = json["id"];
     fName = json['first_name'];
 
     lName = json['last_name'];
