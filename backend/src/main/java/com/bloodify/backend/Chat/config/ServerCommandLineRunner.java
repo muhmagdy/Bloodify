@@ -12,7 +12,7 @@ import lombok.RequiredArgsConstructor;
 public class ServerCommandLineRunner implements CommandLineRunner {
     private final SocketIOServer server;
     //TODO: set to true to enable websocket
-    private boolean run = false;
+    private boolean run = true;
     @Override
     public void run(String... args) throws Exception {
 
