@@ -10,7 +10,9 @@ class RequestFullWidget extends StatelessWidget {
   final PostBrief postBrief;
   final List<UserBrief> people;
   final int status;
-  const RequestFullWidget(this.postBrief, this.people, this.status,
+  final Function updateParent;
+  const RequestFullWidget(
+      this.postBrief, this.people, this.status, this.updateParent,
       {super.key});
 
   @override
@@ -22,7 +24,7 @@ class RequestFullWidget extends StatelessWidget {
     else if (status == 2) header = "Requester";
     return Column(
       children: [
-        RequestHeader(postBrief),
+        RequestHeader(postBrief, updateParent),
         if (people.isNotEmpty)
           Text(header,
               textAlign: TextAlign.left,
@@ -35,7 +37,8 @@ class RequestFullWidget extends StatelessWidget {
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           itemCount: people.length,
-          itemBuilder: (context, index) => PersonTile(people[index]),
+          itemBuilder: (context, index) =>
+              PersonTile(people[index], postBrief.id, status),
         ),
         Container(
           height: 0.01 * height,

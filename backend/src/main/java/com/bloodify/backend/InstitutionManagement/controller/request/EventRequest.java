@@ -21,10 +21,10 @@ public class EventRequest {
     @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate endDate;
 
-    @JsonFormat(pattern = "hh:mm a")
+    @JsonFormat(pattern = "hh:mm' 'a")
     private LocalTime startWorkingHour;
 
-    @JsonFormat(pattern = "hh:mm a")
+    @JsonFormat(pattern = "hh:mm' 'a")
     private LocalTime endWorkingHour;
 
     private String location;

@@ -2,11 +2,15 @@
 import 'package:bloodify_front_end/modules/home_UI/institution_home/instHome.dart';
 import 'package:bloodify_front_end/modules/institution/eventInstitution.dart';
 import 'package:bloodify_front_end/shared/Constatnt/colors.dart';
+import 'package:bloodify_front_end/shared/network/local/cach_helper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+import 'package:restart_app/restart_app.dart';
 
+import '../settings/institution_settings/institution_settings.dart';
 import '../transactions_modules/institution_tranaction/InstituteTransaction.dart';
+import 'package:bloodify_front_end/modules/institution/stats/statistics_view.dart';
 
 class InstNavBar extends StatelessWidget {
   const InstNavBar({Key? key}) : super(key: key);
@@ -14,10 +18,10 @@ class InstNavBar extends StatelessWidget {
   List<Widget> _buildScreens() {
     return [
       InstitutionHome(),
-      const Screen2(),
+      const Statistics(),
       InstituteTransaction(),
       InstitutionEventPage(),
-      const Screen5()
+      const InstitutionSettings()
     ];
   }
 
@@ -157,6 +161,10 @@ class Screen5 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Screen5')),
+      floatingActionButton: FloatingActionButton(
+        onPressed: logout,
+        child: const Icon(Icons.logout),
+      ),
       body: const Center(
         child: Text(
           'Account',
@@ -164,5 +172,11 @@ class Screen5 extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void logout() {
+    CachHelper.removeData(key: "token");
+    CachHelper.removeData(key: "isUser");
+    // Restart.restartApp(webOrigin: '/');
   }
 }

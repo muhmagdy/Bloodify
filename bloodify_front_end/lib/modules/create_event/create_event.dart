@@ -380,8 +380,12 @@ class CreateEvent extends StatelessWidget {
                                 title: titleController.text,
                                 fromDate: fromDate.text,
                                 toDate: toDate.text,
-                                startWorking: startWorking.text,
-                                endWorking: endWorking.text,
+                                startWorking: startWorking.text
+                                    .replaceAll("AM", "am")
+                                    .replaceAll("PM", "pm"),
+                                endWorking: endWorking.text
+                                    .replaceAll("AM", "am")
+                                    .replaceAll("PM", "pm"),
                               );
                             }
                           },

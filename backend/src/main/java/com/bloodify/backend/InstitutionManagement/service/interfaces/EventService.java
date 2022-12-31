@@ -10,5 +10,7 @@ public interface EventService {
 
     List<Event> getAllInstEvents(String email);
 
+    List<Event> getAllEvents();
+
     void delete();
 }

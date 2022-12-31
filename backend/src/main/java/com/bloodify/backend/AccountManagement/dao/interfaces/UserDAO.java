@@ -15,6 +15,8 @@ public interface UserDAO extends UserDetailsService{
 
     public User findUserByEmail(String email);
 
+    User findByID(int userID);
+
     public User findUserByEmailJoin(String email);
 
     public User findUserByNationalID(String nationalID);
@@ -31,14 +33,16 @@ public interface UserDAO extends UserDetailsService{
 
     public List<User> findByBloodTypeIn(List<String> bloodTypes);
 
-    public void updateStatus(int userID, int userStatus);
-
-    public void updateLongitudeAndLatitude(int userID, Double longitude, Double latitude);
-  
     int updateLastTimeDonatedByNationalID(LocalDate lastTimeDonated, String nationalID);
 
     int updateLastTimeDonatedAndBloodTypeByNationalID(LocalDate lastTimeDonated,
                                                       String bloodType,
                                                       String nationalID);
+
+    int updateHasDiseases(boolean hasDiseases, String email);
+    
+    public boolean isUserExistByEmail(String email);
+
+    public boolean updatePassword(String email, String newPassword);
 
 }

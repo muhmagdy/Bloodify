@@ -1,4 +1,6 @@
+import 'package:bloodify_front_end/modules/login_UI/forget_password.dart';
 import 'package:bloodify_front_end/modules/login_UI/institution_login/cubit/institution_login_cubit.dart';
+import 'package:bloodify_front_end/modules/settings/common/email_confirmation.dart';
 import 'package:bloodify_front_end/modules/signUP_UI/sign_up_pages/sign_up_1.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
@@ -87,7 +89,22 @@ Widget loginUI({
                   children: [
                     Expanded(child: Container()),
                     InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.of(context).push(PageRouteBuilder(
+                            pageBuilder: (context, animation, secondaryAnimation) =>
+                                const ForgetPassword(),
+                            transitionsBuilder: ((context, animation, secondaryAnimation, child) {
+                              const begin = Offset(0.0, 1.0);
+                              const end = Offset.zero;
+                              const curve = Curves.ease;
+                              var tween =
+                              Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+                              return SlideTransition(
+                                position: animation.drive(tween),
+                                child: child,
+                              );
+                            })));
+                      },
                       child: const Text(
                         "Forgotten password?",
                         style:

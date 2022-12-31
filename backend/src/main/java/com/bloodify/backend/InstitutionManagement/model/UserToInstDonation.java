@@ -4,19 +4,22 @@ import com.bloodify.backend.AccountManagement.model.entities.Institution;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 public class UserToInstDonation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer userToInstDonID;
 
-    @ManyToOne(cascade = CascadeType.ALL, optional = false)
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY, optional = false)
     private Institution institution;
 
     @Column(nullable = false)
@@ -30,4 +33,10 @@ public class UserToInstDonation {
     @Column(nullable = false)
     private LocalDate donationDate;
 
+    public UserToInstDonation(Institution institution, String donorNationalID, String bloodType, LocalDate donationDate) {
+        this.institution = institution;
+        this.donorNationalID = donorNationalID;
+        this.bloodType = bloodType;
+        this.donationDate = donationDate;
+    }
 }

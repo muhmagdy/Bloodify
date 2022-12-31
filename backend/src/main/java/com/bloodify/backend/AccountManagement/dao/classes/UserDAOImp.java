@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Required Services:
@@ -50,6 +51,12 @@ public class UserDAOImp implements UserDAO {
             return null;
         else
             return foundUsers.get(0);
+    }
+
+    @Override
+    public User findByID(int userID) {
+        Optional<User> user = userRepo.findById(userID);
+        return user.orElse(null);
     }
 
     @Override
@@ -93,6 +100,11 @@ public class UserDAOImp implements UserDAO {
                         bloodType, nationalID);
     }
 
+    @Override
+    public int updateHasDiseases(boolean hasDisease, String email) {
+        return userRepo.updateHasDiseasesByEmail(hasDisease, email);
+    }
+
     public List<User> getUsersByBloodType(String bloodType) {
         return userRepo.findByBloodType(bloodType);
     }
@@ -119,16 +131,6 @@ public class UserDAOImp implements UserDAO {
     }
 
     @Override
-    public void updateStatus(int userID, int userStatus) {
-        this.userRepo.updateUserStatus(userID, userStatus);
-    }
-
-    @Override
-    public void updateLongitudeAndLatitude(int userID, Double longitude, Double latitude) {
-        this.userRepo.updateLongitudeAndLatitude(userID, longitude, latitude);
-    }
-
-    @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         log.info(username + " user");
         User user = this.findUserByEmail(username);
@@ -138,6 +140,16 @@ public class UserDAOImp implements UserDAO {
         UserAuthentication userAuth = new UserAuthentication(user);
         return userAuth;
         // return new User("foo", "foo", List.of());
+    }
+
+    @Override
+    public boolean isUserExistByEmail(String email){
+        return userRepo.existsByEmail(email);
+    }
+
+    @Override
+    public boolean updatePassword(String email, String newPassword) {
+        return userRepo.updatePasswordByEmail(newPassword, email) == 1;
     }
 
 }

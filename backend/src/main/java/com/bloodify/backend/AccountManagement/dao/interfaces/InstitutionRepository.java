@@ -5,6 +5,7 @@ import com.bloodify.backend.AccountManagement.model.entities.Institution;
 import com.bloodify.backend.UserRequests.model.entities.Post;
 import com.bloodify.backend.AccountManagement.model.entities.User;
 import com.bloodify.backend.UserRequests.controller.request.entity.InstitutionBrief;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -35,6 +36,13 @@ public interface InstitutionRepository extends JpaRepository<Institution, Intege
     List<Institution> haveBloodPacketsNegativeAB(int quantity);
     List<Institution> haveBloodPacketsNegativeO(int quantity);
 
+    boolean existsByEmail(String email);
+
+    @Transactional
+    @Modifying(clearAutomatically = true,flushAutomatically = true)
+    @Query("update Institution u set u.password = ?1 where u.email = ?2")
+    int updatePasswordByEmail(@NonNull String newPassword,
+                                  @NonNull String email);
 
     @Transactional
     @Modifying(clearAutomatically = true,flushAutomatically = true)
@@ -115,6 +123,34 @@ public interface InstitutionRepository extends JpaRepository<Institution, Intege
     @Modifying(clearAutomatically = true,flushAutomatically = true)
     @Query("update Institution i set i.negativeO_bagsCount = i.negativeO_bagsCount + ?1 where i.email = ?2")
     int incrementONegBagsCountBy(@NonNull Integer negativeO_bagsCount, @NonNull String email);
+
+    // getting blood bags counts:
+
+    @Query("select i.negativeA_bagsCount from Institution i where i.email like ?1")
+    Integer findANByEmailLike(String email);
+
+    @Query("select i.negativeB_bagsCount from Institution i where i.email like ?1")
+    Integer findBNByEmailLike(String email);
+
+    @Query("select i.negativeO_bagsCount from Institution i where i.email like ?1")
+    Integer findONByEmailLike(String email);
+
+    @Query("select i.negativeAB_bagsCount from Institution i where i.email like ?1")
+    Integer findABNByEmailLike(String email);
+
+    @Query("select i.positiveA_bagsCount from Institution i where i.email like ?1")
+    Integer findAPByEmailLike(String email);
+
+    @Query("select i.positiveB_bagsCount from Institution i where i.email like ?1")
+    Integer findBPByEmailLike(String email);
+
+    @Query("select i.positiveO_bagsCount from Institution i where i.email like ?1")
+    Integer findOPByEmailLike(String email);
+
+    @Query("select i.positiveAB_bagsCount from Institution i where i.email like ?1")
+    Integer findABPByEmailLike(String email);
+
+
 
 
 

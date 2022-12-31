@@ -23,4 +23,5 @@ public interface UserToInstDonDAO {
     // finds all the (user to institution) donations where the specified user (by NID) was a donor
     List<UserToInstDonation> findByDonorNID(@NonNull String nationalID);
 
+    int requestedBloodBagsByTypeAndDate(String bloodType, LocalDate startDate, LocalDate endDate, String instEmail);
 }

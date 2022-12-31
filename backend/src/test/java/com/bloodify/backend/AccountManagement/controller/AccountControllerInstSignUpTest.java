@@ -5,6 +5,7 @@ import com.bloodify.backend.AccountManagement.model.entities.Institution;
 import com.bloodify.backend.AccountManagement.model.responses.SignUpResponse;
 import com.bloodify.backend.AccountManagement.services.exceptions.EmailExistsException;
 import com.bloodify.backend.AccountManagement.services.interfaces.AccountManagerService;
+import com.bloodify.backend.UserRequests.model.request.PasswordChangeRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -134,6 +135,71 @@ class AccountControllerInstSignUpTest {
                 andReturn();
         String expected = objectMapper.
                 writeValueAsString(new SignUpResponse(false, "An account already exists with the same email."));
+        String actual = mvcResult.getResponse().getContentAsString();
+        assertThat(actual).isEqualToIgnoringWhitespace(expected);
+    }
+
+    @Test
+    void whenEmptyPasswordResponse_thenReturns422() throws Exception {
+        mockMvc.perform(post("/api/v1/password").
+                contentType("application/json")).
+                andExpect(status().isUnprocessableEntity());
+    }
+
+    @Test
+    void whenValidPasswordRequest_thenReturn200OK() throws Exception {
+        String email = random.generateEmail(10,20);
+        SignUpResponse response = new SignUpResponse(true, "Code sent successfully to " + email);
+        when(accountManagerService.sendVerificationCode(email)).thenReturn(response);
+        MvcResult mvcResult =
+                mockMvc.perform(post("/api/v1/password")
+                        .contentType("application/json")
+                        .content(objectMapper.writeValueAsString(email)))
+                        .andExpect(status().isOk())
+                        .andReturn();
+    }
+
+    @Test
+    void whenEmptyPasswordResetResponse_thenReturns400() throws Exception {
+        mockMvc.perform(post("/api/v1/password").
+                contentType("application/json")).
+                andExpect(status().isUnprocessableEntity());
+    }
+
+    @Test
+    void whenPasswordResetCorrect_thenStateIsTrue() throws Exception {
+        String email ="test@test.com";
+        String code = "1234";
+        String password = "1234567890@PASSWORD";
+        PasswordChangeRequest passwordChangeRequest =
+                new PasswordChangeRequest(email, code, password);
+        when(accountManagerService.resetPassword(email, code, password)).thenReturn(true);
+        MvcResult mvcResult = mockMvc.perform(patch("/api/v1/password").
+                contentType("application/json").
+                content(objectMapper.writeValueAsString(passwordChangeRequest))).
+                andExpect(status().isOk()).
+                andReturn();
+        String expected = objectMapper.
+                writeValueAsString(new SignUpResponse(true, "Password changed successfully"));
+        String actual = mvcResult.getResponse().getContentAsString();
+        assertThat(actual).isEqualToIgnoringWhitespace(expected);
+    }
+
+    @Test
+    void whenPasswordResetIncorrect_thenStateIsFalse() throws Exception {
+        String email ="test@test.com";
+        String code = "1234";
+        String password = "1234567890@PASSWORD";
+        PasswordChangeRequest passwordChangeRequest =
+                new PasswordChangeRequest(email, code, password);
+        when(accountManagerService.resetPassword(email, code, password)).thenReturn(false);
+        MvcResult mvcResult = mockMvc.perform(patch("/api/v1/password").
+                contentType("application/json").
+                content(objectMapper.writeValueAsString(passwordChangeRequest))).
+                andExpect(status().isOk()).
+                andReturn();
+        String expected = objectMapper.
+                writeValueAsString(new SignUpResponse(false, "Incorrect code, please try again."));
         String actual = mvcResult.getResponse().getContentAsString();
         assertThat(actual).isEqualToIgnoringWhitespace(expected);
     }

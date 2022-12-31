@@ -86,6 +86,7 @@ Future<List<FoundInstitutionWithDistance>> processFindings(
 
   List<FoundInstitutionWithDistance> processedFindings = institutions.map((e) {
     e.types_bags.removeWhere((key, value) => value <= 0);
+    print('${e.latitude}, ${e.longitude}');
     return FoundInstitutionWithDistance(
         institution: e,
         distance: getDistance(position, e.latitude, e.longitude));
@@ -99,7 +100,7 @@ Future<List<FoundInstitutionWithDistance>> processFindings(
 getDistance(Position? pos, double lat, double long) {
   if (pos == null) return -1.0;
   var distanceBetween =
-      Geolocator.distanceBetween(pos.latitude, pos.latitude, lat, long);
+      Geolocator.distanceBetween(pos.latitude, pos.longitude, lat, long);
   print(distanceBetween);
   return distanceBetween;
 }

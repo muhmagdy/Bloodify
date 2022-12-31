@@ -40,4 +40,9 @@ public class UserToInstDonDAOImp implements UserToInstDonDAO {
         return userToInstDonRepository.findByDonorNationalID(nationalID);
     }
 
+    @Override
+    public int requestedBloodBagsByTypeAndDate(String bloodType, LocalDate startDate, LocalDate endDate, String instEmail){
+        return userToInstDonRepository.countByBloodTypeLikeAndDonationDateBetween(bloodType, startDate, endDate, instEmail);
+    }
+
 }

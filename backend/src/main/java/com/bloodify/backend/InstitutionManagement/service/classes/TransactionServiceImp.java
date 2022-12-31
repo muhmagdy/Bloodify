@@ -106,13 +106,6 @@ public class TransactionServiceImp implements TransactionService {
     public void applyUserToInstDonation(UserToInstDonDTO userToInsDonDTO) {
         UserToInstDonation model = userToInstDonModelMapper.mapToModel(userToInsDonDTO);
 
-        // update only happens if the user is already registered otherwise no changes happen
-        userDAO.updateLastTimeDonatedAndBloodTypeByNationalID(
-                LocalDate.now(),
-                userToInsDonDTO.getBloodType(),
-                userToInsDonDTO.getDonorNationalID()
-        );
-
         int updatedRows = institutionDAO.incrementBagsCountBy(
                 userToInsDonDTO.getInstitutionEmail(),
                 userToInsDonDTO.getBloodType(),
@@ -122,6 +115,12 @@ public class TransactionServiceImp implements TransactionService {
         if (updatedRows == -1)
             throw new InvalidBloodType();
 
+        // update only happens if the user is already registered otherwise no changes happen
+        userDAO.updateLastTimeDonatedAndBloodTypeByNationalID(
+                LocalDate.now(),
+                userToInsDonDTO.getBloodType(),
+                userToInsDonDTO.getDonorNationalID()
+        );
 
         if (!(updatedRows > 0 && userToInstDonDAO.save(model)))
             throw new TransactionException("Invalid Transaction!");

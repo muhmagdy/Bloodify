@@ -13,7 +13,7 @@ class DioHelper {
       BaseOptions(
         // baseUrl:
         // "https://7722b390-519c-4d05-810f-90091b05282c.mock.pstmn.io/api/v1/",
-        baseUrl: 'http://192.168.1.5:8080/api/v1/',
+        baseUrl: 'http://192.168.249.67:8080/api/v1/',
         receiveDataWhenStatusError: true,
         headers: {
           'Content-Type': 'application/json',
@@ -72,10 +72,92 @@ class DioHelper {
     );
   }
 
+  static Future<Response> postString({
+    required String url,
+    Map<String, dynamic>? query,
+    required String data,
+    String lang = 'en',
+  }) async {
+    String? auth;
+    if (token == null) {
+      dio!.options.headers = {
+        'Content-Type': 'application/json',
+        'lang': lang,
+      };
+    } else {
+      dio!.options.headers = {
+        'Content-Type': 'application/json',
+        'lang': lang,
+        'Authorization': "Bearer $token",
+      };
+    }
+    print(dio!.options.headers);
+    return dio!.post(
+      url,
+      queryParameters: query,
+      data: data,
+    );
+  }
+
+  static Future<Response> patchData({
+    required String url,
+    Map<String, dynamic>? query,
+    required Map<String, dynamic> data,
+    String lang = 'en',
+  }) async {
+    String? auth;
+    if (token == null) {
+      dio!.options.headers = {
+        'Content-Type': 'application/json',
+        'lang': lang,
+      };
+    } else {
+      dio!.options.headers = {
+        'Content-Type': 'application/json',
+        'lang': lang,
+        'Authorization': "Bearer $token",
+      };
+    }
+    print(dio!.options.headers);
+    return dio!.patch(
+      url,
+      queryParameters: query,
+      data: data,
+    );
+  }
+
+  static Future<Response> deleteData({
+    required String url,
+    Map<String, dynamic>? query,
+    required Map<String, dynamic> data,
+    String lang = 'en',
+  }) async {
+    String? auth;
+    if (token == null) {
+      dio!.options.headers = {
+        'Content-Type': 'application/json',
+        'lang': lang,
+      };
+    } else {
+      dio!.options.headers = {
+        'Content-Type': 'application/json',
+        'lang': lang,
+        'Authorization': "Bearer $token",
+      };
+    }
+    print(dio!.options.headers);
+    return dio!.delete(
+      url,
+      queryParameters: query,
+      data: data,
+    );
+  }
+
   static Future<Response> postLogin({
     required String url,
     required email,
     required password,
+    Map<String, dynamic>? data,
   }) async {
     var auth = 'Basic ${base64Encode(utf8.encode('$email:$password'))}';
     print(auth);
@@ -83,10 +165,12 @@ class DioHelper {
       'authorization': auth,
       'Content-Type': 'application/json',
     };
-
-    return dio!.post(
-      url,
-    );
+    if (data == null) {
+      return dio!.post(
+        url,
+      );
+    }
+    return dio!.post(url, data: data);
   }
 
   static Future<Response> putData({

@@ -20,6 +20,7 @@ public class UserToUserDonDAOImp implements UserToUserDonDAO {
             userToUserDonRepository.save(userToUserDonation);
             return true;
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             return false;
         }
     }
@@ -44,4 +45,7 @@ public class UserToUserDonDAOImp implements UserToUserDonDAO {
         return userToUserDonRepository.findByAcceptor_NationalID(nationalID);
     }
 
+    public int requestedBloodBagsByTypeAndDate (String bloodType, LocalDate start, LocalDate end, String instEmail) {
+        return userToUserDonRepository.countByAcceptor_BloodTypeAndDonationDateBetween(bloodType, start, end, instEmail);
+    }
 }
