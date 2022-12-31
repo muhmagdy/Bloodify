@@ -227,7 +227,14 @@ class InstitutionAddress extends StatelessWidget {
     return Row(
       children: [
         Icon(Icons.location_on_outlined),
-        Text(institutionLocation),
+        Container(
+          constraints:
+              BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.4),
+          child: Text(
+            institutionLocation,
+            softWrap: true,
+          ),
+        ),
       ],
     );
   }
