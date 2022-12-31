@@ -8,14 +8,13 @@ import 'package:intl/intl.dart';
 class ChatScreen extends StatelessWidget {
   final String firstName, lastName;
   final int postID, donorID, myID;
-  const ChatScreen({
-    super.key,
-    required this.postID,
-    required this.donorID,
-    required this.myID,
-    required this.firstName,
-    required this.lastName,
-  });
+  const ChatScreen(
+      {super.key,
+      required this.postID,
+      required this.donorID,
+      required this.myID,
+      required this.firstName,
+      required this.lastName});
 
   @override
   Widget build(BuildContext context) {
