@@ -5,12 +5,7 @@
 * [Features](#features)
 * [Screenshots](#screenshots)
 <!-- * [Setup](#setup)
-* [Usage](#usage)
-* [Project Status](#project-status)
-* [Room for Improvement](#room-for-improvement)
-* [Acknowledgements](#acknowledgements)
-* [Contact](#contact) -->
-<!-- * [License](#license) -->
+* [Contact](#contact)  -->
 ## General Information
 - Bloodify is project of swe course 
 - What problem does it solve?<br>
@@ -46,7 +41,7 @@ units.
 <img src="https://user-images.githubusercontent.com/89037036/205827817-3ebab7e1-ea28-4008-9df6-fd3b5ee43499.png" alt="drawing" height="400"/>
 <img src="https://user-images.githubusercontent.com/89037036/205827541-1dcc9d3f-d16f-4441-885d-3df55895352a.png" alt="drawing" height="400"/>
 <img src="https://user-images.githubusercontent.com/89037036/205827702-8f974ddc-11da-426f-8613-ae4d682559cd.png" alt="drawing" height="400"/>
-</p><br>
+</p>
 - home pages
 <p align="center">
 <img src="https://user-images.githubusercontent.com/26904065/208301481-71fe407d-eed0-4bae-9b38-cda395922d5c.png" alt="drawing" height="400"/>
@@ -69,3 +64,8 @@ units.
 <p align="center">
 <img src="https://user-images.githubusercontent.com/77590247/208864991-26b64e79-20f6-4b86-a2a4-4912ca39a2c8.png" alt="drawing" height="400"/>
 </p>
+<!-- ## Setup
+1. download flutter 
+2. download java spring boot
+3. download my sql 
+4. run spring boot and flutter and connect to ur local host api in flutter side -->
