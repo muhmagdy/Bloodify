@@ -3,8 +3,8 @@
 * [General Info](#general-information)
 * [Technologies Used](#technologies-used)
 * [Features](#features)
-<!-- * [Screenshots](#screenshots)
-* [Setup](#setup)
+* [Screenshots](#screenshots)
+<!-- * [Setup](#setup)
 * [Usage](#usage)
 * [Project Status](#project-status)
 * [Room for Improvement](#room-for-improvement)
@@ -39,3 +39,33 @@ Medical institutions can also use the app to post their needs, and the app will 
 units.
 - Consumption analysis for hospitals and opposite for blood banks.
 - Sort blood doner based on proximity.
+## Screenshots
+- login and signup UI
+<p align="center">
+<img src="https://user-images.githubusercontent.com/89037036/205827357-78a4092a-39ac-4dfb-8688-483c0e94a52b.png" alt="drawing" height="400"/>
+<img src="https://user-images.githubusercontent.com/89037036/205827817-3ebab7e1-ea28-4008-9df6-fd3b5ee43499.png" alt="drawing" height="400"/>
+<img src="https://user-images.githubusercontent.com/89037036/205827541-1dcc9d3f-d16f-4441-885d-3df55895352a.png" alt="drawing" height="400"/>
+<img src="https://user-images.githubusercontent.com/89037036/205827702-8f974ddc-11da-426f-8613-ae4d682559cd.png" alt="drawing" height="400"/>
+</p><br>
+- home pages
+<p align="center">
+<img src="https://user-images.githubusercontent.com/26904065/208301481-71fe407d-eed0-4bae-9b38-cda395922d5c.png" alt="drawing" height="400"/>
+<img src="https://user-images.githubusercontent.com/26904065/208301894-77ec284a-f4b5-4c32-8c96-c4f920c9dc04.png" alt="drawing" height="400"/>
+<img src="https://user-images.githubusercontent.com/26904065/208301556-1d035723-1963-4330-a93f-c44ccb8da395.png" alt="drawing" width="400"/>
+</p>
+- transactions
+<p align="center">
+<img src="https://user-images.githubusercontent.com/77590247/208730779-995f4682-0b47-4012-acda-c54ca07e1ae2.png" alt="drawing" height="400"/>
+<img src="https://user-images.githubusercontent.com/77590247/208731299-749c4a1b-f35a-4e51-bf3d-64941893e0db.png" alt="drawing" height="400"/>
+<img src="https://user-images.githubusercontent.com/77590247/208731703-8012b575-3dc6-435b-85fb-39820c916130.png" alt="drawing" height="400" />
+</p>
+- requiest
+<p align="center">
+<img src="https://user-images.githubusercontent.com/89037036/208801117-395e7b9c-a396-4580-a697-bab4d5bb86f2.png" alt="drawing" height="400"/>
+<img src="https://user-images.githubusercontent.com/89037036/208801241-1a84d4bf-2e7f-45fa-bd7b-a0d4d94238cb.png" alt="drawing" height="400"/>
+<img src="https://user-images.githubusercontent.com/77590247/208864991-26b64e79-20f6-4b86-a2a4-4912ca39a2c8.png" alt="drawing" height="400"/>
+</p>
+- event creation
+<p align="center">
+<img src="https://user-images.githubusercontent.com/77590247/208864991-26b64e79-20f6-4b86-a2a4-4912ca39a2c8.png" alt="drawing" height="400"/>
+</p>
