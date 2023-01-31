@@ -51,8 +51,6 @@ public class PostServiceImp implements PostService {
     }
 
     @Autowired
-    LoginSessionDAO loginSessionDAO;
-    @Autowired
     NotificationService notificationFacade;
 
     @Autowired

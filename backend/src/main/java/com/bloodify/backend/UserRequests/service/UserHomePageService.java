@@ -29,8 +29,7 @@ public class UserHomePageService {
     UserDAO userDAO;
     @Resource(name = "postDaoImp")
     PostDao postDao;
-    @Autowired
-    LoginSessionDAO loginSessionDAO;
+
     @Autowired
     AcceptRepository acceptRepository;
     @Autowired

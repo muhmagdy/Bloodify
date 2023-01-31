@@ -6,7 +6,6 @@ import com.bloodify.backend.notification.NotificationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import com.bloodify.backend.AccountManagement.dao.interfaces.LoginSessionDAO;
 import com.bloodify.backend.AccountManagement.dao.interfaces.UserDAO;
 import com.bloodify.backend.AccountManagement.model.entities.User;
 import com.bloodify.backend.Chat.dto.entities.ChatMessageDto;
@@ -37,9 +36,8 @@ public class ChatServiceImp implements ChatService {
 
     final UserDAO userDAO;
 
-    final NotificationService messagingService;
-    final LoginSessionDAO loginSessionDAO;
-    
+    final NotificationService notificationService;
+
     private Integer getRecipientID(ChatMessage chatMessage){
         Integer recipientID = chatMessage.getPostOwnerID();
         if(chatMessage.getDirection()){
@@ -94,7 +92,7 @@ public class ChatServiceImp implements ChatService {
 
         User recipient = userDAO.findByID(recipientID);
 
-        messagingService.sendNotification(recipient.getEmail(), "You may have new message.", null);
+        notificationService.sendNotification(recipient.getEmail(), "You may have new message.", null);
         
     }
 
