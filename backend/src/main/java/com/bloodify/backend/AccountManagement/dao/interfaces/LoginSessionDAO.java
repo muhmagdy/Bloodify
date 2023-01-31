@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.bloodify.backend.AccountManagement.model.entities.LoginSession;
 
 public interface LoginSessionDAO   {
-    String getToken(String email);
+    String getToken(String email) throws Exception;
     boolean delete(String email);
     boolean save(LoginSession login);
     void updateToken(String email,String token);

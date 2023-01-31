@@ -18,11 +18,11 @@ public class LoginSessionDAOImp implements LoginSessionDAO {
     LoginSessionRepository loginSessionRepository;
 
     @Override
-    public String getToken(String email) {
+    public String getToken(String email) throws Exception {
         LoginSession loginSession = loginSessionRepository.findTokenByEmail(email);
 
         if (loginSession == null) {
-            return null;
+            throw new Exception("Not founded");
         }
         return loginSession.getToken();
     }

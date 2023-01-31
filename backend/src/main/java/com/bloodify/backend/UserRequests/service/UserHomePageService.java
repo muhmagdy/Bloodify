@@ -13,13 +13,12 @@ import com.bloodify.backend.UserRequests.service.bloodTypes.BloodType;
 import com.bloodify.backend.UserRequests.service.bloodTypes.BloodTypeFactory;
 import com.bloodify.backend.UserRequests.service.interfaces.CompatiblePosts;
 import com.bloodify.backend.UserRequests.service.interfaces.PostDao;
+import com.bloodify.backend.notification.NotificationService;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.bloodify.backend.notification.service.FirebaseMessagingService;
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,14 +29,13 @@ public class UserHomePageService {
     UserDAO userDAO;
     @Resource(name = "postDaoImp")
     PostDao postDao;
-    @Autowired
-    LoginSessionDAO loginSessionDAO;
+
     @Autowired
     AcceptRepository acceptRepository;
     @Autowired
     CompatiblePosts compatiblePosts;
     @Autowired
-    FirebaseMessagingService firebaseMessagingService;
+    NotificationService notificationFacade;
 
     // Check if has current post -> 1
     // Check if has accepted requests -> 2
@@ -133,11 +131,8 @@ public class UserHomePageService {
             AcceptedPost acceptedPost = new AcceptedPost(post, user, longitude, latitude, threshold,
                     post.getUser().getUserID());
             User requesterUser = post.getUser();
-            String token = loginSessionDAO.getToken(requesterUser.getEmail());
-            if (token != null) {
-                firebaseMessagingService.chatNotification(token, "Your request has been accepted",
-                        user.getFirstName() + " has accepted your request");
-            }
+            notificationFacade.sendNotification(requesterUser.getEmail(), "Your request has been accepted",
+                    user.getFirstName() + " has accepted your request");
             acceptRepository.save(acceptedPost);
         } catch (Exception e) {
             return false;

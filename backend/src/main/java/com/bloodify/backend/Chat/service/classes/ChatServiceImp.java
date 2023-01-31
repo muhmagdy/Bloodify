@@ -2,12 +2,13 @@ package com.bloodify.backend.Chat.service.classes;
 
 import java.util.List;
 
+import com.bloodify.backend.notification.NotificationService;
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import com.bloodify.backend.AccountManagement.dao.interfaces.LoginSessionDAO;
 import com.bloodify.backend.AccountManagement.dao.interfaces.UserDAO;
 import com.bloodify.backend.AccountManagement.model.entities.User;
-import com.bloodify.backend.Chat.controller.requests.entities.ChatMessageRequest;
 import com.bloodify.backend.Chat.dto.entities.ChatMessageDto;
 import com.bloodify.backend.Chat.dto.mapper.ChatMessageMapper;
 import com.bloodify.backend.Chat.exceptions.RecipientNotFoundException;
@@ -18,11 +19,10 @@ import com.bloodify.backend.Chat.service.interfaces.ChatService;
 import com.bloodify.backend.UserRequests.exceptions.AcceptedPostNotFoundException;
 import com.bloodify.backend.UserRequests.exceptions.UserNotFoundException;
 import com.bloodify.backend.UserRequests.repository.interfaces.AcceptRepository;
-import com.bloodify.backend.notification.service.FirebaseMessagingService;
 import com.google.firebase.messaging.FirebaseMessagingException;
 
 import jakarta.transaction.Transactional;
-
+@RequiredArgsConstructor
 @Service
 public class ChatServiceImp implements ChatService {
 
@@ -37,20 +37,7 @@ public class ChatServiceImp implements ChatService {
 
     final UserDAO userDAO;
 
-    final FirebaseMessagingService messagingService;
-    final LoginSessionDAO loginSessionDAO;
-
-
-    public ChatServiceImp(UserDAO userDAO, AcceptRepository acceptRepository,
-     ChatMessageDao chatMessageDao, ChatMessageMapper chatMessageMapper, FirebaseMessagingService messagingService,
-     LoginSessionDAO loginSessionDAO) {
-        this.userDAO = userDAO;
-        this.acceptRepository = acceptRepository;
-        this.chatMessageDao = chatMessageDao;
-        this.chatMessageMapper = chatMessageMapper;
-        this.messagingService = messagingService;
-        this.loginSessionDAO = loginSessionDAO;
-    }
+    final NotificationService notificationService;
 
     private Integer getRecipientID(ChatMessage chatMessage){
         Integer recipientID = chatMessage.getPostOwnerID();
@@ -106,7 +93,7 @@ public class ChatServiceImp implements ChatService {
 
         User recipient = userDAO.findByID(recipientID);
 
-        messagingService.chatNotification(loginSessionDAO.getToken(recipient.getEmail()), "You may have new message.", null);
+        notificationService.sendNotification(recipient.getEmail(), "You may have new message.", null);
         
     }
 
