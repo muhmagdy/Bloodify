@@ -52,8 +52,8 @@ public class AccountController {
     // Returns Status Code 422 UNPROCESSABLE ENTITY if email/password incorrect
     @PostMapping(test + "/user/auth")
     public ResponseEntity<LogInResponse> signInUser(Authentication credentials,
-            @RequestBody Map<String, Object> httpBody) {
-        String token = (String) httpBody.get("token");
+            @RequestBody String token) {
+
         System.out.println(token);
         LoginResponseBody body = accountManagerService.userLogIn(credentials, token);
         if (body == null) {

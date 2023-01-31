@@ -74,7 +74,7 @@ public class NotificationDIOImp implements NotificationHistoryDAO {
             notificationHistoryRepository.save(notificationHistory);
 
         } catch (Exception e) {
-            throw new Exception("un able to save");
+            throw new Exception("unable to save");
         }
     }
 

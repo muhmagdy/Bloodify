@@ -54,11 +54,10 @@ public class AccountManagerServiceImp implements AccountManagerService {
         try {
             String token = tokenUtil.generateToken(auth);
             User user = userDAO.findUserByEmail(auth.getName());
-            String loginToken = loginSessionDAO.getToken(user.getEmail());
-            System.out.println(loginToken);
-            if (loginToken != null) {
+            try {
+                String loginToken = loginSessionDAO.getToken(user.getEmail());
                 loginSessionDAO.updateToken(user.getEmail(), mobileToken);
-            } else {
+            }catch (Exception e){
                 LoginSession loginSession = new LoginSession(user.getEmail(), mobileToken);
                 loginSessionDAO.save(loginSession);
             }

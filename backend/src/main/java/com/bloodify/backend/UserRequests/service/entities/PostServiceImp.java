@@ -16,18 +16,15 @@ import com.bloodify.backend.UserRequests.service.bloodTypes.BloodType;
 import com.bloodify.backend.UserRequests.service.bloodTypes.BloodTypeFactory;
 import com.bloodify.backend.UserRequests.service.interfaces.PostDao;
 import com.bloodify.backend.UserRequests.service.interfaces.PostService;
+import com.bloodify.backend.notification.NotificationService;
 import com.bloodify.backend.notification.dao.Interfaces.NotificationHistoryDAO;
 import com.bloodify.backend.notification.model.NotificationHistory;
 import com.bloodify.backend.notification.model.NotificationHistoryKey;
 import com.bloodify.backend.notification.model.PushNotificationRequest;
-import com.bloodify.backend.notification.service.FirebaseMessagingService;
 
-import ch.qos.logback.core.subst.Token;
 import lombok.extern.slf4j.Slf4j;
-import net.bytebuddy.asm.Advice.Local;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -56,14 +53,13 @@ public class PostServiceImp implements PostService {
     @Autowired
     LoginSessionDAO loginSessionDAO;
     @Autowired
-    FirebaseMessagingService firebaseMessagingService;
+    NotificationService notificationFacade;
 
     @Autowired
     NotificationHistoryDAO notificationHistoryDAO;
 
     @Override
     public boolean savePost(PostDto dto) {
-        System.out.println("adding some post");
         Post postToSave;
         try {
             postToSave = this.postDtoMapper.map_to_Post(dto);
@@ -71,15 +67,11 @@ public class PostServiceImp implements PostService {
             if (status) {
                 List<User> users = this.getUsersToBeNotified(postToSave);
                 for (User itr : users) {
-                    String sessionToken = loginSessionDAO.getToken(itr.getEmail());
-                    System.out.println(sessionToken);
-                    if (sessionToken != null) {
-                        PushNotificationRequest pushableNotification = new PushNotificationRequest("",
-                                postToSave.getInstitution().getLongitude(),
-                                postToSave.getInstitution().getLatitude(),
-                                postToSave.getInstitution().getName(), false);
-                        firebaseMessagingService.sendNotification(pushableNotification, sessionToken);
-                    }
+                    PushNotificationRequest pushableNotification = new PushNotificationRequest("",
+                            postToSave.getInstitution().getLongitude(),
+                            postToSave.getInstitution().getLatitude(),
+                            postToSave.getInstitution().getName(), false);
+                    notificationFacade.sendNotification(itr.getEmail(), pushableNotification);
                     NotificationHistoryKey notificationHistoryKey = new NotificationHistoryKey(postToSave.getPostID(),
                             itr.getUserID());
                     NotificationHistory notificationHistory = new NotificationHistory(notificationHistoryKey, itr,
