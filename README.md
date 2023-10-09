@@ -25,8 +25,6 @@ Medical institutions can also use the app to post their needs, and the app will 
 - Feed: All requests which haven't been fulfilled within the same location are added to the feed. Users within the same location can view the feed.
 - Push Notification: When a match happens or a blood campaign is held. 
 - Chatting: When a match occurs, the two parties can chat with each other to exchange any necessary information.
-- Support hospitals and blood banks share in providing / consuming blood
-units.
 - Consumption and Donation analysis for hospitals and blood banks.
 ## Screenshots
 ### Login and Signup UI
