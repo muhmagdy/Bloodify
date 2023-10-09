@@ -1,6 +1,6 @@
 # Bloodify
 ## Table of Contents
-* [Motivation](#Motivationn)
+* [Motivation](#motivationn)
 * [Technologies Used](#technologies-used)
 * [Features](#features)
 * [Screenshots](#screenshots)
