@@ -1,21 +1,15 @@
 # Bloodify
 ## Table of Contents
-* [General Info](#general-information)
+* [Motivation](#Motivationn)
 * [Technologies Used](#technologies-used)
 * [Features](#features)
 * [Screenshots](#screenshots)
 <!-- * [Setup](#setup)
 * [Contact](#contact)  -->
-## General Information
-- Bloodify is project of swe course 
-- What problem does it solve?<br>
+## Motivation
 Blood donation is a sensitive topic in Egypt. The country has one of the world's lowest rates of blood donation per capita. According to the most recent statistics, only 1% of Egyptians donate blood, while the global average is around 6%. Because of this disparity, blood supplies are in short supply, limiting the number of procedures doctors can perform on patients and leaving many in critical need.
 Bloodify was created to solve the problem of blood donation by making it easier and more accessible to the public. Users can sign up for the app and become blood donors in just a few minutes. Users can request blood from others in their area and find the closest one who meets their criteria, as well as the types of donation they require. Bloodify is the first app to offer digital blood coupons that can be redeemed at local blood banks as needed.
 Medical institutions can also use the app to post their needs, and the app will find nearby users who can assist. The app also supports blood donation campaigns, where users can donate blood.
-- What is the purpose of your project?
-1. useing princibles of agile 
-2. use project develop tool like Jira 
-3. using Design pattern
 ## Technologies Used
 - Flutter
 - Spring boot
