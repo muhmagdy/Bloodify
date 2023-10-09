@@ -1,6 +1,6 @@
 # Bloodify
 ## Table of Contents
-* [Motivation](#motivationn)
+* [Motivation](#motivation)
 * [Technologies Used](#technologies-used)
 * [Features](#features)
 * [Screenshots](#screenshots)
@@ -13,48 +13,54 @@ Medical institutions can also use the app to post their needs, and the app will 
 ## Technologies Used
 - Flutter
 - Spring boot
-- Fire base 
-- Websocket
+- Firebase 
+- SocketIO
 - MySQL
 ## Features
 - User registration (Sign Up) and signing in.
 - User Profile and Information: User profile contains name, gender, residence, blood type and previous donations.
 - Blood Request: Each request has a criteria (required blood type, time, location). A request can be placed by a regular user or medical institution.
+- Sort blood donor based on proximity.
+- Match donor / recipient based on proximity.
 - Feed: All requests which haven't been fulfilled within the same location are added to the feed. Users within the same location can view the feed.
-- Pushing notification: When a match happens or a blood campaign is held. 
+- Push Notification: When a match happens or a blood campaign is held. 
 - Chatting: When a match occurs, the two parties can chat with each other to exchange any necessary information.
-- Match doner / recipient based on proximity (distance).
 - Support hospitals and blood banks share in providing / consuming blood
 units.
-- Consumption analysis for hospitals and opposite for blood banks.
-- Sort blood doner based on proximity.
+- Consumption and Donation analysis for hospitals and blood banks.
 ## Screenshots
-- login and signup UI
+### Login and Signup UI
 <p align="center">
 <img src="https://user-images.githubusercontent.com/89037036/205827357-78a4092a-39ac-4dfb-8688-483c0e94a52b.png" alt="drawing" height="400"/>
 <img src="https://user-images.githubusercontent.com/89037036/205827817-3ebab7e1-ea28-4008-9df6-fd3b5ee43499.png" alt="drawing" height="400"/>
 <img src="https://user-images.githubusercontent.com/89037036/205827541-1dcc9d3f-d16f-4441-885d-3df55895352a.png" alt="drawing" height="400"/>
 <img src="https://user-images.githubusercontent.com/89037036/205827702-8f974ddc-11da-426f-8613-ae4d682559cd.png" alt="drawing" height="400"/>
 </p>
-- home pages
+
+### HomePages
+
 <p align="center">
 <img src="https://user-images.githubusercontent.com/26904065/208301481-71fe407d-eed0-4bae-9b38-cda395922d5c.png" alt="drawing" height="400"/>
 <img src="https://user-images.githubusercontent.com/26904065/208301894-77ec284a-f4b5-4c32-8c96-c4f920c9dc04.png" alt="drawing" height="400"/>
-<img src="https://user-images.githubusercontent.com/26904065/208301556-1d035723-1963-4330-a93f-c44ccb8da395.png" alt="drawing" width="400"/>
+<!-- <img src="https://user-images.githubusercontent.com/26904065/208301556-1d035723-1963-4330-a93f-c44ccb8da395.png" alt="drawing" width="400"/> -->
 </p>
-- transactions
+
+### Transactions
+
 <p align="center">
 <img src="https://user-images.githubusercontent.com/77590247/208730779-995f4682-0b47-4012-acda-c54ca07e1ae2.png" alt="drawing" height="400"/>
 <img src="https://user-images.githubusercontent.com/77590247/208731299-749c4a1b-f35a-4e51-bf3d-64941893e0db.png" alt="drawing" height="400"/>
 <img src="https://user-images.githubusercontent.com/77590247/208731703-8012b575-3dc6-435b-85fb-39820c916130.png" alt="drawing" height="400" />
 </p>
-- requiest
+### Request
 <p align="center">
 <img src="https://user-images.githubusercontent.com/89037036/208801117-395e7b9c-a396-4580-a697-bab4d5bb86f2.png" alt="drawing" height="400"/>
 <img src="https://user-images.githubusercontent.com/89037036/208801241-1a84d4bf-2e7f-45fa-bd7b-a0d4d94238cb.png" alt="drawing" height="400"/>
 <img src="https://user-images.githubusercontent.com/77590247/208864991-26b64e79-20f6-4b86-a2a4-4912ca39a2c8.png" alt="drawing" height="400"/>
 </p>
-- event creation
+
+### Event Creation
+
 <p align="center">
 <img src="https://user-images.githubusercontent.com/77590247/208864991-26b64e79-20f6-4b86-a2a4-4912ca39a2c8.png" alt="drawing" height="400"/>
 </p>
